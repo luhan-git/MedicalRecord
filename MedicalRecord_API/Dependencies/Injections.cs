@@ -2,6 +2,7 @@
 using MedicalRecord_API.Repository.Interfaces;
 using MedicalRecord_API.Repository.Implements;
 using Microsoft.EntityFrameworkCore;
+using MedicalRecord_API.Utils.AutoMapper;
 
 namespace MedicalRecord_API.Dependencies
 {
@@ -11,6 +12,7 @@ namespace MedicalRecord_API.Dependencies
         {
             services.AddDbContext<DbhistoriasContext>(option => option.UseMySql(configuration.GetConnectionString("Context"),ServerVersion.Parse("8.0.30-mysql")));
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddAutoMapper(typeof(AutoMapperProfile));
         }
     }
 }
