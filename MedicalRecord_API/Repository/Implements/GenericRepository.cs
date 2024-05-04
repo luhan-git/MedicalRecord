@@ -5,11 +5,11 @@ using System.Linq.Expressions;
 
 namespace MedicalRecord_API.Repository.Implements
 {
-    public class GenericRepositoty<TEntity> : IGenericRepository<TEntity> where TEntity : class
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
         private readonly DbhistoriasContext _context;
         internal DbSet<TEntity>dbSet;
-        public GenericRepositoty(DbhistoriasContext context)
+        public GenericRepository(DbhistoriasContext context)
         {
 
             _context = context;
