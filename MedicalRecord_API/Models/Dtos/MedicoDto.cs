@@ -2,6 +2,7 @@
 {
     public class MedicoDto
     {
+        public int IdMedico { get; set; }
         public string NombreMed { get; set; } = null!;
 
         public string? EspeMed { get; set; }

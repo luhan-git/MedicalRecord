@@ -10,7 +10,7 @@ namespace MedicalRecord_API.Dependencies
     {
         public static void Injection(this IServiceCollection services,IConfiguration configuration)
         {
-            services.AddDbContext<DbhistoriasContext>(option => option.UseMySql(configuration.GetConnectionString("Context"),ServerVersion.Parse("8.0.30-mysql")));
+            services.AddDbContext<DbhistoriasContext>(option => option.UseMySql(configuration.GetConnectionString("Context"), Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.30-mysql")));
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddAutoMapper(typeof(AutoMapperProfile));
         }

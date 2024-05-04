@@ -13,5 +13,5 @@ public partial class Medico
 
     public string? NroCmed { get; set; }
 
-    public bool? Estado { get; set; }
+    public bool? Estado { get; set; } = true;
 }
