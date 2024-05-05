@@ -14,7 +14,9 @@ import {
 
 export function Sidebar() {
   const [showMenu, setShowMenu] = useState(false)
-  const [showSubmenu, setShowSubmenu] = useState(false)
+  const [showSubmenuMantenimiento, setShowSubmenuMantenimiento] =
+    useState(false)
+  const [showSubmenuControl, setShowSubmenuControl] = useState(false)
   return (
     <>
       <div
@@ -32,26 +34,113 @@ export function Sidebar() {
                 to='/'
                 className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors'
               >
-                <RiBarChart2Line className='text-primary' /> Analíticas
+                <RiBarChart2Line className='text-primary' /> Dashboard
               </Link>
             </li>
             <li>
               <button
-                onClick={() => setShowSubmenu(!showSubmenu)}
+                onClick={() =>
+                  setShowSubmenuMantenimiento(!showSubmenuMantenimiento)
+                }
                 className='w-full flex items-center justify-between py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors'
               >
                 <span className='flex items-center gap-4'>
-                  <RiEarthLine className='text-primary' /> Redes sociales
+                  <RiEarthLine className='text-primary' /> Mantenimiento
                 </span>
                 <RiArrowRightSLine
                   className={`mt-1 ${
-                    showSubmenu && 'rotate-90'
+                    showSubmenuMantenimiento && 'rotate-90'
                   } transition-all`}
                 />
               </button>
               <ul
                 className={` ${
-                  showSubmenu ? 'h-[130px]' : 'h-0'
+                  showSubmenuMantenimiento ? 'h-[325px]' : 'h-0'
+                } overflow-y-hidden transition-all`}
+              >
+                <li>
+                  <Link
+                    to='/medicos'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Registro de Medicos
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Laboratorios
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Medicamentos
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    CIE10
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Examenes de Laboratorio
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Procedimientos Especiales
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Compañias de Seguros
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Directorio Telefonico
+                  </Link>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <button
+                onClick={() => setShowSubmenuControl(!showSubmenuControl)}
+                className='w-full flex items-center justify-between py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors'
+              >
+                <span className='flex items-center gap-4'>
+                  <RiEarthLine className='text-primary' /> Control
+                </span>
+                <RiArrowRightSLine
+                  className={`mt-1 ${
+                    showSubmenuControl && 'rotate-90'
+                  } transition-all`}
+                />
+              </button>
+              <ul
+                className={` ${
+                  showSubmenuControl ? 'h-[240px]' : 'h-0'
                 } overflow-y-hidden transition-all`}
               >
                 <li>
@@ -59,7 +148,7 @@ export function Sidebar() {
                     to='/'
                     className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
                   >
-                    Post red social
+                    Registro de Pacientes y Consultas
                   </Link>
                 </li>
                 <li>
@@ -67,7 +156,7 @@ export function Sidebar() {
                     to='/'
                     className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
                   >
-                    Estadisticas
+                    Visualización Auxiliar de Consultas
                   </Link>
                 </li>
                 <li>
@@ -75,7 +164,31 @@ export function Sidebar() {
                     to='/'
                     className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
                   >
-                    Perfiles
+                    Control de Próximas Consultas
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Consulta Medica Lentes por Paciente
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Compañias de Seguros
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Directorio Telefonico
                   </Link>
                 </li>
               </ul>
@@ -86,7 +199,15 @@ export function Sidebar() {
                 className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors'
               >
                 <RiCustomerService2Line className='text-primary' /> Soporte
-                técnico
+                Tecnico
+              </Link>
+            </li>
+            <li>
+              <Link
+                to='/tickets'
+                className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors'
+              >
+                <RiCustomerService2Line className='text-primary' /> Reportes
               </Link>
             </li>
             <li>
@@ -94,7 +215,7 @@ export function Sidebar() {
                 to='/'
                 className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors'
               >
-                <RiCalendarTodoLine className='text-primary' /> Calendario
+                <RiCalendarTodoLine className='text-primary' /> Utilitarios
               </Link>
             </li>
           </ul>
