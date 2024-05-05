@@ -1,43 +1,154 @@
 import React from 'react'
-import { RiSearch2Line } from 'react-icons/ri'
+import {
+  RiNotification3Line,
+  RiArrowDownSLine,
+  RiSettings3Line,
+  RiLogoutCircleRLine,
+  RiThumbUpLine,
+  RiChat3Line
+} from 'react-icons/ri'
+import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu'
+import '@szhsin/react-menu/dist/index.css'
+import '@szhsin/react-menu/dist/transitions/slide.css'
+import { Link } from 'react-router-dom'
 
 export function Header() {
   return (
-    <header>
-      {/* Title and search */}
-      <div className='flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6'>
-        <div>
-          <h1 className='text-2xl text-gray-300'>Jeager Resto</h1>
-          <p className='text-gray-500'>07 octubre 2022</p>
-        </div>
-        <form>
-          <div className='w-full relative'>
-            <RiSearch2Line className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-300' />
-            <input
-              type='text'
-              className='bg-[#1F1D2B] w-full py-2 pl-10 pr-4 rounded-lg text-gray-300 outline-none'
-              placeholder='Search'
-            />
-          </div>
-        </form>
-      </div>
-      {/* Tabs */}
-      <nav className='text-gray-300 flex items-center justify-between md:justify-start md:gap-8 border-b mb-6'>
-        <a
-          href='#'
-          className='relative py-2 pr-4 before:w-1/2 before:h-[2px] before:absolute before:bg-[#ec7c6a] before:left-0 before:rounded-full before:-bottom-[1px] text-[#ec7c6a]'
+    <header className='h-[7vh] md:h-[10vh] border-b border-secondary-100 p-8 flex items-center justify-end'>
+      <nav className='flex items-center gap-2'>
+        <Menu
+          menuButton={
+            <MenuButton className='relative hover:bg-secondary-100 p-2 rounded-lg transition-colors'>
+              <RiNotification3Line />
+              <span className='absolute -top-0.5 right-0 bg-primary py-0.5 px-[5px] box-content text-black rounded-full text-[8px] font-bold'>
+                2
+              </span>
+            </MenuButton>
+          }
+          align='end'
+          arrow
+          transition
+          arrowClassName='bg-secondary-100'
+          menuClassName='bg-secondary-100 p-4'
         >
-          Hot dishes
-        </a>
-        <a href='#' className='py-2 pr-4'>
-          Cold dishes
-        </a>
-        <a href='#' className='py-2 pr-4'>
-          Soup
-        </a>
-        <a href='#' className='py-2'>
-          Grill
-        </a>
+          <h1 className='text-gray-300 text-center font-medium'>
+            Notificaciones (2)
+          </h1>
+          <hr className='my-6 border-gray-500' />
+          <MenuItem className='p-0 hover:bg-transparent'>
+            <Link
+              to='/'
+              className='text-gray-300 flex flex-1 items-center gap-4 py-2 px-4 hover:bg-secondary-900 transition-colors rounded-lg'
+            >
+              <img
+                src='https://img.freepik.com/foto-gratis/feliz-optimista-guapo-gerente-ventas-latina-apuntando-lado-mirando-camara_1262-12679.jpg'
+                className='w-8 h-8 object-cover rounded-full'
+              />
+              <div className='text-sm flex flex-col'>
+                <div className='flex items-center justify-between gap-4'>
+                  <span>Jorge Luis Trejo</span>{' '}
+                  <span className='text-[8px]'>21/10/2022</span>
+                </div>
+                <p className='text-gray-500 text-xs'>
+                  Lorem ipsum dolor sit amet...
+                </p>
+              </div>
+            </Link>
+          </MenuItem>
+          <MenuItem className='p-0 hover:bg-transparent'>
+            <Link
+              to='/'
+              className='text-gray-300 flex flex-1 items-center gap-4 py-2 px-4 hover:bg-secondary-900 transition-colors rounded-lg'
+            >
+              <RiThumbUpLine className='p-2 bg-blue-200 text-blue-700 box-content rounded-full' />
+              <div className='text-sm flex flex-col'>
+                <div className='flex items-center justify-between gap-4'>
+                  <span>Nuevo like</span>{' '}
+                  <span className='text-[8px]'>21/10/2022</span>
+                </div>
+                <p className='text-gray-500 text-xs'>
+                  A Jorge Trejo le gusta tu pub...
+                </p>
+              </div>
+            </Link>
+          </MenuItem>
+          <MenuItem className='p-0 hover:bg-transparent'>
+            <Link
+              to='/'
+              className='text-gray-300 flex flex-1 items-center gap-4 py-2 px-4 hover:bg-secondary-900 transition-colors rounded-lg'
+            >
+              <RiChat3Line className='p-2 bg-yellow-200 text-yellow-700 box-content rounded-full' />
+              <div className='text-sm flex flex-col'>
+                <div className='flex items-center justify-between gap-4'>
+                  <span>Nuevo comentario</span>{' '}
+                  <span className='text-[8px]'>21/10/2022</span>
+                </div>
+                <p className='text-gray-500 text-xs'>
+                  Jorge Trejo ha comentado tu...
+                </p>
+              </div>
+            </Link>
+          </MenuItem>
+          <hr className='my-6 border-gray-500' />
+          <MenuItem className='p-0 hover:bg-transparent flex justify-center cursor-default'>
+            <Link
+              to='/'
+              className='text-gray-400 text-sm hover:text-white transition-colors'
+            >
+              Todas las notificaciones
+            </Link>
+          </MenuItem>
+        </Menu>
+        <Menu
+          menuButton={
+            <MenuButton className='flex items-center gap-x-2 hover:bg-secondary-100 p-2 rounded-lg transition-colors'>
+              <img
+                src='https://img.freepik.com/foto-gratis/feliz-optimista-guapo-gerente-ventas-latina-apuntando-lado-mirando-camara_1262-12679.jpg'
+                className='w-6 h-6 object-cover rounded-full'
+              />
+              <span>Jorge Luis Trejo</span>
+              <RiArrowDownSLine />
+            </MenuButton>
+          }
+          align='end'
+          arrow
+          arrowClassName='bg-secondary-100'
+          transition
+          menuClassName='bg-secondary-100 p-4'
+        >
+          <MenuItem className='p-0 hover:bg-transparent'>
+            <Link
+              to='/perfil'
+              className='rounded-lg transition-colors text-gray-300 hover:bg-secondary-900 flex items-center gap-x-4 py-2 px-6 flex-1'
+            >
+              <img
+                src='https://img.freepik.com/foto-gratis/feliz-optimista-guapo-gerente-ventas-latina-apuntando-lado-mirando-camara_1262-12679.jpg'
+                className='w-8 h-8 object-cover rounded-full'
+              />
+              <div className='flex flex-col text-sm'>
+                <span className='text-sm'>Jorge Luis Trejo</span>
+                <span className='text-xs text-gray-500'>jorge@gmail.com</span>
+              </div>
+            </Link>
+          </MenuItem>
+          <hr className='my-4 border-gray-500' />
+          <MenuItem className='p-0 hover:bg-transparent'>
+            <Link
+              to='/configuracion'
+              className='rounded-lg transition-colors text-gray-300 hover:bg-secondary-900 flex items-center gap-x-4 py-2 px-6 flex-1'
+            >
+              <RiSettings3Line /> Configuración
+            </Link>
+          </MenuItem>
+          <MenuItem className='p-0 hover:bg-transparent'>
+            <Link
+              to='/cerrar-sesion'
+              className='rounded-lg transition-colors text-gray-300 hover:bg-secondary-900 flex items-center gap-x-4 py-2 px-6 flex-1'
+            >
+              <RiLogoutCircleRLine /> Cerrar sesión
+            </Link>
+          </MenuItem>
+        </Menu>
       </nav>
     </header>
   )
