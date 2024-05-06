@@ -22,7 +22,7 @@ namespace MedicalRecord_API.Controllers
             _mapper = mapper;
             _response = new();
         }
-        [HttpGet]
+        [HttpGet (Name="GetAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Response>> GetAll()

@@ -14,7 +14,7 @@ export function Profile() {
     <>
       {/* Profile */}
       <div className='bg-secondary-100 p-8 rounded-xl mb-8'>
-        <h1 className='text-xl text-gray-100'>Profile</h1>
+        <h1 className='text-xl text-gray-100'>Perfil</h1>
         <hr className='my-8 border-gray-500/30' />
         <form>
           <div className='flex items-center mb-8'>

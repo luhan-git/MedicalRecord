@@ -10,7 +10,7 @@ export function Home() {
   return (
     <div>
       <div className='flex items-center justify-between mb-10'>
-        <h1 className='text-4xl text-white'>Good morning, inserte cuenta!</h1>
+        <h1 className='text-4xl text-white'>Buen día, Usuario!</h1>
         <div className='flex items-center gap-2 text-3xl'>
           <RiArrowLeftSLine className='hover:cursor-pointer hover:text-white transition-colors' />
           <RiArrowRightSLine className='hover:cursor-pointer hover:text-white transition-colors' />
