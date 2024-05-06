@@ -14,9 +14,7 @@ export function Tables(props) {
       <div className='bg-secondary-100 p-8 rounded-xl'>
         <div className='hidden md:grid grid-cols-1 md:grid-cols-6 gap-4 mb-10 p-4'>
           {props.headers.map((item, index) => (
-            <>
-              <h5 key={index}>{item}</h5>
-            </>
+            <h5 key={index}>{item}</h5>
           ))}
         </div>
         {props.data.map(item => (

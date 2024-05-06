@@ -19,14 +19,14 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/login' element={<Login />} />
+        {/* <Route path='/login' element={<Login />} />
         <Route path='/registro' element={<Register />} />
-        <Route path='/olvide-password' element={<ForgetPassword />} />
+        <Route path='/olvide-password' element={<ForgetPassword />} /> */}
         <Route path='/' element={<LayoutAdmin />}>
-          <Route index element={<Home />} />
-          <Route path='perfil' element={<Profile />} />
-          <Route path='chat' element={<Chat />} />
-          <Route path='tickets' element={<Tickets />} />
+          {/* <Route index element={<Home />} /> */}
+          {/* <Route path='perfil' element={<Profile />} /> */}
+          {/* <Route path='chat' element={<Chat />} />
+          <Route path='tickets' element={<Tickets />} /> */}
           <Route path='medicos' element={<Medicos />} />
         </Route>
         <Route path='*' element={<Error404 />} />

@@ -55,7 +55,7 @@ export function Sidebar() {
               </button>
               <ul
                 className={` ${
-                  showSubmenuMantenimiento ? 'h-[325px]' : 'h-0'
+                  showSubmenuMantenimiento ? 'h-[375px]' : 'h-0'
                 } overflow-y-hidden transition-all`}
               >
                 <li>
@@ -140,7 +140,7 @@ export function Sidebar() {
               </button>
               <ul
                 className={` ${
-                  showSubmenuControl ? 'h-[240px]' : 'h-0'
+                  showSubmenuControl ? 'h-[345px]' : 'h-0'
                 } overflow-y-hidden transition-all`}
               >
                 <li>

@@ -11,18 +11,27 @@ export function Medicos() {
     'Estado',
     'Acciones'
   ]
-  const obtenerDatos = async () => {
-    try {
-      const response = await fetch('https://localhost:7027/api/Medico')
-      if (response.ok) {
-        const data = await response.json()
-        console.log(data)
-        setMedicos(data.resultado)
-      }
-    } catch (error) {
-      console.log(error)
-    }
+  const obtenerDatos = () => {
+    return new Promise((resolve, reject) => {
+      fetch('https://localhost:7027/api/Medico')
+        .then(response => {
+          if (response.ok) {
+            return response.json()
+          } else {
+            throw new Error('Error al obtener los datos')
+          }
+        })
+        .then(data => {
+          setMedicos(data.resultado)
+          resolve()
+        })
+        .catch(error => {
+          console.error(error)
+          reject(error)
+        })
+    })
   }
+
   useEffect(() => {
     obtenerDatos()
   }, [])
