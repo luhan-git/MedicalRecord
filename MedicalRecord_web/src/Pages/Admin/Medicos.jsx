@@ -13,7 +13,7 @@ export function Medicos() {
   ]
   const obtenerDatos = () => {
     return new Promise((resolve, reject) => {
-      fetch('https://localhost:7027/api/Medico')
+      fetch('https://localhost:7027/api/Medicos')
         .then(response => {
           if (response.ok) {
             return response.json()
