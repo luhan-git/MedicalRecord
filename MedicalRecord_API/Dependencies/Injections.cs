@@ -12,6 +12,7 @@ namespace MedicalRecord_API.Dependencies
         {
             services.AddDbContext<DbhistoriasContext>(option => option.UseMySql(configuration.GetConnectionString("Context"), Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.30-mysql")));
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IMedicoRepository,MedicoRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfile));
         }
     }

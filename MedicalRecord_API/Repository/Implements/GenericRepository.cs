@@ -16,11 +16,6 @@ namespace MedicalRecord_API.Repository.Implements
             this.dbSet = _context.Set<TEntity>();
 
         }
-        public async Task Create(TEntity entity)
-        {
-            await dbSet.AddAsync(entity);
-            await _context.SaveChangesAsync();
-        }
 
         public async Task Delete(TEntity entity)
         {

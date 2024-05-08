@@ -13,10 +13,10 @@ namespace MedicalRecord_API.Controllers
     [ApiController]
     public class MedicosController : ControllerBase
     {
-        private readonly IGenericRepository<Medico> _medicoRepo;
+        private readonly IMedicoRepository _medicoRepo;
         private readonly IMapper _mapper;
         protected Response _response;
-        public MedicosController(IGenericRepository<Medico> medicoRepo, IMapper mapper)
+        public MedicosController(IMedicoRepository medicoRepo, IMapper mapper)
         {
             _medicoRepo = medicoRepo;
             _mapper = mapper;
@@ -85,7 +85,7 @@ namespace MedicalRecord_API.Controllers
                 if (createDto == null) return BadRequest(createDto);
                 if (await _medicoRepo.GetEntity(v => v.NombreMed.ToUpper() == createDto.NombreMed.ToUpper(), false) != null)
                 {
-                    ModelState.AddModelError("NombreExiste", "La el medico con este nombre ya existe");
+                    ModelState.AddModelError("NombreExiste", "El medico con este nombre ya existe");
                     return BadRequest(ModelState);
                 }
    
