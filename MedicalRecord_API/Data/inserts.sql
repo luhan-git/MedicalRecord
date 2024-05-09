@@ -1,0 +1,10 @@
+INSERT INTO medicos (nombre_med, espe_med, nro_cmed) VALUES ('Dr. Alejandro García', 'Cardiología', '12345');
+INSERT INTO medicos (nombre_med, espe_med, nro_cmed) VALUES ('Dra. Ana Martínez', 'Pediatría', '54321');
+INSERT INTO medicos (nombre_med, espe_med, nro_cmed) VALUES ('Dr. Roberto López', 'Cirugía General', '98765');
+INSERT INTO medicos (nombre_med, espe_med, nro_cmed) VALUES ('Dra. María Fernández', 'Ginecología', '13579');
+INSERT INTO medicos (nombre_med, espe_med, nro_cmed) VALUES ('Dr. Juan Pérez', 'Neurología', '24680');
+INSERT INTO medicos (nombre_med, espe_med, nro_cmed) VALUES ('Dra. Laura Sánchez', 'Dermatología', '97531');
+INSERT INTO medicos (nombre_med, espe_med, nro_cmed) VALUES ('Dr. Miguel Rodríguez', 'Oftalmología', '86420');
+INSERT INTO medicos (nombre_med, espe_med, nro_cmed) VALUES ('Dra. Patricia Gómez', 'Psiquiatría', '11111');
+INSERT INTO medicos (nombre_med, espe_med, nro_cmed) VALUES ('Dr. Carlos Vargas', 'Ortopedia', '22222');
+INSERT INTO medicos (nombre_med, espe_med, nro_cmed) VALUES ('Dra. Claudia Ramírez', 'Endocrinología', '33333');

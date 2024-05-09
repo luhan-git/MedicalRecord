@@ -1,5 +1,12 @@
 create database DBHISTORIAS;
 use DBHISTORIAS;
+CREATE TABLE Medicos(
+	id_medico int AUTO_INCREMENT PRIMARY KEY ,
+	nombre_med varchar(50) NOT NULL,
+	espe_med varchar(30) NULL,
+	nro_cmed varchar(6) NULL,
+	estado bool default true
+);
 CREATE TABLE AgendaCitas(
 	id_cita int AUTO_INCREMENT  PRIMARY KEY,
 	id_paciente int NOT NULL,
@@ -139,16 +146,6 @@ CREATE TABLE Medicamentos(
 	dosis varchar(80) NULL,
 	indicacion varchar(180) NULL
 );
-
-
-CREATE TABLE Medicos(
-	id_medico int AUTO_INCREMENT PRIMARY KEY ,
-	nombre_med varchar(50) NOT NULL,
-	espe_med varchar(30) NULL,
-	nro_cmed varchar(6) NULL,
-	estado bool default true
-);
-
 
 CREATE TABLE MedidaLentes(
 	id_consulta int AUTO_INCREMENT  PRIMARY KEY,

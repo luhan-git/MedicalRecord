@@ -6,6 +6,6 @@ namespace MedicalRecord_API.Repository.Interfaces
     public interface IMedicoRepository:IGenericRepository<Medico>
     {
         Task<int> Create (Medico entity);
-        Task<Medico> Update(Medico entity);
+        Task Update(Medico entity);
     }
 }

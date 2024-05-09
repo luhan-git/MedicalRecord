@@ -136,5 +136,37 @@ namespace MedicalRecord_API.Controllers
             }
             return BadRequest(_response);
         }
+        [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Update(int id, [FromBody] MedicoUpdateDto updateDto)
+        {
+            try
+            {
+                if (id == 0)
+                {
+                    _response.IsExitoso = false;
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    return BadRequest(_response);
+                }
+                if (updateDto == null || id != updateDto.IdMedico)
+                {
+                    _response.IsExitoso = false;
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    return BadRequest(_response);
+                }
+                await _medicoRepo.Update(_mapper.Map<Medico>(updateDto));
+                _response.StatusCode = HttpStatusCode.NoContent;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsExitoso = false;
+                _response.ErrorMensajes = [ex.ToString()];
+            }
+            return BadRequest(_response);
+        }
     }
 }
