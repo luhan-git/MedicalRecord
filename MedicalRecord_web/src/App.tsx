@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import './App.css'
 // Layouts
 import { LayoutAuth } from './Layouts/LayoutAuth'
 import { LayoutAdmin } from './Layouts/LayoutAdmin'

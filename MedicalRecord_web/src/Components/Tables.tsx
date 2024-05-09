@@ -4,7 +4,13 @@ import '@szhsin/react-menu/dist/transitions/slide.css'
 import { Link } from 'react-router-dom'
 import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu'
 
-export function Tables(props) {
+type TableDataRow = Record<string, any>
+
+type Props = {
+  headers: string[]
+  data: TableDataRow
+}
+export function Tables(props: Props) {
   const { headers, data } = props
   return (
     <>
@@ -13,11 +19,11 @@ export function Tables(props) {
       </div>
       <div className='bg-secondary-100 p-8 rounded-xl'>
         <div className='hidden md:grid grid-cols-1 md:grid-cols-6 gap-4 mb-10 p-4'>
-          {props.headers.map((item, index) => (
+          {headers.map((item, index) => (
             <h5 key={index}>{item}</h5>
           ))}
         </div>
-        {props.data.map(item => (
+        {data.map((item: any) => (
           <div
             key={item.idMedico}
             className='grid grid-cols-1 md:grid-cols-6 gap-4 items-center mb-4 bg-secondary-900 p-4 rounded-xl'
