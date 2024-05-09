@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MedicalRecord_API.Models.Dtos;
 using MedicalRecord_API.Models;
-using MedicalRecord_API.Repository.Implements;
 using MedicalRecord_API.Utils.Response;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
