@@ -90,7 +90,8 @@ namespace MedicalRecord_API.Controllers
                 }
    
                 Medico modelo = _mapper.Map<Medico>(createDto);
-                await _medicoRepo.Create(modelo);
+                int idModelo=await _medicoRepo.Create(modelo);
+                modelo.IdMedico = idModelo;
                 _response.Resultado = _mapper.Map<MedicoDto>(modelo);
                 _response.StatusCode = HttpStatusCode.Created;
                 return CreatedAtRoute("Get", new { id = modelo.IdMedico }, _response);
