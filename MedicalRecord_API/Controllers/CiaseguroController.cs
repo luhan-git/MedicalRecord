@@ -10,7 +10,7 @@ namespace MedicalRecord_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CiaSegurosController : ControllerBase
+    public class CiaseguroController : ControllerBase
     {
         /*private readonly ICiaSeguroRepository _ciaSegurosRepo;
         private readonly IMapper _mapper;

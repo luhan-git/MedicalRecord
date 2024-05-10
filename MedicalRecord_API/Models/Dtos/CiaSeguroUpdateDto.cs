@@ -1,6 +1,6 @@
 ﻿namespace MedicalRecord_API.Models.Dtos
 {
-    public class CiaSeguroUpdateDto
+    public class CiaseguroUpdateDto
     {
         public int IdCiaSeguro { get; set; }
         public string NombreCia { get; set; } = null!;
