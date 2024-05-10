@@ -1,4 +1,4 @@
-﻿namespace MedicalRecord_API.Models.Dtos
+﻿namespace MedicalRecord_API.Models.Dtos.Medico
 {
     public class MedicoUpdateDto
     {

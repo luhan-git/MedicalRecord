@@ -1,4 +1,5 @@
 ﻿using MedicalRecord_API.Models;
+using MedicalRecord_API.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 using System.Data;

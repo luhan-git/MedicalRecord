@@ -1,34 +1,37 @@
 ﻿using AutoMapper;
 using MedicalRecord_API.Models;
+using MedicalRecord_API.Models.Dtos.Cie;
+using MedicalRecord_API.Models.Dtos.Medico;
+using MedicalRecord_API.Repository.Interfaces;
 using MedicalRecord_API.Utils.Response;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using MedicalRecord_API.Repository.Interfaces;
-using MedicalRecord_API.Models.Dtos.Medico;
 
 namespace MedicalRecord_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MedicosController : ControllerBase
+    public class CieController : ControllerBase
     {
-        private readonly IMedicoRepository _medicoRepo;
+        private readonly ICieRepository _cieRepo;
         private readonly IMapper _mapper;
         protected Response _response;
-        public MedicosController(IMedicoRepository medicoRepo, IMapper mapper)
+        public CieController(ICieRepository cieRepo, IMapper mapper)
         {
-            _medicoRepo = medicoRepo;
+            _cieRepo = cieRepo;
             _mapper = mapper;
             _response = new();
         }
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Response>> GetMedicos()
+        public async Task<ActionResult<Response>> GetCies()
         {
             try
             {
-                IEnumerable<MedicoDto> medicoList = _mapper.Map<IEnumerable<MedicoDto>>(await _medicoRepo.Query());
+                IEnumerable<CieDto> medicoList = _mapper.Map<IEnumerable<CieDto>>(await _cieRepo.Query());
                 _response.Resultado = medicoList;
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
@@ -41,11 +44,11 @@ namespace MedicalRecord_API.Controllers
             }
             return _response;
         }
-        [HttpGet("Id:int", Name = "GetMedico")]
+        [HttpGet("Id:int", Name = "GetCie")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Response>> GetMedico(int Id)
+        public async Task<ActionResult<Response>> GetCie(int Id)
         {
             try
             {
@@ -55,15 +58,15 @@ namespace MedicalRecord_API.Controllers
                     _response.IsExitoso = false;
                     return BadRequest(_response);
                 }
-                MedicoDto medicoDto = _mapper.Map<MedicoDto>(await _medicoRepo.GetEntity(c => c.IdMedico == Id, false));
-                if (medicoDto == null)
+                CieDto cieDto = _mapper.Map<CieDto>(await _cieRepo.GetEntity(c => c.IdCie == Id, false));
+                if (cieDto == null)
                 {
                     _response.StatusCode = HttpStatusCode.NotFound;
                     _response.IsExitoso = false;
                     return NotFound(_response);
                 }
                 _response.StatusCode = HttpStatusCode.OK;
-                _response.Resultado = medicoDto;
+                _response.Resultado = cieDto;
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -76,24 +79,24 @@ namespace MedicalRecord_API.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<Response>> Create([FromBody] MedicoCreateDto createDto)
+        public async Task<ActionResult<Response>> Create([FromBody] CieCreateDto createDto)
         {
             try
             {
                 if (!ModelState.IsValid) return BadRequest(ModelState);
                 if (createDto == null) return BadRequest(createDto);
-                if (await _medicoRepo.GetEntity(v => v.NombreMed.ToUpper() == createDto.NombreMed.ToUpper(), false) != null)
+                if (await _cieRepo.GetEntity(v => v.Codcie.ToUpper() == createDto.Codcie.ToUpper(), false) != null)
                 {
-                    ModelState.AddModelError("NombreExiste", "El medico con este nombre ya existe");
+                    ModelState.AddModelError("CodigoExiste", "El cie con este codigo ya existe");
                     return BadRequest(ModelState);
                 }
-   
-                Medico modelo = _mapper.Map<Medico>(createDto);
-                int idModelo=await _medicoRepo.Create(modelo);
-                modelo.IdMedico = idModelo;
-                _response.Resultado = _mapper.Map<MedicoDto>(modelo);
+
+                Cie modelo = _mapper.Map<Cie>(createDto);
+                int idModelo = await _cieRepo.Create(modelo);
+                modelo.IdCie = idModelo;
+                _response.Resultado = _mapper.Map<CieDto>(modelo);
                 _response.StatusCode = HttpStatusCode.Created;
-                return CreatedAtRoute("GetMedico", new { id = modelo.IdMedico }, _response);
+                return CreatedAtRoute("GetCie", new { id = modelo.IdCie }, _response);
             }
             catch (Exception ex)
             {
@@ -117,14 +120,14 @@ namespace MedicalRecord_API.Controllers
                     _response.IsExitoso = false;
                     BadRequest(_response);
                 };
-                Medico medico = await _medicoRepo.GetEntity(v => v.IdMedico == id, false);
-                if (medico == null)
+                Cie cie = await _cieRepo.GetEntity(v => v.IdCie == id, false);
+                if (cie == null)
                 {
                     _response.IsExitoso = false;
                     _response.StatusCode = HttpStatusCode.NotFound;
                     return NotFound(_response);
                 }
-                await _medicoRepo.Delete(medico);
+                await _cieRepo.Delete(cie);
                 _response.StatusCode = HttpStatusCode.NoContent;
                 return Ok(_response);
             }
@@ -140,23 +143,30 @@ namespace MedicalRecord_API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Update(int id, [FromBody] MedicoUpdateDto updateDto)
+        public async Task<IActionResult> Update(int id, [FromBody] CieUpdateDto updateDto)
         {
             try
             {
+                if (!ModelState.IsValid) return BadRequest(ModelState);
+                if (updateDto == null) return BadRequest(updateDto);
+                if (await _cieRepo.GetEntity(c => c.Codcie.ToUpper() == updateDto.Codcie.ToUpper(), false) != null)
+                {
+                    ModelState.AddModelError("CodigoExiste", "El cie con este codigo ya existe");
+                    return BadRequest(ModelState);
+                }
                 if (id == 0)
                 {
                     _response.IsExitoso = false;
                     _response.StatusCode = HttpStatusCode.BadRequest;
                     return BadRequest(_response);
                 }
-                if (updateDto == null || id != updateDto.IdMedico)
+                if (updateDto == null || id != updateDto.IdCie)
                 {
                     _response.IsExitoso = false;
                     _response.StatusCode = HttpStatusCode.BadRequest;
                     return BadRequest(_response);
                 }
-                await _medicoRepo.Update(_mapper.Map<Medico>(updateDto));
+                await _cieRepo.Update(_mapper.Map<Cie>(updateDto));
                 _response.StatusCode = HttpStatusCode.NoContent;
                 return Ok(_response);
             }

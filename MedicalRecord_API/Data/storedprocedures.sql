@@ -41,7 +41,43 @@ BEGIN
 END//
 DELIMITER ;
 
+-- Cie
+DELIMITER//
+CREATE PROCEDURE InsertCie(
+  IN codcie VARCHAR(5),
+  IN enfermedad VARCHAR(20),
+  OUT id_cie INT
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SELECT -1;
+    END;
 
+    START TRANSACTION;
+    INSERT INTO Cie (codcie, enfermedad) VALUES (codcie,enfermedad);
+    set id_cie=LAST_INSERT_ID();
+    COMMIT;
+END;
+CREATE PROCEDURE UpdateCie(
+  IN id_cie_update int,
+  IN codcie VARCHAR(5),
+  IN enfermedad VARCHAR(20)
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SELECT -1;
+    END;
+
+    START TRANSACTION;
+    update Cie set codcie=codcie,enfermedad=enfermedad where id_cie=id_cie_update;
+    COMMIT;
+END;
+
+DELIMITER;
 -- CIA SEGUROS
 DELIMITER //
 
