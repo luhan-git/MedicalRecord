@@ -76,6 +76,7 @@ namespace MedicalRecord_API.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Route("Create")]
         public async Task<ActionResult<Response>> Create([FromBody] MedicoCreateDto createDto)
         {
             try

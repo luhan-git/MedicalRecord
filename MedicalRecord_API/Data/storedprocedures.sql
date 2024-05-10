@@ -1,5 +1,5 @@
 -- Medico
-CREATE PROCEDURE sp_crearmedico(
+CREATE PROCEDURE InsertMedico(
   IN nombre_med VARCHAR(50),
   IN espe_med VARCHAR(20),
   IN nro_cmed VARCHAR(6),
@@ -20,7 +20,8 @@ BEGIN
     COMMIT;
 END
 
-CREATE PROCEDURE sp_actualizarmedico(
+DELIMITER //
+CREATE PROCEDURE UpdateMedico(
   IN id_medico_update int,
   IN nombre_med VARCHAR(50),
   IN espe_med VARCHAR(20),
@@ -37,30 +38,31 @@ BEGIN
     START TRANSACTION;
     UPDATE medicos set nombre_med=nombre_med,espe_med=espe_med,nro_cmed=nro_cmed,estado=estado where id_medico=id_medico_update;
     COMMIT;
-END
+END//
+DELIMITER ;
 
 
 -- CIA SEGUROS
 DELIMITER //
 
 CREATE PROCEDURE InsertCia_sp(
-    IN nombre_cia VARCHAR(50),
-    IN nemo_cia VARCHAR(20),
-    OUT id_cia INT
+    IN p_nombre_cia VARCHAR(50),
+    IN p_nemo_cia VARCHAR(20),
+    OUT p_id_cia INT
 )
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
-        SET id_cia = -1;
+        SET p_id_cia = -1;
         ROLLBACK;
     END;
 
     START TRANSACTION;
 
     INSERT INTO CiaSeguros(nombre_cia, nemo_cia) 
-    VALUES(nombre_cia, nemo_cia);
+    VALUES(p_nombre_cia, p_nemo_cia);
 
-    SET id_cia = LAST_INSERT_ID();
+    SET p_id_cia = LAST_INSERT_ID();
 
     COMMIT;
 END//
@@ -104,13 +106,13 @@ CREATE PROCEDURE InsertDirectorio_sp(
     IN p_email VARCHAR(80),
     IN p_direccion VARCHAR(180),
     IN p_estado CHAR(1),
-    OUT p_id INT
+    OUT p_id_directorio INT
 )
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         ROLLBACK;
-        SET p_id = -1;
+        SET p_id_directorio = -1;
     END;
 
     START TRANSACTION;
@@ -118,7 +120,7 @@ BEGIN
     INSERT INTO Directorio (nombre, repre, fono, celular, email, direccion, estado)
     VALUES (p_nombre, p_repre, p_fono, p_celular, p_email, p_direccion, p_estado);
 
-    SET p_id = LAST_INSERT_ID();
+    SET p_id_directorio = LAST_INSERT_ID();
 
     COMMIT;
 END//
@@ -227,7 +229,8 @@ DELIMITER //
 
 CREATE PROCEDURE InsertOcupacion_sp(
     IN p_nombre_ocupa VARCHAR(30),
-    IN p_detalle_ocupa VARCHAR(15)
+    IN p_detalle_ocupa VARCHAR(15),
+    OUT p_id_Ocupa INT
 )
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -239,6 +242,7 @@ BEGIN
 
     INSERT INTO Ocupacion (nombre_ocupa, detalle_ocupa)
     VALUES (p_nombre_ocupa, p_detalle_ocupa);
+    SET p_id_Ocupa = LAST_INSERT_ID();
 
     COMMIT;
 END//

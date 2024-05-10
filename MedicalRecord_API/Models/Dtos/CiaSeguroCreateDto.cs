@@ -1,12 +1,8 @@
-﻿namespace MedicalRecord_API.Models
+﻿namespace MedicalRecord_API.Models.Dtos
 {
-    public partial class CiaSeguros
+    public class CiaSeguroCreateDto
     {
-        public int IdCia { get; set; }
-
         public string NombreCia { get; set; } = null!;
-
         public string? NemoCia { get; set; }
-
     }
 }

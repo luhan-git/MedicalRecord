@@ -3,7 +3,6 @@ using MedicalRecord_API.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 using System.Data;
-using System.Reflection.Metadata.Ecma335;
 
 namespace MedicalRecord_API.Repository.Implements
 {
@@ -21,13 +20,12 @@ namespace MedicalRecord_API.Repository.Implements
         {
             try
             {
-
                 await using var connection = _context.Database.GetDbConnection();
                 await connection.OpenAsync();
 
                 var command = connection.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "sp_crearmedico";
+                command.CommandText = "InsertMedico";
 
                 command.Parameters.Add(new MySqlParameter("@nombre_med", entity.NombreMed));
                 command.Parameters.Add(new MySqlParameter("@espe_med", entity.EspeMed));
@@ -38,13 +36,15 @@ namespace MedicalRecord_API.Repository.Implements
                     Direction = ParameterDirection.Output
                 };
                 command.Parameters.Add(idMedicoParam);
+
                 await command.ExecuteNonQueryAsync();
+
                 var idMedico = (int)idMedicoParam.Value;
                 if (idMedico == -1)
                 {
-                    throw new Exception("El procedimiento almacenado sp_crearmedico devolvió -1, indicando un error.");
+                    throw new Exception("El procedimiento almacenado InserMedico devolvió -1, indicando un error.");
                 }
-                _logger.LogInformation("Se creo un nuevo medico con ID:{idMedico}", idMedico);
+                _logger.LogInformation("Registro de inserción en Medico con ID: {idMedico}", idMedico);
                 return idMedico;
             }
             catch (Exception ex)
@@ -62,7 +62,7 @@ namespace MedicalRecord_API.Repository.Implements
             try
             {
 
-            string sql = "CALL sp_actualizarmedico (@id_medico_update, @nombre_med, @espe_med,@nro_cmed,@estado)";
+            string sql = "CALL UpdateMedico (@id_medico_update, @nombre_med, @espe_med,@nro_cmed,@estado)";
             await _context.Database.ExecuteSqlRawAsync(sql,
                 new MySqlParameter("@id_medico_update", entity.IdMedico),
                 new MySqlParameter("@nombre_med", entity.NombreMed),
@@ -70,7 +70,7 @@ namespace MedicalRecord_API.Repository.Implements
                 new MySqlParameter("@nro_cmed", entity.NroCmed),
                 new MySqlParameter("@estado", entity.Estado)
                 );
-                _logger.LogInformation("Se actualizo un medico con ID: {idMedico}",entity.IdMedico);
+                _logger.LogInformation("Se actualizó un medico con ID: {idMedico}",entity.IdMedico);
             }
             catch (Exception ex)
             {
