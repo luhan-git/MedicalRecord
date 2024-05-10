@@ -5,7 +5,7 @@ using System.Data;
 
 namespace MedicalRecord_API.Repository.Implements
 {
-    public class ProcedimientoRepository : GenericRepository<Procedimientos>, IProcedimiento
+    public class ProcedimientoRepository : GenericRepository<Procedimiento>, IProcedimiento
     {
         private readonly DbhistoriasContext _context;
         private readonly ILogger<ProcedimientoRepository> _logger;
@@ -15,7 +15,7 @@ namespace MedicalRecord_API.Repository.Implements
             _context = context;
             _logger = logger;
         }
-        public async Task<int> Create(Procedimientos entity)
+        public async Task<int> Create(Procedimiento entity)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace MedicalRecord_API.Repository.Implements
             }
         }
 
-        public async Task Update(Procedimientos entity)
+        public async Task Update(Procedimiento entity)
         {
             try
             {

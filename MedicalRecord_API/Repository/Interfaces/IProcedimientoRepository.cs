@@ -2,9 +2,9 @@
 
 namespace MedicalRecord_API.Repository.Interfaces
 {
-    public interface IProcedimientoRepository : IGenericRepository<Procedimientos>
+    public interface IProcedimientoRepository : IGenericRepository<Procedimiento>
     {
-        Task<int> Create(Procedimientos entity);
-        Task Update(Procedimientos entity);
+        Task<int> Create(Procedimiento entity);
+        Task Update(Procedimiento entity);
     }
 }

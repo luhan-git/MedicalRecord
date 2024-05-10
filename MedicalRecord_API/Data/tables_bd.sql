@@ -7,6 +7,22 @@ CREATE TABLE Medicos(
 	nro_cmed varchar(6) NULL,
 	estado bool default true
 );
+CREATE TABLE CiaSeguros(
+	id_cia int AUTO_INCREMENT PRIMARY KEY,
+	nombre_cia varchar(50) NOT NULL,
+	nemo_cia varchar(20) NULL
+);
+CREATE TABLE Directorio(
+	id_directorio int AUTO_INCREMENT PRIMARY KEY ,
+	nombre varchar(80) NULL,
+	repre varchar(80) NULL,
+	fono varchar(40) NULL,
+	celular varchar(40) NULL,
+	email varchar(80) NULL,
+	direccion varchar(180) NULL,
+	estado varchar(1) NULL
+);
+
 CREATE TABLE AgendaCitas(
 	id_cita int AUTO_INCREMENT  PRIMARY KEY,
 	id_paciente int NOT NULL,
@@ -19,16 +35,28 @@ CREATE TABLE AgendaCitas(
 	estado char(1) NOT NULL,
 	monto numeric(12, 2) NULL
 );
+CREATE TABLE Procedimientos(
+	id_proce int AUTO_INCREMENT PRIMARY KEY,
+	nombre_proce varchar(50) NOT NULL,
+	nemo_proce varchar(20) NULL
+);
 
 CREATE TABLE CampoVisual(
     IDPAC bigint AUTO_INCREMENT PRIMARY KEY,
     CAMPO_VIS CHAR(6) CHARACTER SET utf8mb4 NULL
 );
 
-CREATE TABLE CiaSeguros(
-	id_cia int AUTO_INCREMENT PRIMARY KEY,
-	nombre_cia varchar(50) NOT NULL,
-	nemo_cia varchar(20) NULL
+CREATE TABLE UBICACION(
+	id_ubica int AUTO_INCREMENT  PRIMARY KEY,
+	tab_tipreg int NOT NULL,
+	tab_codreg char(6) NOT NULL,
+	tab_nombre varchar(30) NULL,
+	tab_codrela char(6) NULL
+);
+CREATE TABLE Presentaciones(
+	id_presenta int AUTO_INCREMENT PRIMARY KEY ,
+	nombre_prese varchar(30) NOT NULL,
+	nemo_prese varchar(4) NOT NULL
 );
 
 CREATE TABLE CIE(
@@ -66,16 +94,10 @@ CREATE TABLE DiagCIE(
 	id_cie int NULL
 );
 
-
-CREATE TABLE Directorio(
-	id_directorio int AUTO_INCREMENT PRIMARY KEY ,
-	nombre varchar(80) NULL,
-	repre varchar(80) NULL,
-	fono varchar(40) NULL,
-	celular varchar(40) NULL,
-	email varchar(80) NULL,
-	direccion varchar(180) NULL,
-	estado varchar(1) NULL
+CREATE TABLE Lineas(
+	id_linea int AUTO_INCREMENT PRIMARY KEY ,
+	nombre_linea varchar(40) NOT NULL,
+	nemo_linea varchar(4) NULL
 );
 
 CREATE TABLE ExamenesLaboratorio(
@@ -83,7 +105,7 @@ CREATE TABLE ExamenesLaboratorio(
 	nombre_exam varchar(50) NOT NULL,
 	nemo_exam varchar(20) NULL
 );
-
+-- end tablas sin relacion
 CREATE TABLE HorarioConsultas(
 	id_paciente int AUTO_INCREMENT  PRIMARY KEY,
 	fch_Cita varchar(10) NULL,

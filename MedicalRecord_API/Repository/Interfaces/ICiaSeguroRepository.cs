@@ -2,9 +2,9 @@
 
 namespace MedicalRecord_API.Repository.Interfaces
 {
-    public interface ICiaSeguroRepository : IGenericRepository<CiaSeguros>
+    public interface ICiaSeguroRepository : IGenericRepository<Ciaseguro>
     {
-        Task<int> Create(CiaSeguros entity);
-        Task Update(CiaSeguros entity);
+        Task<int> Create(Ciaseguro entity);
+        Task Update(Ciaseguro entity);
     }
 }

@@ -7,7 +7,7 @@ using System.Data;
 
 namespace MedicalRecord_API.Repository.Implements
 {
-    public class CiaSeguroRepository: GenericRepository<CiaSeguros>, ICiaSeguroRepository
+    public class CiaSeguroRepository: GenericRepository<Ciaseguro>, ICiaSeguroRepository
     {
         private readonly DbhistoriasContext _context;
         private readonly ILogger<CiaSeguroRepository> _logger;
@@ -17,7 +17,7 @@ namespace MedicalRecord_API.Repository.Implements
             _context = context;
             _logger = logger;
         }
-        public async Task<int> Create(CiaSeguros entity)
+        public async Task<int> Create(Ciaseguro entity)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace MedicalRecord_API.Repository.Implements
             }
         }
 
-        public async Task Update(CiaSeguros entity)
+        public async Task Update(Ciaseguro entity)
         {
             try
             {
