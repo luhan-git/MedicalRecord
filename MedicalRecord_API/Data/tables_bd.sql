@@ -19,9 +19,10 @@ CREATE TABLE AgendaCitas(
 	estado char(1) NOT NULL,
 	monto numeric(12, 2) NULL
 );
+
 CREATE TABLE CampoVisual(
-	IDPAC bigint AUTO_INCREMENT PRIMARY KEY,
-	CAMPO_VIS nvarchar(6) NULL
+    IDPAC bigint AUTO_INCREMENT PRIMARY KEY,
+    CAMPO_VIS CHAR(6) CHARACTER SET utf8mb4 NULL
 );
 
 CREATE TABLE CiaSeguros(
@@ -29,7 +30,6 @@ CREATE TABLE CiaSeguros(
 	nombre_cia varchar(50) NOT NULL,
 	nemo_cia varchar(20) NULL
 );
-
 
 CREATE TABLE CIE(
 	id_cie int AUTO_INCREMENT PRIMARY KEY ,
