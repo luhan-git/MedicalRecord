@@ -1,3 +1,13 @@
+-- MEDICOS
+-- LABORATORIO
+-- MEDICAMENTOS
+-- CIE10
+-- EXAMENES DE LABORATORIO
+-- PROCEDIMIENTOS ESPECIALIZADOS
+-- COMPAÑIAS DE SEGUROS
+-- DIRECTORIO DE TELEFONOS
+-- PACIENTES
+
 INSERT INTO medicos (nombre_med, espe_med, nro_cmed) VALUES ('Dr. Alejandro García', 'Cardiología', '12345');
 INSERT INTO medicos (nombre_med, espe_med, nro_cmed) VALUES ('Dra. Ana Martínez', 'Pediatría', '54321');
 INSERT INTO medicos (nombre_med, espe_med, nro_cmed) VALUES ('Dr. Roberto López', 'Cirugía General', '98765');
