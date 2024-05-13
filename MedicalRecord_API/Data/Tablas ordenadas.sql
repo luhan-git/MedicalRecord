@@ -30,19 +30,6 @@ CREATE TABLE Presentaciones(
 	nemo_prese varchar(4) NOT NULL
 );
 
-CREATE TABLE Medicamentos(
-	id_articulo int AUTO_INCREMENT PRIMARY KEY ,
-	cod_articulo varchar(7) NULL,
-	id_linea int NOT NULL,--laboratorio(linea)
-	id_sunidad int NOT NULL,--tipo de unidad
-	name_comercial varchar(50) NULL,
-	name_generico varchar(50) NULL,
-	id_tipo tinyint NULL,--presentaciones
-	estado varchar(1) NULL,
-	dosis varchar(80) NULL,
-	indicacion varchar(180) NULL
-);
-
 CREATE TABLE CIE(
 	id_cie int AUTO_INCREMENT PRIMARY KEY ,
 	codcie varchar(5) NOT NULL,
@@ -82,6 +69,19 @@ CREATE TABLE Ocupacion(
 	id_ocupa int AUTO_INCREMENT  PRIMARY KEY,
 	nombre_ocupa varchar(60) NULL,
 	detalle_ocupa varchar(20) NULL
+);
+
+CREATE TABLE Medicamentos(
+	id_articulo int AUTO_INCREMENT PRIMARY KEY ,
+	cod_articulo varchar(7) NULL,
+	id_linea int NOT NULL,--laboratorio(linea)
+	id_sunidad int NOT NULL,--tipo de unidad
+	name_comercial varchar(50) NULL,
+	name_generico varchar(50) NULL,
+	id_tipo tinyint NULL,--presentaciones
+	estado varchar(1) NULL,
+	dosis varchar(80) NULL,
+	indicacion varchar(180) NULL
 );
 
 -- Proceso de atención
