@@ -1,3 +1,22 @@
+-- USUARIOS
+-- UBICACION
+-- MEDICOS
+-- LINEAS
+-- PRESENTACIONES
+-- CIE
+-- EXAMENES DE LABORATORIO
+-- PROCEDIMIENTOS
+-- CIA DE SEGUROS
+-- DIRECTORIO DE TELEFONOS
+-- OCUPACIONES
+-- MEDICAMENTOS
+
+
+
+
+
+-- PACIENTES
+
 INSERT INTO medicos (nombre_med, espe_med, nro_cmed) VALUES ('Dr. Alejandro García', 'Cardiología', '12345');
 INSERT INTO medicos (nombre_med, espe_med, nro_cmed) VALUES ('Dra. Ana Martínez', 'Pediatría', '54321');
 INSERT INTO medicos (nombre_med, espe_med, nro_cmed) VALUES ('Dr. Roberto López', 'Cirugía General', '98765');
