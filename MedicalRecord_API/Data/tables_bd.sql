@@ -1,5 +1,6 @@
 create database DBHISTORIAS;
 use DBHISTORIAS;
+
 CREATE TABLE Medicos(
 	id_medico int AUTO_INCREMENT PRIMARY KEY ,
 	nombre_med varchar(50) NOT NULL,
@@ -14,27 +15,16 @@ CREATE TABLE CiaSeguros(
 );
 CREATE TABLE Directorio(
 	id_directorio int AUTO_INCREMENT PRIMARY KEY ,
-	nombre varchar(80) NULL,
+	nombre varchar(80) NOT NULL,
 	repre varchar(80) NULL,
-	fono varchar(40) NULL,
-	celular varchar(40) NULL,
+	fono varchar(9) NULL,
+	celular1 varchar(9) NOT NULL,
+    celular2 varchar(9)  NULL,
 	email varchar(80) NULL,
 	direccion varchar(180) NULL,
-	estado varchar(1) NULL
+	estado bool default true
 );
 
-CREATE TABLE AgendaCitas(
-	id_cita int AUTO_INCREMENT  PRIMARY KEY,
-	id_paciente int NOT NULL,
-	fch_cita datetime NOT NULL,
-	hra_cira varchar(12) NOT NULL,
-	motivo varchar(50) NULL,
-	id_medico int NOT NULL,
-	tipo_paci char(1) NOT NULL,
-	tipo_cita char(1) NOT NULL,
-	estado char(1) NOT NULL,
-	monto numeric(12, 2) NULL
-);
 CREATE TABLE Procedimientos(
 	id_proce int AUTO_INCREMENT PRIMARY KEY,
 	nombre_proce varchar(50) NOT NULL,
@@ -58,15 +48,103 @@ CREATE TABLE Presentaciones(
 	nombre_prese varchar(30) NOT NULL,
 	nemo_prese varchar(4) NOT NULL
 );
-
 CREATE TABLE CIE(
 	id_cie int AUTO_INCREMENT PRIMARY KEY ,
 	codcie varchar(5) NOT NULL,
 	enfermedad varchar(120) NOT NULL
 );
+CREATE TABLE AgendaCitas(
+	id_cita int AUTO_INCREMENT  PRIMARY KEY,
+	id_paciente int NOT NULL,
+	fch_cita datetime NOT NULL,
+	hra_cira varchar(12) NOT NULL,
+	motivo varchar(50) NULL,
+	id_medico int NOT NULL,
+	tipo_paci char(1) NOT NULL,
+	tipo_cita char(1) NOT NULL,
+	estado char(1) NOT NULL,
+	monto numeric(12, 2) NULL
+);
+CREATE TABLE Lineas(
+	id_linea int AUTO_INCREMENT PRIMARY KEY ,
+	nombre_linea varchar(40) NOT NULL,
+	nemo_linea varchar(4) NULL
+);
+CREATE TABLE Ocupacion(
+	id_ocupa int AUTO_INCREMENT  PRIMARY KEY,
+	nombre_ocupa varchar(60) NOT NULL,
+	detalle_ocupa varchar(20) NULL
+);
+CREATE TABLE ExamenesLaboratorio(
+	id_exam int AUTO_INCREMENT PRIMARY KEY ,
+	nombre_exam varchar(50) NOT NULL,
+	nemo_exam varchar(20) NULL
+);
+
+CREATE TABLE paciente(
+	idpaciente int AUTO_INCREMENT PRIMARY KEY,
+	nhisto varchar(7) NULL,
+	fching datetime NOT NULL,
+	condicion char(1) NOT NULL,
+	apaterno varchar(25) NOT NULL,
+	amaterno varchar(25) NOT NULL,
+	nombres varchar(50) NOT NULL,
+	tipdoc char(1) NOT NULL,
+	nrodocu varchar(12) NULL,
+	fchnac datetime NOT NULL,
+	sexo char(1) NOT NULL,
+	estcivil char(1) NOT NULL,
+	gruposa varchar(10) NULL,
+	nacion char(1) NOT NULL,
+	procede varchar(60) NULL,
+	iddepa int NOT NULL,
+	idprov int NOT NULL,
+	iddist int NOT NULL,
+	direcc varchar(60) NULL,
+	idocupa int NULL,
+	telcasa varchar(20) NULL,
+	centrab varchar(40) NULL,
+	celular varchar(20) NULL,
+	asegu char(1) NOT NULL,
+	ncarnet varchar(10) NULL,
+	ciasegu int NULL,
+	contacto varchar(60) NULL, -- elimiar
+	idparen int NULL,
+	telcon varchar(20) NULL,
+	celcon varchar(20) NULL,
+	perfil varchar(200) NULL,
+	anteclinic varchar(160) NULL,
+	antefam varchar(160) NULL,
+	historia_c nvarchar(255) NULL,
+	edad varchar(3) NULL,
+	lugar_nac varchar(20) NULL,
+	ocupacion varchar(25) NULL,
+	hipertenso char(1) NULL,
+	diabetes char(1) NULL,
+	tipoDiabetes varchar(20) NULL,
+	alergico char(1) NULL,
+	tipoAlergia varchar(25) NULL,
+	CV varchar(6) NULL,
+	id_medico int NULL,
+	email varchar(80) NULL
+);
+
+CREATE TABLE DiagCIE(
+    id_diagCie int AUTO_INCREMENT  PRIMARY KEY,
+	id_consulta int NOT NULL,
+	id_cie int NOT NULL
+);
+
+CREATE TABLE Medicacion(
+    id_medicacion AUTO_INCREMENT  PRIMARY KEY,
+	id_consulta int,
+	id_medicamento int NULL,
+	dosis varchar(80) NULL,
+	indicacion varchar(300) NULL
+);
 
 CREATE TABLE Consulta(
-	id_consulta int AUTO_INCREMENT PRIMARY KEY ,
+	id_consulta int AUTO_INCREMENT PRIMARY KEY,
 	nro_consulta int NOT NULL,
 	id_paciente int NOT NULL,
 	fch_consulta datetime NOT NULL,
@@ -89,32 +167,14 @@ CREATE TABLE Consulta(
 	examOcular varchar(400) NULL
 );
 
-CREATE TABLE DiagCIE(
-	id_consulta int  AUTO_INCREMENT  PRIMARY KEY,
-	id_cie int NULL
-);
-
-CREATE TABLE Lineas(
-	id_linea int AUTO_INCREMENT PRIMARY KEY ,
-	nombre_linea varchar(40) NOT NULL,
-	nemo_linea varchar(4) NULL
-);
-
-CREATE TABLE ExamenesLaboratorio(
-	id_exam int AUTO_INCREMENT PRIMARY KEY ,
-	nombre_exam varchar(50) NOT NULL,
-	nemo_exam varchar(20) NULL
-);
 -- end tablas sin relacion
-CREATE TABLE HorarioConsultas(
-	id_paciente int AUTO_INCREMENT  PRIMARY KEY,
-	fch_Cita varchar(10) NULL,
-	hra_Cita varchar(10) NULL,
-	fch_Consulta varchar(10) NULL,
-	hra_Consulta varchar(10) NULL,
-	id_Consulta int NULL,
-	estado varchar(1) NOT NULL,
-	observa varchar(300) NULL
+
+CREATE TABLE InformesPaciente(
+	id_info int AUTO_INCREMENT PRIMARY KEY,
+	nro_info int NOT NULL,
+	id_paciente int NOT NULL,
+	fch_info datetime NOT NULL,
+	informe nvarchar(255) NULL
 );
 
 CREATE TABLE imagenes(
@@ -133,27 +193,12 @@ CREATE TABLE IndicaExamenes(
 	observaExam varchar(200) NULL
 );
 
-CREATE TABLE InformesPaciente(
-	id_info int AUTO_INCREMENT PRIMARY KEY,
-	nro_info int NOT NULL,
-	id_paciente int NOT NULL,
-	fch_info datetime NOT NULL,
-	informe nvarchar(255) NULL
-);
-
-CREATE TABLE Lineas(
-	id_linea int AUTO_INCREMENT PRIMARY KEY ,
-	nombre_linea varchar(40) NOT NULL,
-	nemo_linea varchar(4) NULL
-);
 
 
-CREATE TABLE Medicacion(
-	id_consulta int AUTO_INCREMENT  PRIMARY KEY,
-	id_medicamento int NULL,
-	dosis varchar(80) NULL,
-	indicacion varchar(300) NULL
-);
+
+
+
+
 
 
 CREATE TABLE Medicamentos(
@@ -196,11 +241,7 @@ CREATE TABLE MedidaLentes(
 );
 
 
-CREATE TABLE Ocupacion(
-	id_ocupa int AUTO_INCREMENT  PRIMARY KEY,
-	nombre_ocupa varchar(60) NULL,
-	detalle_ocupa varchar(20) NULL
-);
+
 
 
 CREATE TABLE OrdenesVarias(
@@ -211,53 +252,7 @@ CREATE TABLE OrdenesVarias(
 	observa varchar(120) NULL
 );
 
-CREATE TABLE paciente(
-	idpaciente int AUTO_INCREMENT PRIMARY KEY,
-	nhisto varchar(7) NULL,
-	fching datetime NOT NULL,
-	condicion char(1) NOT NULL,
-	apaterno varchar(25) NOT NULL,
-	amaterno varchar(25) NOT NULL,
-	nombres varchar(50) NOT NULL,
-	tipdoc char(1) NOT NULL,
-	nrodocu varchar(12) NULL,
-	fchnac datetime NOT NULL,
-	sexo char(1) NOT NULL,
-	estcivil char(1) NOT NULL,
-	gruposa varchar(10) NULL,
-	nacion char(1) NOT NULL,
-	procede varchar(60) NULL,
-	iddepa int NOT NULL,
-	idprov int NOT NULL,
-	iddist int NOT NULL,
-	direcc varchar(60) NULL,
-	idocupa int NULL,
-	telcasa varchar(20) NULL,
-	centrab varchar(40) NULL,
-	celular varchar(20) NULL,
-	asegu char(1) NOT NULL,
-	ncarnet varchar(10) NULL,
-	ciasegu int NULL,
-	contacto varchar(60) NULL,
-	idparen int NULL,
-	telcon varchar(20) NULL,
-	celcon varchar(20) NULL,
-	perfil varchar(200) NULL,
-	anteclinic varchar(160) NULL,
-	antefam varchar(160) NULL,
-	historia_c nvarchar(255) NULL,
-	edad varchar(3) NULL,
-	lugar_nac varchar(20) NULL,
-	ocupacion varchar(25) NULL,
-	hipertenso char(1) NULL,
-	diabetes char(1) NULL,
-	tipoDiabetes varchar(20) NULL,
-	alergico char(1) NULL,
-	tipoAlergia varchar(25) NULL,
-	CV varchar(6) NULL,
-	id_medico int NULL,
-	email varchar(80) NULL
-);
+
 
 
 CREATE TABLE Presentaciones(
@@ -288,4 +283,15 @@ CREATE TABLE UBICACION(
 	tab_codreg char(6) NOT NULL,
 	tab_nombre varchar(30) NULL,
 	tab_codrela char(6) NULL
-)
+);
+
+CREATE TABLE HorarioConsultas(
+	id_paciente int AUTO_INCREMENT  PRIMARY KEY,
+	fch_Cita varchar(10) NULL,
+	hra_Cita varchar(10) NULL,
+	fch_Consulta varchar(10) NULL,
+	hra_Consulta varchar(10) NULL,
+	id_Consulta int NULL,
+	estado varchar(1) NOT NULL,
+	observa varchar(300) NULL
+);
