@@ -5,13 +5,13 @@ namespace MedicalRecord_API.Models;
 
 public partial class Directorio
 {
-    public int IdDirectorio { get; set; }
+    public int Id { get; set; }
 
-    public string? Nombre { get; set; }
+    public string Nombre { get; set; } = null!;
 
-    public string? Repre { get; set; }
+    public string? Representante { get; set; }
 
-    public string? Fono { get; set; }
+    public string? Telefono { get; set; }
 
     public string? Celular { get; set; }
 
@@ -19,5 +19,5 @@ public partial class Directorio
 
     public string? Direccion { get; set; }
 
-    public string? Estado { get; set; }
+    public bool? Estado { get; set; }
 }

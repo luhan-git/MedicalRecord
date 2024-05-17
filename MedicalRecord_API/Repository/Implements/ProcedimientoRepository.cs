@@ -26,8 +26,8 @@ namespace MedicalRecord_API.Repository.Implements
                 var command = connection.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "InsertProcedimiento_sp";
-                command.Parameters.Add(new MySqlParameter("@p_nombre_proce", entity.NombreProce));
-                command.Parameters.Add(new MySqlParameter("@p_nemo_proce", entity.NemoProce));
+                command.Parameters.Add(new MySqlParameter("@p_nombre_proce", entity.Nombre));
+                command.Parameters.Add(new MySqlParameter("@p_nemo_proce", entity.Abreviatura));
 
                 var idProcedimientosParam = new MySqlParameter("@p_id_proce", MySqlDbType.Int32)
                 {
@@ -64,13 +64,13 @@ namespace MedicalRecord_API.Repository.Implements
                 var command = connection.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "UpdateProcedimiento_sp";
-                command.Parameters.Add(new MySqlParameter("@p_id_proce", entity.IdProce));
-                command.Parameters.Add(new MySqlParameter("@p_nombre_proce", entity.NombreProce));
-                command.Parameters.Add(new MySqlParameter("@p_nemo_proce", entity.NemoProce));
+                command.Parameters.Add(new MySqlParameter("@p_id_proce", entity.Id));
+                command.Parameters.Add(new MySqlParameter("@p_nombre_proce", entity.Nombre));
+                command.Parameters.Add(new MySqlParameter("@p_nemo_proce", entity.Abreviatura));
 
                 await command.ExecuteNonQueryAsync();
 
-                _logger.LogInformation("Registro de actualización en Procedimientos con ID:{@p_id_proce}", entity.IdProce);
+                _logger.LogInformation("Registro de actualización en Procedimientos con ID:{@p_id_proce}", entity.Id);
             }
             catch (Exception ex)
             {

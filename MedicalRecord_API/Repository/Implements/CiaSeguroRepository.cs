@@ -27,8 +27,8 @@ namespace MedicalRecord_API.Repository.Implements
                 var command = connection.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "InsertCia_sp";
-                command.Parameters.Add(new MySqlParameter("@p_nombre_cia", entity.NombreCia));
-                command.Parameters.Add(new MySqlParameter("@p_nemo_cia", entity.NemoCia));
+                command.Parameters.Add(new MySqlParameter("@p_nombre_cia", entity.Nombre));
+                command.Parameters.Add(new MySqlParameter("@p_nemo_cia", entity.Abreviatura));
 
                 var idCiaSegurosParam = new MySqlParameter("@p_id_cia", MySqlDbType.Int32)
                 {
@@ -65,12 +65,12 @@ namespace MedicalRecord_API.Repository.Implements
                 var command = connection.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "UpdateCia_sp";
-                command.Parameters.Add(new MySqlParameter("@p_id_cia", entity.IdCia));
-                command.Parameters.Add(new MySqlParameter("@p_nombre_cia", entity.NombreCia));
-                command.Parameters.Add(new MySqlParameter("@p_nemo_cia", entity.NemoCia));
+                command.Parameters.Add(new MySqlParameter("@p_id_cia", entity.Id));
+                command.Parameters.Add(new MySqlParameter("@p_nombre_cia", entity.Nombre));
+                command.Parameters.Add(new MySqlParameter("@p_nemo_cia", entity.Abreviatura));
 
                 await command.ExecuteNonQueryAsync();
-                _logger.LogInformation("Registro de actualización en CiaSeguros con ID:{idCiaSeguros}", entity.IdCia);
+                _logger.LogInformation("Registro de actualización en CiaSeguros con ID:{idCiaSeguros}", entity.Id);
             }
             catch (Exception ex)
             {

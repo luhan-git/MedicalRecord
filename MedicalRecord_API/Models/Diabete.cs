@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace MedicalRecord_API.Models;
 
-public partial class Ciaseguro
+public partial class Diabete
 {
     public int Id { get; set; }
 
-    public string Nombre { get; set; } = null!;
+    public string Tipo { get; set; } = null!;
 
-    public string? Abreviatura { get; set; }
+    public string? Detalle { get; set; }
 }

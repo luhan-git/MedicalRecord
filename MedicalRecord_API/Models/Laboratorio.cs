@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MedicalRecord_API.Models;
 
-public partial class Procedimiento
+public partial class Laboratorio
 {
     public int Id { get; set; }
 

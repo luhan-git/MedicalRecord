@@ -28,7 +28,7 @@ namespace MedicalRecord_API.Repository.Implements
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "InsertCie";
 
-                command.Parameters.Add(new MySqlParameter("@codcie", entity.Codcie));
+                command.Parameters.Add(new MySqlParameter("@codcie", entity.Codigo));
                 command.Parameters.Add(new MySqlParameter("@enfermedad", entity.Enfermedad));
 
                 var idCieParam = new MySqlParameter("@id_cie", MySqlDbType.Int32)
@@ -64,12 +64,12 @@ namespace MedicalRecord_API.Repository.Implements
 
                 string sql = "CALL UpdateCie (@id_cie_update, @codcie,@enfermedad)";
                 await _context.Database.ExecuteSqlRawAsync(sql,
-                    new MySqlParameter("@id_cie_update", entity.IdCie),
-                    new MySqlParameter("@codcie", entity.Codcie),
+                    new MySqlParameter("@id_cie_update", entity.Codigo),
+                    new MySqlParameter("@codcie", entity.Codigo),
                     new MySqlParameter("@enfermedad", entity.Enfermedad)
                
                     );
-                _logger.LogInformation("Se actualizó un cie con ID: {idCie}", entity.IdCie);
+                _logger.LogInformation("Se actualizó un cie con ID: {idCie}", entity.Id);
             }
             catch (Exception ex)
             {

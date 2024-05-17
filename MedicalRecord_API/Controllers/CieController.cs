@@ -58,7 +58,7 @@ namespace MedicalRecord_API.Controllers
                     _response.IsExitoso = false;
                     return BadRequest(_response);
                 }
-                CieDto cieDto = _mapper.Map<CieDto>(await _cieRepo.GetEntity(c => c.IdCie == Id, false));
+                CieDto cieDto = _mapper.Map<CieDto>(await _cieRepo.GetEntity(c => c.Id == Id, false));
                 if (cieDto == null)
                 {
                     _response.StatusCode = HttpStatusCode.NotFound;
@@ -85,7 +85,7 @@ namespace MedicalRecord_API.Controllers
             {
                 if (!ModelState.IsValid) return BadRequest(ModelState);
                 if (createDto == null) return BadRequest(createDto);
-                if (await _cieRepo.GetEntity(v => v.Codcie.ToUpper() == createDto.Codcie.ToUpper(), false) != null)
+                if (await _cieRepo.GetEntity(v => v.Codigo.ToUpper() == createDto.Codcie.ToUpper(), false) != null)
                 {
                     ModelState.AddModelError("CodigoExiste", "El cie con este codigo ya existe");
                     return BadRequest(ModelState);
@@ -93,10 +93,10 @@ namespace MedicalRecord_API.Controllers
 
                 Cie modelo = _mapper.Map<Cie>(createDto);
                 int idModelo = await _cieRepo.Create(modelo);
-                modelo.IdCie = idModelo;
+                modelo.Id = idModelo;
                 _response.Resultado = _mapper.Map<CieDto>(modelo);
                 _response.StatusCode = HttpStatusCode.Created;
-                return CreatedAtRoute("GetCie", new { id = modelo.IdCie }, _response);
+                return CreatedAtRoute("GetCie", new { id = modelo.Id }, _response);
             }
             catch (Exception ex)
             {
@@ -120,7 +120,7 @@ namespace MedicalRecord_API.Controllers
                     _response.IsExitoso = false;
                     BadRequest(_response);
                 };
-                Cie cie = await _cieRepo.GetEntity(v => v.IdCie == id, false);
+                Cie cie = await _cieRepo.GetEntity(v => v.Id == id, false);
                 if (cie == null)
                 {
                     _response.IsExitoso = false;
@@ -149,7 +149,7 @@ namespace MedicalRecord_API.Controllers
             {
                 if (!ModelState.IsValid) return BadRequest(ModelState);
                 if (updateDto == null) return BadRequest(updateDto);
-                if (await _cieRepo.GetEntity(c => c.Codcie.ToUpper() == updateDto.Codcie.ToUpper(), false) != null)
+                if (await _cieRepo.GetEntity(c => c.Codigo.ToUpper() == updateDto.Codcie.ToUpper(), false) != null)
                 {
                     ModelState.AddModelError("CodigoExiste", "El cie con este codigo ya existe");
                     return BadRequest(ModelState);

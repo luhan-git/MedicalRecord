@@ -16,25 +16,53 @@ public partial class DbhistoriasContext : DbContext
     {
     }
 
-    public virtual DbSet<Campovisual> Campovisuals { get; set; }
+    public virtual DbSet<Alergium> Alergia { get; set; }
 
     public virtual DbSet<Ciaseguro> Ciaseguros { get; set; }
 
     public virtual DbSet<Cie> Cies { get; set; }
 
+    public virtual DbSet<Consultum> Consulta { get; set; }
+
+    public virtual DbSet<Departamento> Departamentos { get; set; }
+
+    public virtual DbSet<Detallealergium> Detallealergia { get; set; }
+
+    public virtual DbSet<Detalleexaman> Detalleexamen { get; set; }
+
+    public virtual DbSet<Detalleprocedimiento> Detalleprocedimientos { get; set; }
+
+    public virtual DbSet<Diabete> Diabetes { get; set; }
+
     public virtual DbSet<Directorio> Directorios { get; set; }
 
-    public virtual DbSet<Exameneslaboratorio> Exameneslaboratorios { get; set; }
+    public virtual DbSet<Distrito> Distritos { get; set; }
 
-    public virtual DbSet<Linea> Lineas { get; set; }
+    public virtual DbSet<Examenlaboratorio> Examenlaboratorios { get; set; }
 
-    public virtual DbSet<Medico> Medicos { get; set; }
+    public virtual DbSet<Laboratorio> Laboratorios { get; set; }
 
-    public virtual DbSet<Presentacione> Presentaciones { get; set; }
+    public virtual DbSet<Medicacion> Medicacions { get; set; }
+
+    public virtual DbSet<Medicamento> Medicamentos { get; set; }
+
+    public virtual DbSet<Medidalente> Medidalentes { get; set; }
+
+    public virtual DbSet<Ocupacion> Ocupacions { get; set; }
+
+    public virtual DbSet<Paciente> Pacientes { get; set; }
+
+    public virtual DbSet<Parentesco> Parentescos { get; set; }
+
+    public virtual DbSet<Presentacion> Presentacions { get; set; }
 
     public virtual DbSet<Procedimiento> Procedimientos { get; set; }
 
-    public virtual DbSet<Ubicacion> Ubicacions { get; set; }
+    public virtual DbSet<Provincium> Provincia { get; set; }
+
+    public virtual DbSet<Usuario> Usuarios { get; set; }
+
+    
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -42,56 +70,203 @@ public partial class DbhistoriasContext : DbContext
             .UseCollation("utf8mb4_0900_ai_ci")
             .HasCharSet("utf8mb4");
 
-        modelBuilder.Entity<Campovisual>(entity =>
+        modelBuilder.Entity<Alergium>(entity =>
         {
-            entity.HasKey(e => e.Idpac).HasName("PRIMARY");
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("campovisual");
+            entity.ToTable("alergia");
 
-            entity.Property(e => e.Idpac).HasColumnName("IDPAC");
-            entity.Property(e => e.CampoVis)
-                .HasMaxLength(6)
-                .IsFixedLength()
-                .HasColumnName("CAMPO_VIS");
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(50)
+                .HasColumnName("nombre");
         });
 
         modelBuilder.Entity<Ciaseguro>(entity =>
         {
-            entity.HasKey(e => e.IdCia).HasName("PRIMARY");
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("ciaseguros");
+            entity.ToTable("ciaseguro");
 
-            entity.Property(e => e.IdCia).HasColumnName("id_cia");
-            entity.Property(e => e.NemoCia)
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Abreviatura)
                 .HasMaxLength(20)
-                .HasColumnName("nemo_cia");
-            entity.Property(e => e.NombreCia)
+                .HasColumnName("abreviatura");
+            entity.Property(e => e.Nombre)
                 .HasMaxLength(50)
-                .HasColumnName("nombre_cia");
+                .HasColumnName("nombre");
         });
 
         modelBuilder.Entity<Cie>(entity =>
         {
-            entity.HasKey(e => e.IdCie).HasName("PRIMARY");
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
 
             entity.ToTable("cie");
 
-            entity.Property(e => e.IdCie).HasColumnName("id_cie");
-            entity.Property(e => e.Codcie)
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Codigo)
                 .HasMaxLength(5)
-                .HasColumnName("codcie");
+                .HasColumnName("codigo");
             entity.Property(e => e.Enfermedad)
                 .HasMaxLength(120)
                 .HasColumnName("enfermedad");
         });
 
+        modelBuilder.Entity<Consultum>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("consulta");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Davcc)
+                .HasMaxLength(10)
+                .HasColumnName("davcc");
+            entity.Property(e => e.Davsc)
+                .HasMaxLength(10)
+                .HasColumnName("davsc");
+            entity.Property(e => e.Diagnostico)
+                .HasMaxLength(200)
+                .HasColumnName("diagnostico");
+            entity.Property(e => e.Dpio)
+                .HasMaxLength(10)
+                .HasColumnName("dpio");
+            entity.Property(e => e.EnfermedadActual)
+                .HasMaxLength(200)
+                .HasColumnName("enfermedadActual");
+            entity.Property(e => e.FechaActualizacion)
+                .ValueGeneratedOnAddOrUpdate()
+                .HasColumnType("datetime")
+                .HasColumnName("fechaActualizacion");
+            entity.Property(e => e.FechaConsulta)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("datetime")
+                .HasColumnName("fechaConsulta");
+            entity.Property(e => e.Iavcc)
+                .HasMaxLength(10)
+                .HasColumnName("iavcc");
+            entity.Property(e => e.Iavsc)
+                .HasMaxLength(10)
+                .HasColumnName("iavsc");
+            entity.Property(e => e.IdCie).HasColumnName("idCie");
+            entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
+            entity.Property(e => e.Ipio)
+                .HasMaxLength(10)
+                .HasColumnName("ipio");
+            entity.Property(e => e.Motivo)
+                .HasMaxLength(80)
+                .HasColumnName("motivo");
+            entity.Property(e => e.NumeroConsulta)
+                .HasMaxLength(7)
+                .HasColumnName("numeroConsulta");
+            entity.Property(e => e.Shimer)
+                .HasMaxLength(10)
+                .HasColumnName("shimer");
+            entity.Property(e => e.ValorK)
+                .HasMaxLength(80)
+                .HasColumnName("valorK");
+        });
+
+        modelBuilder.Entity<Departamento>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("departamento");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Departamento1)
+                .HasMaxLength(50)
+                .HasColumnName("departamento");
+        });
+
+        modelBuilder.Entity<Detallealergium>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("detallealergia");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Detalle)
+                .HasMaxLength(50)
+                .HasColumnName("detalle");
+            entity.Property(e => e.IdAlergia).HasColumnName("idAlergia");
+            entity.Property(e => e.IdPaciente).HasColumnName("idPaciente");
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(50)
+                .HasColumnName("nombre");
+        });
+
+        modelBuilder.Entity<Detalleexaman>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("detalleexamen");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Detalle)
+                .HasMaxLength(255)
+                .HasColumnName("detalle");
+            entity.Property(e => e.FechaResultado)
+                .HasColumnType("datetime")
+                .HasColumnName("fechaResultado");
+            entity.Property(e => e.IdConsulta).HasColumnName("idConsulta");
+            entity.Property(e => e.IdExamenLab).HasColumnName("idExamenLab");
+            entity.Property(e => e.Resultado)
+                .HasMaxLength(500)
+                .HasColumnName("resultado");
+        });
+
+        modelBuilder.Entity<Detalleprocedimiento>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("detalleprocedimiento");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Detalle)
+                .HasMaxLength(255)
+                .HasColumnName("detalle");
+            entity.Property(e => e.Directorio)
+                .HasMaxLength(500)
+                .HasColumnName("directorio");
+            entity.Property(e => e.FechaResultado)
+                .HasColumnType("datetime")
+                .HasColumnName("fechaResultado");
+            entity.Property(e => e.IdConsulta).HasColumnName("idConsulta");
+            entity.Property(e => e.IdProcedimiento).HasColumnName("idProcedimiento");
+            entity.Property(e => e.Imagenes)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("imagenes");
+            entity.Property(e => e.Indicacion)
+                .HasMaxLength(255)
+                .HasColumnName("indicacion");
+            entity.Property(e => e.Resultado)
+                .HasMaxLength(500)
+                .HasColumnName("resultado");
+        });
+
+        modelBuilder.Entity<Diabete>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("diabetes");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Detalle)
+                .HasMaxLength(100)
+                .HasColumnName("detalle");
+            entity.Property(e => e.Tipo)
+                .HasMaxLength(50)
+                .HasColumnName("tipo");
+        });
+
         modelBuilder.Entity<Directorio>(entity =>
         {
-            entity.HasKey(e => e.IdDirectorio).HasName("PRIMARY");
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
 
             entity.ToTable("directorio");
 
-            entity.Property(e => e.IdDirectorio).HasColumnName("id_directorio");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Celular)
                 .HasMaxLength(40)
                 .HasColumnName("celular");
@@ -102,119 +277,402 @@ public partial class DbhistoriasContext : DbContext
                 .HasMaxLength(80)
                 .HasColumnName("email");
             entity.Property(e => e.Estado)
-                .HasMaxLength(1)
+                .HasDefaultValueSql("'1'")
                 .HasColumnName("estado");
-            entity.Property(e => e.Fono)
-                .HasMaxLength(40)
-                .HasColumnName("fono");
             entity.Property(e => e.Nombre)
                 .HasMaxLength(80)
                 .HasColumnName("nombre");
-            entity.Property(e => e.Repre)
+            entity.Property(e => e.Representante)
                 .HasMaxLength(80)
-                .HasColumnName("repre");
-        });
-
-        modelBuilder.Entity<Exameneslaboratorio>(entity =>
-        {
-            entity.HasKey(e => e.IdExam).HasName("PRIMARY");
-
-            entity.ToTable("exameneslaboratorio");
-
-            entity.Property(e => e.IdExam).HasColumnName("id_exam");
-            entity.Property(e => e.NemoExam)
-                .HasMaxLength(20)
-                .HasColumnName("nemo_exam");
-            entity.Property(e => e.NombreExam)
-                .HasMaxLength(50)
-                .HasColumnName("nombre_exam");
-        });
-
-        modelBuilder.Entity<Linea>(entity =>
-        {
-            entity.HasKey(e => e.IdLinea).HasName("PRIMARY");
-
-            entity.ToTable("lineas");
-
-            entity.Property(e => e.IdLinea).HasColumnName("id_linea");
-            entity.Property(e => e.NemoLinea)
-                .HasMaxLength(4)
-                .HasColumnName("nemo_linea");
-            entity.Property(e => e.NombreLinea)
+                .HasColumnName("representante");
+            entity.Property(e => e.Telefono)
                 .HasMaxLength(40)
-                .HasColumnName("nombre_linea");
+                .HasColumnName("telefono");
         });
 
-        modelBuilder.Entity<Medico>(entity =>
+        modelBuilder.Entity<Distrito>(entity =>
         {
-            entity.HasKey(e => e.IdMedico).HasName("PRIMARY");
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("medicos");
+            entity.ToTable("distrito");
 
-            entity.Property(e => e.IdMedico).HasColumnName("id_medico");
-            entity.Property(e => e.EspeMed)
-                .HasMaxLength(30)
-                .HasColumnName("espe_med");
-            entity.Property(e => e.Estado)
-                .HasDefaultValueSql("'1'")
-                .HasColumnName("estado");
-            entity.Property(e => e.NombreMed)
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Distrito1)
                 .HasMaxLength(50)
-                .HasColumnName("nombre_med");
-            entity.Property(e => e.NroCmed)
-                .HasMaxLength(6)
-                .HasColumnName("nro_cmed");
+                .HasColumnName("distrito");
+            entity.Property(e => e.IdProvincia).HasColumnName("idProvincia");
         });
 
-        modelBuilder.Entity<Presentacione>(entity =>
+        modelBuilder.Entity<Examenlaboratorio>(entity =>
         {
-            entity.HasKey(e => e.IdPresenta).HasName("PRIMARY");
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("presentaciones");
+            entity.ToTable("examenlaboratorio");
 
-            entity.Property(e => e.IdPresenta).HasColumnName("id_presenta");
-            entity.Property(e => e.NemoPrese)
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Abreviatura)
+                .HasMaxLength(20)
+                .HasColumnName("abreviatura");
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(50)
+                .HasColumnName("nombre");
+        });
+
+        modelBuilder.Entity<Laboratorio>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("laboratorio");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Abreviatura)
                 .HasMaxLength(4)
-                .HasColumnName("nemo_prese");
-            entity.Property(e => e.NombrePrese)
+                .HasColumnName("abreviatura");
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(40)
+                .HasColumnName("nombre");
+        });
+
+        modelBuilder.Entity<Medicacion>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("medicacion");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Dosis)
+                .HasMaxLength(80)
+                .HasColumnName("dosis");
+            entity.Property(e => e.IdConsulta).HasColumnName("idConsulta");
+            entity.Property(e => e.IdMedicamento).HasColumnName("idMedicamento");
+            entity.Property(e => e.Indicacion)
+                .HasMaxLength(300)
+                .HasColumnName("indicacion");
+            entity.Property(e => e.OrdenMedica)
+                .HasMaxLength(500)
+                .HasColumnName("ordenMedica");
+        });
+
+        modelBuilder.Entity<Medicamento>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("medicamento");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Codigo)
+                .HasMaxLength(7)
+                .HasColumnName("codigo");
+            entity.Property(e => e.Dosis)
+                .HasMaxLength(80)
+                .HasColumnName("dosis");
+            entity.Property(e => e.Estado)
+                .HasMaxLength(1)
+                .HasColumnName("estado");
+            entity.Property(e => e.IdLaboratorio).HasColumnName("idLaboratorio");
+            entity.Property(e => e.IdPresentacion).HasColumnName("idPresentacion");
+            entity.Property(e => e.Indicacion)
+                .HasMaxLength(180)
+                .HasColumnName("indicacion");
+            entity.Property(e => e.NombreComercial)
+                .HasMaxLength(50)
+                .HasColumnName("nombreComercial");
+            entity.Property(e => e.NombreGenerico)
+                .HasMaxLength(50)
+                .HasColumnName("nombreGenerico");
+        });
+
+        modelBuilder.Entity<Medidalente>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("medidalente");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.IdConsulta).HasColumnName("idConsulta");
+            entity.Property(e => e.Obsc)
+                .HasMaxLength(120)
+                .HasColumnName("OBSC");
+            entity.Property(e => e.Obsl)
+                .HasMaxLength(120)
+                .HasColumnName("OBSL");
+            entity.Property(e => e.Odav)
+                .HasMaxLength(6)
+                .HasColumnName("ODAV");
+            entity.Property(e => e.Odaxic)
+                .HasMaxLength(6)
+                .HasColumnName("ODAXIC");
+            entity.Property(e => e.Odaxil)
+                .HasMaxLength(6)
+                .HasColumnName("ODAXIL");
+            entity.Property(e => e.Odcysc)
+                .HasMaxLength(6)
+                .HasColumnName("ODCYSC");
+            entity.Property(e => e.Odcysl)
+                .HasMaxLength(6)
+                .HasColumnName("ODCYSL");
+            entity.Property(e => e.Odsphc)
+                .HasMaxLength(6)
+                .HasColumnName("ODSPHC");
+            entity.Property(e => e.Odsphl)
+                .HasMaxLength(6)
+                .HasColumnName("ODSPHL");
+            entity.Property(e => e.Oiav)
+                .HasMaxLength(6)
+                .HasColumnName("OIAV");
+            entity.Property(e => e.Oiaxic)
+                .HasMaxLength(6)
+                .HasColumnName("OIAXIC");
+            entity.Property(e => e.Oiaxil)
+                .HasMaxLength(6)
+                .HasColumnName("OIAXIL");
+            entity.Property(e => e.Oicysc)
+                .HasMaxLength(6)
+                .HasColumnName("OICYSC");
+            entity.Property(e => e.Oicysl)
+                .HasMaxLength(6)
+                .HasColumnName("OICYSL");
+            entity.Property(e => e.Oisphc)
+                .HasMaxLength(6)
+                .HasColumnName("OISPHC");
+            entity.Property(e => e.Oisphl)
+                .HasMaxLength(6)
+                .HasColumnName("OISPHL");
+            entity.Property(e => e.Pdc)
+                .HasMaxLength(3)
+                .HasColumnName("PDC");
+            entity.Property(e => e.Pdl)
+                .HasMaxLength(3)
+                .HasColumnName("PDL");
+            entity.Property(e => e.Preventiva)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("preventiva");
+        });
+
+        modelBuilder.Entity<Ocupacion>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("ocupacion");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Detalle)
+                .HasMaxLength(20)
+                .HasColumnName("detalle");
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(60)
+                .HasColumnName("nombre");
+        });
+
+        modelBuilder.Entity<Paciente>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("paciente");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.AMaterno)
+                .HasMaxLength(25)
+                .HasColumnName("aMaterno");
+            entity.Property(e => e.APaterno)
+                .HasMaxLength(25)
+                .HasColumnName("aPaterno");
+            entity.Property(e => e.Alergico)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("alergico");
+            entity.Property(e => e.AntecedentesClinicos)
+                .HasMaxLength(150)
+                .HasColumnName("antecedentesClinicos");
+            entity.Property(e => e.AntecedentesFamiliares)
+                .HasMaxLength(150)
+                .HasColumnName("antecedentesFamiliares");
+            entity.Property(e => e.Asegurado)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("asegurado");
+            entity.Property(e => e.CampoVisual)
+                .HasMaxLength(6)
+                .HasColumnName("campoVisual");
+            entity.Property(e => e.Celular)
+                .HasMaxLength(20)
+                .HasColumnName("celular");
+            entity.Property(e => e.CelularContacto)
+                .HasMaxLength(20)
+                .HasColumnName("celularContacto");
+            entity.Property(e => e.CentroTrabajo)
+                .HasMaxLength(40)
+                .HasColumnName("centroTrabajo");
+            entity.Property(e => e.Condicion)
+                .HasMaxLength(1)
+                .IsFixedLength()
+                .HasColumnName("condicion");
+            entity.Property(e => e.Contacto)
+                .HasMaxLength(50)
+                .HasColumnName("contacto");
+            entity.Property(e => e.Diabetico)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("diabetico");
+            entity.Property(e => e.Direccion)
+                .HasMaxLength(60)
+                .HasColumnName("direccion");
+            entity.Property(e => e.Edad)
+                .HasMaxLength(3)
+                .HasColumnName("edad");
+            entity.Property(e => e.Email)
+                .HasMaxLength(80)
+                .HasColumnName("email");
+            entity.Property(e => e.EstadoCivil)
+                .HasMaxLength(1)
+                .IsFixedLength()
+                .HasColumnName("estadoCivil");
+            entity.Property(e => e.FechaActualizacion)
+                .ValueGeneratedOnAddOrUpdate()
+                .HasColumnType("datetime")
+                .HasColumnName("fechaActualizacion");
+            entity.Property(e => e.FechaCreacion)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("datetime")
+                .HasColumnName("fechaCreacion");
+            entity.Property(e => e.FechaNacimiento)
+                .HasColumnType("datetime")
+                .HasColumnName("fechaNacimiento");
+            entity.Property(e => e.GrupoSanguineo)
+                .HasMaxLength(10)
+                .HasColumnName("grupoSanguineo");
+            entity.Property(e => e.IdCiaSeguro).HasColumnName("idCiaSeguro");
+            entity.Property(e => e.IdDepartamento).HasColumnName("idDepartamento");
+            entity.Property(e => e.IdDiabetes).HasColumnName("idDiabetes");
+            entity.Property(e => e.IdDistrito).HasColumnName("idDistrito");
+            entity.Property(e => e.IdOcupacion).HasColumnName("idOcupacion");
+            entity.Property(e => e.IdParentesco).HasColumnName("idParentesco");
+            entity.Property(e => e.IdProvincia).HasColumnName("idProvincia");
+            entity.Property(e => e.Nacionalidad)
+                .HasMaxLength(1)
+                .IsFixedLength()
+                .HasColumnName("nacionalidad");
+            entity.Property(e => e.Nombres)
+                .HasMaxLength(50)
+                .HasColumnName("nombres");
+            entity.Property(e => e.NumeroCarnet)
+                .HasMaxLength(10)
+                .HasColumnName("numeroCarnet");
+            entity.Property(e => e.NumeroDocumento)
+                .HasMaxLength(12)
+                .HasColumnName("numeroDocumento");
+            entity.Property(e => e.Perfil)
+                .HasMaxLength(200)
+                .HasColumnName("perfil");
+            entity.Property(e => e.PresionArterial)
+                .HasMaxLength(3)
+                .IsFixedLength()
+                .HasColumnName("presionArterial");
+            entity.Property(e => e.Sexo).HasColumnName("sexo");
+            entity.Property(e => e.Telefono)
+                .HasMaxLength(20)
+                .HasColumnName("telefono");
+            entity.Property(e => e.TelefonoContacto)
+                .HasMaxLength(20)
+                .HasColumnName("telefonoContacto");
+            entity.Property(e => e.TipoDocumento)
+                .HasMaxLength(1)
+                .IsFixedLength()
+                .HasColumnName("tipoDocumento");
+        });
+
+        modelBuilder.Entity<Parentesco>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("parentesco");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Valor)
+                .HasMaxLength(20)
+                .HasColumnName("valor");
+        });
+
+        modelBuilder.Entity<Presentacion>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("presentacion");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Abreviatura)
+                .HasMaxLength(4)
+                .HasColumnName("abreviatura");
+            entity.Property(e => e.Nombre)
                 .HasMaxLength(30)
-                .HasColumnName("nombre_prese");
+                .HasColumnName("nombre");
         });
 
         modelBuilder.Entity<Procedimiento>(entity =>
         {
-            entity.HasKey(e => e.IdProce).HasName("PRIMARY");
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("procedimientos");
+            entity.ToTable("procedimiento");
 
-            entity.Property(e => e.IdProce).HasColumnName("id_proce");
-            entity.Property(e => e.NemoProce)
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Abreviatura)
                 .HasMaxLength(20)
-                .HasColumnName("nemo_proce");
-            entity.Property(e => e.NombreProce)
+                .HasColumnName("abreviatura");
+            entity.Property(e => e.Nombre)
                 .HasMaxLength(50)
-                .HasColumnName("nombre_proce");
+                .HasColumnName("nombre");
         });
 
-        modelBuilder.Entity<Ubicacion>(entity =>
+        modelBuilder.Entity<Provincium>(entity =>
         {
-            entity.HasKey(e => e.IdUbica).HasName("PRIMARY");
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("ubicacion");
+            entity.ToTable("provincia");
 
-            entity.Property(e => e.IdUbica).HasColumnName("id_ubica");
-            entity.Property(e => e.TabCodreg)
-                .HasMaxLength(6)
-                .IsFixedLength()
-                .HasColumnName("tab_codreg");
-            entity.Property(e => e.TabCodrela)
-                .HasMaxLength(6)
-                .IsFixedLength()
-                .HasColumnName("tab_codrela");
-            entity.Property(e => e.TabNombre)
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.IdDepartamento).HasColumnName("idDepartamento");
+            entity.Property(e => e.Provincia)
+                .HasMaxLength(50)
+                .HasColumnName("provincia");
+        });
+
+        modelBuilder.Entity<Usuario>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("usuario");
+
+            entity.HasIndex(e => e.Correo, "correo").IsUnique();
+
+            entity.HasIndex(e => e.Nombre, "nombre").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Activo)
+                .HasDefaultValueSql("'1'")
+                .HasColumnName("activo");
+            entity.Property(e => e.Cargo)
                 .HasMaxLength(30)
-                .HasColumnName("tab_nombre");
-            entity.Property(e => e.TabTipreg).HasColumnName("tab_tipreg");
+                .HasColumnName("cargo");
+            entity.Property(e => e.Clave)
+                .HasMaxLength(250)
+                .HasColumnName("clave");
+            entity.Property(e => e.Correo)
+                .HasMaxLength(50)
+                .HasColumnName("correo");
+            entity.Property(e => e.Especialidad)
+                .HasMaxLength(30)
+                .HasColumnName("especialidad");
+            entity.Property(e => e.FechaRegistro)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("datetime")
+                .HasColumnName("fechaRegistro");
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(50)
+                .HasColumnName("nombre");
+            entity.Property(e => e.NroColMedico)
+                .HasMaxLength(6)
+                .HasColumnName("nroColMedico");
+            entity.Property(e => e.UltimaSesion)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("datetime")
+                .HasColumnName("ultimaSesion");
         });
 
         OnModelCreatingPartial(modelBuilder);

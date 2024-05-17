@@ -27,8 +27,8 @@ namespace MedicalRecord_API.Repository.Implements
                 var command = connection.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "InsertOcupacion_sp";
-                command.Parameters.Add(new MySqlParameter("@p_nombre_ocupa", entity.NombreOcupa));
-                command.Parameters.Add(new MySqlParameter("@p_detalle_ocupa", entity.NombreOcupa));
+                command.Parameters.Add(new MySqlParameter("@p_nombre_ocupa", entity.Nombre));
+                command.Parameters.Add(new MySqlParameter("@p_detalle_ocupa", entity.Detalle));
 
                 var idOcupacionParam = new MySqlParameter("@p_id_Ocupa", MySqlDbType.Int32)
                 {
@@ -65,13 +65,13 @@ namespace MedicalRecord_API.Repository.Implements
                 var command = connection.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "UpdateOcupacion_sp";
-                command.Parameters.Add(new MySqlParameter("@p_id_ocupa", entity.IdOcupa));
-                command.Parameters.Add(new MySqlParameter("@p_nombre_ocupa", entity.NombreOcupa));
-                command.Parameters.Add(new MySqlParameter("@p_detalle_ocupa", entity.NombreOcupa));
+                command.Parameters.Add(new MySqlParameter("@p_id_ocupa", entity.Id));
+                command.Parameters.Add(new MySqlParameter("@p_nombre_ocupa", entity.Nombre));
+                command.Parameters.Add(new MySqlParameter("@p_detalle_ocupa", entity.Detalle));
 
                 await command.ExecuteNonQueryAsync();
 
-                _logger.LogInformation("Registro de actualización en Ocupacion con ID:{@p_id_ocupacion}", entity.IdOcupa);
+                _logger.LogInformation("Registro de actualización en Ocupacion con ID:{@p_id_ocupacion}", entity.Id);
             }
             catch (Exception ex)
             {

@@ -27,8 +27,8 @@ namespace MedicalRecord_API.Repository.Implements
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "InsertDirectorio_sp";
                 command.Parameters.Add(new MySqlParameter("@p_nombre", entity.Nombre));
-                command.Parameters.Add(new MySqlParameter("@p_repre", entity.Repre));
-                command.Parameters.Add(new MySqlParameter("@p_fono", entity.Fono));
+                command.Parameters.Add(new MySqlParameter("@p_repre", entity.Representante));
+                command.Parameters.Add(new MySqlParameter("@p_fono", entity.Telefono));
                 command.Parameters.Add(new MySqlParameter("@p_celular", entity.Celular));
                 command.Parameters.Add(new MySqlParameter("@p_email", entity.Email));
                 command.Parameters.Add(new MySqlParameter("@p_direccion", entity.Direccion));
@@ -69,10 +69,10 @@ namespace MedicalRecord_API.Repository.Implements
                 var command = connection.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "UpdateDirectorio_sp";
-                command.Parameters.Add(new MySqlParameter("@p_id_directorio", entity.IdDirectorio));
+                command.Parameters.Add(new MySqlParameter("@p_id_directorio", entity.Id));
                 command.Parameters.Add(new MySqlParameter("@p_nombre", entity.Nombre));
-                command.Parameters.Add(new MySqlParameter("@p_repre", entity.Repre));
-                command.Parameters.Add(new MySqlParameter("@p_fono", entity.Fono));
+                command.Parameters.Add(new MySqlParameter("@p_repre", entity.Representante));
+                command.Parameters.Add(new MySqlParameter("@p_fono", entity.Telefono));
                 command.Parameters.Add(new MySqlParameter("@p_celular", entity.Celular));
                 command.Parameters.Add(new MySqlParameter("@p_email", entity.Email));
                 command.Parameters.Add(new MySqlParameter("@p_direccion", entity.Direccion));
@@ -80,7 +80,7 @@ namespace MedicalRecord_API.Repository.Implements
 
                 await command.ExecuteNonQueryAsync();
 
-                _logger.LogInformation("Registro de actualización en Directorio con ID:{@p_id_directorio}", entity.IdDirectorio);
+                _logger.LogInformation("Registro de actualización en Directorio con ID:{@p_id_directorio}", entity.Id);
             }
             catch (Exception ex)
             {
