@@ -81,7 +81,7 @@ CREATE TABLE Medicamento (
 	estado VARCHAR(1) NULL,
 	dosis VARCHAR(80) NULL,
 	indicacion VARCHAR(180) NULL,
-    idPresentacion INT NOT NULL REFERENCES presentacion(id),
+    idPresentacion INT NOT NULL REFERENCES Presentacion(id),
     idLaboratorio INT NOT NULL REFERENCES Laboratorio(id)
 );
 DROP TABLE IF EXISTS Diabetes;
@@ -167,8 +167,8 @@ CREATE TABLE Paciente(
 DROP TABLE IF EXISTS DetalleAlergia;
 CREATE TABLE DetalleAlergia (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    idPaciente INT NOT NULL,
-    idAlergia INT NOT NULL,
+    idPaciente INT NOT NULL REFERENCES Paciente(id),
+    idAlergia INT NOT NULL REFERENCES alergia(id),
     nombre VARCHAR(50),
     detalle VARCHAR(50)
 );
@@ -189,7 +189,8 @@ CREATE TABLE Consulta(
     valorK VARCHAR(80) NULL,
 	diagnostico VARCHAR(200) NULL,
     idCie INT REFERENCES CIE(id),
-	idUsuario INT REFERENCES usuario(id),
+	idUsuario INT REFERENCES Usuario(id),
+    idPaciente INT REFERENCES Paciente(id),
     fechaConsulta DATETIME DEFAULT CURRENT_TIMESTAMP,
     fechaActualizacion DATETIME ON UPDATE CURRENT_TIMESTAMP
 
