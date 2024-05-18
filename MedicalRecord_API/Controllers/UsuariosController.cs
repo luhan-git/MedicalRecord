@@ -111,7 +111,7 @@ namespace MedicalRecord_API.Controllers
             {
                 if (!ModelState.IsValid) return BadRequest(ModelState);
                 if (createDto == null) return BadRequest(createDto);
-                if (await _usuarioRepo.GetEntity(v => v.Correo.ToUpper() == createDto.Correo.ToUpper(), false) != null)
+                if (await _usuarioRepo.GetEntity(u => u.Correo.ToUpper() == createDto.Correo.ToUpper(), false) != null)
                 {
                     ModelState.AddModelError("correoExiste", "El Usuario con este Correo ya existe");
                     _logger.LogError("{StatusCode}[{HttpStatusCode}]: Error handling CREATE request", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest);
