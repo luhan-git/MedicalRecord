@@ -6,8 +6,7 @@ using MedicalRecord_API.Utils.Response;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using MedicalRecord_API.Models;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace MedicalRecord_API.Controllers
 {
@@ -191,7 +190,7 @@ namespace MedicalRecord_API.Controllers
             }
             catch (Exception ex)
             {
-                _response.Status= HttpStatusCode.BadRequest;
+                _response.Status= HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = [ex.ToString()];
                 _logger.LogError("{StatusCode}[{HttpStatusCode}]: Error al intentar UPDATE", StatusCodes.Status500InternalServerError, HttpStatusCode.InternalServerError);
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
@@ -199,5 +198,92 @@ namespace MedicalRecord_API.Controllers
             
 
         }
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            _logger.LogInformation("{StatusCode}[{HttpStatusCode}]:Procesando la solicitud a DELETE", StatusCodes.Status102Processing, HttpStatusCode.Processing);
+
+            if (id == 0)
+                {
+                 _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMensajes = ["id: argumento no puede ser 0"];
+                _logger.LogError("{StatusCode}[{HttpStatusCode}]: id: argumento no puede ser 0", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest);
+  
+                BadRequest(_response);
+                };
+            try
+            {
+                Usuario usuario = await _usuarioRepo.GetEntity(v => v.Id == id, false);
+                if (usuario== null)
+                {
+                    _response.Status = HttpStatusCode.NotFound;
+                    _response.ErrorMensajes = ["modelo: no esxiste en la base de datos"];
+                    _logger.LogError("{StatusCode}[{HttpStatusCode}]: modelo: no esxiste en la base de datos", StatusCodes.Status404NotFound, HttpStatusCode.NotFound);
+                    return NotFound(_response);
+                }
+                await _usuarioRepo.Delete(usuario);
+                _response.Status = HttpStatusCode.NoContent;
+                _response.IsExitoso = true;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.Status = HttpStatusCode.InternalServerError;
+                _response.ErrorMensajes = [ex.ToString()];
+                _logger.LogError("{StatusCode}[{HttpStatusCode}]: Error al intentar DELETE", StatusCodes.Status500InternalServerError, HttpStatusCode.InternalServerError);
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+            
+        }
+        [HttpPatch("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> PartialUpdate(int id, [FromBody] JsonPatchDocument<UsuarioUpdateDto> patchDto)
+        {
+            _logger.LogInformation("{StatusCode}[{HttpStatusCode}]:Procesando la solicitud a PARTIALUPDATE", StatusCodes.Status102Processing, HttpStatusCode.Processing);
+
+              if (patchDto == null || id <= 0)
+                {
+                    _response.Status = HttpStatusCode.BadRequest;
+                    return BadRequest(_response);
+                }
+
+                Usuario usuario = await _usuarioRepo.GetEntity(v => v.Id == id, false);
+                if (usuario == null)
+                {
+                    _response.Status = HttpStatusCode.NotFound;
+                    return NotFound(_response);
+                }
+
+                UsuarioUpdateDto dto = _mapper.Map<UsuarioUpdateDto>(usuario);
+                patchDto.ApplyTo(dto, ModelState);
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+            try
+            {
+
+                await _usuarioRepo.Update(_mapper.Map<Usuario>(dto));
+
+                _response.Status = HttpStatusCode.NoContent;
+                _response.IsExitoso = true;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.ErrorMensajes = [ ex.ToString() ];
+                _response.Status = HttpStatusCode.InternalServerError;
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+        }
+
     }
 }

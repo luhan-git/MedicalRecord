@@ -1,4 +1,6 @@
 using MedicalRecord_API.Dependencies;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +14,7 @@ options.AddPolicy("AllowSpecificOrigin",
                        .AllowAnyMethod();
             })
 );
-
+builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
