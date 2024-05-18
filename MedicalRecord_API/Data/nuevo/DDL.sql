@@ -86,8 +86,11 @@ CREATE TABLE Medicamento (
 	estado VARCHAR(1) NULL,
 	dosis VARCHAR(80) NULL,
 	indicacion VARCHAR(180) NULL,
-    idPresentacion INT NOT NULL REFERENCES Presentacion(id),
-    idLaboratorio INT NOT NULL REFERENCES Laboratorio(id)
+    idPresentacion INT NOT NULL,
+    idLaboratorio INT NOT NULL,
+    
+    FOREIGN KEY (idPresentacion) REFERENCES Presentacion(id),
+    FOREIGN KEY (idLaboratorio) REFERENCES Laboratorio(id)
 );
 
 DROP TABLE IF EXISTS Diabetes;
@@ -100,33 +103,37 @@ CREATE TABLE Diabetes (
 DROP TABLE IF EXISTS Alergia;
 CREATE TABLE Alergia (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(50)
+    nombre VARCHAR(50) NOT NULL
 );
 
-DROP TABLE IF EXISTS departamento;
-CREATE TABLE departamento (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+DROP TABLE IF EXISTS Departamento;
+CREATE TABLE Departamento (
+  id INT AUTO_INCREMENT PRIMARY KEY,
   departamento VARCHAR(50) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=26;
 
-DROP TABLE IF EXISTS provincia;
-CREATE TABLE provincia (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+DROP TABLE IF EXISTS Provincia;
+CREATE TABLE Provincia (
+  id INT AUTO_INCREMENT PRIMARY KEY,
   provincia VARCHAR(50) NOT NULL,
-  idDepartamento INT NOT NULL REFERENCES departamento(id)
+  idDepartamento INT NOT NULL,
+  
+  FOREIGN KEY (idDepartamento) REFERENCES Departamento(id)
 ) ENGINE=InnoDB AUTO_INCREMENT=194;
 
-DROP TABLE IF EXISTS distrito;
-CREATE TABLE distrito (
-  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+DROP TABLE IF EXISTS Distrito;
+CREATE TABLE Distrito (
+  id INT AUTO_INCREMENT PRIMARY KEY,
   distrito VARCHAR(50) NOT NULL,
-  idProvincia INT NOT NULL REFERENCES provincia(id)
+  idProvincia INT NOT NULL,
+  
+  FOREIGN KEY (idProvincia) REFERENCES Provincia(id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1833;
 
 DROP TABLE IF EXISTS Parentesco;
 CREATE TABLE Parentesco(
     id INT AUTO_INCREMENT PRIMARY KEY,
-    valor VARCHAR(20)
+    valor VARCHAR(20) NOT NULL
 );
 
 DROP TABLE IF EXISTS Paciente;
@@ -137,49 +144,58 @@ CREATE TABLE Paciente(
 	aMaterno VARCHAR(25) NOT NULL,
 	nombres VARCHAR(50) NOT NULL,
 	tipoDocumento CHAR(1) NOT NULL CHECK(tipoDocumento IN('0','1','2','3')) DEFAULT '0',-- DNI ...
-	numeroDocumento VARCHAR(12) NOT NULL,
+	numeroDocumento VARCHAR(12) NOT NULL UNIQUE,
 	fechaNacimiento DATETIME NOT NULL,
     edad VARCHAR(3) NOT NULL,
 	sexo CHAR(1) NOT NULL CHECK(sexo IN('M', 'F')),
 	estadoCivil CHAR(1) NOT NULL CHECK (estadoCivil IN('0','1','2','3','4')) DEFAULT '0',-- Soltero ...
 	grupoSanguineo VARCHAR(10) NOT NULL CHECK (grupoSanguineo IN('0','1','2','3','4','5','6','7','8')) DEFAULT '0',-- No indica ...
 	nacionalidad CHAR(1) NOT NULL CHECK (nacionalidad IN('0','1') ),-- Peruana/Extranjera
-	idDepartamento INT REFERENCES departamento(id),
-	idProvincia INT REFERENCES provincia(id),
-	idDistrito INT REFERENCES distrito(id),
+	idDepartamento INT NOT NULL,
+	idProvincia INT NOT NULL,
+	idDistrito INT NOT NULL,
 	direccion VARCHAR(60) NULL,
 	telefono VARCHAR(20) NULL,
     celular VARCHAR(20) NULL,
 	centroTrabajo VARCHAR(40) NULL,
     asegurado BOOL DEFAULT FALSE,
-    idCiaSeguro INT NULL  REFERENCES CiaSeguro(id),
+    idCiaSeguro INT NULL,
 	numeroCarnet VARCHAR(10) NULL,
 	contacto VARCHAR(50) NULL,
-    idParentesco INT NULL REFERENCES parentesco(id),
+    idParentesco INT NULL,
 	telefonoContacto VARCHAR(20) NULL,
 	celularContacto VARCHAR(20) NULL,
 	perfil VARCHAR(200) NULL,
 	antecedentesClinicos VARCHAR(150) NULL,
 	antecedentesFamiliares VARCHAR(150) NULL,
-	idOcupacion INT NULL REFERENCES ocupacion(id),
+	idOcupacion INT NOT NULL,
 	presionArterial CHAR(3) NOT NULL CHECK ( presionArterial IN('0','1','2') ) DEFAULT '1',
 	campoVisual VARCHAR(6) NULL,
 	email VARCHAR(80) NULL,
     diabetico BOOL DEFAULT FALSE,
-    idDiabetes INT NULL REFERENCES Diabetes(id),
+    idDiabetes INT NULL,
     alergico BOOL DEFAULT FALSE,
     fechaCreacion DATETIME DEFAULT CURRENT_TIMESTAMP,
-    fechaActualizacion DATETIME ON UPDATE CURRENT_TIMESTAMP
+    fechaActualizacion DATETIME ON UPDATE CURRENT_TIMESTAMP,
+    
+    FOREIGN KEY (idDepartamento) REFERENCES Departamento(id),
+    FOREIGN KEY (idProvincia) REFERENCES Provincia(id),
+    FOREIGN KEY (idDistrito) REFERENCES Distrito(id),
+    FOREIGN KEY (idCiaSeguro) REFERENCES CiaSeguro(id),
+    FOREIGN KEY (idParentesco) REFERENCES Parentesco(id),
+	FOREIGN KEY (idOcupacion) REFERENCES Ocupacion(id),
+    FOREIGN KEY (idDiabetes) REFERENCES Diabetes(id)
     
 );
 
 DROP TABLE IF EXISTS DetalleAlergia;
 CREATE TABLE DetalleAlergia (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    idPaciente INT NOT NULL REFERENCES Paciente(id),
-    idAlergia INT NOT NULL REFERENCES alergia(id),
-    nombre VARCHAR(50),
-    detalle VARCHAR(50)
+    idPaciente INT NOT NULL,
+    idAlergia INT NOT NULL,
+    
+    FOREIGN KEY (idPaciente) REFERENCES Paciente(id),
+    FOREIGN KEY (idAlergia) REFERENCES Alergia(id)
 );
 
 DROP TABLE IF EXISTS Consulta;
@@ -197,41 +213,50 @@ CREATE TABLE Consulta(
     shimer VARCHAR(10) NULL,
     valorK VARCHAR(80) NULL,
 	diagnostico VARCHAR(200) NULL,
-    idCie INT REFERENCES CIE(id),
-	idUsuario INT REFERENCES Usuario(id),
-    idPaciente INT REFERENCES Paciente(id),
+    idCie INT NOT NULL,
+	idUsuario INT NOT NULL,
+    idPaciente INT NOT NULL,
     fechaConsulta DATETIME DEFAULT CURRENT_TIMESTAMP,
-    fechaActualizacion DATETIME ON UPDATE CURRENT_TIMESTAMP
-
+    fechaActualizacion DATETIME ON UPDATE CURRENT_TIMESTAMP,
+    
+    FOREIGN KEY (idCie) REFERENCES CIE(id),
+    FOREIGN KEY (idUsuario) REFERENCES Usuario(id),
+	FOREIGN KEY (idPaciente) REFERENCES Paciente(id)
 );
 
 DROP TABLE IF EXISTS DetalleExamen;
 CREATE TABLE DetalleExamen (
     id INT AUTO_INCREMENT PRIMARY KEY ,
-	idConsulta INT NOT NULL REFERENCES Consulta(id),
-    idExamenLab INT NOT NULL REFERENCES ExamenLaboratorio(id),
+	idConsulta INT NOT NULL,
+    idExamenLab INT NOT NULL,
     detalle VARCHAR(255),
     resultado VARCHAR(500),
-    fechaResultado DATETIME NULL
+    fechaResultado DATETIME NULL,
+    
+    FOREIGN KEY (idConsulta) REFERENCES Consulta(id),
+    FOREIGN KEY (idExamenLab) REFERENCES ExamenLaboratorio(id)
 );
 
 DROP TABLE IF EXISTS DetalleProcedimiento;
 CREATE TABLE DetalleProcedimiento(
     id INT AUTO_INCREMENT PRIMARY KEY ,
-	idConsulta INT NOT NULL REFERENCES Consulta(id),
-    idProcedimiento INT NOT NULL REFERENCES Procedimiento(id),
+	idConsulta INT NOT NULL,
+    idProcedimiento INT NOT NULL,
     detalle VARCHAR(255),
     indicacion VARCHAR(255),
     resultado VARCHAR(500),
     imagenes BOOL DEFAULT FALSE,
     directorio VARCHAR(500),
-    fechaResultado DATETIME NULL
+    fechaResultado DATETIME NULL,
+    
+    FOREIGN KEY (idConsulta) REFERENCES Consulta(id),
+    FOREIGN KEY (idProcedimiento) REFERENCES Procedimiento(id)
 );
 
 DROP TABLE IF EXISTS MedidaLente;
 CREATE TABLE MedidaLente(
 	id INT AUTO_INCREMENT  PRIMARY KEY,
-    idConsulta INT NOT NULL REFERENCES Consulta(id),
+    idConsulta INT NOT NULL,
     -- lejos
     ODSPHL VARCHAR(6) NULL,
 	ODCYSL VARCHAR(6) NULL,
@@ -259,15 +284,20 @@ CREATE TABLE MedidaLente(
 
 	OBSC VARCHAR(120) NULL,
 
-    preventiva BOOL DEFAULT FALSE
+    preventiva BOOL DEFAULT FALSE,
+    
+    FOREIGN KEY (idConsulta) REFERENCES Consulta(id)
 );
 
 DROP TABLE IF EXISTS Medicacion;
 CREATE TABLE Medicacion(
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    idConsulta INT NOT NULL REFERENCES Consulta(id),
-	idMedicamento INT NOT NULL REFERENCES Medicamento(id),
+    idConsulta INT NOT NULL,
+	idMedicamento INT NOT NULL,
 	dosis VARCHAR(80) NOT NULL,
 	indicacion VARCHAR(300) NULL,
-    ordenMedica VARCHAR(500) NULL
+    ordenMedica VARCHAR(500) NULL,
+    
+    FOREIGN KEY (idConsulta) REFERENCES Consulta(id),
+    FOREIGN KEY (idMedicamento) REFERENCES Medicamento(id)
 );
