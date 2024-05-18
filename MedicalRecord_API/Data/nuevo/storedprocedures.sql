@@ -25,7 +25,7 @@ DELIMITER ;
 DELIMITER $
 DROP PROCEDURE IF EXISTS sp_UpdateUsuario;
 CREATE PROCEDURE sp_UpdateUsuario(
-  IN id_update INT,
+  IN idUpdate INT,
   IN nombre VARCHAR(50),
   IN correo VARCHAR(50),
   IN clave VARCHAR(250),
@@ -41,7 +41,7 @@ BEGIN
 
     START TRANSACTION;
     UPDATE  Usuario SET nombre=nombre,correo=correo,clave=clave,cargo=cargo,especialidad=especialidad,nroColMedico=nroColmedico=nroColMedico
-    where id=id_update;
+    where id=idUpdate;
     COMMIT;
 END;
 DELIMITER ;

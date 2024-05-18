@@ -32,18 +32,18 @@ namespace MedicalRecord_API.Controllers
             {
                 IEnumerable<CieDto> medicoList = _mapper.Map<IEnumerable<CieDto>>(await _cieRepo.Query());
                 _response.Resultado = medicoList;
-                _response.StatusCode = HttpStatusCode.OK;
+                _response.Status = HttpStatusCode.OK;
                 return Ok(_response);
             }
             catch (Exception ex)
             {
                 _response.IsExitoso = false;
-                _response.StatusCode = HttpStatusCode.InternalServerError;
+                _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = [ex.ToString()];
             }
             return _response;
         }
-        [HttpGet("Id:int", Name = "GetCie")]
+        [HttpGet("{Id:int}", Name = "GetCie")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -53,18 +53,18 @@ namespace MedicalRecord_API.Controllers
             {
                 if (Id == 0)
                 {
-                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.Status = HttpStatusCode.BadRequest;
                     _response.IsExitoso = false;
                     return BadRequest(_response);
                 }
                 CieDto cieDto = _mapper.Map<CieDto>(await _cieRepo.GetEntity(c => c.Id == Id, false));
                 if (cieDto == null)
                 {
-                    _response.StatusCode = HttpStatusCode.NotFound;
+                    _response.Status = HttpStatusCode.NotFound;
                     _response.IsExitoso = false;
                     return NotFound(_response);
                 }
-                _response.StatusCode = HttpStatusCode.OK;
+                _response.Status = HttpStatusCode.OK;
                 _response.Resultado = cieDto;
                 return Ok(_response);
             }
@@ -94,7 +94,7 @@ namespace MedicalRecord_API.Controllers
                 int idModelo = await _cieRepo.Create(modelo);
                 modelo.Id = idModelo;
                 _response.Resultado = _mapper.Map<CieDto>(modelo);
-                _response.StatusCode = HttpStatusCode.Created;
+                _response.Status = HttpStatusCode.Created;
                 return CreatedAtRoute("GetCie", new { id = modelo.Id }, _response);
             }
             catch (Exception ex)
@@ -115,7 +115,7 @@ namespace MedicalRecord_API.Controllers
             {
                 if (id == 0)
                 {
-                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.Status = HttpStatusCode.BadRequest;
                     _response.IsExitoso = false;
                     BadRequest(_response);
                 };
@@ -123,11 +123,11 @@ namespace MedicalRecord_API.Controllers
                 if (cie == null)
                 {
                     _response.IsExitoso = false;
-                    _response.StatusCode = HttpStatusCode.NotFound;
+                    _response.Status = HttpStatusCode.NotFound;
                     return NotFound(_response);
                 }
                 await _cieRepo.Delete(cie);
-                _response.StatusCode = HttpStatusCode.NoContent;
+                _response.Status = HttpStatusCode.NoContent;
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -156,17 +156,17 @@ namespace MedicalRecord_API.Controllers
                 if (id == 0)
                 {
                     _response.IsExitoso = false;
-                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.Status = HttpStatusCode.BadRequest;
                     return BadRequest(_response);
                 }
                 if (updateDto == null || id != updateDto.IdCie)
                 {
                     _response.IsExitoso = false;
-                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.Status = HttpStatusCode.BadRequest;
                     return BadRequest(_response);
                 }
                 await _cieRepo.Update(_mapper.Map<Cie>(updateDto));
-                _response.StatusCode = HttpStatusCode.NoContent;
+                _response.Status = HttpStatusCode.NoContent;
                 return Ok(_response);
             }
             catch (Exception ex)

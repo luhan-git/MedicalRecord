@@ -37,9 +37,25 @@ namespace MedicalRecord_API.Repository.Implements
             }
         }
 
-        public Task Update(Usuario entity)
+        public async Task Update(Usuario entity)
         {
-            throw new NotImplementedException();
+            var idParam = new MySqlParameter("@id_update",entity.Id);
+            var nombreParam = new MySqlParameter("@nombre", entity.Nombre);
+            var correoParam = new MySqlParameter("@correo", entity.Correo);
+            var claveParam = new MySqlParameter("@clave", entity.Clave);
+            var cargoParam = new MySqlParameter("@cargo", entity.Cargo);
+            var especialidadParam = new MySqlParameter("@especialidad", entity.Especialidad);
+            var nroColMedicoParam = new MySqlParameter("@nroColMedico", entity.NroColMedico);
+            try
+            {
+                await _context.Database.ExecuteSqlRawAsync("CALL sp_UpdateUsuario(@idUpdate,@nombre, @correo, @clave, @cargo, @especialidad, @nroColMedico)",
+                                                          idParam, nombreParam, correoParam, claveParam, cargoParam, especialidadParam, nroColMedicoParam);
+            }
+            catch (Exception)
+            {
+                _logger.LogError("Error updting user");
+                throw;
+            }
         }
     }
 }
