@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MedicalRecord_API.Models;
 
 namespace MedicalRecord_API.Controllers
 {
@@ -60,6 +61,7 @@ namespace MedicalRecord_API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Response>> GetUsuario(int Id)
         {
             _logger.LogInformation("{StatusCode}[{HttpStatusCode}]: Handling GETUSUARIO request", StatusCodes.Status102Processing, HttpStatusCode.Processing);
@@ -91,7 +93,44 @@ namespace MedicalRecord_API.Controllers
             {
                 _response.IsExitoso = false;
                 _response.ErrorMensajes = [ex.ToString()];
+                _response.StatusCode = HttpStatusCode.InternalServerError;
                 _logger.LogError("{StatusCode}[{HttpStatusCode}]: Error handling GETUSUARIOS request", StatusCodes.Status500InternalServerError, HttpStatusCode.InternalServerError);
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+
+            }
+        }
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<Response>> Create([FromBody] UsuarioCreateDto createDto)
+        {
+            _logger.LogInformation("{StatusCode}[{HttpStatusCode}]: Handling CREATE request", StatusCodes.Status102Processing, HttpStatusCode.Processing);
+
+            try
+            {
+                if (!ModelState.IsValid) return BadRequest(ModelState);
+                if (createDto == null) return BadRequest(createDto);
+                if (await _usuarioRepo.GetEntity(v => v.Correo.ToUpper() == createDto.Correo.ToUpper(), false) != null)
+                {
+                    ModelState.AddModelError("correoExiste", "El Usuario con este Correo ya existe");
+                    _logger.LogError("{StatusCode}[{HttpStatusCode}]: Error handling CREATE request", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest);
+                    return BadRequest(ModelState);
+                }
+
+                Usuario modelo = _mapper.Map<Usuario>(createDto);
+                modelo = await _usuarioRepo.Create(modelo);
+                _response.Resultado = _mapper.Map<UsuarioDto>(modelo);
+                _response.StatusCode = HttpStatusCode.Created;
+                _logger.LogInformation("{StatusCode}[{HttpStatusCode}]: Request handled successfully", StatusCodes.Status201Created, HttpStatusCode.Created);
+                return CreatedAtRoute("GetUsuario", new { id = modelo.Id }, _response);
+            }
+            catch (Exception ex)
+            {
+                _response.IsExitoso = false;
+                _response.ErrorMensajes = [ex.ToString()];
+                _response.StatusCode = HttpStatusCode.InternalServerError;
+                _logger.LogError("{StatusCode}[{HttpStatusCode}]: Error handling CREATE request", StatusCodes.Status500InternalServerError, HttpStatusCode.InternalServerError);
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
 
             }

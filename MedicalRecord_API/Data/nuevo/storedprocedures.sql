@@ -1,48 +1,31 @@
--- Medico
-CREATE PROCEDURE InsertMedico(
-  IN nombre_med VARCHAR(50),
-  IN espe_med VARCHAR(20),
-  IN nro_cmed VARCHAR(6),
-  OUT id_medico INT
+-- Usuarios
+use dbhistorias;
+DELIMITER $
+DROP PROCEDURE IF EXISTS sp_InsertUsuario;
+CREATE PROCEDURE sp_InsertUsuario(
+  IN nombre VARCHAR(50),
+  IN correo VARCHAR(50),
+  IN clave VARCHAR(250),
+  IN cargo VARCHAR(30),
+  IN especialidad VARCHAR(30),
+  IN nroColMedico VARCHAR(6)
 )
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         ROLLBACK;
-        SELECT -1;
     END;
 
     START TRANSACTION;
 
-    INSERT INTO medicos (nombre_med, espe_med, nro_cmed) VALUES (nombre_med, espe_med, nro_cmed);
-    SET id_medico = LAST_INSERT_ID();
-
+    INSERT INTO Usuario (nombre,correo,clave,cargo,especialidad,nroColMedico) VALUES (nombre,correo,clave,cargo,especialidad,nroColMedico);
     COMMIT;
-END
-
-DELIMITER //
-CREATE PROCEDURE UpdateMedico(
-  IN id_medico_update int,
-  IN nombre_med VARCHAR(50),
-  IN espe_med VARCHAR(20),
-  IN nro_cmed VARCHAR(6),
-  IN estado bool
-)
-BEGIN
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-    BEGIN
-        ROLLBACK;
-        SELECT -1;
-    END;
-
-    START TRANSACTION;
-    UPDATE medicos set nombre_med=nombre_med,espe_med=espe_med,nro_cmed=nro_cmed,estado=estado where id_medico=id_medico_update;
-    COMMIT;
-END//
+END;
 DELIMITER ;
 
+
 -- Cie
-DELIMITER//
+DELIMITER /
 CREATE PROCEDURE InsertCie(
   IN codcie VARCHAR(5),
   IN enfermedad VARCHAR(20),
