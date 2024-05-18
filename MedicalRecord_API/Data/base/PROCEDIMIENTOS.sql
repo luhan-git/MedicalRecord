@@ -376,23 +376,23 @@ CREATE PROCEDURE [dbo].[_InsertConsulta_sp]
        (@id_paciente 	int,
 		@nro_consulta	int,
 		@fch_consulta	datetime,
-		@motivo 	varchar (80),
-		@sp     	varchar (80),
-		@enf_actual varchar (800),
-		@valorK		varchar (80),
-		@shimer		varchar (10),
-		@davsc   	varchar (10),
-		@iavsc 		varchar (10),
-		@davcc 		varchar (10),
-		@iavcc 		varchar (10),
-		@dpio	    varchar (10),
-		@ipio	    varchar (10),
-		@diagnostico 	varchar (200),
-		@detaExam 	varchar (40),
-		@atiendePro varchar (180),
-		@notaPro 	varchar (120),
+		@motivo 	VARCHAR (80),
+		@sp     	VARCHAR (80),
+		@enf_actual VARCHAR (800),
+		@valorK		VARCHAR (80),
+		@shimer		VARCHAR (10),
+		@davsc   	VARCHAR (10),
+		@iavsc 		VARCHAR (10),
+		@davcc 		VARCHAR (10),
+		@iavcc 		VARCHAR (10),
+		@dpio	    VARCHAR (10),
+		@ipio	    VARCHAR (10),
+		@diagnostico 	VARCHAR (200),
+		@detaExam 	VARCHAR (40),
+		@atiendePro VARCHAR (180),
+		@notaPro 	VARCHAR (120),
 		@id_medico  int,
-		@exam_ocular varchar (400))
+		@exam_ocular VARCHAR (400))
 AS
 BEGIN TRAN
 INSERT INTO Consulta ([id_paciente], [nro_consulta], [fch_consulta], [motivo], [sp], [enf_actual], [valorK], [shimer], [davsc], [iavsc],
@@ -435,8 +435,8 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE PROC [dbo].[_InsertExamenLab_sp]
-@nombre_exam	varchar(50),
-@nemo_exam	varchar(20),
+@nombre_exam	VARCHAR(50),
+@nemo_exam	VARCHAR(20),
 @id_exam 	int OUTPUT
 AS
 BEGIN TRAN
@@ -458,13 +458,13 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE  PROCEDURE [dbo].[_InsertHorarioConsultas_sp]
 (	@id_paciente [int],
-	@fch_Cita [varchar] (10),
-	@hra_Cita [varchar] (10),
-	@fch_Consulta [varchar] (10),
-	@hra_Consulta [varchar] (10),
+	@fch_Cita [VARCHAR] (10),
+	@hra_Cita [VARCHAR] (10),
+	@fch_Consulta [VARCHAR] (10),
+	@hra_Consulta [VARCHAR] (10),
 	@id_Consulta [int],
-	@estado [varchar] (1),
-	@observa [varchar] (300))
+	@estado [VARCHAR] (1),
+	@observa [VARCHAR] (300))
 AS
 BEGIN TRAN
 INSERT [HorarioConsultas] ([id_paciente], [fch_Cita], [hra_Cita], [fch_Consulta], [hra_Consulta],
@@ -486,9 +486,9 @@ GO
 
 CREATE PROCEDURE [dbo].[_InsertImagen_sp]
                  (@id_consulta	int,
-                  @name_imagen	varchar(20),
-                  @desc_imagen  varchar(100),
-                  @fech_imagen	varchar(10))  
+                  @name_imagen	VARCHAR(20),
+                  @desc_imagen  VARCHAR(100),
+                  @fech_imagen	VARCHAR(10))  
 AS
 BEGIN TRAN
 INSERT INTO imagenes(id_consulta,name_imagen,desc_imagen,fech_imagen)
@@ -511,7 +511,7 @@ create  PROCEDURE [dbo].[_InsertIndicacionExamenes_sp]
 (	@id_consulta [int],
 	@id_examen [int],
 	@fch_resulExam [datetime],
-	@observaExam [varchar] (200))
+	@observaExam [VARCHAR] (200))
 AS
 BEGIN TRAN
 INSERT [IndicaExamenes] ([id_consulta], [id_examen], [fch_resulExam], [observaExam])
@@ -533,7 +533,7 @@ create PROCEDURE [dbo].[_InsertInformePacientes_sp]
        (@id_paciente 	int,
 		@nro_info	int,
 		@fch_info	datetime,
-		@informe	nvarchar (max))
+		@informe	nVARCHAR (max))
 AS
 BEGIN TRAN
 INSERT INTO InformesPaciente ([id_paciente], [nro_info], [fch_info], [informe])
@@ -553,8 +553,8 @@ SET QUOTED_IDENTIFIER ON
 GO
 ---sp_helptext _InsertLinea_sp
 CREATE  PROC [dbo].[_InsertLinea_sp]
-@nombre_linea	varchar(40),
-@nemo_linea	varchar(4),
+@nombre_linea	VARCHAR(40),
+@nemo_linea	VARCHAR(4),
 @id_Linea 	int OUTPUT
 AS
 BEGIN TRAN
@@ -580,8 +580,8 @@ GO
 CREATE   PROCEDURE [dbo].[_InsertMedicacion_sp]
 (	@id_consulta [int],
 	@id_medicamento [int],
-	@dosis [varchar] (80),
-	@indicacion [varchar] (300))
+	@dosis [VARCHAR] (80),
+	@indicacion [VARCHAR] (300))
 AS
 BEGIN TRAN
 INSERT [Medicacion] ([id_consulta], [id_medicamento], [dosis], [indicacion])
@@ -599,26 +599,26 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE PROC [dbo].[_InsertMedicamento_sp]
-@cod_articulo	varchar(7),
-@name_comercial	varchar(50),
-@name_generico	varchar(50),
+@cod_articulo	VARCHAR(7),
+@name_comercial	VARCHAR(50),
+@name_generico	VARCHAR(50),
 @id_linea	int,
 @id_tipo	tinyint,
 @id_sunidad	int, 
-@dosis		varchar(80), 
-@indicacion	varchar(180),
-@estado 	varchar(1)
+@dosis		VARCHAR(80), 
+@indicacion	VARCHAR(180),
+@estado 	VARCHAR(1)
 AS
 
-DECLARE @id_lab	    varchar(3)
-DECLARE @correla  	varchar(4)
-DECLARE @codi	    varchar(7)
+DECLARE @id_lab	    VARCHAR(3)
+DECLARE @correla  	VARCHAR(4)
+DECLARE @codi	    VARCHAR(7)
 
 set @id_lab = @id_linea
 SET @id_lab = REPLICATE('0', 3 - DATALENGTH(@id_lab)) + @id_lab
 
 --- Obtengo el Maximo Correlativo
-SET @correla = (SELECT RTRIM(CAST((ISNULL(MAX(RIGHT(cod_articulo,4)),0) + 1) AS varchar))
+SET @correla = (SELECT RTRIM(CAST((ISNULL(MAX(RIGHT(cod_articulo,4)),0) + 1) AS VARCHAR))
 	            FROM Medicamentos WHERE LEFT(cod_articulo,3) = @id_lab )
 	
 ---SET @id_linea = REPLICATE('0', 3 - DATALENGTH(@id_linea)) + @id_linea
@@ -648,24 +648,24 @@ GO
 CREATE PROCEDURE [dbo].[_InsertMedidaLentes_sp]
        (@id_consulta  int,
 	    @idpaciente  int,
-		@OISPHL    nvarchar(6),
-		@OICYSL    nvarchar(6),
-		@OIAXIL    nvarchar(6),
-		@ODSPHL    nvarchar(6),
-		@ODCYSL    nvarchar(6),
-		@ODAXIL    nvarchar(6),
-		@PDL    nvarchar(3),
-		@OBSL    nvarchar(120),
-		@ODAV    nvarchar(6),
-		@OIAV    nvarchar(6),
-		@OISPHC    nvarchar(6),
-		@OICYSC    nvarchar(6),
-		@OIAXIC    nvarchar(6),
-		@ODSPHC    nvarchar(6),
-		@ODCYSC    nvarchar(6),
-		@ODAXIC    nvarchar(6),
-		@PDC    nvarchar(3),
-		@OBSC    nvarchar(120),
+		@OISPHL    nVARCHAR(6),
+		@OICYSL    nVARCHAR(6),
+		@OIAXIL    nVARCHAR(6),
+		@ODSPHL    nVARCHAR(6),
+		@ODCYSL    nVARCHAR(6),
+		@ODAXIL    nVARCHAR(6),
+		@PDL    nVARCHAR(3),
+		@OBSL    nVARCHAR(120),
+		@ODAV    nVARCHAR(6),
+		@OIAV    nVARCHAR(6),
+		@OISPHC    nVARCHAR(6),
+		@OICYSC    nVARCHAR(6),
+		@OIAXIC    nVARCHAR(6),
+		@ODSPHC    nVARCHAR(6),
+		@ODCYSC    nVARCHAR(6),
+		@ODAXIC    nVARCHAR(6),
+		@PDC    nVARCHAR(3),
+		@OBSC    nVARCHAR(120),
 		@condi    char(1))
 AS
 BEGIN TRAN
@@ -692,9 +692,9 @@ GO
 create PROCEDURE [dbo].[_InsertOrdenesVarias_sp]
        (@id_consulta  int,
 	    @idpaciente  int,
-		@atencion   varchar(180),
-		@orden      varchar(800),
-		@observa   varchar(120))
+		@atencion   VARCHAR(180),
+		@orden      VARCHAR(800),
+		@observa   VARCHAR(120))
 AS
 BEGIN TRAN
 INSERT INTO OrdenesVarias ([id_consulta], [idpaciente], [atencion], [orden], [observa] )
@@ -717,9 +717,9 @@ CREATE      PROCEDURE [dbo].[_InsertPaciente_sp]
        (@nhisto		char(7),
 		@fching 	datetime,
 		@condicion	char(1),
-		@apaterno	varchar(25),
-		@amaterno	varchar(25),
-		@nombres	varchar(60),
+		@apaterno	VARCHAR(25),
+		@amaterno	VARCHAR(25),
+		@nombres	VARCHAR(60),
 		@tipdoc		char(1),
 		@nrodocu	char(12),
 		@fchnac		datetime,
@@ -727,33 +727,33 @@ CREATE      PROCEDURE [dbo].[_InsertPaciente_sp]
 		@estcivil	char(1),
 		@gruposa	char(1),
 		@nacion		char(1),
-		@procede	varchar(60),
+		@procede	VARCHAR(60),
 		@iddepa		int,
 		@idprov		int,
 		@iddist		int,
-		@direcc		varchar(60),
-		@telcasa	varchar(20),
-		@celular	varchar(20),
+		@direcc		VARCHAR(60),
+		@telcasa	VARCHAR(20),
+		@celular	VARCHAR(20),
 		@idocupa	int,
-		@centrab	varchar(40),
+		@centrab	VARCHAR(40),
 		@asegu		char(1),
-		@ncarnet	varchar(10),
+		@ncarnet	VARCHAR(10),
 		@ciaSeguro	int,
-		@contacto	varchar(60),
+		@contacto	VARCHAR(60),
 		@idparen	int,
-		@telcon		varchar(20),
-		@celcon		varchar(20),
-		@perfil		varchar(200),
-		@antecli    varchar(160),
-		@antefam    varchar(160),
+		@telcon		VARCHAR(20),
+		@celcon		VARCHAR(20),
+		@perfil		VARCHAR(200),
+		@antecli    VARCHAR(160),
+		@antefam    VARCHAR(160),
 		@hipertenso char(1),
         @diabetes   char(1),
-        @tipoDiabetes varchar(20),
+        @tipoDiabetes VARCHAR(20),
         @alergico    char(1), 
-	    @tipoAlergia varchar(25),
-		@cv          varchar(6),
-		@ocupacion   varchar(25),
-		@email       varchar(80),
+	    @tipoAlergia VARCHAR(25),
+		@cv          VARCHAR(6),
+		@ocupacion   VARCHAR(25),
+		@email       VARCHAR(80),
 		@id_medico	 int)
 AS
 BEGIN TRAN
@@ -784,9 +784,9 @@ CREATE PROCEDURE [dbo].[_InsertProcedEspeciales_sp]
 (	@id_consulta [int],
 	@id_proce [int],
 	@fch_resulProce [datetime],
-	@observa [varchar](800),
+	@observa [VARCHAR](800),
 	@imagenes [char](1),
-	@ubicacion [varchar](160))
+	@ubicacion [VARCHAR](160))
 AS
 BEGIN TRAN
 INSERT [ProcedEspeciales] ([id_consulta], [id_proce], [fch_resulProce], [observa], [imagenes], [ubicacion])
@@ -1131,11 +1131,11 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 create    PROC [dbo].[_SeleccionaCia_sp]
-@nombre varchar(50)
+@nombre VARCHAR(50)
 AS
 
 SELECT id_cia, nombre_cia, nemo_cia,
-       'name_cia' = REPLICATE('0', 3 - DATALENGTH(cast(id_cia as varchar))) + cast(id_cia as varchar) + ' - ' + nombre_cia
+       'name_cia' = REPLICATE('0', 3 - DATALENGTH(cast(id_cia as VARCHAR))) + cast(id_cia as VARCHAR) + ' - ' + nombre_cia
 FROM CiaSeguros
 WHERE nombre_cia LIKE @nombre + '%'
 GO
@@ -1159,10 +1159,10 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 create    PROC [dbo].[_SeleccionaExamenesLab_sp]
-@nombre varchar(50)
+@nombre VARCHAR(50)
 AS
 SELECT id_exam, nombre_exam, nemo_exam,
-       'name_proce' = REPLICATE('0', 3 - DATALENGTH(cast(id_exam as varchar))) + cast(id_exam as varchar) + ' - ' + nombre_exam
+       'name_proce' = REPLICATE('0', 3 - DATALENGTH(cast(id_exam as VARCHAR))) + cast(id_exam as VARCHAR) + ' - ' + nombre_exam
 FROM ExamenesLaboratorio
 WHERE nombre_exam LIKE @nombre + '%'
 GO
@@ -1173,11 +1173,11 @@ SET QUOTED_IDENTIFIER ON
 GO
 ---sp_helptext _SeleccionaLineas_sp
 CREATE    PROC [dbo].[_SeleccionaLineas_sp]
-@nombre varchar(40)
+@nombre VARCHAR(40)
 AS
 
 SELECT id_linea, nombre_linea, nemo_linea,
-       'name_linea' = REPLICATE('0', 3 - DATALENGTH(cast(id_linea as varchar))) + cast(id_linea as varchar) + ' - ' + nombre_linea
+       'name_linea' = REPLICATE('0', 3 - DATALENGTH(cast(id_linea as VARCHAR))) + cast(id_linea as VARCHAR) + ' - ' + nombre_linea
 FROM Lineas
 WHERE nombre_Linea LIKE @nombre + '%'
 
@@ -1202,11 +1202,11 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 create    PROC [dbo].[_SeleccionaMedicos_sp]
-@nombre varchar(50)
+@nombre VARCHAR(50)
 AS
 
 SELECT id_medico, nombre_med, espe_med,
-       'name_med' = REPLICATE('0', 3 - DATALENGTH(cast(id_medico as varchar))) + cast(id_medico as varchar) + ' - ' + nombre_med
+       'name_med' = REPLICATE('0', 3 - DATALENGTH(cast(id_medico as VARCHAR))) + cast(id_medico as VARCHAR) + ' - ' + nombre_med
 FROM Medicos
 WHERE nombre_med LIKE @nombre + '%'
 GO
@@ -1229,10 +1229,10 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE    PROC [dbo].[_SeleccionaProcedimiento_sp]
-@nombre varchar(50)
+@nombre VARCHAR(50)
 AS
 SELECT id_proce, nombre_proce, nemo_proce,
-       'name_proce' = REPLICATE('0', 3 - DATALENGTH(cast(id_proce as varchar))) + cast(id_proce as varchar) + ' - ' + nombre_proce
+       'name_proce' = REPLICATE('0', 3 - DATALENGTH(cast(id_proce as VARCHAR))) + cast(id_proce as VARCHAR) + ' - ' + nombre_proce
 FROM Procedimientos
 WHERE nombre_proce LIKE @nombre + '%'
 GO
@@ -1257,7 +1257,7 @@ GO
 create PROC [dbo].[_SelectCias_sp]
 AS
 SELECT  id_cia, nombre_cia, nemo_cia,
-       'name_cia' = REPLICATE('0', 3 - DATALENGTH(cast(id_cia as varchar))) + cast(id_cia as varchar) + ' - ' + nombre_cia
+       'name_cia' = REPLICATE('0', 3 - DATALENGTH(cast(id_cia as VARCHAR))) + cast(id_cia as VARCHAR) + ' - ' + nombre_cia
 FROM CiaSeguros
 ORDER BY nombre_cia
 GO
@@ -1270,8 +1270,8 @@ GO
 create  PROC [dbo].[_SelectExamenesLab_sp]
 AS
 SELECT  id_exam, nombre_exam, nemo_exam,
-        cod_proce= REPLICATE('0', 3 - DATALENGTH(cast(id_exam as varchar))) + cast(id_exam as varchar), 
-       'name_proce' = REPLICATE('0', 3 - DATALENGTH(cast(id_exam as varchar))) + cast(id_exam as varchar) + ' - ' + nombre_exam
+        cod_proce= REPLICATE('0', 3 - DATALENGTH(cast(id_exam as VARCHAR))) + cast(id_exam as VARCHAR), 
+       'name_proce' = REPLICATE('0', 3 - DATALENGTH(cast(id_exam as VARCHAR))) + cast(id_exam as VARCHAR) + ' - ' + nombre_exam
 FROM ExamenesLaboratorio 
 ORDER BY nombre_exam
 
@@ -1284,7 +1284,7 @@ GO
 CREATE PROC [dbo].[_SelectLineas_sp]
 AS
 SELECT  id_linea, nombre_linea, nemo_linea,
-       'name_linea' = REPLICATE('0', 3 - DATALENGTH(cast(id_linea as varchar))) + cast(id_linea as varchar) + ' - ' + nombre_linea
+       'name_linea' = REPLICATE('0', 3 - DATALENGTH(cast(id_linea as VARCHAR))) + cast(id_linea as VARCHAR) + ' - ' + nombre_linea
 FROM Lineas
 ORDER BY nombre_linea
 
@@ -1301,7 +1301,7 @@ GO
 create PROC [dbo].[_SelectMedicos_sp]
 AS
 SELECT *,
-       'name_med' = REPLICATE('0', 3 - DATALENGTH(cast(id_medico as varchar))) + cast(id_medico as varchar) + ' - ' + nombre_med
+       'name_med' = REPLICATE('0', 3 - DATALENGTH(cast(id_medico as VARCHAR))) + cast(id_medico as VARCHAR) + ' - ' + nombre_med
 FROM Medicos
 ORDER BY nombre_med
 GO
@@ -1340,8 +1340,8 @@ GO
 CREATE   PROC [dbo].[_SelectProcedimiento_sp]
 AS
 SELECT  id_proce, nombre_proce, nemo_proce,
-        cod_proce= REPLICATE('0', 3 - DATALENGTH(cast(id_proce as varchar))) + cast(id_proce as varchar), 
-       'name_proce' = REPLICATE('0', 3 - DATALENGTH(cast(id_proce as varchar))) + cast(id_proce as varchar) + ' - ' + nombre_proce
+        cod_proce= REPLICATE('0', 3 - DATALENGTH(cast(id_proce as VARCHAR))) + cast(id_proce as VARCHAR), 
+       'name_proce' = REPLICATE('0', 3 - DATALENGTH(cast(id_proce as VARCHAR))) + cast(id_proce as VARCHAR) + ' - ' + nombre_proce
 FROM Procedimientos
 ORDER BY nombre_proce
 
@@ -1356,7 +1356,7 @@ GO
 CREATE PROCEDURE [dbo].[_UpdateAtencionMedidaOPT_sp]
        (@id_consulta   int,
 		@atencion      char(1),
-		@observaOpt    varchar(180))
+		@observaOpt    VARCHAR(180))
 AS
 BEGIN TRAN
 UPDATE MedidaLentes
@@ -1381,23 +1381,23 @@ CREATE PROCEDURE [dbo].[_UpdateConsulta_sp]
 	    @id_paciente 	int,
 	    @nro_consulta	int,
 		@fch_consulta	datetime,
-		@motivo 	varchar (80),
-		@sp     	varchar (80),
-		@enf_actual 	varchar (800),
-		@valorK		varchar (80),
-		@shimer		varchar (10),
-		@davsc   	varchar (10),
-		@iavsc 		varchar (10),
-		@davcc 		varchar (10),
-		@iavcc 		varchar (10),
-		@dpio	    varchar (10),
-		@ipio	    varchar (10),
-		@diagnostico 	varchar (200),
-		@detaExam 	varchar (40),
-		@atiendePro varchar (180),
-		@notaPro 	varchar (120),
+		@motivo 	VARCHAR (80),
+		@sp     	VARCHAR (80),
+		@enf_actual 	VARCHAR (800),
+		@valorK		VARCHAR (80),
+		@shimer		VARCHAR (10),
+		@davsc   	VARCHAR (10),
+		@iavsc 		VARCHAR (10),
+		@davcc 		VARCHAR (10),
+		@iavcc 		VARCHAR (10),
+		@dpio	    VARCHAR (10),
+		@ipio	    VARCHAR (10),
+		@diagnostico 	VARCHAR (200),
+		@detaExam 	VARCHAR (40),
+		@atiendePro VARCHAR (180),
+		@notaPro 	VARCHAR (120),
 		@id_medico  int,
-		@exam_ocular varchar (400))
+		@exam_ocular VARCHAR (400))
 AS
 BEGIN TRAN
 UPDATE [Consulta]
@@ -1437,8 +1437,8 @@ GO
 
 create   PROC [dbo].[_UpdateExamenLab_sp]
 @id_exam 	int, 
-@nombre_exam	varchar(50),
-@nemo_exam	varchar(20)
+@nombre_exam	VARCHAR(50),
+@nemo_exam	VARCHAR(20)
 AS
 BEGIN TRAN
 UPDATE ExamenesLaboratorio
@@ -1464,7 +1464,7 @@ create PROCEDURE [dbo].[_UpdateInformePacientes_sp]
 	    @id_paciente 	int,
 	    @nro_info	int,
 		@fch_info	datetime,
-		@informe	varchar (80))
+		@informe	VARCHAR (80))
 AS
 BEGIN TRAN
 UPDATE InformesPaciente
@@ -1487,8 +1487,8 @@ GO
 
 CREATE   PROC [dbo].[_UpdateLinea_sp]
 @id_cia 	int, 
-@nombre_cia	varchar(50),
-@nemo_cia	varchar(20)
+@nombre_cia	VARCHAR(50),
+@nemo_cia	VARCHAR(20)
 AS
 BEGIN TRAN
 UPDATE CiaSeguros
@@ -1511,15 +1511,15 @@ GO
 
 CREATE PROC [dbo].[_UpdateMedicamento_sp]
 @id_articulo 	int,
-@cod_articulo	varchar(7),
-@name_comercial	varchar(50),
-@name_generico	varchar(50),
+@cod_articulo	VARCHAR(7),
+@name_comercial	VARCHAR(50),
+@name_generico	VARCHAR(50),
 @id_linea		int,
 @id_tipo		tinyint,
 @id_sunidad		int, 
-@dosis		    varchar(80), 
-@indicacion  	varchar(180),
-@estado 		varchar(1)
+@dosis		    VARCHAR(80), 
+@indicacion  	VARCHAR(180),
+@estado 		VARCHAR(1)
 AS
 BEGIN TRAN
 UPDATE Medicamentos
@@ -1548,22 +1548,22 @@ GO
 create PROCEDURE [dbo].[_UpdateMedidaLentes_sp]
        (@id_consulta	int,
 	    @idpaciente  int,
-		@OISPHL    nvarchar(6),
-		@OICYSL    nvarchar(6),
-		@OIAXIL    nvarchar(6),
-		@ODSPHL    nvarchar(6),
-		@ODCYSL    nvarchar(6),
-		@ODAXIL    nvarchar(6),
-		@PDL    nvarchar(3),
-		@OBSL    nvarchar(120),
-		@OISPHC    nvarchar(6),
-		@OICYSC    nvarchar(6),
-		@OIAXIC    nvarchar(6),
-		@ODSPHC    nvarchar(6),
-		@ODCYSC    nvarchar(6),
-		@ODAXIC    nvarchar(6),
-		@PDC    nvarchar(3),
-		@OBSC    nvarchar(120))
+		@OISPHL    nVARCHAR(6),
+		@OICYSL    nVARCHAR(6),
+		@OIAXIL    nVARCHAR(6),
+		@ODSPHL    nVARCHAR(6),
+		@ODCYSL    nVARCHAR(6),
+		@ODAXIL    nVARCHAR(6),
+		@PDL    nVARCHAR(3),
+		@OBSL    nVARCHAR(120),
+		@OISPHC    nVARCHAR(6),
+		@OICYSC    nVARCHAR(6),
+		@OIAXIC    nVARCHAR(6),
+		@ODSPHC    nVARCHAR(6),
+		@ODCYSC    nVARCHAR(6),
+		@ODAXIC    nVARCHAR(6),
+		@PDC    nVARCHAR(3),
+		@OBSC    nVARCHAR(120))
 AS
 BEGIN TRAN
 UPDATE MedidaLentes
@@ -1601,8 +1601,8 @@ GO
 
 CREATE  PROCEDURE [dbo].[_UpdateOcupacion_sp]
      ( @id_ocupa	int,
-       @nombre_ocupa	varchar(30),
-       @detalle_ocupa	varchar(15)
+       @nombre_ocupa	VARCHAR(30),
+       @detalle_ocupa	VARCHAR(15)
      )
 AS
 BEGIN TRAN
@@ -1629,9 +1629,9 @@ GO
 create PROCEDURE [dbo].[_UpdateOrdenesVarias_sp]
        (@id_consulta	int,
 	    @idpaciente  int,
-		@atencion   varchar(180),
-		@orden      varchar(800),
-		@observa   varchar(120))
+		@atencion   VARCHAR(180),
+		@orden      VARCHAR(800),
+		@observa   VARCHAR(120))
 AS
 BEGIN TRAN
 UPDATE OrdenesVarias
@@ -1658,9 +1658,9 @@ CREATE       PROCEDURE [dbo].[_UpdatePaciente_sp]
         @nhisto		char(7),
 		@fching 	datetime,
 		@condicion	char(1),
-		@apaterno	varchar(25),
-		@amaterno	varchar(25),
-		@nombres	varchar(60),
+		@apaterno	VARCHAR(25),
+		@amaterno	VARCHAR(25),
+		@nombres	VARCHAR(60),
 		@tipdoc		char(1),
 		@nrodocu	char(10),
 		@fchnac		datetime,
@@ -1668,33 +1668,33 @@ CREATE       PROCEDURE [dbo].[_UpdatePaciente_sp]
 		@estcivil	char(1),
 		@gruposa	char(1),
 		@nacion		char(1),
-		@procede	varchar(60),
+		@procede	VARCHAR(60),
 		@iddepa		int,
 		@idprov		int,
 		@iddist		int,
-		@direcc		varchar(60),
-		@telcasa	varchar(20),
-		@celular	varchar(20),
+		@direcc		VARCHAR(60),
+		@telcasa	VARCHAR(20),
+		@celular	VARCHAR(20),
 		@idocupa	int,
-		@centrab	varchar(40),
+		@centrab	VARCHAR(40),
 		@asegu		char(1),
-		@ncarnet	varchar(10),
+		@ncarnet	VARCHAR(10),
 		@ciaSeguro	int,
-		@contacto	varchar(60),
+		@contacto	VARCHAR(60),
 		@idparen	int,
-		@telcon		varchar(20),
-		@celcon		varchar(20),
-		@perfil		varchar(200),
-		@antecli         varchar(160),
-		@antefam        varchar(160),
+		@telcon		VARCHAR(20),
+		@celcon		VARCHAR(20),
+		@perfil		VARCHAR(200),
+		@antecli         VARCHAR(160),
+		@antefam        VARCHAR(160),
 		@hipertenso char(1),
         @diabetes   char(1),
-        @tipoDiabetes varchar(20),
+        @tipoDiabetes VARCHAR(20),
         @alergico    char(1), 
-	    @tipoAlergia varchar(25),
-		@cv          varchar(6),
-		@ocupacion   varchar(25),
-		@email       varchar(80),
+	    @tipoAlergia VARCHAR(25),
+		@cv          VARCHAR(6),
+		@ocupacion   VARCHAR(25),
+		@email       VARCHAR(80),
 		@id_medico	 int)
 AS
 BEGIN TRAN
@@ -1754,8 +1754,8 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE   PROC [dbo].[_UpdateProcedimiento_sp]
 @id_proce 	int, 
-@nombre_proce	varchar(50),
-@nemo_proce	varchar(20)
+@nombre_proce	VARCHAR(50),
+@nemo_proce	VARCHAR(20)
 AS
 BEGIN TRAN
 UPDATE Procedimientos

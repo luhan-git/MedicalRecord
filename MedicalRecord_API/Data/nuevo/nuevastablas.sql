@@ -98,22 +98,22 @@ CREATE TABLE Alergia (
 
 DROP TABLE IF EXISTS departamento;
 CREATE TABLE departamento (
-  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  departamento varchar(50) NOT NULL
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  departamento VARCHAR(50) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=26;
 
 DROP TABLE IF EXISTS provincia;
 CREATE TABLE provincia (
-  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  provincia varchar(50) NOT NULL,
-  idDepartamento int NOT NULL REFERENCES departamento(id)
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  provincia VARCHAR(50) NOT NULL,
+  idDepartamento INT NOT NULL REFERENCES departamento(id)
 ) ENGINE=InnoDB AUTO_INCREMENT=194;
 
 DROP TABLE IF EXISTS distrito;
 CREATE TABLE distrito (
-  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  distrito varchar(50) NOT NULL,
-  idProvincia int NOT NULL REFERENCES provincia(id)
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  distrito VARCHAR(50) NOT NULL,
+  idProvincia INT NOT NULL REFERENCES provincia(id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1833;
 
 DROP TABLE IF EXISTS Parentesco;
@@ -176,7 +176,7 @@ CREATE TABLE DetalleAlergia (
 DROP TABLE IF EXISTS Consulta;
 CREATE TABLE Consulta(
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	numeroConsulta varchar(7),
+	numeroConsulta VARCHAR(7),
 	motivo VARCHAR(80) NOT NULL,
 	enfermedadActual VARCHAR(200) NULL,
 	davsc VARCHAR(10) NULL,
@@ -213,7 +213,7 @@ CREATE TABLE DetalleProcedimiento(
     indicacion VARCHAR(255),
     resultado VARCHAR(500),
     imagenes BOOL DEFAULT FALSE,
-    directorio varchar(500),
+    directorio VARCHAR(500),
     fechaResultado DATETIME NULL
 );
 DROP TABLE IF EXISTS MedidaLente;
