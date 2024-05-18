@@ -34,27 +34,27 @@ namespace MedicalRecord_API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Response>> GetUsuarios()
         {
-            _logger.LogInformation("{StatusCode}[{HttpStatusCode}]: Handling GETUSUARIOS request", StatusCodes.Status102Processing, HttpStatusCode.Processing);
+            _logger.LogInformation("{StatusCode}[{HttpStatusCode}]:Procesando la solicitud a GETUSUARIOS", StatusCodes.Status102Processing, HttpStatusCode.Processing);
 
             try
             {
                 IEnumerable<UsuarioDto> usuarioList = _mapper.Map<IEnumerable<UsuarioDto>>(await _usuarioRepo.Query());
                 _response.Resultado = usuarioList;
-                _response.Status = HttpStatusCode.OK;
-                _logger.LogInformation("{StatusCode}[{HttpStatusCode}]: Request handled successfully", StatusCodes.Status200OK, HttpStatusCode.OK);
+                _response.IsExitoso = true;
+                _response.Status = HttpStatusCode.OK; 
+                _logger.LogInformation("{StatusCode}[{HttpStatusCode}]: Respuesta exitosa de GETUSUARIO", StatusCodes.Status200OK, HttpStatusCode.OK);
 
                 return Ok(_response);
             }
             catch (Exception ex)
             {
-                _response.IsExitoso = false;
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes =[ ex.ToString() ];
-                _logger.LogError("{StatusCode}[{HttpStatusCode}]: Error handling GETUSUARIOS request", StatusCodes.Status500InternalServerError, HttpStatusCode.InternalServerError);
+                _logger.LogError("{StatusCode}[{HttpStatusCode}]: Error en la respuesta de GETUSUARIOS", StatusCodes.Status500InternalServerError, HttpStatusCode.InternalServerError);
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
-        [HttpGet("Id:int", Name = "GetUsuario")]
+        [HttpGet("{Id:int}", Name = "GetUsuario")]
         [ProducesResponseType(StatusCodes.Status102Processing)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
@@ -62,37 +62,35 @@ namespace MedicalRecord_API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Response>> GetUsuario(int Id)
         {
-            _logger.LogInformation("{StatusCode}[{HttpStatusCode}]: Handling GETUSUARIO request", StatusCodes.Status102Processing, HttpStatusCode.Processing);
-
-            try
-            {
+            _logger.LogInformation("{StatusCode}[{HttpStatusCode}]:Procesando la solicitud a GETUSUARIO", StatusCodes.Status102Processing, HttpStatusCode.Processing);           
                 if (Id == 0)
                 {
                     _response.Status = HttpStatusCode.BadRequest;
-                    _response.IsExitoso = false;
-                    _logger.LogError("{StatusCode}[{HttpStatusCode}]: Error handling GETUSUARIO request", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest);
+                    _response.ErrorMensajes=["id: argumento no puede ser 0"];
+                   _logger.LogError("{StatusCode}[{HttpStatusCode}]: id: argumento no puede ser 0", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest);
                     return BadRequest(_response);
                 }
+            try
+            {
                 UsuarioDto usuarioDto = _mapper.Map<UsuarioDto>(await _usuarioRepo.GetEntity(u =>u.Id == Id, false));
                 if (usuarioDto == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.IsExitoso = false;
-                    _logger.LogError("{StatusCode}[{HttpStatusCode}]: Error handling GETUSUARIO request", StatusCodes.Status404NotFound, HttpStatusCode.NotFound);
+                    _response.ErrorMensajes = [" modelo: no esxiste en la base de datos"];
+                    _logger.LogError("{StatusCode}[{HttpStatusCode}]: modelo: no esxiste en la base de datos", StatusCodes.Status404NotFound, HttpStatusCode.NotFound);
                     return NotFound(_response);
                 }
                 _response.Status = HttpStatusCode.OK;
+                _response.IsExitoso = true;
                 _response.Resultado = usuarioDto;
-                _logger.LogInformation("{StatusCode}[{HttpStatusCode}]: Request handled successfully", StatusCodes.Status200OK, HttpStatusCode.OK);
-
+                _logger.LogInformation("{StatusCode}[{HttpStatusCode}]: Respuesta exitosa de GETUSUARIO", StatusCodes.Status200OK, HttpStatusCode.OK);
                 return Ok(_response);
             }
             catch (Exception ex)
             {
-                _response.IsExitoso = false;
                 _response.ErrorMensajes = [ex.ToString()];
                 _response.Status = HttpStatusCode.InternalServerError;
-                _logger.LogError("{StatusCode}[{HttpStatusCode}]: Error handling GETUSUARIOS request", StatusCodes.Status500InternalServerError, HttpStatusCode.InternalServerError);
+                _logger.LogError("{StatusCode}[{HttpStatusCode}]: Error en la respuesta de GETUSUARIO", StatusCodes.Status500InternalServerError, HttpStatusCode.InternalServerError);
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
 
             }
@@ -103,23 +101,32 @@ namespace MedicalRecord_API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Response>> Create([FromBody] UsuarioCreateDto dto)
         {
-            _logger.LogInformation("{StatusCode}[{HttpStatusCode}]: Handling CREATE request", StatusCodes.Status102Processing, HttpStatusCode.Processing);
-
+            _logger.LogInformation("{StatusCode}[{HttpStatusCode}]:Procesando la solicitud CREATE", StatusCodes.Status102Processing, HttpStatusCode.Processing);
+            if (dto == null) 
+            {
+                _response.ErrorMensajes = ["modelo: no puede ser null"];
+                _logger.LogError("{StatusCode}[{HttpStatusCode}] : modelo: modelo no puede ser null", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest);
+                return BadRequest(_response);
+            };
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("{StatusCode}[{HttpStatusCode}] {ModelState}", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest, ModelState.ToString());
+                return BadRequest(ModelState);
+            };
             try
             {
-                if (!ModelState.IsValid) return BadRequest(ModelState);
-                if (dto == null) return BadRequest(dto);
-                if (await _usuarioRepo.GetEntity(u => u.Correo.ToUpper() == dto.Correo.ToUpper(), false) != null)
+                if (await _usuarioRepo.GetEntity(u => string.Equals(u.Correo,dto.Correo), false) != null)
                 {
-                    ModelState.AddModelError("correoExiste", "El Usuario con este Correo ya existe");
+                    _response.ErrorMensajes = ["correoExiste", "El Usuario con este Correo ya existe"];
                     _logger.LogError("{StatusCode}[{HttpStatusCode}]: Error handling CREATE request", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest);
-                    return BadRequest(ModelState);
+                    return BadRequest(_response);
                 }
 
                 Usuario modelo = _mapper.Map<Usuario>(dto);
                 modelo = await _usuarioRepo.Create(modelo);
                 _response.Resultado = _mapper.Map<UsuarioDto>(modelo);
                 _response.Status = HttpStatusCode.Created;
+                _response.IsExitoso = true;
                 _logger.LogInformation("{StatusCode}[{HttpStatusCode}]: Request handled successfully", StatusCodes.Status201Created, HttpStatusCode.Created);
                 return CreatedAtRoute("GetUsuario", new { id = modelo.Id }, _response);
             }
@@ -144,7 +151,6 @@ namespace MedicalRecord_API.Controllers
 
             if (id == 0)
                 {
-                    _response.IsExitoso = false;
                     _response.Status = HttpStatusCode.BadRequest;
                     _response.ErrorMensajes= ["id: argumento no puede ser 0"];
                    _logger.LogError("{StatusCode}[{HttpStatusCode}]: id: argumento no puede ser 0", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest);
@@ -152,15 +158,13 @@ namespace MedicalRecord_API.Controllers
                 }
                 if (dto == null)
                 {
-                    _response.IsExitoso = false;
                     _response.Status = HttpStatusCode.BadRequest;
-                   _response.ErrorMensajes = ["modelo: argumento no puede ser null"];
+                   _response.ErrorMensajes = ["modelo: no puede ser null"];
                    _logger.LogError("{StatusCode}[{HttpStatusCode}]: modelo: argumento no puede ser null", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest);
                    return BadRequest(_response);
                 }
               if (dto.Id!=id)
                  {
-                _response.IsExitoso = false;
                 _response.Status = HttpStatusCode.BadRequest;
                 _response.ErrorMensajes = ["id: argumento id & modelo.id no pueden ser diferenes"];
                 _logger.LogError("{StatusCode}[{HttpStatusCode}]: id: argumento id & modelo.id no pueden ser diferenes", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest);
@@ -168,23 +172,29 @@ namespace MedicalRecord_API.Controllers
                 }
             if (!ModelState.IsValid) 
             {
-                _logger.LogError(ModelState.ToString(),"{StatusCode}[{HttpStatusCode}]", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest);
+                _logger.LogError("{StatusCode}[{HttpStatusCode}] {ModelState}", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest, ModelState.ToString());
                 return BadRequest(ModelState);
             };
             try
             {
+                if (await _usuarioRepo.GetEntity(u => u.Id == id) == null) {
+                    _response.Status = HttpStatusCode.NotFound;
+                    _response.ErrorMensajes = ["modelo: no esxiste en la base de datos"];
+                    _logger.LogError("{StatusCode}[{HttpStatusCode}]: modelo: no esxiste en la base de datos", StatusCodes.Status404NotFound, HttpStatusCode.NotFound);
+                    return BadRequest(_response);
+                }
                 await _usuarioRepo.Update(_mapper.Map<Usuario>(dto));
                 _logger.LogInformation("{StatusCode}[{HttpStatusCode}]: Respuesta de UPDATE ha sido exitosa", StatusCodes.Status204NoContent, HttpStatusCode.NoContent);
                 _response.Status = HttpStatusCode.NoContent;
+                _response.IsExitoso = true;
                 return Ok(_response);
             }
             catch (Exception ex)
             {
-                _response.IsExitoso = false;
                 _response.Status= HttpStatusCode.BadRequest;
                 _response.ErrorMensajes = [ex.ToString()];
-                _logger.LogError("{StatusCode}[{HttpStatusCode}]: Error al intentar UPDATE", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest);
-                return BadRequest(_response);
+                _logger.LogError("{StatusCode}[{HttpStatusCode}]: Error al intentar UPDATE", StatusCodes.Status500InternalServerError, HttpStatusCode.InternalServerError);
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
             
 
