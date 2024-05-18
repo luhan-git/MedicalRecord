@@ -15,6 +15,7 @@ CREATE TABLE Usuario (
     fechaRegistro DATETIME DEFAULT CURRENT_TIMESTAMP,
     ultimaSesion DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
 DROP TABLE IF EXISTS Laboratorio;
 CREATE TABLE Laboratorio (
 	id INT AUTO_INCREMENT PRIMARY KEY,
@@ -28,6 +29,7 @@ CREATE TABLE Presentacion (
 	nombre VARCHAR(30) NOT NULL,
 	abreviatura VARCHAR(4) NULL
 );
+
 DROP TABLE IF EXISTS CIE;
 CREATE TABLE CIE (
 	id INT AUTO_INCREMENT PRIMARY KEY,
@@ -55,6 +57,7 @@ CREATE TABLE CiaSeguro (
 	nombre VARCHAR(50) NOT NULL,
 	abreviatura VARCHAR(20) NULL
 );
+
 DROP TABLE IF EXISTS Directorio;
 CREATE TABLE Directorio (
 	id INT AUTO_INCREMENT PRIMARY KEY,
@@ -66,12 +69,14 @@ CREATE TABLE Directorio (
 	direccion VARCHAR(180) NULL,
 	estado BOOL DEFAULT TRUE
 );
+
 DROP TABLE IF EXISTS Ocupacion;
 CREATE TABLE Ocupacion (
 	id INT AUTO_INCREMENT  PRIMARY KEY,
 	nombre VARCHAR(60) NOT NULL,
 	detalle VARCHAR(20) NULL
 );
+
 DROP TABLE IF EXISTS Medicamento;
 CREATE TABLE Medicamento (
 	id INT AUTO_INCREMENT PRIMARY KEY,
@@ -84,12 +89,14 @@ CREATE TABLE Medicamento (
     idPresentacion INT NOT NULL REFERENCES Presentacion(id),
     idLaboratorio INT NOT NULL REFERENCES Laboratorio(id)
 );
+
 DROP TABLE IF EXISTS Diabetes;
 CREATE TABLE Diabetes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tipo VARCHAR(50) NOT NULL,
     detalle VARCHAR(100)
 );
+
 DROP TABLE IF EXISTS Alergia;
 CREATE TABLE Alergia (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -125,37 +132,37 @@ CREATE TABLE Parentesco(
 DROP TABLE IF EXISTS Paciente;
 CREATE TABLE Paciente(
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	condicion CHAR(1) NOT NULL CHECK(condicion IN('0','1','2')),
+	condicion CHAR(1) NOT NULL CHECK(condicion IN('0','1','2')) DEFAULT '0',-- Regular, retirado, fallecido
 	aPaterno VARCHAR(25) NOT NULL,
 	aMaterno VARCHAR(25) NOT NULL,
 	nombres VARCHAR(50) NOT NULL,
-	tipoDocumento CHAR(1) NOT NULL CHECK(tipoDocumento IN('0','1','2','3')),
+	tipoDocumento CHAR(1) NOT NULL CHECK(tipoDocumento IN('0','1','2','3')) DEFAULT '0',-- DNI ...
 	numeroDocumento VARCHAR(12) NOT NULL,
 	fechaNacimiento DATETIME NOT NULL,
     edad VARCHAR(3) NOT NULL,
-	sexo BOOL NOT NULL,
-	estadoCivil CHAR(1) NOT NULL CHECK ( estadoCivil IN('0','1','2','3','4') ),
-	grupoSanguineo VARCHAR(10) NOT NULL CHECK (grupoSanguineo IN('0','1','2','3','4','5','6','7','8')),
-	nacionalidad CHAR(1) NOT NULL CHECK ( nacionalidad IN('0','1') ),
-	idDepartamento INT NOT NULL REFERENCES departamento(id),
-	idProvincia INT NOT NULL REFERENCES provincia(id),
-	idDistrito INT NOT NULL REFERENCES distrito(id),
+	sexo CHAR(1) NOT NULL CHECK(sexo IN('M', 'F')),
+	estadoCivil CHAR(1) NOT NULL CHECK (estadoCivil IN('0','1','2','3','4')) DEFAULT '0',-- Soltero ...
+	grupoSanguineo VARCHAR(10) NOT NULL CHECK (grupoSanguineo IN('0','1','2','3','4','5','6','7','8')) DEFAULT '0',-- No indica ...
+	nacionalidad CHAR(1) NOT NULL CHECK (nacionalidad IN('0','1') ),-- Peruana/Extranjera
+	idDepartamento INT REFERENCES departamento(id),
+	idProvincia INT REFERENCES provincia(id),
+	idDistrito INT REFERENCES distrito(id),
 	direccion VARCHAR(60) NULL,
 	telefono VARCHAR(20) NULL,
     celular VARCHAR(20) NULL,
 	centroTrabajo VARCHAR(40) NULL,
     asegurado BOOL DEFAULT FALSE,
-    idCiaSeguro INT NULL REFERENCES CiaSeguro(id),
+    idCiaSeguro INT NULL  REFERENCES CiaSeguro(id),
 	numeroCarnet VARCHAR(10) NULL,
 	contacto VARCHAR(50) NULL,
-    idParentesco INT REFERENCES parentesco(id),
+    idParentesco INT NULL REFERENCES parentesco(id),
 	telefonoContacto VARCHAR(20) NULL,
 	celularContacto VARCHAR(20) NULL,
 	perfil VARCHAR(200) NULL,
 	antecedentesClinicos VARCHAR(150) NULL,
 	antecedentesFamiliares VARCHAR(150) NULL,
 	idOcupacion INT NULL REFERENCES ocupacion(id),
-	presionArterial CHAR(3) NOT NULL CHECK ( presionArterial IN('0','1','2') ),
+	presionArterial CHAR(3) NOT NULL CHECK ( presionArterial IN('0','1','2') ) DEFAULT '1',
 	campoVisual VARCHAR(6) NULL,
 	email VARCHAR(80) NULL,
     diabetico BOOL DEFAULT FALSE,
@@ -163,7 +170,9 @@ CREATE TABLE Paciente(
     alergico BOOL DEFAULT FALSE,
     fechaCreacion DATETIME DEFAULT CURRENT_TIMESTAMP,
     fechaActualizacion DATETIME ON UPDATE CURRENT_TIMESTAMP
+    
 );
+
 DROP TABLE IF EXISTS DetalleAlergia;
 CREATE TABLE DetalleAlergia (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -195,6 +204,7 @@ CREATE TABLE Consulta(
     fechaActualizacion DATETIME ON UPDATE CURRENT_TIMESTAMP
 
 );
+
 DROP TABLE IF EXISTS DetalleExamen;
 CREATE TABLE DetalleExamen (
     id INT AUTO_INCREMENT PRIMARY KEY ,
@@ -204,6 +214,7 @@ CREATE TABLE DetalleExamen (
     resultado VARCHAR(500),
     fechaResultado DATETIME NULL
 );
+
 DROP TABLE IF EXISTS DetalleProcedimiento;
 CREATE TABLE DetalleProcedimiento(
     id INT AUTO_INCREMENT PRIMARY KEY ,
@@ -216,6 +227,7 @@ CREATE TABLE DetalleProcedimiento(
     directorio VARCHAR(500),
     fechaResultado DATETIME NULL
 );
+
 DROP TABLE IF EXISTS MedidaLente;
 CREATE TABLE MedidaLente(
 	id INT AUTO_INCREMENT  PRIMARY KEY,
@@ -249,6 +261,7 @@ CREATE TABLE MedidaLente(
 
     preventiva BOOL DEFAULT FALSE
 );
+
 DROP TABLE IF EXISTS Medicacion;
 CREATE TABLE Medicacion(
 	id INT AUTO_INCREMENT PRIMARY KEY,
