@@ -39,7 +39,7 @@ namespace MedicalRecord_API.Repository.Implements
 
         public async Task Update(Usuario entity)
         {
-            var idParam = new MySqlParameter("@id_update",entity.Id);
+            var idParam = new MySqlParameter("@idUpdate",entity.Id);
             var nombreParam = new MySqlParameter("@nombre", entity.Nombre);
             var correoParam = new MySqlParameter("@correo", entity.Correo);
             var claveParam = new MySqlParameter("@clave", entity.Clave);
