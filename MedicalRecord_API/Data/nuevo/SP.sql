@@ -1,8 +1,8 @@
 USE dbhistorias;
 -- Usuario
 DELIMITER $
-DROP PROCEDURE IF EXISTS InsertUsuario_sp;
-CREATE PROCEDURE InsertUsuario_sp(
+DROP PROCEDURE IF EXISTS sp_InsertUsuario;
+CREATE PROCEDURE sp_InsertUsuario(
   IN nombre VARCHAR(50),
   IN correo VARCHAR(50),
   IN clave VARCHAR(250),
@@ -20,16 +20,15 @@ BEGIN
     INSERT INTO Usuario (nombre,correo,clave,cargo,especialidad,nroColMedico)
     VALUES (nombre,correo,clave,cargo,especialidad,nroColMedico);
     COMMIT;
-END;
+END$
 DELIMITER ;
 
 DELIMITER $
-DROP PROCEDURE IF EXISTS UpdateUsuario_sp;
-CREATE PROCEDURE UpdateUsuario_sp(
+DROP PROCEDURE IF EXISTS sp_UpdateUsuario;
+CREATE PROCEDURE sp_UpdateUsuario(
   IN idUpdate INT,
   IN nombre VARCHAR(50),
   IN correo VARCHAR(50),
-  IN clave VARCHAR(250),
   IN cargo VARCHAR(30),
   IN especialidad VARCHAR(30),
   IN nroColMedico VARCHAR(6),
@@ -42,17 +41,17 @@ BEGIN
     END;
 
     START TRANSACTION;
-    UPDATE  Usuario SET nombre=nombre,correo=correo,clave=clave,cargo=cargo,
+    UPDATE  Usuario SET nombre=nombre,correo=correo,cargo=cargo,
     especialidad=especialidad,nroColMedico=nroColmedico=nroColMedico,
-    activo=activo where id=idUpdate;
+    activo=activo where id=id_pdate;
     COMMIT;
-END;
+END$
 DELIMITER ;
 
 -- CIE
 DELIMITER $
-DROP PROCEDURE IF EXISTS InsertCie_sp;
-CREATE PROCEDURE InsertCie_sp(
+DROP PROCEDURE IF EXISTS sp_InsertCie;
+CREATE PROCEDURE sp_InsertCie(
   IN codigo VARCHAR(5),
   IN enfermedad VARCHAR(120)
 )
@@ -64,12 +63,12 @@ BEGIN
     START TRANSACTION;
     INSERT INTO Cie (codigo, enfermedad) VALUES (codigo,enfermedad);
     COMMIT;
-END;
+END$
 DELIMITER ;
 
 DELIMITER $
-DROP PROCEDURE IF EXISTS UpdateCie_sp;
-CREATE PROCEDURE UpdateCie_sp(
+DROP PROCEDURE IF EXISTS sp_UpdateCie;
+CREATE PROCEDURE sp_UpdateCie(
   IN idUpdate int,
   IN codigo VARCHAR(5),
   IN enfermedad VARCHAR(20)
@@ -80,15 +79,15 @@ BEGIN
         ROLLBACK;
     END;
     START TRANSACTION;
-    update Cie set codigo=codigo,enfermedad=enfermedad where id=idUpdate;
+    update Cie set codigo=codigo,enfermedad=enfermedad where id=id_update;
     COMMIT;
-END;
+END$
 DELIMITER ;
 
 -- CIA SEGURO --- MIO 
 DELIMITER $
-DROP PROCEDURE IF EXISTS InsertCia_sp;
-CREATE PROCEDURE InsertCia_sp(
+DROP PROCEDURE IF EXISTS InsertCiaSeguro_sp;
+CREATE PROCEDURE InsertCiaSeguro_sp(
     IN nombre VARCHAR(50),
     IN abreviatura VARCHAR(20),
     OUT id INT
@@ -102,18 +101,18 @@ BEGIN
 
     START TRANSACTION;
 
-    INSERT INTO CiaSeguros(nombre, abreviatura) 
+    INSERT INTO CiaSeguro(nombre, abreviatura) 
     VALUES(nombre, abreviatura);
 
     SET id = LAST_INSERT_ID();
 
     COMMIT;
-END;
-DELIMITER;
+END$
+DELIMITER ;
 
 DELIMITER $
-DROP PROCEDURE IF EXISTS UpdateCia_sp;
-CREATE PROCEDURE UpdateCia_sp(
+DROP PROCEDURE IF EXISTS UpdateCiaSeguro_sp;
+CREATE PROCEDURE UpdateCiaSeguro_sp(
     IN id INT,
     IN nombre VARCHAR(50),
     IN abreviatura VARCHAR(20)
@@ -132,7 +131,7 @@ BEGIN
     WHERE id = id;
 
     COMMIT;
-END;
+END$
 DELIMITER;
 
 -- DIRECTORIO
@@ -163,7 +162,7 @@ BEGIN
 
     COMMIT;
 END;
-DELIMITER;
+DELIMITER ;
 
 DELIMITER $
 DROP PROCEDURE IF EXISTS UpdateDirectorio_sp;
@@ -196,8 +195,8 @@ BEGIN
     WHERE id = id;
 
     COMMIT;
-END;
-DELIMITER;
+END$
+DELIMITER ;
 
 -- PROCEDIMIENTO
 DELIMITER $
@@ -222,8 +221,8 @@ BEGIN
     SET id = LAST_INSERT_ID();
 
     COMMIT;
-END;
-DELIMITER;
+END$
+DELIMITER ;
 
 DELIMITER $
 DROP PROCEDURE IF EXISTS UpdateProcedimiento_sp;
@@ -246,8 +245,8 @@ BEGIN
     WHERE id = id;
 
     COMMIT;
-END;
-DELIMITER;
+END$
+DELIMITER ;
 
 -- CAMPO VISUAL
 -- NO HAY NINGUN PROCEDIMIENTO PARA ESO - LO REVISO MAS ADELANTE
@@ -273,8 +272,8 @@ BEGIN
     SET id = LAST_INSERT_ID();
 
     COMMIT;
-END;
-DELIMITER;
+END$
+DELIMITER ;
 
 DELIMITER $
 DROP PROCEDURE IF EXISTS UpdateOcupacion_sp;
@@ -297,6 +296,5 @@ BEGIN
     WHERE id = id;
 
     COMMIT;
-END;
-DELIMITER;
-
+END$
+DELIMITER ;

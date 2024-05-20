@@ -6,7 +6,7 @@ using System.Data;
 
 namespace MedicalRecord_API.Repository.Implements
 {
-    public class ProcedimientoRepository : GenericRepository<Procedimiento>, IProcedimiento
+    public class ProcedimientoRepository : GenericRepository<Procedimiento>, IProcedimientoRepository
     {
         private readonly DbhistoriasContext _context;
         private readonly ILogger<ProcedimientoRepository> _logger;
@@ -16,7 +16,8 @@ namespace MedicalRecord_API.Repository.Implements
             _context = context;
             _logger = logger;
         }
-        public async Task<int> Create(Procedimiento entity)
+
+        public async Task<Procedimiento> Create(Procedimiento entity)
         {
             try
             {
@@ -26,26 +27,26 @@ namespace MedicalRecord_API.Repository.Implements
                 var command = connection.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "InsertProcedimiento_sp";
-                command.Parameters.Add(new MySqlParameter("@p_nombre_proce", entity.Nombre));
-                command.Parameters.Add(new MySqlParameter("@p_nemo_proce", entity.Abreviatura));
+                command.Parameters.Add(new MySqlParameter("@nombre", entity.Nombre));
+                command.Parameters.Add(new MySqlParameter("@abreviatura", entity.Abreviatura));
 
-                var idProcedimientosParam = new MySqlParameter("@p_id_proce", MySqlDbType.Int32)
+                var idProcedimientoParam = new MySqlParameter("@id", MySqlDbType.Int32)
                 {
                     Direction = ParameterDirection.Output
                 };
-                command.Parameters.Add(idProcedimientosParam);
+                command.Parameters.Add(idProcedimientoParam);
 
                 await command.ExecuteNonQueryAsync();
 
-                var idProcedimientos = (int)idProcedimientosParam.Value;
-                if (idProcedimientos == -1)
+                var idProcedimiento = (int)idProcedimientoParam.Value;
+                if (idProcedimiento == -1)
                 {
                     throw new Exception("El procedimiento almacenado InsertProcedimiento_sp devolvió -1, indicando un error.");
                 }
 
-                _logger.LogInformation("Registro de inserción en Procedimientos con ID:{@p_id_proce}", idProcedimientos);
-                
-                return idProcedimientos;
+                _logger.LogInformation("Registro de inserción en Procedimiento con ID:{@id}", idProcedimiento);
+
+                return await _context.Set<Procedimiento>().FirstOrDefaultAsync(c => c.Id == idProcedimiento) ?? new();
             }
             catch (Exception ex)
             {
@@ -64,20 +65,19 @@ namespace MedicalRecord_API.Repository.Implements
                 var command = connection.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "UpdateProcedimiento_sp";
-                command.Parameters.Add(new MySqlParameter("@p_id_proce", entity.Id));
-                command.Parameters.Add(new MySqlParameter("@p_nombre_proce", entity.Nombre));
-                command.Parameters.Add(new MySqlParameter("@p_nemo_proce", entity.Abreviatura));
+                command.Parameters.Add(new MySqlParameter("@id", entity.Id));
+                command.Parameters.Add(new MySqlParameter("@nombre", entity.Nombre));
+                command.Parameters.Add(new MySqlParameter("@abreviatura", entity.Abreviatura));
 
                 await command.ExecuteNonQueryAsync();
 
-                _logger.LogInformation("Registro de actualización en Procedimientos con ID:{@p_id_proce}", entity.Id);
+                _logger.LogInformation("Registro de actualización en Procedimiento con ID:{@id}", entity.Id);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Excepción al intentar actualizar un registro en Procedimiento");
                 throw;
             }
-
         }
     }
 }

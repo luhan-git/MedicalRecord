@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MedicalRecord_API.Models;
+using MedicalRecord_API.Models.Dtos.CiaSeguro;
 using MedicalRecord_API.Models.Dtos.Cie;
 using MedicalRecord_API.Models.Dtos.Usuario;
 
@@ -14,16 +15,18 @@ namespace MedicalRecord_API.Utils.AutoMapper
             CreateMap<Usuario, UsuarioCreateDto>().ReverseMap();
             CreateMap<Usuario, UsuarioUpdateDto>().ReverseMap();
             #endregion Usuario
+
             #region Cie
             CreateMap<Cie, CieDto>().ReverseMap();
             CreateMap<Cie,CieCreateDto>().ReverseMap();
             CreateMap<Cie,CieUpdateDto>().ReverseMap();
             #endregion Cie
-            //#region CiaSeguros
-            //CreateMap<CiaSeguros, CiaSegurosDto>().ReverseMap();
-            //CreateMap<CiaSeguros, CiaSegurosCreateDto>().ReverseMap();
-            //CreateMap<CiaSeguros, CiaSegurosUpdateDto>().ReverseMap();
-            //#endregion CiaSeguros
+
+            #region CiaSeguros
+            CreateMap<Ciaseguro, CiaSeguroCreateDto>().ReverseMap();
+            //CreateMap<Ciaseguro, CiaSegurosCreateDto>().ReverseMap();
+            //CreateMap<Ciaseguro, CiaSegurosUpdateDto>().ReverseMap();
+            #endregion CiaSeguros
 
             //#region Directorio
             //CreateMap<Directorio, DirectorioDto>().ReverseMap();

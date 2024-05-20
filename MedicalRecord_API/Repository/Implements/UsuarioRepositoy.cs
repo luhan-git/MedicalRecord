@@ -25,7 +25,7 @@ namespace MedicalRecord_API.Repository.Implements
             try
             {
             
-                await _context.Database.ExecuteSqlRawAsync("CALL sp_InsertUsuario(@nombre, @correo, @clave, @cargo, @especialidad, @nroColMedico)",
+                await _context.Database.ExecuteSqlRawAsync("CALL InsertUsuario_sp(@nombre, @correo, @clave, @cargo, @especialidad, @nroColMedico)",
                                                            new MySqlParameter("@nombre", entity.Nombre),
                                                            new MySqlParameter("@correo", entity.Correo),
                                                            new MySqlParameter("@clave",  entity.Clave),
@@ -54,7 +54,7 @@ namespace MedicalRecord_API.Repository.Implements
                 }
                 
 
-                await _context.Database.ExecuteSqlRawAsync("CALL sp_UpdateUsuario(@idUpdate,@nombre, @correo, @cargo, @especialidad, @nroColMedico,@activo)",
+                await _context.Database.ExecuteSqlRawAsync("CALL UpdateUsuario_sp(@idUpdate,@nombre, @correo, @cargo, @especialidad, @nroColMedico,@activo)",
                                                            new MySqlParameter("@idUpdate", entity.Id),
                                                            new MySqlParameter("@nombre", entity.Nombre),
                                                            new MySqlParameter("@correo", entity.Correo),

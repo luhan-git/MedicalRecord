@@ -17,9 +17,11 @@ namespace MedicalRecord_API.Dependencies
 
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddAutoMapper(typeof(AutoMapperProfile));
+            services.AddScoped<IUtilsService, UtilsService>();
+
             services.AddScoped<IUsuarioRepository, UsuarioRepositoy>();
             services.AddScoped<ICieRepository, CieRepository>();
-            services.AddScoped<IUtilsService, UtilsService>();
+            services.AddScoped<ICiaSeguroRepository, CiaSeguroRepository>();
         }
     }
 }

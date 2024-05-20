@@ -14,13 +14,13 @@ namespace MedicalRecord_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CiesController : ControllerBase
+    public class CieController : ControllerBase
     {
         private readonly ICieRepository _cieRepo;
         private readonly IMapper _mapper;
-        private readonly ILogger<CiesController> _logger;
+        private readonly ILogger<CieController> _logger;
         protected Response _response;
-        public CiesController(ICieRepository cieRepo, IMapper mapper, ILogger<CiesController> logger)
+        public CieController(ICieRepository cieRepo, IMapper mapper, ILogger<CieController> logger)
         {
             _cieRepo = cieRepo;
             _mapper = mapper;

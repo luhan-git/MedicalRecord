@@ -4,7 +4,7 @@ namespace MedicalRecord_API.Repository.Interfaces
 {
     public interface IOcupacionRepository
     {
-        Task<int> Create(Ocupacion entity);
+        Task<Ocupacion> Create(Ocupacion entity);
         Task Update(Ocupacion entity);
     }
 }

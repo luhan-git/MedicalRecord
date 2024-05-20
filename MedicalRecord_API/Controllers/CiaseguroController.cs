@@ -1,115 +1,110 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
 using MedicalRecord_API.Repository.Interfaces;
-using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using MedicalRecord_API.Utils.Response;
-using MedicalRecord_API.Models.Dtos;
-using System.Net;
+using MedicalRecord_API.Models.Dtos.CiaSeguro;
 using MedicalRecord_API.Models;
+using System.Net;
 
 namespace MedicalRecord_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CiaseguroController : ControllerBase
+    public class CiaSeguroController : ControllerBase
     {
-        /*private readonly ICiaSeguroRepository _ciaSegurosRepo;
+        private readonly ICiaSeguroRepository _ciaRepo;
         private readonly IMapper _mapper;
+        private readonly ILogger<CiaSeguroController> _logger;
         protected Response _response;
 
-        public CiaSegurosController(ICiaSeguroRepository ciaSegurosRepo, IMapper mapper)
+        public CiaSeguroController(
+            ICiaSeguroRepository ciaRepo,
+            IMapper mapper,
+            ILogger<CiaSeguroController> logger)
         {
-            _ciaSegurosRepo = ciaSegurosRepo;
+            _ciaRepo = ciaRepo;
             _mapper = mapper;
-            _response = new();
-        }
-
-        [HttpGet(Name = "GetAll")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Response>> GetAll()
-        {
-            try
-            {
-                IEnumerable<CiaSeguroDto> ciaSegurosList = _mapper.Map<IEnumerable<CiaSeguroDto>>(await _ciaSegurosRepo.Query());
-                _response.Resultado = ciaSegurosList;
-                _response.StatusCode = HttpStatusCode.OK;
-                return Ok(_response);
-            }
-            catch (Exception ex)
-            {
-                _response.IsExitoso = false;
-                _response.StatusCode = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = [ex.ToString()];
-            }
-            return _response;
-        }
-
-        [HttpGet("Id:int", Name = "Get")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Response>> Get(int Id)
-        {
-            try
-            {
-                if (Id == 0)
-                {
-                    _response.StatusCode = HttpStatusCode.BadRequest;
-                    _response.IsExitoso = false;
-                    return BadRequest(_response);
-                }
-                CiaSeguroDto ciaSeguroDto = _mapper.Map<CiaSeguroDto>(await _ciaSegurosRepo.GetEntity(c => c.IdCia == Id, false));
-                if (ciaSeguroDto == null)
-                {
-                    _response.StatusCode = HttpStatusCode.NotFound;
-                    _response.IsExitoso = false;
-                    return NotFound(_response);
-                }
-                _response.Resultado = ciaSeguroDto;
-                _response.StatusCode = HttpStatusCode.OK;
-                return Ok(_response);
-            }
-            catch (Exception ex)
-            {
-                _response.IsExitoso = false;
-                _response.StatusCode = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = [ex.ToString()];
-            }
-            return _response;
+            _logger = logger;
+            _response = new Response();
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Response>> Create(CiaSeguroDto ciaSeguroDto)
+        public async Task<ActionResult<Response>> Create([FromBody] CiaSeguroCreateDto dto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new Response
+                {
+                    Status = HttpStatusCode.BadRequest,
+                    IsExitoso = false,
+                    ErrorMensajes = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage)).ToList()
+                });
+            }
+
             try
             {
-                //Debo revisar de nuevo
-                if (ciaSeguroDto == null)
+                var cia = _mapper.Map<Ciaseguro>(dto);
+                cia = await _ciaRepo.Create(cia);
+
+                return Created("", new Response
                 {
-                    _response.StatusCode = HttpStatusCode.BadRequest;
-                    _response.IsExitoso = false;
-                    return BadRequest(_response);
-                }
-                CiaSeguros ciaSeguro = _mapper.Map<CiaSeguros>(ciaSeguroDto);
-                int idModelo = await _ciaSegurosRepo.Create(ciaSeguro);
-                if (idModelo == 0)
-                {
-                    _response.StatusCode = HttpStatusCode.InternalServerError;
-                    _response.IsExitoso = false;
-                    return StatusCode((int)HttpStatusCode.InternalServerError, _response);
-                }
-                _response.Resultado = idModelo;
+                    Status = HttpStatusCode.Created,
+                    IsExitoso = true,
+                    Resultado = cia
+                });
             }
             catch (Exception ex)
             {
-                _response.IsExitoso = false;
-                _response.StatusCode = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = [ex.ToString()];
+                _logger.LogError(ex, $"Error al intentar crear cia de seguro: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response
+                {
+                    Status = HttpStatusCode.InternalServerError,
+                    IsExitoso = false,
+                    ErrorMensajes = new List<string> { "Ocurrió un error al procesar la solicitud." }
+                });
             }
-            return _response;
-        }*/
+        }
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<Response>> Update([FromBody] CiaSeguroUpdateDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new Response
+                {
+                    Status = HttpStatusCode.BadRequest,
+                    IsExitoso = false,
+                    ErrorMensajes = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage)).ToList()
+                });
+            }
+
+            try
+            {
+                var cia = _mapper.Map<Ciaseguro>(dto);
+                cia = await _ciaRepo.Update(cia);
+
+                return Ok(new Response
+                {
+                    Status = HttpStatusCode.OK,
+                    IsExitoso = true,
+                    Resultado = cia
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error al intentar actualizar cia de seguro: {ex.Message}");
+                return StatusCode(StatusCodes.Status500InternalServerError, new Response
+                {
+                    Status = HttpStatusCode.InternalServerError,
+                    IsExitoso = false,
+                    ErrorMensajes = new List<string> { "Ocurrió un error al procesar la solicitud." }
+                });
+            }
+        }
+
     }
 }
