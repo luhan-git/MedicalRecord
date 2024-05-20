@@ -307,15 +307,42 @@ namespace MedicalRecord_API.Controllers
             }
 
         }
-        [HttpPut(Name = "ChangePassword")]
+        [HttpPut("ChangePassword/{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> ChangePassword(int id, string currentPassword, string newPassword)
+        public async Task<IActionResult> ChangePassword(int id, [FromBody] ChangePasswordDto dto)
         {
+            if (id < 1)
+            {
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMensajes = ["id: argumento no puede ser 0"];
+                _logger.LogError("{StatusCode}[{HttpStatusCode}]: id: argumento no puede ser 0", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest);
+                return BadRequest(_response);
+            }
+            if (dto == null)
+            {
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMensajes = ["modelo: no puede ser null"];
+                _logger.LogError("{StatusCode}[{HttpStatusCode}]: modelo: argumento no puede ser null", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest);
+                return BadRequest(_response);
+            }
+            if (dto.Id != id)
+            {
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMensajes = ["id: argumento id & modelo.id no pueden ser diferenes"];
+                _logger.LogError("{StatusCode}[{HttpStatusCode}]: id: argumento id & modelo.id no pueden ser diferenes", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest);
+                return BadRequest(_response);
+            }
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("{StatusCode}[{HttpStatusCode}] {ModelState}", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest, ModelState.ToString());
+                return BadRequest(ModelState);
+            };
             try
             {
+
                 Usuario usuario = await _usuarioRepo.GetEntity(u => u.Id ==id);
                 if (usuario == null)
                 {
@@ -324,7 +351,7 @@ namespace MedicalRecord_API.Controllers
                     _logger.LogError("{StatusCode}[{HttpStatusCode}]: usuario no esxiste en la base de datos", StatusCodes.Status404NotFound, HttpStatusCode.NotFound);
                     return NotFound(_response);
                 }
-                if (usuario.Clave != _utilsService.ConvertirSha256(currentPassword))
+                if (usuario.Clave != _utilsService.ConvertirSha256(dto.CurrentPassword))
                 {
                      _response.Status = HttpStatusCode.BadRequest;
                      _response.ErrorMensajes = ["Contraseña ingresasa no coincide con la contraseña actual"];
@@ -332,8 +359,8 @@ namespace MedicalRecord_API.Controllers
                      BadRequest(_response);
                 }
 
-                usuario.Clave = _utilsService.ConvertirSha256(newPassword);
-                await _usuarioRepo.ChangePassword(usuario);
+                usuario.Clave = _utilsService.ConvertirSha256(dto.NewPassword);
+                await _usuarioRepo.Update(usuario);
                 _response.Status = HttpStatusCode.NoContent;
                 _response.IsExitoso = true;
                 _logger.LogWarning("{StatusCode}[{HttpStatusCode}]: Respuesta de CHANGEPASSWORD ha sido exitosa", StatusCodes.Status204NoContent, HttpStatusCode.NoContent);

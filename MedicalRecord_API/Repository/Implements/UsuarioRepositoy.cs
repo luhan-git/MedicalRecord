@@ -47,10 +47,18 @@ namespace MedicalRecord_API.Repository.Implements
         {
             try
             {
+                Usuario? clave = new();
+                if (entity.Clave != null)
+                {
+                    clave = await _context.Set<Usuario>().FirstOrDefaultAsync(u => u.Id == entity.Id);
+                }
+                
+
                 await _context.Database.ExecuteSqlRawAsync("CALL sp_UpdateUsuario(@idUpdate,@nombre, @correo, @cargo, @especialidad, @nroColMedico,@activo)",
                                                            new MySqlParameter("@idUpdate", entity.Id),
                                                            new MySqlParameter("@nombre", entity.Nombre),
                                                            new MySqlParameter("@correo", entity.Correo),
+                                                           new MySqlParameter("@clave", entity.Clave ?? clave.Clave),
                                                            new MySqlParameter("@cargo", entity.Cargo),
                                                            new MySqlParameter("@especialidad", entity.Especialidad),
                                                            new MySqlParameter("@nroColMedico", entity.NroColMedico),
@@ -62,20 +70,6 @@ namespace MedicalRecord_API.Repository.Implements
             catch (Exception)
             {
                 _logger.LogError("Error actualizando un usuario");
-                throw;
-            }
-        }
-
-        public async Task<bool> ChangePassword(Usuario usuario)
-        {
-            try
-            {
-                _context.Set<Usuario>().Update(usuario);
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            catch
-            {
                 throw;
             }
         }
