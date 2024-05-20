@@ -6,8 +6,8 @@ namespace MedicalRecord_API.Models.Dtos.Cie
     {
         [Required]
         [StringLength(5)]
-        public string Codcie { get; set; } = null!;
-
+        public string Codigo { get; set; } = null!;
+        [Required]
         public string Enfermedad { get; set; } = null!;
     }
 }

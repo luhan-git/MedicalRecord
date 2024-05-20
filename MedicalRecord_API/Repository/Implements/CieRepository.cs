@@ -17,43 +17,23 @@ namespace MedicalRecord_API.Repository.Implements
             _context = context;
             _logger=logger;
         }
-        public async Task<int> Create(Cie entity)
+        public async Task<Cie> Create(Cie entity)
         {
+            var codigoParam = new MySqlParameter("@codigo", entity.Codigo);
+            var enfermedadParam = new MySqlParameter("@enfermedad", entity.Enfermedad);
+        
             try
             {
-                await using var connection = _context.Database.GetDbConnection();
-                await connection.OpenAsync();
-
-                var command = connection.CreateCommand();
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "InsertCie";
-
-                command.Parameters.Add(new MySqlParameter("@codcie", entity.Codigo));
-                command.Parameters.Add(new MySqlParameter("@enfermedad", entity.Enfermedad));
-
-                var idCieParam = new MySqlParameter("@id_cie", MySqlDbType.Int32)
-                {
-                    Direction = ParameterDirection.Output
-                };
-                command.Parameters.Add(idCieParam);
-
-                await command.ExecuteNonQueryAsync();
-
-                var idCie = (int)idCieParam.Value;
-                if (idCie == -1)
-                {
-                    throw new Exception("El procedimiento almacenado InsertCie devolvió -1, indicando un error.");
-                }
-                _logger.LogInformation("Registro de inserción en Cie con ID: {idCie}", idCie);
-                return idCie;
+                await _context.Database.ExecuteSqlRawAsync("CALL sp_InsertCie(@codigo, @enfermedad)",
+                                                           new MySqlParameter("@codigo", entity.Codigo),
+                                                           new MySqlParameter("@enfermedad", entity.Enfermedad));
+                _logger.LogWarning("Se creo un nuevo cie con codigo : {codigo}",entity.Codigo);
+                return await _context.Set<Cie>().FirstOrDefaultAsync(c => string.Equals(c.Codigo,entity.Codigo))?? new();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                {
-                    _logger.LogError(ex, "Error al intentar crear un Cie");
-                    throw;
-                }
-
+                _logger.LogError("Error creating cie");
+                throw;
             }
         }
 
@@ -62,18 +42,18 @@ namespace MedicalRecord_API.Repository.Implements
             try
             {
 
-                string sql = "CALL UpdateCie (@id_cie_update, @codcie,@enfermedad)";
+                string sql = "CALL sp_UpdateCie (@id_update, @codigo,@enfermedad)";
                 await _context.Database.ExecuteSqlRawAsync(sql,
-                    new MySqlParameter("@id_cie_update", entity.Codigo),
-                    new MySqlParameter("@codcie", entity.Codigo),
+                    new MySqlParameter("@id_update", entity.Id),
+                    new MySqlParameter("@codigo", entity.Codigo),
                     new MySqlParameter("@enfermedad", entity.Enfermedad)
                
                     );
-                _logger.LogInformation("Se actualizó un cie con ID: {idCie}", entity.Id);
+                _logger.LogWarning("Se actualizó un cie con id: {id} en la base de datos",entity.Id);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError(ex, "Error al intentar actualizar un cie");
+                _logger.LogError("Error actualizando un cie");
                 throw;
             }
         }

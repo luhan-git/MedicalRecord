@@ -18,42 +18,46 @@ namespace MedicalRecord_API.Repository.Implements
         }
         public async Task<Usuario> Create(Usuario entity)
         {
-                var nombreParam = new MySqlParameter("@nombre", entity.Nombre);
-                var correoParam = new MySqlParameter("@correo", entity.Correo);
-                var claveParam = new MySqlParameter("@clave", entity.Clave);
-                var cargoParam = new MySqlParameter("@cargo", entity.Cargo);
-                var especialidadParam = new MySqlParameter("@especialidad", entity.Especialidad);
-                var nroColMedicoParam = new MySqlParameter("@nroColMedico", entity.NroColMedico);
             try
             {
                 await _context.Database.ExecuteSqlRawAsync("CALL sp_InsertUsuario(@nombre, @correo, @clave, @cargo, @especialidad, @nroColMedico)",
-                                                           nombreParam, correoParam, claveParam, cargoParam, especialidadParam, nroColMedicoParam);
-                 return  await _context.Set<Usuario>().FirstOrDefaultAsync(u => u.Correo == entity.Correo);
+                                                           new MySqlParameter("@nombre", entity.Nombre),
+                                                           new MySqlParameter("@correo", entity.Correo),
+                                                           new MySqlParameter("@clave", entity.Clave),
+                                                           new MySqlParameter("@cargo", entity.Cargo),
+                                                           new MySqlParameter("@especialidad", entity.Especialidad),
+                                                           new MySqlParameter("@nroColMedico", entity.NroColMedico)
+                                                           );
+                _logger.LogWarning("Se creo un nuevo usuario en la base de datos");
+                return await _context.Set<Usuario>().FirstOrDefaultAsync(u => string.Equals(u.Correo, entity.Correo)) ?? new();
             }
             catch (Exception)
             {
-                _logger.LogError("Error creating user");
+                _logger.LogError("Error creando un usuario");
                 throw;
             }
         }
 
         public async Task Update(Usuario entity)
         {
-            var idParam = new MySqlParameter("@idUpdate",entity.Id);
-            var nombreParam = new MySqlParameter("@nombre", entity.Nombre);
-            var correoParam = new MySqlParameter("@correo", entity.Correo);
-            var claveParam = new MySqlParameter("@clave", entity.Clave);
-            var cargoParam = new MySqlParameter("@cargo", entity.Cargo);
-            var especialidadParam = new MySqlParameter("@especialidad", entity.Especialidad);
-            var nroColMedicoParam = new MySqlParameter("@nroColMedico", entity.NroColMedico);
+         
             try
             {
                 await _context.Database.ExecuteSqlRawAsync("CALL sp_UpdateUsuario(@idUpdate,@nombre, @correo, @clave, @cargo, @especialidad, @nroColMedico)",
-                                                          idParam, nombreParam, correoParam, claveParam, cargoParam, especialidadParam, nroColMedicoParam);
+                                                           new MySqlParameter("@idUpdate", entity.Id),
+                                                           new MySqlParameter("@nombre", entity.Nombre),
+                                                           new MySqlParameter("@correo", entity.Correo),
+                                                           new MySqlParameter("@clave", entity.Clave),
+                                                           new MySqlParameter("@cargo", entity.Cargo),
+                                                           new MySqlParameter("@especialidad", entity.Especialidad),
+                                                           new MySqlParameter("@nroColMedico", entity.NroColMedico)
+                                                           );
+                _logger.LogWarning("Se actualizó un usuario con id: {id} en la base de datos", entity.Id);
+
             }
             catch (Exception)
             {
-                _logger.LogError("Error updting user");
+                _logger.LogError("Error actualizando un usuario");
                 throw;
             }
         }
