@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using MedicalRecord_API.Models;
 using Microsoft.AspNetCore.JsonPatch;
+using MedicalRecord_API.Services.Interfaces;
 
 namespace MedicalRecord_API.Controllers
 {
@@ -16,14 +17,16 @@ namespace MedicalRecord_API.Controllers
     {
         private readonly IUsuarioRepository _usuarioRepo;
         private readonly IMapper _mapper;
+        private readonly IUtilsService _utilsService;
         private readonly ILogger<UsuariosController> _logger;
         protected Response _response;
 
-        public UsuariosController(IMapper mapper, IUsuarioRepository usuarioRepo, ILogger<UsuariosController> logger)
+        public UsuariosController(IMapper mapper, IUsuarioRepository usuarioRepo,  IUtilsService utilsService, ILogger<UsuariosController> logger)
         {
             _logger = logger;
             _usuarioRepo = usuarioRepo;
             _mapper = mapper;
+            _utilsService = utilsService;
             _response = new Response();
         }
 
@@ -277,7 +280,6 @@ namespace MedicalRecord_API.Controllers
                 _response.Status = HttpStatusCode.BadRequest;
                 _response.ErrorMensajes = ["id: argumento no puede ser 0"];
                 _logger.LogError("{StatusCode}[{HttpStatusCode}]: id: argumento no puede ser 0", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest);
-
                 BadRequest(_response);
             };
             try
@@ -293,7 +295,7 @@ namespace MedicalRecord_API.Controllers
                 await _usuarioRepo.Delete(usuario);
                 _response.Status = HttpStatusCode.NoContent;
                 _response.IsExitoso = true;
-                _logger.LogInformation("{StatusCode}[{HttpStatusCode}]: Respuesta de DELETE ha sido exitosa", StatusCodes.Status204NoContent, HttpStatusCode.NoContent);
+                _logger.LogWarning("{StatusCode}[{HttpStatusCode}]: Respuesta de DELETE ha sido exitosa", StatusCodes.Status204NoContent, HttpStatusCode.NoContent);
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -304,6 +306,47 @@ namespace MedicalRecord_API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
 
+        }
+        [HttpPut(Name = "ChangePassword")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ChangePassword(int id, string currentPassword, string newPassword)
+        {
+            try
+            {
+                Usuario usuario = await _usuarioRepo.GetEntity(u => u.Id ==id);
+                if (usuario == null)
+                {
+                    _response.Status = HttpStatusCode.NotFound;
+                    _response.ErrorMensajes = [" usuario no esxiste en la base de datos"];
+                    _logger.LogError("{StatusCode}[{HttpStatusCode}]: usuario no esxiste en la base de datos", StatusCodes.Status404NotFound, HttpStatusCode.NotFound);
+                    return NotFound(_response);
+                }
+                if (usuario.Clave != _utilsService.ConvertirSha256(currentPassword))
+                {
+                     _response.Status = HttpStatusCode.BadRequest;
+                     _response.ErrorMensajes = ["Contraseña ingresasa no coincide con la contraseña actual"];
+                    _logger.LogError("{StatusCode}[{HttpStatusCode}]: Contraseña ingresasa no coincide con la contraseña actual", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest);
+                     BadRequest(_response);
+                }
+
+                usuario.Clave = _utilsService.ConvertirSha256(newPassword);
+                await _usuarioRepo.ChangePassword(usuario);
+                _response.Status = HttpStatusCode.NoContent;
+                _response.IsExitoso = true;
+                _logger.LogWarning("{StatusCode}[{HttpStatusCode}]: Respuesta de CHANGEPASSWORD ha sido exitosa", StatusCodes.Status204NoContent, HttpStatusCode.NoContent);
+                return Ok(_response);
+
+            }
+            catch(Exception ex)
+            {
+                _response.Status = HttpStatusCode.InternalServerError;
+                _response.ErrorMensajes = [ex.ToString()];
+                _logger.LogError("{StatusCode}[{HttpStatusCode}]: Error al intentar CHANGEPASSWORD", StatusCodes.Status500InternalServerError, HttpStatusCode.InternalServerError);
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
         }
     }
 }

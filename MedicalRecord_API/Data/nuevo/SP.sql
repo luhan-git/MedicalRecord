@@ -25,13 +25,13 @@ DELIMITER ;
 DELIMITER $
 DROP PROCEDURE IF EXISTS sp_UpdateUsuario;
 CREATE PROCEDURE sp_UpdateUsuario(
-  IN idUpdate INT,
+  IN id_pdate INT,
   IN nombre VARCHAR(50),
   IN correo VARCHAR(50),
-  IN clave VARCHAR(250),
   IN cargo VARCHAR(30),
   IN especialidad VARCHAR(30),
-  IN nroColMedico VARCHAR(6)
+  IN nroColMedico VARCHAR(6),
+  IN activo BOOL
 )
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -40,8 +40,8 @@ BEGIN
     END;
 
     START TRANSACTION;
-    UPDATE  Usuario SET nombre=nombre,correo=correo,clave=clave,cargo=cargo,especialidad=especialidad,nroColMedico=nroColmedico=nroColMedico
-    where id=idUpdate;
+    UPDATE  Usuario SET nombre=nombre,correo=correo,cargo=cargo,especialidad=especialidad,nroColMedico=nroColmedico=nroColMedico,activo=activo
+    where id=id_pdate;
     COMMIT;
 END;
 DELIMITER ;

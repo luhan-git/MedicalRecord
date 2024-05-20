@@ -3,6 +3,8 @@ using MedicalRecord_API.Repository.Interfaces;
 using MedicalRecord_API.Repository.Implements;
 using Microsoft.EntityFrameworkCore;
 using MedicalRecord_API.Utils.AutoMapper;
+using MedicalRecord_API.Services.Implements;
+using MedicalRecord_API.Services.Interfaces;
 
 namespace MedicalRecord_API.Dependencies
 {
@@ -14,9 +16,10 @@ namespace MedicalRecord_API.Dependencies
                                                       Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.30-mysql")));
 
             services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddAutoMapper(typeof(AutoMapperProfile));
             services.AddScoped<IUsuarioRepository, UsuarioRepositoy>();
             services.AddScoped<ICieRepository, CieRepository>();
-            services.AddAutoMapper(typeof(AutoMapperProfile));
+            services.AddScoped<IUtilsService, UtilsService>();
         }
     }
 }

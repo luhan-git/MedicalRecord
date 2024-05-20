@@ -6,5 +6,6 @@ namespace MedicalRecord_API.Repository.Interfaces
     {
         Task <Usuario>Create(Usuario entity);
         Task Update(Usuario entity);
+        Task<bool> ChangePassword(Usuario usuario);
     }
 }
