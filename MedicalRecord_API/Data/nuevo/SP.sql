@@ -1,8 +1,8 @@
 USE dbhistorias;
 -- Usuario
 DELIMITER $
-DROP PROCEDURE IF EXISTS InsertUsuario_sp;
-CREATE PROCEDURE InsertUsuario_sp(
+DROP PROCEDURE IF EXISTS sp_InsertUsuario;
+CREATE PROCEDURE sp_InsertUsuario_sp(
   IN nombre VARCHAR(50),
   IN correo VARCHAR(50),
   IN clave VARCHAR(250),
@@ -21,11 +21,11 @@ BEGIN
     VALUES (nombre,correo,clave,cargo,especialidad,nroColMedico);
     COMMIT;
 END;
-DELIMITER;
+DELIMITER ;
 
 DELIMITER $
-DROP PROCEDURE IF EXISTS UpdateUsuario_sp;
-CREATE PROCEDURE UpdateUsuario_sp(
+DROP PROCEDURE IF EXISTS sp_UpdateUsuario;
+CREATE PROCEDURE sp_UpdateUsuario(
   IN idUpdate INT,
   IN nombre VARCHAR(50),
   IN correo VARCHAR(50),
@@ -43,15 +43,15 @@ BEGIN
     START TRANSACTION;
     UPDATE  Usuario SET nombre=nombre,correo=correo,cargo=cargo,
     especialidad=especialidad,nroColMedico=nroColmedico=nroColMedico,
-    activo=activo where id=id_pdate;
+    activo=activo where id=idUpdate;
     COMMIT;
 END;
-DELIMITER;
+DELIMITER ;
 
 -- CIE
 DELIMITER $
-DROP PROCEDURE IF EXISTS InsertCie_sp;
-CREATE PROCEDURE InsertCie_sp(
+DROP PROCEDURE IF EXISTS sp_InsertCie;
+CREATE PROCEDURE sp_InsertCie(
   IN codigo VARCHAR(5),
   IN enfermedad VARCHAR(120)
 )
@@ -64,11 +64,11 @@ BEGIN
     INSERT INTO Cie (codigo, enfermedad) VALUES (codigo,enfermedad);
     COMMIT;
 END;
-DELIMITER;
+DELIMITER ;
 
 DELIMITER $
-DROP PROCEDURE IF EXISTS UpdateCie_sp;
-CREATE PROCEDURE UpdateCie_sp(
+DROP PROCEDURE IF EXISTS sp_UpdateCie;
+CREATE PROCEDURE sp_UpdateCie_sp(
   IN idUpdate int,
   IN codigo VARCHAR(5),
   IN enfermedad VARCHAR(20)
@@ -79,10 +79,10 @@ BEGIN
         ROLLBACK;
     END;
     START TRANSACTION;
-    update Cie set codigo=codigo,enfermedad=enfermedad where id=id_update;
+    update Cie set codigo=codigo,enfermedad=enfermedad where id=idUpdate;
     COMMIT;
 END;
-DELIMITER;
+DELIMITER ;
 
 -- CIA SEGURO --- MIO 
 DELIMITER $
