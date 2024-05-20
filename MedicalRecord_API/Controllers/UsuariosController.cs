@@ -126,6 +126,7 @@ namespace MedicalRecord_API.Controllers
                 }
 
                 Usuario modelo = _mapper.Map<Usuario>(dto);
+                modelo.Clave= await _utilsService.ConvertirSha256Async(dto.Clave);
                 modelo = await _usuarioRepo.Create(modelo);
                 _response.Resultado = _mapper.Map<UsuarioDto>(modelo);
                 _response.Status = HttpStatusCode.Created;
@@ -351,7 +352,7 @@ namespace MedicalRecord_API.Controllers
                     _logger.LogError("{StatusCode}[{HttpStatusCode}]: usuario no esxiste en la base de datos", StatusCodes.Status404NotFound, HttpStatusCode.NotFound);
                     return NotFound(_response);
                 }
-                if (usuario.Clave != _utilsService.ConvertirSha256(dto.CurrentPassword))
+                if (usuario.Clave != await _utilsService.ConvertirSha256Async(dto.CurrentPassword))
                 {
                      _response.Status = HttpStatusCode.BadRequest;
                      _response.ErrorMensajes = ["Contraseña ingresasa no coincide con la contraseña actual"];
@@ -359,7 +360,7 @@ namespace MedicalRecord_API.Controllers
                      BadRequest(_response);
                 }
 
-                usuario.Clave = _utilsService.ConvertirSha256(dto.NewPassword);
+                usuario.Clave = await _utilsService.ConvertirSha256Async(dto.NewPassword);
                 await _usuarioRepo.Update(usuario);
                 _response.Status = HttpStatusCode.NoContent;
                 _response.IsExitoso = true;

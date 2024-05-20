@@ -2,6 +2,6 @@
 {
     public interface IUtilsService
     {
-        string ConvertirSha256(string input);
+        Task<string> ConvertirSha256Async(string input);
     }
 }

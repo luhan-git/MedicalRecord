@@ -6,10 +6,10 @@ namespace MedicalRecord_API.Services.Implements
 {
     public class UtilsService : IUtilsService
     {
-        public string ConvertirSha256(string input)
+        public async Task<string> ConvertirSha256Async(string input)
         {
             StringBuilder Sb = new();
-            using (SHA256 hash = SHA256.Create())
+           using (SHA256 hash = SHA256.Create())
             {
                 Encoding enc = Encoding.UTF8;
                 byte[] bytes = hash.ComputeHash(enc.GetBytes(input));

@@ -2,7 +2,7 @@ USE dbhistorias;
 -- Usuario
 DELIMITER $
 DROP PROCEDURE IF EXISTS sp_InsertUsuario;
-CREATE PROCEDURE sp_InsertUsuario_sp(
+CREATE PROCEDURE sp_InsertUsuario(
   IN nombre VARCHAR(50),
   IN correo VARCHAR(50),
   IN clave VARCHAR(250),
@@ -29,6 +29,7 @@ CREATE PROCEDURE sp_UpdateUsuario(
   IN idUpdate INT,
   IN nombre VARCHAR(50),
   IN correo VARCHAR(50),
+  IN clave VARCHAR(250),
   IN cargo VARCHAR(30),
   IN especialidad VARCHAR(30),
   IN nroColMedico VARCHAR(6),
@@ -41,7 +42,7 @@ BEGIN
     END;
 
     START TRANSACTION;
-    UPDATE  Usuario SET nombre=nombre,correo=correo,cargo=cargo,
+    UPDATE  Usuario SET nombre=nombre,correo=correo,clave=clave,cargo=cargo,
     especialidad=especialidad,nroColMedico=nroColmedico=nroColMedico,
     activo=activo where id=idUpdate;
     COMMIT;
