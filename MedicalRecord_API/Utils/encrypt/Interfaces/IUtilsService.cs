@@ -1,4 +1,4 @@
-﻿namespace MedicalRecord_API.Services.Interfaces
+﻿namespace MedicalRecord_API.Utils.encrypt.Interfaces
 {
     public interface IUtilsService
     {

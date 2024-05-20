@@ -1,6 +1,6 @@
 ﻿using MedicalRecord_API.Models;
 using MedicalRecord_API.Repository.Interfaces;
-using MedicalRecord_API.Services.Interfaces;
+using MedicalRecord_API.Utils.encrypt.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 using System.Data;

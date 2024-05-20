@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using MedicalRecord_API.Models.Dtos.Cie;
 using MedicalRecord_API.Models.Dtos.Usuario;
 using MedicalRecord_API.Repository.Interfaces;
 using MedicalRecord_API.Utils.Response;
@@ -7,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using MedicalRecord_API.Models;
 using Microsoft.AspNetCore.JsonPatch;
-using MedicalRecord_API.Services.Interfaces;
+using MedicalRecord_API.Utils.encrypt.Interfaces;
 
 namespace MedicalRecord_API.Controllers
 {
