@@ -56,7 +56,7 @@ namespace MedicalRecord_API.Controllers
 
         public async Task<ActionResult<Response>> GetPresentacion(int Id)
         {
-            _logger.LogInformation("{StatusCode}[{HttpStatusCode}]:Procesando la solicitud a GETCIE", StatusCodes.Status102Processing, HttpStatusCode.Processing);
+            _logger.LogInformation("{StatusCode}[{HttpStatusCode}]:Procesando la solicitud a GETPRESENTACION", StatusCodes.Status102Processing, HttpStatusCode.Processing);
 
             if (Id < 1)
             {
@@ -67,7 +67,7 @@ namespace MedicalRecord_API.Controllers
             }
             try
             {
-                CieDto dto = _mapper.Map<CieDto>(await _presentacionRepo.GetEntity(c => c.Id == Id, false));
+                PresentacionDto dto = _mapper.Map<PresentacionDto>(await _presentacionRepo.GetEntity(p => p.Id == Id, false));
                 if (dto == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
@@ -78,7 +78,7 @@ namespace MedicalRecord_API.Controllers
                 _response.Status = HttpStatusCode.OK;
                 _response.IsExitoso = true;
                 _response.Resultado = dto;
-                _logger.LogInformation("{StatusCode}[{HttpStatusCode}]: Respuesta exitosa de GETCIE", StatusCodes.Status200OK, HttpStatusCode.OK);
+                _logger.LogInformation("{StatusCode}[{HttpStatusCode}]: Respuesta exitosa de GETCIEPRESENTACION", StatusCodes.Status200OK, HttpStatusCode.OK);
                 return Ok(_response);
             }
             catch (Exception ex)
