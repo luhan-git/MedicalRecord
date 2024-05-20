@@ -85,7 +85,7 @@ namespace MedicalRecord_API.Controllers
             try
             {
                 var cia = _mapper.Map<Ciaseguro>(dto);
-                cia = await _ciaRepo.Update(cia);
+                //cia = await _ciaRepo.Update(cia);
 
                 return Ok(new Response
                 {
