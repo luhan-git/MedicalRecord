@@ -29,21 +29,18 @@ namespace MedicalRecord_API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Response>> GetPresentaciones()
         {
-            _logger.LogInformation("{StatusCode}[{HttpStatusCode}]:Procesando la solicitud a GETPRESENTACIONES", StatusCodes.Status102Processing, HttpStatusCode.Processing);
             try
             {
                 IEnumerable<PresentacionDto> presentacionList = _mapper.Map<IEnumerable<PresentacionDto>>(await _presentacionRepo.Query());
                 _response.Resultado = presentacionList;
                 _response.IsExitoso = true;
                 _response.Status = HttpStatusCode.OK;
-                _logger.LogInformation("{StatusCode}[{HttpStatusCode}]: Respuesta exitosa de GETPRESENTACIONES", StatusCodes.Status200OK, HttpStatusCode.OK);
                 return Ok(_response);
             }
             catch (Exception ex)
             {
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = [ex.ToString()];
-                _logger.LogError("{StatusCode}[{HttpStatusCode}]: Error en la respuesta de GETPRESENTACIONES", StatusCodes.Status500InternalServerError, HttpStatusCode.InternalServerError);
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
 
             }
@@ -56,13 +53,11 @@ namespace MedicalRecord_API.Controllers
 
         public async Task<ActionResult<Response>> GetPresentacion(int Id)
         {
-            _logger.LogInformation("{StatusCode}[{HttpStatusCode}]:Procesando la solicitud a GETPRESENTACION", StatusCodes.Status102Processing, HttpStatusCode.Processing);
 
             if (Id < 1)
             {
                 _response.Status = HttpStatusCode.BadRequest;
                 _response.ErrorMensajes = ["id: argumento no puede ser 0"];
-                _logger.LogError("{StatusCode}[{HttpStatusCode}]: id: argumento no puede ser 0", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest);
                 return BadRequest(_response);
             }
             try
@@ -72,20 +67,17 @@ namespace MedicalRecord_API.Controllers
                 {
                     _response.Status = HttpStatusCode.NotFound;
                     _response.ErrorMensajes = [" modelo: no esxiste en la base de datos"];
-                    _logger.LogError("{StatusCode}[{HttpStatusCode}]: modelo: no esxiste en la base de datos", StatusCodes.Status404NotFound, HttpStatusCode.NotFound);
                     return NotFound(_response);
                 }
                 _response.Status = HttpStatusCode.OK;
                 _response.IsExitoso = true;
                 _response.Resultado = dto;
-                _logger.LogInformation("{StatusCode}[{HttpStatusCode}]: Respuesta exitosa de GETCIEPRESENTACION", StatusCodes.Status200OK, HttpStatusCode.OK);
                 return Ok(_response);
             }
             catch (Exception ex)
             {
                 _response.ErrorMensajes = [ex.ToString()];
                 _response.Status = HttpStatusCode.InternalServerError;
-                _logger.LogError("{StatusCode}[{HttpStatusCode}]: Error en la respuesta de GETCIE", StatusCodes.Status500InternalServerError, HttpStatusCode.InternalServerError);
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
