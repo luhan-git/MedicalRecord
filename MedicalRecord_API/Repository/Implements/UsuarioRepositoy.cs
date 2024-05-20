@@ -10,13 +10,11 @@ namespace MedicalRecord_API.Repository.Implements
     public class UsuarioRepositoy : GenericRepository<Usuario>, IUsuarioRepository
     {
         private readonly DbhistoriasContext _context;
-        private readonly IUtilsService _utilsService;
         private readonly ILogger<UsuarioRepositoy> _logger;
-        public UsuarioRepositoy(DbhistoriasContext context, IUtilsService utilsService, ILogger<UsuarioRepositoy> logger) : base(context)
+        public UsuarioRepositoy(DbhistoriasContext context, ILogger<UsuarioRepositoy> logger) : base(context)
         {
 
             _context = context;
-            _utilsService = utilsService;
             _logger = logger;
         }
 
