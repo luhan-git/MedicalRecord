@@ -20,28 +20,12 @@ namespace MedicalRecord_API.Repository.Implements
             _logger = logger;
         }
 
-        public async Task<bool> ChangePassword(Usuario usuario)
-        {
-            try
-            {
-              _context.Set<Usuario>().Update(usuario);
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
         public async Task<Usuario> Create(Usuario entity)
         { 
-          
-
             try
             {
             
-                await _context.Database.ExecuteSqlRawAsync("CALL sp_InsertUsuario(@nombre, @correo, @clave, @cargo, @especialidad, @nroColMedico)",
+                await _context.Database.ExecuteSqlRawAsync("CALL InsertUsuario_sp(@nombre, @correo, @clave, @cargo, @especialidad, @nroColMedico)",
                                                            new MySqlParameter("@nombre", entity.Nombre),
                                                            new MySqlParameter("@correo", entity.Correo),
                                                            new MySqlParameter("@clave",  entity.Clave),
@@ -61,11 +45,10 @@ namespace MedicalRecord_API.Repository.Implements
 
         public async Task Update(Usuario entity)
         {
-         
             try
             {
-                await _context.Database.ExecuteSqlRawAsync("CALL sp_UpdateUsuario(@id_update,@nombre, @correo, @cargo, @especialidad, @nroColMedico,@activo)",
-                                                           new MySqlParameter("@id_update", entity.Id),
+                await _context.Database.ExecuteSqlRawAsync("CALL UpdateUsuario_sp(@idUpdate,@nombre, @correo, @cargo, @especialidad, @nroColMedico,@activo)",
+                                                           new MySqlParameter("@idUpdate", entity.Id),
                                                            new MySqlParameter("@nombre", entity.Nombre),
                                                            new MySqlParameter("@correo", entity.Correo),
                                                            new MySqlParameter("@cargo", entity.Cargo),
@@ -79,6 +62,20 @@ namespace MedicalRecord_API.Repository.Implements
             catch (Exception)
             {
                 _logger.LogError("Error actualizando un usuario");
+                throw;
+            }
+        }
+
+        public async Task<bool> ChangePassword(Usuario usuario)
+        {
+            try
+            {
+                _context.Set<Usuario>().Update(usuario);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
                 throw;
             }
         }

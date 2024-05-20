@@ -24,7 +24,7 @@ namespace MedicalRecord_API.Repository.Implements
         
             try
             {
-                await _context.Database.ExecuteSqlRawAsync("CALL sp_InsertCie(@codigo, @enfermedad)",
+                await _context.Database.ExecuteSqlRawAsync("CALL InsertCie_sp(@codigo, @enfermedad)",
                                                            new MySqlParameter("@codigo", entity.Codigo),
                                                            new MySqlParameter("@enfermedad", entity.Enfermedad));
                 _logger.LogWarning("Se creo un nuevo cie con codigo : {codigo}",entity.Codigo);
@@ -42,9 +42,9 @@ namespace MedicalRecord_API.Repository.Implements
             try
             {
 
-                string sql = "CALL sp_UpdateCie (@id_update, @codigo,@enfermedad)";
+                string sql = "CALL UpdateCie_sp (@idUpdate, @codigo,@enfermedad)";
                 await _context.Database.ExecuteSqlRawAsync(sql,
-                    new MySqlParameter("@id_update", entity.Id),
+                    new MySqlParameter("@idUpdate", entity.Id),
                     new MySqlParameter("@codigo", entity.Codigo),
                     new MySqlParameter("@enfermedad", entity.Enfermedad)
                

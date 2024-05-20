@@ -1,8 +1,8 @@
--- Usuarios
-use dbhistorias;
+USE dbhistorias;
+-- Usuario
 DELIMITER $
-DROP PROCEDURE IF EXISTS sp_InsertUsuario;
-CREATE PROCEDURE sp_InsertUsuario(
+DROP PROCEDURE IF EXISTS InsertUsuario_sp;
+CREATE PROCEDURE InsertUsuario_sp(
   IN nombre VARCHAR(50),
   IN correo VARCHAR(50),
   IN clave VARCHAR(250),
@@ -17,15 +17,16 @@ BEGIN
     END;
 
     START TRANSACTION;
-
-    INSERT INTO Usuario (nombre,correo,clave,cargo,especialidad,nroColMedico) VALUES (nombre,correo,clave,cargo,especialidad,nroColMedico);
+    INSERT INTO Usuario (nombre,correo,clave,cargo,especialidad,nroColMedico)
+    VALUES (nombre,correo,clave,cargo,especialidad,nroColMedico);
     COMMIT;
 END;
-DELIMITER ;
+DELIMITER;
+
 DELIMITER $
-DROP PROCEDURE IF EXISTS sp_UpdateUsuario;
-CREATE PROCEDURE sp_UpdateUsuario(
-  IN id_pdate INT,
+DROP PROCEDURE IF EXISTS UpdateUsuario_sp;
+CREATE PROCEDURE UpdateUsuario_sp(
+  IN idUpdate INT,
   IN nombre VARCHAR(50),
   IN correo VARCHAR(50),
   IN cargo VARCHAR(30),
@@ -40,18 +41,19 @@ BEGIN
     END;
 
     START TRANSACTION;
-    UPDATE  Usuario SET nombre=nombre,correo=correo,cargo=cargo,especialidad=especialidad,nroColMedico=nroColmedico=nroColMedico,activo=activo
-    where id=id_pdate;
+    UPDATE  Usuario SET nombre=nombre,correo=correo,cargo=cargo,
+    especialidad=especialidad,nroColMedico=nroColmedico=nroColMedico,
+    activo=activo where id=id_pdate;
     COMMIT;
 END;
-DELIMITER ;
+DELIMITER;
 
--- Cie
+-- CIE
 DELIMITER $
-DROP PROCEDURE IF EXISTS sp_InsertCie;
-CREATE PROCEDURE sp_InsertCie(
+DROP PROCEDURE IF EXISTS InsertCie_sp;
+CREATE PROCEDURE InsertCie_sp(
   IN codigo VARCHAR(5),
-  IN enfermedad VARCHAR(20)
+  IN enfermedad VARCHAR(120)
 )
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -62,11 +64,12 @@ BEGIN
     INSERT INTO Cie (codigo, enfermedad) VALUES (codigo,enfermedad);
     COMMIT;
 END;
-DELIMITER ;
+DELIMITER;
+
 DELIMITER $
-DROP PROCEDURE IF EXISTS sp_UpdateCie;
-CREATE PROCEDURE sp_UpdateCie(
-  IN id_update int,
+DROP PROCEDURE IF EXISTS UpdateCie_sp;
+CREATE PROCEDURE UpdateCie_sp(
+  IN idUpdate int,
   IN codigo VARCHAR(5),
   IN enfermedad VARCHAR(20)
 )
@@ -79,40 +82,40 @@ BEGIN
     update Cie set codigo=codigo,enfermedad=enfermedad where id=id_update;
     COMMIT;
 END;
-DELIMITER ;
--- CIA SEGUROS
-DELIMITER //
+DELIMITER;
 
+-- CIA SEGURO --- MIO 
+DELIMITER $
+DROP PROCEDURE IF EXISTS InsertCia_sp;
 CREATE PROCEDURE InsertCia_sp(
-    IN p_nombre_cia VARCHAR(50),
-    IN p_nemo_cia VARCHAR(20),
-    OUT p_id_cia INT
+    IN nombre VARCHAR(50),
+    IN abreviatura VARCHAR(20),
+    OUT id INT
 )
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
-        SET p_id_cia = -1;
+        SET id = -1;
         ROLLBACK;
     END;
 
     START TRANSACTION;
 
-    INSERT INTO CiaSeguros(nombre_cia, nemo_cia) 
-    VALUES(p_nombre_cia, p_nemo_cia);
+    INSERT INTO CiaSeguros(nombre, abreviatura) 
+    VALUES(nombre, abreviatura);
 
-    SET p_id_cia = LAST_INSERT_ID();
+    SET id = LAST_INSERT_ID();
 
     COMMIT;
-END//
+END;
+DELIMITER;
 
-DELIMITER ;
-
-DELIMITER //
-
-CREATE PROCEDURE UpdateCIA_sp(
-    IN p_id_cia INT,
-    IN p_nombre_cia VARCHAR(50),
-    IN p_nemo_cia VARCHAR(20)
+DELIMITER $
+DROP PROCEDURE IF EXISTS UpdateCia_sp;
+CREATE PROCEDURE UpdateCia_sp(
+    IN id INT,
+    IN nombre VARCHAR(50),
+    IN abreviatura VARCHAR(20)
 )
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -122,60 +125,56 @@ BEGIN
 
     START TRANSACTION;
 
-    UPDATE CiaSeguros
-    SET nombre_cia = p_nombre_cia,
-        nemo_cia = p_nemo_cia
-    WHERE id_cia = p_id_cia;
+    UPDATE CiaSeguro
+    SET nombre = nombre,
+        abreviatura = abreviatura
+    WHERE id = id;
 
     COMMIT;
-END//
-
-DELIMITER ;
-
+END;
+DELIMITER;
 
 -- DIRECTORIO
-DELIMITER //
-
+DELIMITER $
+DROP PROCEDURE IF EXISTS InsertDirectorio_sp;
 CREATE PROCEDURE InsertDirectorio_sp(
-    IN p_nombre VARCHAR(80),
-    IN p_repre VARCHAR(80),
-    IN p_fono VARCHAR(40),
-    IN p_celular VARCHAR(40),
-    IN p_email VARCHAR(80),
-    IN p_direccion VARCHAR(180),
-    IN p_estado CHAR(1),
-    OUT p_id_directorio INT
+    IN nombre VARCHAR(80),
+    IN representante VARCHAR(80),
+    IN telefono VARCHAR(40),
+    IN celular VARCHAR(40),
+    IN email VARCHAR(80),
+    IN direccion VARCHAR(180),
+    OUT id INT
 )
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         ROLLBACK;
-        SET p_id_directorio = -1;
+        SET id = -1;
     END;
 
     START TRANSACTION;
 
-    INSERT INTO Directorio (nombre, repre, fono, celular, email, direccion, estado)
-    VALUES (p_nombre, p_repre, p_fono, p_celular, p_email, p_direccion, p_estado);
+    INSERT INTO Directorio (nombre, representante, telefono, celular, email, direccion)
+    VALUES (nombre, representante, telefono, celular, email, direccion);
 
-    SET p_id_directorio = LAST_INSERT_ID();
+    SET id = LAST_INSERT_ID();
 
     COMMIT;
-END//
+END;
+DELIMITER;
 
-DELIMITER ;
-
-DELIMITER //
-
+DELIMITER $
+DROP PROCEDURE IF EXISTS UpdateDirectorio_sp;
 CREATE PROCEDURE UpdateDirectorio_sp(
-    IN p_id_directorio INT,
-    IN p_nombre VARCHAR(80),
-    IN p_repre VARCHAR(80),
-    IN p_fono VARCHAR(40),
-    IN p_celular VARCHAR(40),
-    IN p_email VARCHAR(80),
-    IN p_direccion VARCHAR(180),
-    IN p_estado CHAR(1)
+    IN id INT,
+    IN nombre VARCHAR(80),
+    IN representante VARCHAR(80),
+    IN telefono VARCHAR(40),
+    IN celular VARCHAR(40),
+    IN email VARCHAR(80),
+    IN direccion VARCHAR(180),
+    IN estado BOOL
 )
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -186,54 +185,51 @@ BEGIN
     START TRANSACTION;
 
     UPDATE Directorio
-    SET nombre = p_nombre,
-        repre = p_repre,
-        fono = p_fono,
-        celular = p_celular,
-        email = p_email,
-        direccion = p_direccion,
-        estado = p_estado
-    WHERE id_directorio = p_id_directorio;
+    SET nombre = nombre,
+        representante = representante,
+        telefono = telefono,
+        celular = celular,
+        email = email,
+        direccion = direccion,
+        estado = estado
+    WHERE id = id;
 
     COMMIT;
-END//
+END;
+DELIMITER;
 
-DELIMITER ;
-
-
--- PROCEDIMIENTOS ESPECIALES
-DELIMITER //
-
+-- PROCEDIMIENTO
+DELIMITER $
+DROP PROCEDURE IF EXISTS InsertProcedimiento_sp;
 CREATE PROCEDURE InsertProcedimiento_sp(
-    IN p_nombre_proce VARCHAR(50),
-    IN p_nemo_proce VARCHAR(20),
-    OUT p_id_proce INT
+    IN nombre VARCHAR(50),
+    IN abreviatura VARCHAR(20),
+    OUT id INT
 )
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         ROLLBACK;
-        SET p_id_proce = -1;
+        SET id = -1;
     END;
 
     START TRANSACTION;
 
-    INSERT INTO Procedimientos (nombre_proce, nemo_proce) 
-    VALUES (p_nombre_proce, p_nemo_proce);
+    INSERT INTO Procedimiento (nombre, abreviatura) 
+    VALUES (nombre, abreviatura);
 
-    SET p_id_proce = LAST_INSERT_ID();
+    SET id = LAST_INSERT_ID();
 
     COMMIT;
-END//
+END;
+DELIMITER;
 
-DELIMITER ;
-
-DELIMITER //
-
+DELIMITER $
+DROP PROCEDURE IF EXISTS UpdateProcedimiento_sp;
 CREATE PROCEDURE UpdateProcedimiento_sp(
-    IN p_id_proce INT,
-    IN p_nombre_proce VARCHAR(50),
-    IN p_nemo_proce VARCHAR(20)
+    IN id INT,
+    IN nombre VARCHAR(50),
+    IN abreviatura VARCHAR(20)
 )
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -244,31 +240,24 @@ BEGIN
     START TRANSACTION;
 
     UPDATE Procedimientos
-    SET nombre_proce = p_nombre_proce,
-        nemo_proce = p_nemo_proce
-    WHERE id_proce = p_id_proce;
+    SET nombre = nombre,
+        abreviatura = abreviatura
+    WHERE id = id;
 
     COMMIT;
-END//
-
-DELIMITER ;
-
+END;
+DELIMITER;
 
 -- CAMPO VISUAL
---NO HAY NINGUN PROCEDIMIENTO PARA ESO - LO REVISO MAS ADELANTE
+-- NO HAY NINGUN PROCEDIMIENTO PARA ESO - LO REVISO MAS ADELANTE
 
-
-
-
-
-
---OCUPACION
-DELIMITER //
-
+-- OCUPACION
+DELIMITER $
+DROP PROCEDURE IF EXISTS InsertOcupacion_sp;
 CREATE PROCEDURE InsertOcupacion_sp(
-    IN p_nombre_ocupa VARCHAR(30),
-    IN p_detalle_ocupa VARCHAR(15),
-    OUT p_id_Ocupa INT
+    IN nombre VARCHAR(30),
+    IN detalle VARCHAR(50),
+    OUT id INT
 )
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -278,21 +267,20 @@ BEGIN
 
     START TRANSACTION;
 
-    INSERT INTO Ocupacion (nombre_ocupa, detalle_ocupa)
-    VALUES (p_nombre_ocupa, p_detalle_ocupa);
-    SET p_id_Ocupa = LAST_INSERT_ID();
+    INSERT INTO Ocupacion (nombre, detalle)
+    VALUES (nombre, detalle);
+    SET id = LAST_INSERT_ID();
 
     COMMIT;
-END//
+END;
+DELIMITER;
 
-DELIMITER ;
-
-DELIMITER //
-
+DELIMITER $
+DROP PROCEDURE IF EXISTS UpdateOcupacion_sp;
 CREATE PROCEDURE UpdateOcupacion_sp(
-    IN p_id_ocupa INT,
-    IN p_nombre_ocupa VARCHAR(30),
-    IN p_detalle_ocupa VARCHAR(15)
+    IN id INT,
+    IN nombre VARCHAR(30),
+    IN detalle VARCHAR(50)
 )
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -303,12 +291,11 @@ BEGIN
     START TRANSACTION;
 
     UPDATE Ocupacion
-    SET nombre_ocupa = p_nombre_ocupa,
-        detalle_ocupa = p_detalle_ocupa
-    WHERE id_ocupa = p_id_ocupa;
+    SET nombre = nombre,
+        detalle = detalle
+    WHERE id = id;
 
     COMMIT;
-END//
-
-DELIMITER ;
+END;
+DELIMITER;
 
