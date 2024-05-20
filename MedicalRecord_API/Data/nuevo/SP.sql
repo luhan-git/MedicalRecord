@@ -1,8 +1,8 @@
 USE dbhistorias;
 -- Usuario
 DELIMITER $
-DROP PROCEDURE IF EXISTS sp_InsertUsuario;
-CREATE PROCEDURE sp_InsertUsuario(
+DROP PROCEDURE IF EXISTS InsertUsuario_sp;
+CREATE PROCEDURE InsertUsuario_sp(
   IN nombre VARCHAR(50),
   IN correo VARCHAR(50),
   IN clave VARCHAR(250),
@@ -24,8 +24,8 @@ END;
 DELIMITER ;
 
 DELIMITER $
-DROP PROCEDURE IF EXISTS sp_UpdateUsuario;
-CREATE PROCEDURE sp_UpdateUsuario(
+DROP PROCEDURE IF EXISTS UpdateUsuario_sp;
+CREATE PROCEDURE UpdateUsuario_sp(
   IN idUpdate INT,
   IN nombre VARCHAR(50),
   IN correo VARCHAR(50),
@@ -51,8 +51,8 @@ DELIMITER ;
 
 -- CIE
 DELIMITER $
-DROP PROCEDURE IF EXISTS sp_InsertCie;
-CREATE PROCEDURE sp_InsertCie(
+DROP PROCEDURE IF EXISTS InsertCie_sp;
+CREATE PROCEDURE InsertCie_sp(
   IN codigo VARCHAR(5),
   IN enfermedad VARCHAR(120)
 )
@@ -68,8 +68,8 @@ END;
 DELIMITER ;
 
 DELIMITER $
-DROP PROCEDURE IF EXISTS sp_UpdateCie;
-CREATE PROCEDURE sp_UpdateCie_sp(
+DROP PROCEDURE IF EXISTS UpdateCie_sp;
+CREATE PROCEDURE UpdateCie_sp(
   IN idUpdate int,
   IN codigo VARCHAR(5),
   IN enfermedad VARCHAR(20)
