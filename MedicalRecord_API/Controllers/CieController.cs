@@ -99,7 +99,6 @@ namespace MedicalRecord_API.Controllers
             {
                 if (await _cieRepo.GetEntity(v => string.Equals(v.Codigo,dto.Codigo), false) != null)
                 {
-                    _logger.LogError("{StatusCode}[{HttpStatusCode}]: El Cie con este Codigo ya existe", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest);
                     return BadRequest(_response);
                 }
 
