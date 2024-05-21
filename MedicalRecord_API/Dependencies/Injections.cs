@@ -19,6 +19,7 @@ namespace MedicalRecord_API.Dependencies
             services.AddAutoMapper(typeof(AutoMapperProfile));
             services.AddScoped<IUtilsService, UtilsService>();
             services.AddScoped<IExamenLaboratorioRepository, ExamenLaboratorioRepository>();
+            services.AddScoped<IDiabetesRepository, DiabetesRepository>();
 
             services.AddScoped<IUsuarioRepository, UsuarioRepositoy>();
             services.AddScoped<ICieRepository, CieRepository>();
