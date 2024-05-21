@@ -28,6 +28,7 @@ namespace MedicalRecord_API.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Response>> Create([FromBody] AlergiaCreateDto dto)
         {
             if (!ModelState.IsValid)
@@ -55,9 +56,34 @@ namespace MedicalRecord_API.Controllers
             }
         }
 
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status102Processing)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<Response>> GetAll()
+        {
+            try
+            {
+                IEnumerable<Alergium> lsAlergia = _mapper.Map<IEnumerable<Alergium>>(await _alergiaRepo.Query());
+                _response.Status = HttpStatusCode.OK;
+                _response.IsExitoso = true;
+                _response.Resultado = lsAlergia;
+
+                return Ok(_response);
+            }
+            catch (Exception)
+            {
+                _logger.LogError($"Error al intentar obtener alergias");
+                _response.Status = HttpStatusCode.InternalServerError;
+                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+        }
+
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Response>> Update([FromBody] AlergiaUpdateDto dto)
         {
             if (!ModelState.IsValid)
@@ -83,26 +109,84 @@ namespace MedicalRecord_API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status102Processing)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Response>> GetAll()
+        public async Task<ActionResult<Response>> Delete(int id)
         {
+            if (id <= 0)
+            {
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMensajes = ["Id de alergia no válido."];
+                return BadRequest();
+            }
+
             try
             {
-                IEnumerable<Alergium> lsAlergia = _mapper.Map<IEnumerable<Alergium>>(await _alergiaRepo.Query());
+                var alergia = await _alergiaRepo.GetEntity(e => e.Id == id, false);
+
+                if (alergia == null)
+                {
+                    _response.Status = HttpStatusCode.NotFound;
+                    _response.ErrorMensajes = ["Alergia no encontrada."];
+                    return NotFound(_response);
+                }
+
+                await _alergiaRepo.Delete(alergia);
+
                 _response.Status = HttpStatusCode.OK;
                 _response.IsExitoso = true;
-                _response.Resultado = lsAlergia;
 
                 return Ok(_response);
             }
             catch (Exception)
             {
-                _logger.LogError($"Error al intentar obtener alergias");
+                _logger.LogError($"Error al intentar eliminar alergia");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+        }
+
+        [HttpGet("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<Response>> Get(int id)
+        {
+            if (id <= 0)
+            {
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMensajes = ["Id de alergia no válido."];
+                return BadRequest(_response);
+            }
+
+            try
+            {
+                var alergia = await _alergiaRepo.GetEntity(e => e.Id == id, false);
+
+                if (alergia == null)
+                {
+                    _response.Status = HttpStatusCode.NotFound;
+                    _response.ErrorMensajes = ["Alergia no encontrada."];
+                    return NotFound(_response);
+                }
+
+                _response.Status = HttpStatusCode.OK;
+                _response.IsExitoso = true;
+                _response.Resultado = alergia;
+
+                return Ok(_response);
+            }
+            catch (Exception)
+            {
+                _logger.LogError($"Error al intentar obtener alergia");
+                _response.Status = HttpStatusCode.InternalServerError;
+                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }

@@ -16,12 +16,14 @@ namespace MedicalRecord_API.Controllers
         private readonly ICieRepository _cieRepo;
         private readonly IMapper _mapper;
         protected Response _response;
+
         public CieController(ICieRepository cieRepo, IMapper mapper)
         {
             _cieRepo = cieRepo;
             _mapper = mapper;
             _response = new();
         }
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

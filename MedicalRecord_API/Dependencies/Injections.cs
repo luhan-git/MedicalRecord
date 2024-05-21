@@ -3,8 +3,8 @@ using MedicalRecord_API.Repository.Interfaces;
 using MedicalRecord_API.Repository.Implements;
 using Microsoft.EntityFrameworkCore;
 using MedicalRecord_API.Utils.AutoMapper;
-using MedicalRecord_API.Utils.encrypt.Implements;
-using MedicalRecord_API.Utils.encrypt.Interfaces;
+using MedicalRecord_API.Utils.Recursos.Implements;
+using MedicalRecord_API.Utils.Recursos.Interfaces;
 
 namespace MedicalRecord_API.Dependencies
 {

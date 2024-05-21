@@ -1,8 +1,8 @@
-﻿using MedicalRecord_API.Utils.encrypt.Interfaces;
+﻿using MedicalRecord_API.Utils.Recursos.Interfaces;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace MedicalRecord_API.Utils.encrypt.Implements
+namespace MedicalRecord_API.Utils.Recursos.Implements
 {
     public class UtilsService : IUtilsService
     {

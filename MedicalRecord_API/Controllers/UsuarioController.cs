@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using MedicalRecord_API.Models;
 using Microsoft.AspNetCore.JsonPatch;
-using MedicalRecord_API.Utils.encrypt.Interfaces;
+using MedicalRecord_API.Utils.Recursos.Interfaces;
 
 namespace MedicalRecord_API.Controllers
 {
