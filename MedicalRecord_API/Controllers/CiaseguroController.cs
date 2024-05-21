@@ -41,12 +41,11 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                var cia = _mapper.Map<Ciaseguro>(dto);
-                cia = await _ciaRepo.Create(cia);
+                CiaSeguroDto ciaSeguroDto = _mapper.Map<CiaSeguroDto>(await _ciaRepo.Create(_mapper.Map<Ciaseguro>(dto)));
 
                 _response.Status = HttpStatusCode.Created;
                 _response.IsExitoso = true;
-                _response.Resultado = cia;
+                _response.Resultado = ciaSeguroDto;
 
                 return Created("", _response);
             }
@@ -67,44 +66,142 @@ namespace MedicalRecord_API.Controllers
         {
             try
             {
-                IEnumerable<CiaSeguroDto> lsCiaSeguro = _mapper.Map<IEnumerable<CiaSeguroDto>>(await _ciaRepo.Query());
+                IEnumerable<CiaSeguroDto> CiaSeguros = _mapper.Map<IEnumerable<CiaSeguroDto>>(await _ciaRepo.Query());
                 _response.Status = HttpStatusCode.OK;
                 _response.IsExitoso = true;
-                _response.Resultado = lsCiaSeguro;
+                _response.Resultado = CiaSeguros;
 
                 return Ok(_response);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError(ex, $"Error al intentar obtener cias de seguro: {ex.Message}");
+                _logger.LogError($"Error al intentar obtener las compañias de seguro");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
 
-        [HttpPut]
+        [HttpPut("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Response>> Update([FromBody] CiaSeguroUpdateDto dto)
+        public async Task<ActionResult<Response>> Update(int id, [FromBody] CiaSeguroUpdateDto dto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
+            if (id <= 0 || id != dto.Id)
+            {
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMensajes = ["El identificador de la compañia de seguros no es válido."];
+                return BadRequest(_response);
+            }
+
             try
             {
+                var cia = await _ciaRepo.GetEntity(e => e.Id == id, false);
+
+                if (cia == null)
+                {
+                    _response.Status = HttpStatusCode.BadRequest;
+                    _response.ErrorMensajes = ["La compañia de seguro no existe."];
+                    return BadRequest(_response);
+                }
+
                 await _ciaRepo.Update(_mapper.Map<Ciaseguro>(dto));
-                _response.Status = HttpStatusCode.NoContent;
+
+                _response.Status = HttpStatusCode.OK;
+                _response.IsExitoso = true;
+
+                return Ok(_response);
+            }
+            catch (Exception)
+            {
+                _logger.LogError($"Error al intentar actualizar cia de seguro {id}");
+                _response.Status = HttpStatusCode.InternalServerError;
+                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType (StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<Response>> Delete(int id)
+        {
+            if (id <= 0)
+            {
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMensajes = ["El identificador de la compañia de seguros no es válido."];
+                return BadRequest(_response);
+            }
+
+            try
+            {
+                var cia = await _ciaRepo.GetEntity(e => e.Id == id, false);
+
+                if (cia == null)
+                {
+                    _response.Status = HttpStatusCode.NotFound;
+                    _response.ErrorMensajes = ["La compañia de seguro no existe."];
+                    return NotFound(_response);
+                }
+
+                await _ciaRepo.Delete(cia);
+
+                _response.Status = HttpStatusCode.OK;
                 _response.IsExitoso = true;
 
                 return Ok(_response);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error al intentar actualizar cia de seguro: {ex.Message}");
+                _logger.LogError(ex, $"Error al intentar eliminar cia de seguro: {ex.Message}");
+                _response.Status = HttpStatusCode.InternalServerError;
+                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+        }
+
+        [HttpGet("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<Response>> Get(int id)
+        {
+            if (id <= 0)
+            {
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMensajes = ["El identificador de la compañia de seguros no es válido."];
+                return BadRequest(_response);
+            }
+
+            try
+            {
+                CiaSeguroDto cia = _mapper.Map<CiaSeguroDto>(await _ciaRepo.GetEntity(e => e.Id == id, false));
+
+                if (cia == null)
+                {
+                    _response.Status = HttpStatusCode.NotFound;
+                    _response.ErrorMensajes = ["La compañia de seguro no existe."];
+                    return NotFound(_response);
+                }
+
+                _response.Status = HttpStatusCode.OK;
+                _response.IsExitoso = true;
+                _response.Resultado = cia;
+
+                return Ok(_response);
+            }
+            catch (Exception)
+            {
+                _logger.LogError($"Error al intentar obtener cia de seguro: {id}");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);

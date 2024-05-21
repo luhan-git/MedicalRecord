@@ -28,6 +28,7 @@ namespace MedicalRecord_API.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Response>> Create([FromBody] DirectorioCreateDto dto)
         {
             if (!ModelState.IsValid)
@@ -37,9 +38,7 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                var directorio = _mapper.Map<Directorio>(dto);
-                directorio = await _directorioRepo.Create(directorio);
-
+                DirectorioDto directorio = _mapper.Map<DirectorioDto>(await _directorioRepo.Create(_mapper.Map<Directorio>(dto)));
                 _response.Status = HttpStatusCode.Created;
                 _response.IsExitoso = true;
                 _response.Resultado = directorio;
@@ -56,34 +55,6 @@ namespace MedicalRecord_API.Controllers
             }
         }
 
-        [HttpPut]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<Response>> Update([FromBody] DirectorioUpdateDto dto)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            try
-            {
-                await _directorioRepo.Update(_mapper.Map<Directorio>(dto));
-                _response.Status = HttpStatusCode.NoContent;
-                _response.IsExitoso = true;
-
-                return Ok(_response);
-            }
-            catch (Exception)
-            {
-                _logger.LogError($"Error al intentar actualizar directorio");
-                _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
-
-                return StatusCode(StatusCodes.Status500InternalServerError, _response);
-            }
-        }
-
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status102Processing)]
@@ -92,10 +63,10 @@ namespace MedicalRecord_API.Controllers
         {
             try
             {
-                IEnumerable<DirectorioDto> lsDirectorios = _mapper.Map<IEnumerable<DirectorioDto>>(await _directorioRepo.Query());
+                IEnumerable<DirectorioDto> directorios = _mapper.Map<IEnumerable<DirectorioDto>>(await _directorioRepo.Query());
                 _response.Status = HttpStatusCode.OK;
                 _response.IsExitoso = true;
-                _response.Resultado = lsDirectorios;
+                _response.Resultado = directorios;
 
                 return Ok(_response);
             }
@@ -104,6 +75,136 @@ namespace MedicalRecord_API.Controllers
                 _logger.LogError($"Error al intentar obtener directorios");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+        }
+
+        [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<Response>> Update(int id, [FromBody] DirectorioUpdateDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+
+            if (id <= 0 || id != dto.Id)
+            {
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMensajes = ["El identificador de directorio no es válido."];
+                return BadRequest(_response);
+            }
+
+            try
+            {
+                var directorio = await _directorioRepo.GetEntity(e => e.Id == id, false);
+
+                if (directorio == null)
+                {
+                    _response.Status = HttpStatusCode.BadRequest;
+                    _response.ErrorMensajes = ["El directorio no existe."];
+                    return BadRequest(_response);
+                }
+
+                await _directorioRepo.Update(_mapper.Map<Directorio>(dto));
+
+                _response.Status = HttpStatusCode.OK;
+                _response.IsExitoso = true;
+
+                return Ok(_response);
+            }
+            catch (Exception)
+            {
+                _logger.LogError($"Error al intentar actualizar directorio {id}");
+                _response.Status = HttpStatusCode.InternalServerError;
+                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<Response>> Delete(int id)
+        {
+            if (id <= 0)
+            {
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMensajes = ["El identificador de directorio no es válido."];
+                return BadRequest(_response);
+            }
+
+            try
+            {
+                var directorio = await _directorioRepo.GetEntity(e => e.Id == id, false);
+
+                if (directorio == null)
+                {
+                    _response.Status = HttpStatusCode.NotFound;
+                    _response.ErrorMensajes = ["Directorio no encontrado."];
+                    return NotFound(_response);
+                }
+
+                await _directorioRepo.Delete(directorio);
+
+                _response.Status = HttpStatusCode.OK;
+                _response.IsExitoso = true;
+
+                return Ok(_response);
+            }
+            catch (Exception)
+            {
+                _logger.LogError($"Error al intentar eliminar directorio {id}");
+                _response.Status = HttpStatusCode.InternalServerError;
+                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+        }
+
+        [HttpGet("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<Response>> GetById(int id)
+        {
+            if (id <= 0)
+            {
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMensajes = ["El identificador de directorio no es válido."];
+                return BadRequest(_response);
+            }
+
+            try
+            {
+                DirectorioDto directorio = _mapper.Map<DirectorioDto>(await _directorioRepo.GetEntity(e => e.Id == id, false));
+
+                if (directorio == null)
+                {
+                    _response.Status = HttpStatusCode.NotFound;
+                    _response.ErrorMensajes = ["Directorio no encontrado."];
+                    return NotFound(_response);
+                }
+
+                _response.Status = HttpStatusCode.OK;
+                _response.IsExitoso = true;
+                _response.Resultado = directorio;
+
+                return Ok(_response);
+            }
+            catch (Exception)
+            {
+                _logger.LogError($"Error al intentar obtener directorio {id}");
+                _response.Status = HttpStatusCode.InternalServerError;
+                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }

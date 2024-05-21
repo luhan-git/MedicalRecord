@@ -38,9 +38,7 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                var alergia = _mapper.Map<Alergium>(dto);
-                alergia = await _alergiaRepo.Create(alergia);
-
+                AlergiaDto alergia = _mapper.Map<AlergiaDto>(await _alergiaRepo.Create(_mapper.Map<Alergium>(dto)));
                 _response.Status = HttpStatusCode.Created;
                 _response.IsExitoso = true;
                 _response.Resultado = alergia;
@@ -64,10 +62,10 @@ namespace MedicalRecord_API.Controllers
         {
             try
             {
-                IEnumerable<Alergium> lsAlergia = _mapper.Map<IEnumerable<Alergium>>(await _alergiaRepo.Query());
+                IEnumerable<AlergiaDto> alergias = _mapper.Map<IEnumerable<AlergiaDto>>(await _alergiaRepo.Query());
                 _response.Status = HttpStatusCode.OK;
                 _response.IsExitoso = true;
-                _response.Resultado = lsAlergia;
+                _response.Resultado = alergias;
 
                 return Ok(_response);
             }
@@ -91,15 +89,15 @@ namespace MedicalRecord_API.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (id <= 0 || id != dto.Id)
+            {
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMensajes = ["El identificador de alergia no es válido."];
+                return BadRequest(_response);
+            }
+
             try
             {
-                if (id <= 0)
-                {
-                    _response.Status = HttpStatusCode.BadRequest;
-                    _response.ErrorMensajes = ["Id de alergia no válido."];
-                    return BadRequest(_response);
-                }
-
                 var alergia = await _alergiaRepo.GetEntity(e => e.Id == id, false);
 
                 if (alergia == null)
@@ -118,7 +116,7 @@ namespace MedicalRecord_API.Controllers
             }
             catch (Exception)
             {
-                _logger.LogError($"Error al intentar actualizar alergia");
+                _logger.LogError($"Error al intentar actualizar alergia {id}");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
@@ -159,7 +157,7 @@ namespace MedicalRecord_API.Controllers
             }
             catch (Exception)
             {
-                _logger.LogError($"Error al intentar eliminar alergia");
+                _logger.LogError($"Error al intentar eliminar alergia {id}");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
@@ -182,7 +180,7 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                var alergia = await _alergiaRepo.GetEntity(e => e.Id == id, false);
+                AlergiaDto alergia = _mapper.Map<AlergiaDto>(await _alergiaRepo.GetEntity(e => e.Id == id, false));
 
                 if (alergia == null)
                 {
@@ -199,7 +197,7 @@ namespace MedicalRecord_API.Controllers
             }
             catch (Exception)
             {
-                _logger.LogError($"Error al intentar obtener alergia");
+                _logger.LogError($"Error al intentar obtener alergia: {id}");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
 

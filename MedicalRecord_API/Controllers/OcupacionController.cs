@@ -29,6 +29,7 @@ namespace MedicalRecord_API.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Response>> Create([FromBody] OcupacionCreateDto dto)
         {
             if (!ModelState.IsValid)
@@ -38,9 +39,7 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                var ocupacion = _mapper.Map<Ocupacion>(dto);
-                ocupacion = await _ocupacionRepo.Create(ocupacion);
-
+                OcupacionDto ocupacion = _mapper.Map<OcupacionDto>(await _ocupacionRepo.Create(_mapper.Map<Ocupacion>(dto)));
                 _response.Status = HttpStatusCode.Created;
                 _response.IsExitoso = true;
                 _response.Resultado = ocupacion;
@@ -52,34 +51,6 @@ namespace MedicalRecord_API.Controllers
                 _logger.LogError($"Error al intentar crear ocupación");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
-                return StatusCode(StatusCodes.Status500InternalServerError, _response);
-            }
-        }
-
-        [HttpPut]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<Response>> Update([FromBody] OcupacionUpdateDto dto)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            try
-            {
-                await _ocupacionRepo.Update(_mapper.Map<Ocupacion>(dto));
-                _response.Status = HttpStatusCode.NoContent;
-                _response.IsExitoso = true;
-
-                return Ok(_response);
-            }
-            catch (Exception)
-            {
-                _logger.LogError($"Error al intentar actualizar ocupación");
-                _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
-
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -102,6 +73,137 @@ namespace MedicalRecord_API.Controllers
             catch (Exception)
             {
                 _logger.LogError($"Error al intentar obtener ocupaciones");
+                _response.Status = HttpStatusCode.InternalServerError;
+                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+        }
+
+        [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<Response>> Update(int id, [FromBody] OcupacionUpdateDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id <= 0 || id != dto.Id)
+            {
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMensajes = ["El identificador de ocupación no es válido"];
+
+                return BadRequest(_response);
+            }
+
+            try
+            {
+                var ocupacion = await _ocupacionRepo.GetEntity(e => e.Id == id, false);
+
+                if (ocupacion == null)
+                {
+                    _response.Status = HttpStatusCode.BadRequest;
+                    _response.ErrorMensajes = ["Ocupación no encontrada"];
+
+                    return BadRequest(_response);
+                }
+
+                await _ocupacionRepo.Update(_mapper.Map<Ocupacion>(dto));
+
+                _response.Status = HttpStatusCode.OK;
+                _response.IsExitoso = true;
+
+                return Ok(_response);
+            }
+            catch (Exception)
+            {
+                _logger.LogError($"Error al intentar actualizar ocupación {id}");
+                _response.Status = HttpStatusCode.InternalServerError;
+                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<Response>> Delete(int id)
+        {
+            if (id <= 0)
+            {
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMensajes = ["El identificador de ocupación no es válido"];
+
+                return BadRequest(_response);
+            }
+
+            try
+            {
+                var ocupacion = await _ocupacionRepo.GetEntity(e => e.Id == id, false);
+
+                if (ocupacion == null)
+                {
+                    _response.Status = HttpStatusCode.BadRequest;
+                    _response.ErrorMensajes = ["Ocupación no encontrada"];
+
+                    return BadRequest(_response);
+                }
+
+                await _ocupacionRepo.Delete(ocupacion);
+
+                _response.Status = HttpStatusCode.OK;
+                _response.IsExitoso = true;
+
+                return Ok(_response);
+            }
+            catch (Exception)
+            {
+                _logger.LogError($"Error al intentar eliminar ocupación {id}");
+                _response.Status = HttpStatusCode.InternalServerError;
+                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+        }
+
+        [HttpGet("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<Response>> Get(int id)
+        {
+            if (id <= 0)
+            {
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMensajes = ["El identificador de ocupación no es válido"];
+
+                return BadRequest(_response);
+            }
+
+            try
+            {
+                OcupacionDto ocupacion = _mapper.Map<OcupacionDto>(await _ocupacionRepo.GetEntity(e => e.Id == id, false));
+
+                if (ocupacion == null)
+                {
+                    _response.Status = HttpStatusCode.NotFound;
+                    _response.ErrorMensajes = ["Ocupación no encontrada"];
+
+                    return NotFound(_response);
+                }
+
+                _response.Status = HttpStatusCode.OK;
+                _response.IsExitoso = true;
+                _response.Resultado = ocupacion;
+
+                return Ok(_response);
+            }
+            catch (Exception)
+            {
+                _logger.LogError($"Error al intentar obtener ocupación {id}");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
