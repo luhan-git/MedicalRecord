@@ -7,6 +7,7 @@ using MedicalRecord_API.Models.Dtos.Diabetes;
 using MedicalRecord_API.Models.Dtos.Directorio;
 using MedicalRecord_API.Models.Dtos.ExamenLaboratorio;
 using MedicalRecord_API.Models.Dtos.Ocupacion;
+using MedicalRecord_API.Models.Dtos.Parentesco;
 using MedicalRecord_API.Models.Dtos.Presentacion;
 using MedicalRecord_API.Models.Dtos.Procedimiento;
 using MedicalRecord_API.Models.Dtos.Usuario;
@@ -45,6 +46,11 @@ namespace MedicalRecord_API.Utils.AutoMapper
             CreateMap<Diabete, DiabetesCreateDto>().ReverseMap();
             CreateMap<Diabete, DiabetesUpdateDto>().ReverseMap();
             #endregion Diabetes
+            #region Parentesco
+            CreateMap<Parentesco, ParentescoDto>().ReverseMap();
+            CreateMap<Parentesco, ParentescoCreateDto>().ReverseMap();
+            CreateMap<Parentesco, ParentescoUpdateDto>().ReverseMap();
+            #endregion Parentesco
 
             #region CiaSeguros
             CreateMap<Ciaseguro, CiaSeguroCreateDto>().ReverseMap();
