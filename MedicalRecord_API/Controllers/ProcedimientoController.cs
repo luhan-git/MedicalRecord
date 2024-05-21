@@ -62,7 +62,7 @@ namespace MedicalRecord_API.Controllers
         {
             try
             {
-                IEnumerable<Procedimiento> procedimientos = _mapper.Map<IEnumerable<Procedimiento>>(await _procedimientoRepo.Query());
+                IEnumerable<Procedimiento> procedimientos = _mapper.Map<IEnumerable<Procedimiento>>(await _procedimientoRepo.QueryAsync());
                 _response.Status = HttpStatusCode.OK;
                 _response.IsExitoso = true;
                 _response.Resultado = procedimientos;

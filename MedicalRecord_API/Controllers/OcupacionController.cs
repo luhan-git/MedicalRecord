@@ -63,7 +63,7 @@ namespace MedicalRecord_API.Controllers
         {
             try
             {
-                IEnumerable<Ocupacion> ocupaciones = _mapper.Map<IEnumerable<Ocupacion>>(await _ocupacionRepo.Query());
+                IEnumerable<Ocupacion> ocupaciones = _mapper.Map<IEnumerable<Ocupacion>>(await _ocupacionRepo.QueryAsync());
                 _response.Status = HttpStatusCode.OK;
                 _response.IsExitoso = true;
                 _response.Resultado = ocupaciones;

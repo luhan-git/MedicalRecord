@@ -1,6 +1,7 @@
 ﻿using MedicalRecord_API.Models;
 using MedicalRecord_API.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
 namespace MedicalRecord_API.Repository.Implements
@@ -31,11 +32,20 @@ namespace MedicalRecord_API.Repository.Implements
             return await query.FirstOrDefaultAsync(filters);
         }
 
-        public async Task<List<TEntity>> Query(Expression<Func<TEntity, bool>>? filters = null)
+        public async Task<List<TEntity>> QueryAsync(
+        Expression<Func<TEntity, bool>>? filter = null,
+        params Expression<Func<TEntity, object>>[] includes)
         {
-            IQueryable<TEntity> query = filters == null ? dbSet : dbSet.Where(filters);
+            IQueryable<TEntity> query = dbSet;
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
             return await query.ToListAsync();
-
         }
     }
 }

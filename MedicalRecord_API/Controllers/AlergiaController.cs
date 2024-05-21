@@ -62,7 +62,7 @@ namespace MedicalRecord_API.Controllers
         {
             try
             {
-                IEnumerable<AlergiaDto> alergias = _mapper.Map<IEnumerable<AlergiaDto>>(await _alergiaRepo.Query());
+                IEnumerable<AlergiaDto> alergias = _mapper.Map<IEnumerable<AlergiaDto>>(await _alergiaRepo.QueryAsync());
                 _response.Status = HttpStatusCode.OK;
                 _response.IsExitoso = true;
                 _response.Resultado = alergias;

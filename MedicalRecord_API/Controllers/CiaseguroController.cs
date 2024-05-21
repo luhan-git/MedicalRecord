@@ -66,7 +66,7 @@ namespace MedicalRecord_API.Controllers
         {
             try
             {
-                IEnumerable<CiaSeguroDto> CiaSeguros = _mapper.Map<IEnumerable<CiaSeguroDto>>(await _ciaRepo.Query());
+                IEnumerable<CiaSeguroDto> CiaSeguros = _mapper.Map<IEnumerable<CiaSeguroDto>>(await _ciaRepo.QueryAsync());
                 _response.Status = HttpStatusCode.OK;
                 _response.IsExitoso = true;
                 _response.Resultado = CiaSeguros;

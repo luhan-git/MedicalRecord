@@ -31,7 +31,7 @@ namespace MedicalRecord_API.Controllers
         {
             try
             {
-                IEnumerable<CieDto> cieList = _mapper.Map<IEnumerable<CieDto>>(await _cieRepo.Query());
+                IEnumerable<CieDto> cieList = _mapper.Map<IEnumerable<CieDto>>(await _cieRepo.QueryAsync());
                 _response.Resultado = cieList;
                 _response.IsExitoso = true; 
                 _response.Status = HttpStatusCode.OK;

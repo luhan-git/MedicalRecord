@@ -31,7 +31,7 @@ namespace MedicalRecord_API.Controllers
         {
             try
             {
-                IEnumerable<PresentacionDto> presentacionList = _mapper.Map<IEnumerable<PresentacionDto>>(await _presentacionRepo.Query());
+                IEnumerable<PresentacionDto> presentacionList = _mapper.Map<IEnumerable<PresentacionDto>>(await _presentacionRepo.QueryAsync());
                 _response.Resultado = presentacionList;
                 _response.IsExitoso = true;
                 _response.Status = HttpStatusCode.OK;

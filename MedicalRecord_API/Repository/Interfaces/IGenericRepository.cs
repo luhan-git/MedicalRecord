@@ -1,11 +1,14 @@
-﻿using System.Linq.Expressions;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using System.Linq.Expressions;
 
 namespace MedicalRecord_API.Repository.Interfaces
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {
         Task<TEntity> GetEntity(Expression<Func<TEntity, bool>> filters, bool tracked = true);
-        Task<List<TEntity>> Query(Expression<Func<TEntity, bool>>? filters = null);
+        Task<List<TEntity>> QueryAsync(
+        Expression<Func<TEntity, bool>>? filter = null,
+        params Expression<Func<TEntity, object>>[] includes);
         Task Delete(TEntity entity);
     }
 }

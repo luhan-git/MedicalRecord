@@ -6,7 +6,7 @@ namespace MedicalRecord_API.Utils.Recursos.Implements
 {
     public class UtilsService : IUtilsService
     {
-        public async Task<string> ConvertirSha256Async(string input)
+        public Task<string>  ConvertirSha256Async(string input)
         {
             StringBuilder Sb = new();
             using (SHA256 hash = SHA256.Create())
@@ -18,7 +18,7 @@ namespace MedicalRecord_API.Utils.Recursos.Implements
                     Sb.Append(b.ToString("x2"));
                 }
             }
-            return Sb.ToString();
+            return Task.FromResult(Sb.ToString());
         }
     }
 }
