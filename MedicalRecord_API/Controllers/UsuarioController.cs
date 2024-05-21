@@ -26,7 +26,7 @@ namespace MedicalRecord_API.Controllers
             _usuarioRepo = usuarioRepo;
             _mapper = mapper;
             _utilsService = utilsService;
-            _response = new Response();
+            _response = new();
         }
 
         [HttpGet]
