@@ -80,11 +80,11 @@ namespace MedicalRecord_API.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Response>> Update([FromBody] AlergiaUpdateDto dto)
+        public async Task<ActionResult<Response>> Update(int id, [FromBody] AlergiaUpdateDto dto)
         {
             if (!ModelState.IsValid)
             {
@@ -93,6 +93,22 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
+                if (id <= 0)
+                {
+                    _response.Status = HttpStatusCode.BadRequest;
+                    _response.ErrorMensajes = ["Id de alergia no válido."];
+                    return BadRequest(_response);
+                }
+
+                var alergia = await _alergiaRepo.GetEntity(e => e.Id == id, false);
+
+                if (alergia == null)
+                {
+                    _response.Status = HttpStatusCode.NotFound;
+                    _response.ErrorMensajes = ["Alergia no encontrada."];
+                    return NotFound(_response);
+                }
+
                 await _alergiaRepo.Update(_mapper.Map<Alergium>(dto));
 
                 _response.Status = HttpStatusCode.OK;
