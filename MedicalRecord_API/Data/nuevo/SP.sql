@@ -29,6 +29,7 @@ CREATE PROCEDURE sp_UpdateUsuario(
   IN idUpdate INT,
   IN nombre VARCHAR(50),
   IN correo VARCHAR(50),
+  IN clave VARCHAR(250),
   IN cargo VARCHAR(30),
   IN especialidad VARCHAR(30),
   IN nroColMedico VARCHAR(6),
@@ -41,9 +42,9 @@ BEGIN
     END;
 
     START TRANSACTION;
-    UPDATE  Usuario SET nombre=nombre,correo=correo,cargo=cargo,
+    UPDATE  Usuario SET nombre=nombre,correo=correo,clave=clave,cargo=cargo,
     especialidad=especialidad,nroColMedico=nroColmedico=nroColMedico,
-    activo=activo where id=id_pdate;
+    activo=activo where id=idUpdate;
     COMMIT;
 END$
 DELIMITER ;
@@ -79,7 +80,7 @@ BEGIN
         ROLLBACK;
     END;
     START TRANSACTION;
-    update Cie set codigo=codigo,enfermedad=enfermedad where id=id_update;
+    update Cie set codigo=codigo,enfermedad=enfermedad where id=idUpdate;
     COMMIT;
 END$
 DELIMITER ;

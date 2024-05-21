@@ -2,6 +2,7 @@
 using MedicalRecord_API.Repository.Interfaces;
 using MedicalRecord_API.Utils.Recursos.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using MySqlConnector;
 using System.Data;
 
@@ -45,18 +46,18 @@ namespace MedicalRecord_API.Repository.Implements
         {
             try
             {
-                Usuario? clave = new();
-                if (entity.Clave != null)
-                {
-                    clave = await _context.Set<Usuario>().FirstOrDefaultAsync(u => u.Id == entity.Id);
-                }
-                
+          
+                entity.Clave ??= await _context.Set<Usuario>()
+                                                .Where(u => u.Id == entity.Id)
+                                                .Select(u => u.Clave)
+                                                .FirstOrDefaultAsync();
 
-                await _context.Database.ExecuteSqlRawAsync("CALL sp_UpdateUsuario(@idUpdate,@nombre, @correo, @cargo, @especialidad, @nroColMedico,@activo)",
+
+                await _context.Database.ExecuteSqlRawAsync("CALL sp_UpdateUsuario(@idUpdate,@nombre, @correo, @clave,@cargo, @especialidad, @nroColMedico,@activo)",
                                                            new MySqlParameter("@idUpdate", entity.Id),
                                                            new MySqlParameter("@nombre", entity.Nombre),
                                                            new MySqlParameter("@correo", entity.Correo),
-                                                           new MySqlParameter("@clave", entity.Clave ?? clave.Clave),
+                                                           new MySqlParameter("@clave", entity.Clave),
                                                            new MySqlParameter("@cargo", entity.Cargo),
                                                            new MySqlParameter("@especialidad", entity.Especialidad),
                                                            new MySqlParameter("@nroColMedico", entity.NroColMedico),
