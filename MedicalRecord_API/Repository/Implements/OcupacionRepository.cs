@@ -65,13 +65,13 @@ namespace MedicalRecord_API.Repository.Implements
                 var command = connection.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "UpdateOcupacion_sp";
-                command.Parameters.Add(new MySqlParameter("@id", entity.Id));
+                command.Parameters.Add(new MySqlParameter("@idUpdate", entity.Id));
                 command.Parameters.Add(new MySqlParameter("@nombre", entity.Nombre));
                 command.Parameters.Add(new MySqlParameter("@detalle", entity.Detalle));
 
                 await command.ExecuteNonQueryAsync();
 
-                _logger.LogInformation("Registro de actualización en Ocupacion con ID:{@id}", entity.Id);
+                _logger.LogInformation("Registro de actualización en Ocupacion con ID:{@idUpdate}", entity.Id);
             }
             catch (Exception ex)
             {

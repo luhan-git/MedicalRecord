@@ -33,7 +33,6 @@ namespace MedicalRecord_API.Repository.Implements
                 command.Parameters.Add(new MySqlParameter("@celular", entity.Celular));
                 command.Parameters.Add(new MySqlParameter("@email", entity.Email));
                 command.Parameters.Add(new MySqlParameter("@direccion", entity.Direccion));
-                command.Parameters.Add(new MySqlParameter("@id", entity.Id));
 
                 var idDirectorioParam = new MySqlParameter("@id", MySqlDbType.Int32)
                 {
@@ -69,7 +68,7 @@ namespace MedicalRecord_API.Repository.Implements
                 var command = connection.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "UpdateDirectorio_sp";
-                command.Parameters.Add(new MySqlParameter("@id", entity.Id));
+                command.Parameters.Add(new MySqlParameter("@idUpdate", entity.Id));
                 command.Parameters.Add(new MySqlParameter("@nombre", entity.Nombre));
                 command.Parameters.Add(new MySqlParameter("@representante", entity.Representante));
                 command.Parameters.Add(new MySqlParameter("@telefono", entity.Telefono));
@@ -79,7 +78,7 @@ namespace MedicalRecord_API.Repository.Implements
 
                 await command.ExecuteNonQueryAsync();
 
-                _logger.LogInformation("Registro de actualización en Directorio con ID:{@id}", entity.Id);
+                _logger.LogInformation("Registro de actualización en Directorio con ID:{@idUpdate}", entity.Id);
             }
             catch (Exception ex)
             {

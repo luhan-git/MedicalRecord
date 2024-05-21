@@ -1,9 +1,13 @@
 ﻿using AutoMapper;
 using MedicalRecord_API.Models;
+using MedicalRecord_API.Models.Dtos.Alergia;
 using MedicalRecord_API.Models.Dtos.CiaSeguro;
 using MedicalRecord_API.Models.Dtos.Cie;
+using MedicalRecord_API.Models.Dtos.Directorio;
 using MedicalRecord_API.Models.Dtos.ExamenLaboratorio;
+using MedicalRecord_API.Models.Dtos.Ocupacion;
 using MedicalRecord_API.Models.Dtos.Presentacion;
+using MedicalRecord_API.Models.Dtos.Procedimiento;
 using MedicalRecord_API.Models.Dtos.Usuario;
 
 namespace MedicalRecord_API.Utils.AutoMapper
@@ -23,7 +27,8 @@ namespace MedicalRecord_API.Utils.AutoMapper
             CreateMap<Cie,CieCreateDto>().ReverseMap();
             CreateMap<Cie,CieUpdateDto>().ReverseMap();
             #endregion Cie
-            #region presentacion
+
+            #region Presentacion
             CreateMap<Presentacion, PresentacionDto>().ReverseMap();
             CreateMap<Presentacion, PresentacionCreateDto>().ReverseMap();
             CreateMap<Presentacion, PresentacionUpdateDto>().ReverseMap();
@@ -37,27 +42,33 @@ namespace MedicalRecord_API.Utils.AutoMapper
 
             #region CiaSeguros
             CreateMap<Ciaseguro, CiaSeguroCreateDto>().ReverseMap();
-            //CreateMap<Ciaseguro, CiaSegurosCreateDto>().ReverseMap();
-            //CreateMap<Ciaseguro, CiaSegurosUpdateDto>().ReverseMap();
+            CreateMap<Ciaseguro, CiaSeguroUpdateDto>().ReverseMap();
+            CreateMap<Ciaseguro, CiaSeguroDto>().ReverseMap();
             #endregion CiaSeguros
 
-            //#region Directorio
-            //CreateMap<Directorio, DirectorioDto>().ReverseMap();
-            //CreateMap<Directorio, DirectorioCreateDto>().ReverseMap();
-            //CreateMap<Directorio, DirectorioUpdateDto>().ReverseMap();
-            //#endregion Directorio
+            #region Directorio
+            CreateMap<Directorio, DirectorioDto>().ReverseMap();
+            CreateMap<Directorio, DirectorioCreateDto>().ReverseMap();
+            CreateMap<Directorio, DirectorioUpdateDto>().ReverseMap();
+            #endregion Directorio
 
-            //#region Procedimiento
-            //CreateMap<Procedimiento, ProcedimientoDto>().ReverseMap();
-            //CreateMap<Procedimiento, ProcedimientoCreateDto>().ReverseMap();
-            //CreateMap<Procedimiento, ProcedimientoUpdateDto>().ReverseMap();
-            //#endregion Procedimiento
+            #region Procedimiento
+            CreateMap<Procedimiento, ProcedimientoDto>().ReverseMap();
+            CreateMap<Procedimiento, ProcedimientoCreateDto>().ReverseMap();
+            CreateMap<Procedimiento, ProcedimientoUpdateDto>().ReverseMap();
+            #endregion Procedimiento
 
-            //#region Ocupacion
-            //CreateMap<Ocupacion, OcupacionDto>().ReverseMap();
-            //CreateMap<Ocupacion, OcupacionCreateDto>().ReverseMap();
-            //CreateMap<Ocupacion, OcupacionUpdateDto>().ReverseMap();
-            //#endregion Ocupacion
+            #region Ocupacion
+            CreateMap<Ocupacion, OcupacionDto>().ReverseMap();
+            CreateMap<Ocupacion, OcupacionCreateDto>().ReverseMap();
+            CreateMap<Ocupacion, OcupacionUpdateDto>().ReverseMap();
+            #endregion Ocupacion
+
+            #region Alergia
+            CreateMap<Alergium, AlergiaDto>().ReverseMap();
+            CreateMap<Alergium, AlergiaCreateDto>().ReverseMap();
+            CreateMap<Alergium, AlergiaUpdateDto>().ReverseMap();
+            #endregion Alergia
 
         }
     }

@@ -2,7 +2,7 @@
 using MedicalRecord_API.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using MedicalRecord_API.Utils.Response;
-using MedicalRecord_API.Models.Dtos.CiaSeguro;
+using MedicalRecord_API.Models.Dtos.Alergia;
 using MedicalRecord_API.Models;
 using System.Net;
 
@@ -10,19 +10,16 @@ namespace MedicalRecord_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CiaSeguroController : ControllerBase
+    public class AlergiaController : ControllerBase
     {
-        private readonly ICiaSeguroRepository _ciaRepo;
+        private readonly IAlergiaRepository _alergiaRepo;
         private readonly IMapper _mapper;
-        private readonly ILogger<CiaSeguroController> _logger;
+        private readonly ILogger<AlergiaController> _logger;
         protected Response _response;
 
-        public CiaSeguroController(
-            ICiaSeguroRepository ciaRepo,
-            IMapper mapper,
-            ILogger<CiaSeguroController> logger)
+        public AlergiaController(IAlergiaRepository alergiaRepo,IMapper mapper,ILogger<AlergiaController> logger)
         {
-            _ciaRepo = ciaRepo;
+            _alergiaRepo = alergiaRepo;
             _mapper = mapper;
             _logger = logger;
             _response = new Response();
@@ -31,7 +28,7 @@ namespace MedicalRecord_API.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<Response>> Create([FromBody] CiaSeguroCreateDto dto)
+        public async Task<ActionResult<Response>> Create([FromBody] AlergiaCreateDto dto)
         {
             if (!ModelState.IsValid)
             {
@@ -40,18 +37,18 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                var cia = _mapper.Map<Ciaseguro>(dto);
-                cia = await _ciaRepo.Create(cia);
+                var alergia = _mapper.Map<Alergium>(dto);
+                alergia = await _alergiaRepo.Create(alergia);
 
                 _response.Status = HttpStatusCode.Created;
                 _response.IsExitoso = true;
-                _response.Resultado = cia;
+                _response.Resultado = alergia;
 
                 return Created("", _response);
             }
             catch (Exception)
             {
-                _logger.LogError($"Error al intentar crear cia de seguro");
+                _logger.LogError($"Error al intentar crear alergia");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
@@ -61,7 +58,7 @@ namespace MedicalRecord_API.Controllers
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<Response>> Update([FromBody] CiaSeguroUpdateDto dto)
+        public async Task<ActionResult<Response>> Update([FromBody] AlergiaUpdateDto dto)
         {
             if (!ModelState.IsValid)
             {
@@ -70,15 +67,16 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                await _ciaRepo.Update(_mapper.Map<Ciaseguro>(dto));
-                _response.Status = HttpStatusCode.NoContent;
+                await _alergiaRepo.Update(_mapper.Map<Alergium>(dto));
+
+                _response.Status = HttpStatusCode.OK;
                 _response.IsExitoso = true;
 
                 return Ok(_response);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError(ex, $"Error al intentar actualizar cia de seguro: {ex.Message}");
+                _logger.LogError($"Error al intentar actualizar alergia");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
@@ -93,16 +91,16 @@ namespace MedicalRecord_API.Controllers
         {
             try
             {
-                IEnumerable<CiaSeguroDto> lsCiaSeguro = _mapper.Map<IEnumerable<CiaSeguroDto>>(await _ciaRepo.Query());
+                IEnumerable<Alergium> lsAlergia = _mapper.Map<IEnumerable<Alergium>>(await _alergiaRepo.Query());
                 _response.Status = HttpStatusCode.OK;
                 _response.IsExitoso = true;
-                _response.Resultado = lsCiaSeguro;
+                _response.Resultado = lsAlergia;
 
                 return Ok(_response);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                _logger.LogError(ex, $"Error al intentar obtener cias de seguro: {ex.Message}");
+                _logger.LogError($"Error al intentar obtener alergias");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);

@@ -29,7 +29,6 @@ CREATE PROCEDURE sp_UpdateUsuario(
   IN idUpdate INT,
   IN nombre VARCHAR(50),
   IN correo VARCHAR(50),
-  IN clave varchar(250),
   IN cargo VARCHAR(30),
   IN especialidad VARCHAR(30),
   IN nroColMedico VARCHAR(6),
@@ -42,9 +41,9 @@ BEGIN
     END;
 
     START TRANSACTION;
-    UPDATE  Usuario SET nombre=nombre,correo=correo,clave=clave,cargo=cargo,
+    UPDATE  Usuario SET nombre=nombre,correo=correo,cargo=cargo,
     especialidad=especialidad,nroColMedico=nroColmedico=nroColMedico,
-    activo=activo where id=idUpdate;
+    activo=activo where id=id_pdate;
     COMMIT;
 END$
 DELIMITER ;
@@ -80,7 +79,7 @@ BEGIN
         ROLLBACK;
     END;
     START TRANSACTION;
-    update Cie set codigo=codigo,enfermedad=enfermedad where id=idUpdate;
+    update Cie set codigo=codigo,enfermedad=enfermedad where id=id_update;
     COMMIT;
 END$
 DELIMITER ;
@@ -114,7 +113,7 @@ DELIMITER ;
 DELIMITER $
 DROP PROCEDURE IF EXISTS UpdateCiaSeguro_sp;
 CREATE PROCEDURE UpdateCiaSeguro_sp(
-    IN id INT,
+    IN idUpdate INT,
     IN nombre VARCHAR(50),
     IN abreviatura VARCHAR(20)
 )
@@ -129,11 +128,11 @@ BEGIN
     UPDATE CiaSeguro
     SET nombre = nombre,
         abreviatura = abreviatura
-    WHERE id = id;
+    WHERE id = idUpdate;
 
     COMMIT;
 END$
-DELIMITER;
+DELIMITER ;
 
 -- DIRECTORIO
 DELIMITER $
@@ -162,13 +161,13 @@ BEGIN
     SET id = LAST_INSERT_ID();
 
     COMMIT;
-END;
+END$
 DELIMITER ;
 
 DELIMITER $
 DROP PROCEDURE IF EXISTS UpdateDirectorio_sp;
 CREATE PROCEDURE UpdateDirectorio_sp(
-    IN id INT,
+    IN idUpdate INT,
     IN nombre VARCHAR(80),
     IN representante VARCHAR(80),
     IN telefono VARCHAR(40),
@@ -193,7 +192,7 @@ BEGIN
         email = email,
         direccion = direccion,
         estado = estado
-    WHERE id = id;
+    WHERE id = idUpdate;
 
     COMMIT;
 END$
@@ -228,7 +227,7 @@ DELIMITER ;
 DELIMITER $
 DROP PROCEDURE IF EXISTS UpdateProcedimiento_sp;
 CREATE PROCEDURE UpdateProcedimiento_sp(
-    IN id INT,
+    IN idUpdate INT,
     IN nombre VARCHAR(50),
     IN abreviatura VARCHAR(20)
 )
@@ -243,7 +242,7 @@ BEGIN
     UPDATE Procedimientos
     SET nombre = nombre,
         abreviatura = abreviatura
-    WHERE id = id;
+    WHERE id = idUpdate;
 
     COMMIT;
 END$
@@ -279,7 +278,7 @@ DELIMITER ;
 DELIMITER $
 DROP PROCEDURE IF EXISTS UpdateOcupacion_sp;
 CREATE PROCEDURE UpdateOcupacion_sp(
-    IN id INT,
+    IN idUpdate INT,
     IN nombre VARCHAR(30),
     IN detalle VARCHAR(50)
 )
@@ -294,7 +293,7 @@ BEGIN
     UPDATE Ocupacion
     SET nombre = nombre,
         detalle = detalle
-    WHERE id = id;
+    WHERE id = idUpdate;
 
     COMMIT;
 END$

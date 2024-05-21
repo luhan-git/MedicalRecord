@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 using System.Data;
 
-
 namespace MedicalRecord_API.Repository.Implements
 {
     public class CiaSeguroRepository: GenericRepository<Ciaseguro>, ICiaSeguroRepository
@@ -66,13 +65,13 @@ namespace MedicalRecord_API.Repository.Implements
                 var command = connection.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "UpdateCiaSeguro_sp";
-                command.Parameters.Add(new MySqlParameter("@id", entity.Id));
+                command.Parameters.Add(new MySqlParameter("@idUpdate", entity.Id));
                 command.Parameters.Add(new MySqlParameter("@nombre", entity.Nombre));
                 command.Parameters.Add(new MySqlParameter("@abreviatura", entity.Abreviatura));
 
                 await command.ExecuteNonQueryAsync();
 
-                _logger.LogInformation("Registro de actualización en CiaSeguro con ID:{@id}", entity.Id);
+                _logger.LogInformation("Registro de actualización en CiaSeguro con ID:{@idUpdate}", entity.Id);
             }
             catch (Exception ex)
             {
