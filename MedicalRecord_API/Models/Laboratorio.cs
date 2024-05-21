@@ -10,4 +10,6 @@ public partial class Laboratorio
     public string Nombre { get; set; } = null!;
 
     public string? Abreviatura { get; set; }
+
+    public virtual ICollection<Medicamento> Medicamentos { get; set; } = new List<Medicamento>();
 }

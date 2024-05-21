@@ -23,7 +23,7 @@ public partial class Paciente
 
     public string Edad { get; set; } = null!;
 
-    public bool Sexo { get; set; }
+    public string Sexo { get; set; } = null!;
 
     public string EstadoCivil { get; set; } = null!;
 
@@ -65,7 +65,7 @@ public partial class Paciente
 
     public string? AntecedentesFamiliares { get; set; }
 
-    public int? IdOcupacion { get; set; }
+    public int IdOcupacion { get; set; }
 
     public string PresionArterial { get; set; } = null!;
 
@@ -82,4 +82,22 @@ public partial class Paciente
     public DateTime? FechaCreacion { get; set; }
 
     public DateTime? FechaActualizacion { get; set; }
+
+    public virtual ICollection<Consultum> Consulta { get; set; } = new List<Consultum>();
+
+    public virtual ICollection<Detallealergium> Detallealergia { get; set; } = new List<Detallealergium>();
+
+    public virtual Ciaseguro? IdCiaSeguroNavigation { get; set; }
+
+    public virtual Departamento IdDepartamentoNavigation { get; set; } = null!;
+
+    public virtual Diabete? IdDiabetesNavigation { get; set; }
+
+    public virtual Distrito IdDistritoNavigation { get; set; } = null!;
+
+    public virtual Ocupacion IdOcupacionNavigation { get; set; } = null!;
+
+    public virtual Parentesco? IdParentescoNavigation { get; set; }
+
+    public virtual Provincium IdProvinciaNavigation { get; set; } = null!;
 }

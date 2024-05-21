@@ -31,11 +31,27 @@ public partial class Consultum
 
     public string? Diagnostico { get; set; }
 
-    public int? IdCie { get; set; }
+    public int IdCie { get; set; }
 
-    public int? IdUsuario { get; set; }
+    public int IdUsuario { get; set; }
+
+    public int IdPaciente { get; set; }
 
     public DateTime? FechaConsulta { get; set; }
 
     public DateTime? FechaActualizacion { get; set; }
+
+    public virtual ICollection<Detalleexaman> Detalleexamen { get; set; } = new List<Detalleexaman>();
+
+    public virtual ICollection<Detalleprocedimiento> Detalleprocedimientos { get; set; } = new List<Detalleprocedimiento>();
+
+    public virtual Cie IdCieNavigation { get; set; } = null!;
+
+    public virtual Paciente IdPacienteNavigation { get; set; } = null!;
+
+    public virtual Usuario IdUsuarioNavigation { get; set; } = null!;
+
+    public virtual ICollection<Medicacion> Medicacions { get; set; } = new List<Medicacion>();
+
+    public virtual ICollection<Medidalente> Medidalentes { get; set; } = new List<Medidalente>();
 }

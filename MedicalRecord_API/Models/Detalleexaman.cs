@@ -16,4 +16,8 @@ public partial class Detalleexaman
     public string? Resultado { get; set; }
 
     public DateTime? FechaResultado { get; set; }
+
+    public virtual Consultum IdConsultaNavigation { get; set; } = null!;
+
+    public virtual Examenlaboratorio IdExamenLabNavigation { get; set; } = null!;
 }

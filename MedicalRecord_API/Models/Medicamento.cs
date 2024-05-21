@@ -22,4 +22,10 @@ public partial class Medicamento
     public int IdPresentacion { get; set; }
 
     public int IdLaboratorio { get; set; }
+
+    public virtual Laboratorio IdLaboratorioNavigation { get; set; } = null!;
+
+    public virtual Presentacion IdPresentacionNavigation { get; set; } = null!;
+
+    public virtual ICollection<Medicacion> Medicacions { get; set; } = new List<Medicacion>();
 }

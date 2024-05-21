@@ -10,4 +10,6 @@ public partial class Ciaseguro
     public string Nombre { get; set; } = null!;
 
     public string? Abreviatura { get; set; }
+
+    public virtual ICollection<Paciente> Pacientes { get; set; } = new List<Paciente>();
 }

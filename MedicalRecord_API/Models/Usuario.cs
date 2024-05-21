@@ -24,4 +24,6 @@ public partial class Usuario
     public DateTime? FechaRegistro { get; set; }
 
     public DateTime? UltimaSesion { get; set; }
+
+    public virtual ICollection<Consultum> Consulta { get; set; } = new List<Consultum>();
 }

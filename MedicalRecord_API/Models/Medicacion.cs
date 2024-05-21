@@ -16,4 +16,8 @@ public partial class Medicacion
     public string? Indicacion { get; set; }
 
     public string? OrdenMedica { get; set; }
+
+    public virtual Consultum IdConsultaNavigation { get; set; } = null!;
+
+    public virtual Medicamento IdMedicamentoNavigation { get; set; } = null!;
 }

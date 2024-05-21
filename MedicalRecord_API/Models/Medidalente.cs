@@ -46,4 +46,6 @@ public partial class Medidalente
     public string? Obsc { get; set; }
 
     public bool? Preventiva { get; set; }
+
+    public virtual Consultum IdConsultaNavigation { get; set; } = null!;
 }

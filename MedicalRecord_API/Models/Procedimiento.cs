@@ -10,4 +10,6 @@ public partial class Procedimiento
     public string Nombre { get; set; } = null!;
 
     public string? Abreviatura { get; set; }
+
+    public virtual ICollection<Detalleprocedimiento> Detalleprocedimientos { get; set; } = new List<Detalleprocedimiento>();
 }
