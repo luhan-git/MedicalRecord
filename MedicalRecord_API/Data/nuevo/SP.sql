@@ -299,3 +299,27 @@ BEGIN
     COMMIT;
 END$
 DELIMITER ;
+
+-- DETALLE ALERGIA
+DELIMITER $
+DROP PROCEDURE IF EXISTS InsertDetalleAlergia_sp;
+CREATE PROCEDURE InsertDetalleAlergia_sp(
+    IN idAlergia INT,
+    IN idPaciente INT,
+    OUT id INT
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+    END;
+
+    START TRANSACTION;
+
+    INSERT INTO DetalleAlergia (idAlergia, idPaciente)
+    VALUES (idAlergia, idPaciente);
+    SET id = LAST_INSERT_ID();
+
+    COMMIT;
+END$
+DELIMITER ;

@@ -191,11 +191,12 @@ CREATE TABLE Paciente(
 DROP TABLE IF EXISTS DetalleAlergia;
 CREATE TABLE DetalleAlergia (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    idPaciente INT NOT NULL,
     idAlergia INT NOT NULL,
+    idPaciente INT NOT NULL,
     
-    FOREIGN KEY (idPaciente) REFERENCES Paciente(id),
-    FOREIGN KEY (idAlergia) REFERENCES Alergia(id)
+    FOREIGN KEY (idAlergia) REFERENCES Alergia(id),
+    FOREIGN KEY (idPaciente) REFERENCES Paciente(id)
+    
 );
 
 DROP TABLE IF EXISTS Consulta;
