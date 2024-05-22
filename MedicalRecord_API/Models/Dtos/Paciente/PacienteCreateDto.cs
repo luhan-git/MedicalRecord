@@ -11,7 +11,6 @@ namespace MedicalRecord_API.Models.Dtos.Paciente
 {
     public class PacienteCreateDto
     {
-        [Required(ErrorMessage = "El identificador es obligatorio.")]
         [Range(1, int.MaxValue, ErrorMessage = "El identificador debe ser un número entero mayor a 0.")]
         public int Id { get; set; }
 

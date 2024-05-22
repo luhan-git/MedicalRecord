@@ -4,7 +4,7 @@ namespace MedicalRecord_API.Models.Dtos.Usuario
 {
     public class ChangePasswordDto
     {
-        [Required]
+        [Range(1, int.MaxValue, ErrorMessage = "Identificador fuera del rango")]
         public int Id { get; set; }
         [Required]
         public string CurrentPassword { get; set; } = null!;

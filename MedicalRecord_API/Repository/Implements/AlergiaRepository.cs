@@ -64,7 +64,7 @@ namespace MedicalRecord_API.Repository.Implements
                 var command = connection.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "UpdateAlergia_sp";
-                command.Parameters.Add(new MySqlParameter("@id", entity.Id));
+                command.Parameters.Add(new MySqlParameter("@idUpdate", entity.Id));
                 command.Parameters.Add(new MySqlParameter("@nombre", entity.Nombre));
 
                 await command.ExecuteNonQueryAsync();

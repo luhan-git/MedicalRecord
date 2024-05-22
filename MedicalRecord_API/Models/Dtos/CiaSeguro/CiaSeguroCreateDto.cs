@@ -4,11 +4,12 @@ namespace MedicalRecord_API.Models.Dtos.CiaSeguro
 {
     public class CiaSeguroCreateDto
     {
-        [Required(ErrorMessage = "El nombre es obligatorio.")]
-        [MaxLength(50, ErrorMessage = "El nombre no puede tener más de 50 caracteres.")]
+        [Required(ErrorMessage = "El {0} es requerido.")]
+        [StringLength(50, MinimumLength = 5, ErrorMessage = "El {0} debe tener entre {2} y {1} caracteres.")]
+        [RegularExpression(@"^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ,. ]*$", ErrorMessage = "El {0} solo puede contener letras, comas, puntos y espacios en blanco.")]
         public string Nombre { get; set; } = null!;
 
-        [MaxLength(20, ErrorMessage = "La abreviatura no puede tener mas de 20 caracteres.")]
+        [StringLength(20, MinimumLength = 3, ErrorMessage = "El {0} debe tener entre {2} y {1} caracteres.")]
         public string? Abreviatura { get; set; }
     }
 }

@@ -1,4 +1,4 @@
--- CIA SEGURO --- MIO 
+-- CIA SEGURO
 DELIMITER $
 DROP PROCEDURE IF EXISTS InsertCiaSeguro_sp;
 CREATE PROCEDURE InsertCiaSeguro_sp(
@@ -231,6 +231,27 @@ BEGIN
     INSERT INTO Alergia (nombre)
     VALUES (TRIM(nombre));
     SET id = LAST_INSERT_ID();
+
+    COMMIT;
+END$
+DELIMITER ;
+
+DELIMITER $
+DROP PROCEDURE IF EXISTS UpdateAlergia_sp;
+CREATE PROCEDURE UpdateAlergia_sp(
+    IN idUpdate INT,
+    IN nombre VARCHAR(50)
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+    END;
+
+    START TRANSACTION;
+    
+    UPDATE Alergia SET nombre = TRIM(nombre)
+    WHERE id = idUpdate;
 
     COMMIT;
 END$
