@@ -85,27 +85,10 @@ namespace MedicalRecord_API.Models.Dtos.Paciente
 
         public bool? Alergico { get; set; }
 
-        public DateTime? FechaCreacion { get; set; }
-
         public DateTime? FechaActualizacion { get; set; }
 
-        public ICollection<ConsultaDto> Consulta { get; set; } = new List<ConsultaDto>();
+        public virtual ICollection<DetalleAlergiaDto> Detallealergia { get; set; } =[];
 
-        public ICollection<DetalleAlergiaDto> Detallealergia { get; set; } = new List<DetalleAlergiaDto>();
-
-        public CiaSeguroDto? IdCiaSeguroNavigation { get; set; }
-
-        public DepartamentoDto IdDepartamentoNavigation { get; set; } = null!;
-
-        public ProvinciaDto IdProvinciaNavigation { get; set; } = null!;
-
-        public DistritoDto IdDistritoNavigation { get; set; } = null!;
-
-        public DiabetesDto? IdDiabetesNavigation { get; set; }
-
-        public OcupacionDto IdOcupacionNavigation { get; set; } = null!;
-
-        public ParentescoDto? IdParentescoNavigation { get; set; }
 
     }
 }

@@ -5,6 +5,7 @@ using AutoMapper;
 using MedicalRecord_API.Utils.Response;
 using MedicalRecord_API.Models.Dtos.Paciente;
 using System.Net;
+using MedicalRecord_API.Models.Dtos.Usuario;
 
 namespace MedicalRecord_API.Controllers
 {
@@ -25,40 +26,11 @@ namespace MedicalRecord_API.Controllers
             _response = new Response();
         }
 
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Response>> Create([FromBody] PacienteCreateDto dto)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            try
-            {
-                PacienteDto paciente = _mapper.Map<PacienteDto>(await _pacienteRepository.Create(_mapper.Map<Paciente>(dto)));
-                _response.Status = HttpStatusCode.Created;
-                _response.IsExitoso = true;
-                _response.Resultado = paciente;
-
-                return Created("", _response);
-            }
-            catch (Exception)
-            {
-                _logger.LogError($"Error al intentar crear paciente");
-                _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
-                return StatusCode(StatusCodes.Status500InternalServerError, _response);
-            }
-        }
-
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status102Processing)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Response>> GetAll()
+        public async Task<ActionResult<Response>> GetPacientes()
         {
             try
             {
@@ -77,7 +49,83 @@ namespace MedicalRecord_API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
+        [HttpGet("{Id:int}", Name = "GetPaciente")]
+        [ProducesResponseType(StatusCodes.Status102Processing)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<Response>> GetPaciente(int Id)
+        {
+            if (Id < 1)
+            {
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMensajes = ["id: argumento no puede ser 0"];
+                return BadRequest(_response);
+            }
+            try
+            {
+                PacienteDto pacienteDto = _mapper.Map<PacienteDto>(await _pacienteRepository.GetEntity(p => p.Id == Id, false));
+                if (pacienteDto == null)
+                {
+                    _response.Status = HttpStatusCode.NotFound;
+                    _response.ErrorMensajes = [" modelo: no esxiste en la base de datos"];
+                    return NotFound(_response);
+                }
+                _response.Status = HttpStatusCode.OK;
+                _response.IsExitoso = true;
+                _response.Resultado = pacienteDto;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.ErrorMensajes = [ex.ToString()];
+                _response.Status = HttpStatusCode.InternalServerError;
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
 
+            }
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<Response>> Create([FromBody] PacienteCreateDto dto)
+        {
+            if (dto == null)
+            {
+                _response.ErrorMensajes = ["modelo: no puede ser null"];
+                _response.Status = HttpStatusCode.BadRequest;
+                return BadRequest(_response);
+            };
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            try
+            {
+                PacienteDto modelo = _mapper.Map<PacienteDto>(await _pacienteRepository.Create(_mapper.Map<Paciente>(dto)));
+                if (await _pacienteRepository.GetEntity(p => string.Equals(p.NumeroDocumento, dto.NumeroDocumento), false) != null)
+                {
+                    _response.ErrorMensajes = ["El paciente con este identificador ya existe"];
+                    return BadRequest(_response);
+                }
+                _response.Status = HttpStatusCode.Created;
+                _response.Resultado = modelo;
+                _response.IsExitoso = true;
+                return CreatedAtRoute("GetPaciente", new { id = modelo.Id }, _response);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error al intentar crear paciente");
+                _response.Status = HttpStatusCode.InternalServerError;
+                _response.ErrorMensajes = [ex.ToString(),"Ocurrió un error al procesar la solicitud."];
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+        }
+        
         //[HttpPut("{id:int}")]
         //[ProducesResponseType(StatusCodes.Status200OK)]
         //[ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -124,36 +172,7 @@ namespace MedicalRecord_API.Controllers
         //    }
         //}
 
-        //[HttpGet("{id}")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //public async Task<ActionResult<Response>> GetById(int id)
-        //{
-        //    try
-        //    {
-        //        PacienteDto paciente = _mapper.Map<PacienteDto>(await _pacienteRepository.GetByIdAsync(id));
-        //        if (paciente == null)
-        //        {
-        //            _response.Status = HttpStatusCode.NotFound;
-        //            _response.ErrorMensajes = ["Paciente no encontrado."];
-        //            return NotFound(_response);
-        //        }
 
-        //        _response.Status = HttpStatusCode.OK;
-        //        _response.IsExitoso = true;
-        //        _response.Resultado = paciente;
-
-        //        return Ok(_response);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        _logger.LogError($"Error al intentar obtener paciente con id {id}");
-        //        _response.Status = HttpStatusCode.InternalServerError;
-        //        _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
-        //        return StatusCode(StatusCodes.Status500InternalServerError, _response);
-        //    }
-        //}
 
     }
 }
