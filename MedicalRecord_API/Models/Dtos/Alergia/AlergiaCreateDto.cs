@@ -1,6 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using MedicalRecord_API.Utils.Recursos.Interfaces;
-using MedicalRecord_API.Utils.Recursos.Implements;
 
 namespace MedicalRecord_API.Models.Dtos.Alergia
 {
