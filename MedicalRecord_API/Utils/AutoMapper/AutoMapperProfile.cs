@@ -90,9 +90,10 @@ namespace MedicalRecord_API.Utils.AutoMapper
             #endregion Alergia
 
             #region Paciente
-            CreateMap<Paciente, PacienteDto>().ReverseMap();
+            CreateMap<Paciente, PacienteDetalleDto>().ReverseMap();
             CreateMap<Paciente, PacienteCreateDto>().ReverseMap();
             CreateMap<Paciente, PacienteUpdateDto>().ReverseMap();
+            CreateMap<Paciente,PacienteDto>().ReverseMap();
             #endregion Paciente
 
         }

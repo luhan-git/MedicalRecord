@@ -26,7 +26,7 @@ namespace MedicalRecord_API.Controllers
             _response = new Response();
         }
 
-        [HttpGet]
+        [HttpGet()]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status102Processing)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -65,7 +65,7 @@ namespace MedicalRecord_API.Controllers
             }
             try
             {
-                PacienteDto pacienteDto = _mapper.Map<PacienteDto>(await _pacienteRepository.GetEntity(p => p.Id == Id, false));
+                PacienteDetalleDto pacienteDto = _mapper.Map<PacienteDetalleDto>(await _pacienteRepository.GetEntity(p => p.Id == Id, false));
                 if (pacienteDto == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
@@ -105,7 +105,7 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                PacienteDto modelo = _mapper.Map<PacienteDto>(await _pacienteRepository.Create(_mapper.Map<Paciente>(dto)));
+                PacienteDetalleDto modelo = _mapper.Map<PacienteDetalleDto>(await _pacienteRepository.Create(_mapper.Map<Paciente>(dto)));
                 if (await _pacienteRepository.GetEntity(p => string.Equals(p.NumeroDocumento, dto.NumeroDocumento), false) != null)
                 {
                     _response.ErrorMensajes = ["El paciente con este identificador ya existe"];
