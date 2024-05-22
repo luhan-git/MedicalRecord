@@ -1,4 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using MedicalRecord_API.Models.Dtos.DetalleAlergia;
+using MedicalRecord_API.Models.Dtos.Consulta;
+using MedicalRecord_API.Models.Dtos.CiaSeguro;
+using MedicalRecord_API.Models.Dtos.Ubicacion;
+using MedicalRecord_API.Models.Dtos.Diabetes;
 using MedicalRecord_API.Models.Dtos.Ocupacion;
 using MedicalRecord_API.Models.Dtos.Parentesco;
 
@@ -84,22 +89,23 @@ namespace MedicalRecord_API.Models.Dtos.Paciente
 
         public DateTime? FechaActualizacion { get; set; }
 
-        public  ICollection<Consultum> Consulta { get; set; } = new List<Consultum>();
+        public ICollection<ConsultaDto> Consulta { get; set; } = new List<ConsultaDto>();
 
-        public  ICollection<Detallealergium> Detallealergia { get; set; } = new List<Detallealergium>();
+        public ICollection<DetalleAlergiaDto> Detallealergia { get; set; } = new List<DetalleAlergiaDto>();
 
-        public  Ciaseguro? IdCiaSeguroNavigation { get; set; }
+        public CiaSeguroDto? IdCiaSeguroNavigation { get; set; }
 
-        public  Departamento IdDepartamentoNavigation { get; set; } = null!;
+        public DepartamentoDto IdDepartamentoNavigation { get; set; } = null!;
 
-        public  Diabete? IdDiabetesNavigation { get; set; }
+        public ProvinciaDto IdProvinciaNavigation { get; set; } = null!;
 
-        public  Distrito IdDistritoNavigation { get; set; } = null!;
+        public DistritoDto IdDistritoNavigation { get; set; } = null!;
 
-        public  OcupacionDto IdOcupacionNavigation { get; set; } = null!;
+        public DiabetesDto? IdDiabetesNavigation { get; set; }
 
-        public  ParentescoDto? IdParentescoNavigation { get; set; }
+        public OcupacionDto IdOcupacionNavigation { get; set; } = null!;
 
-        public  Provincium IdProvinciaNavigation { get; set; } = null!;
+        public ParentescoDto? IdParentescoNavigation { get; set; }
+
     }
 }

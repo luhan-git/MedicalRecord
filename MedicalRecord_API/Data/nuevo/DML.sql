@@ -2240,10 +2240,10 @@ grupoSanguineo, nacionalidad, idDepartamento, idProvincia, idDistrito, direccion
 VALUES ('0', 'Gonzalez', 'Pérez', 'Juan', '0', '22345678', '2000-05-15', '24', 'F', '0', '0', '0', 1, 1, 3, 'Av. Los Pinos 678', '01-2345678', '987654321', 1);
 INSERT INTO Paciente (condicion, aPaterno, aMaterno, nombres, tipoDocumento, numeroDocumento, fechaNacimiento, edad, sexo, estadoCivil,
 grupoSanguineo, nacionalidad, idDepartamento, idProvincia, idDistrito, direccion, telefono, celular, idOcupacion)
-VALUES ('0', 'Gonzalez', 'Pérez', 'Juan', '0', '34567846', '2000-05-15', '24', 'F', '0', '0', '0', 1, 2, 3, 'Los cedros', '01-2345678', '987654321', 1);
+VALUES ('0', 'Gonzalez', 'Pérez', 'Roberto', '0', '34567846', '2000-05-15', '24', 'F', '0', '0', '0', 1, 2, 3, 'Los cedros', '01-2345678', '987654321', 1);
 INSERT INTO Paciente (condicion, aPaterno, aMaterno, nombres, tipoDocumento, numeroDocumento, fechaNacimiento, edad, sexo, estadoCivil,
 grupoSanguineo, nacionalidad, idDepartamento, idProvincia, idDistrito, direccion, telefono, celular, idOcupacion)
-VALUES ('0', 'Gonzalez', 'Pérez', 'Juan', '0', '37598426', '2002-05-15', '22', 'F', '0', '0', '0', 1, 5, 1, 'San juan de Lurigancho 453', '01-2345678', '987654321', 1);
+VALUES ('0', 'Gonzalez', 'Pérez', 'Brando', '0', '37598426', '2002-05-15', '22', 'F', '0', '0', '0', 1, 5, 1, 'San juan de Lurigancho 453', '01-2345678', '987654321', 1);
 -- DETALLE ALERGIA
 INSERT INTO DetalleAlergia (idPaciente, idAlergia) VALUES (1, 1);
 INSERT INTO DetalleAlergia (idPaciente, idAlergia) VALUES (1, 2);

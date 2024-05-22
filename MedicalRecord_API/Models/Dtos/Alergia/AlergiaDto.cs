@@ -2,8 +2,8 @@
 {
     public class AlergiaDto
     {
-        public int Id { get; set; }
+        public int Id { get; }
 
-        public string? Nombre { get; set; }
+        public string Nombre { get; }
     }
 }
