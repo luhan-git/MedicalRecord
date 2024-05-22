@@ -12,6 +12,7 @@ using MedicalRecord_API.Models.Dtos.Presentacion;
 using MedicalRecord_API.Models.Dtos.Procedimiento;
 using MedicalRecord_API.Models.Dtos.Usuario;
 using MedicalRecord_API.Models.Dtos.Paciente;
+using MedicalRecord_API.Models.Dtos.Ubicacion;
 
 namespace MedicalRecord_API.Utils.AutoMapper
 {
@@ -51,7 +52,12 @@ namespace MedicalRecord_API.Utils.AutoMapper
             CreateMap<Parentesco, ParentescoDto>().ReverseMap();
             CreateMap<Parentesco, ParentescoCreateDto>().ReverseMap();
             CreateMap<Parentesco, ParentescoUpdateDto>().ReverseMap();
-            #endregion Parentesco
+            #endregion Parentesco 
+            #region Ubicacion
+            CreateMap<Departamento, DepartamentoDto>().ReverseMap();
+            CreateMap<Provincium, ProvinciaDto>().ReverseMap();
+            CreateMap<Distrito, DistritoDto>().ReverseMap();
+            #endregion Ubicacion
 
             #region CiaSeguros
             CreateMap<Ciaseguro, CiaSeguroCreateDto>().ReverseMap();
