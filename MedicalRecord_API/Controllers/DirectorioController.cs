@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using MedicalRecord_API.Utils.AutoMapper;
 using MedicalRecord_API.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using MedicalRecord_API.Utils.Response;
