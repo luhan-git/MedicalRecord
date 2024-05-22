@@ -21,6 +21,8 @@ public partial class Detalleprocedimiento
 
     public string? Directorio { get; set; }
 
+    public DateTime? FechaRegistro { get; set; }
+
     public DateTime? FechaResultado { get; set; }
 
     public virtual Consultum IdConsultaNavigation { get; set; } = null!;

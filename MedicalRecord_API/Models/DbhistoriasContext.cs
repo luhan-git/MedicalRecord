@@ -194,9 +194,9 @@ public partial class DbhistoriasContext : DbContext
             entity.ToTable("departamento");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Departamento1)
+            entity.Property(e => e.Nombre)
                 .HasMaxLength(50)
-                .HasColumnName("departamento");
+                .HasColumnName("nombre");
         });
 
         modelBuilder.Entity<Detallealergium>(entity =>
@@ -216,12 +216,12 @@ public partial class DbhistoriasContext : DbContext
             entity.HasOne(d => d.IdAlergiaNavigation).WithMany(p => p.Detallealergia)
                 .HasForeignKey(d => d.IdAlergia)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("detallealergia_ibfk_2");
+                .HasConstraintName("detallealergia_ibfk_1");
 
             entity.HasOne(d => d.IdPacienteNavigation).WithMany(p => p.Detallealergia)
                 .HasForeignKey(d => d.IdPaciente)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("detallealergia_ibfk_1");
+                .HasConstraintName("detallealergia_ibfk_2");
         });
 
         modelBuilder.Entity<Detalleexaman>(entity =>
@@ -238,7 +238,12 @@ public partial class DbhistoriasContext : DbContext
             entity.Property(e => e.Detalle)
                 .HasMaxLength(255)
                 .HasColumnName("detalle");
+            entity.Property(e => e.FechaRegistro)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("datetime")
+                .HasColumnName("fechaRegistro");
             entity.Property(e => e.FechaResultado)
+                .ValueGeneratedOnAddOrUpdate()
                 .HasColumnType("datetime")
                 .HasColumnName("fechaResultado");
             entity.Property(e => e.IdConsulta).HasColumnName("idConsulta");
@@ -275,7 +280,12 @@ public partial class DbhistoriasContext : DbContext
             entity.Property(e => e.Directorio)
                 .HasMaxLength(500)
                 .HasColumnName("directorio");
+            entity.Property(e => e.FechaRegistro)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("datetime")
+                .HasColumnName("fechaRegistro");
             entity.Property(e => e.FechaResultado)
+                .ValueGeneratedOnAddOrUpdate()
                 .HasColumnType("datetime")
                 .HasColumnName("fechaResultado");
             entity.Property(e => e.IdConsulta).HasColumnName("idConsulta");
@@ -355,10 +365,10 @@ public partial class DbhistoriasContext : DbContext
             entity.HasIndex(e => e.IdProvincia, "idProvincia");
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Distrito1)
-                .HasMaxLength(50)
-                .HasColumnName("distrito");
             entity.Property(e => e.IdProvincia).HasColumnName("idProvincia");
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(50)
+                .HasColumnName("nombre");
 
             entity.HasOne(d => d.IdProvinciaNavigation).WithMany(p => p.Distritos)
                 .HasForeignKey(d => d.IdProvincia)
@@ -784,9 +794,9 @@ public partial class DbhistoriasContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.IdDepartamento).HasColumnName("idDepartamento");
-            entity.Property(e => e.Provincia)
+            entity.Property(e => e.Nombre)
                 .HasMaxLength(50)
-                .HasColumnName("provincia");
+                .HasColumnName("nombre");
 
             entity.HasOne(d => d.IdDepartamentoNavigation).WithMany(p => p.Provincia)
                 .HasForeignKey(d => d.IdDepartamento)

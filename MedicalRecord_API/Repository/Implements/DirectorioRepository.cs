@@ -24,7 +24,7 @@ namespace MedicalRecord_API.Repository.Implements
                 await using var connection = _context.Database.GetDbConnection();
                 await connection.OpenAsync();
 
-                var command = connection.CreateCommand();
+                using var command = connection.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "InsertDirectorio_sp";
                 command.Parameters.Add(new MySqlParameter("@nombre", entity.Nombre));
@@ -65,7 +65,7 @@ namespace MedicalRecord_API.Repository.Implements
             {
                 await using var connection = _context.Database.GetDbConnection();
                 await connection.OpenAsync();
-                var command = connection.CreateCommand();
+                using var command = connection.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
                 command.CommandText = "UpdateDirectorio_sp";
                 command.Parameters.Add(new MySqlParameter("@idUpdate", entity.Id));

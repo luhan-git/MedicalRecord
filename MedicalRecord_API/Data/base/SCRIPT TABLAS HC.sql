@@ -394,3 +394,5 @@ CREATE TABLE [dbo].[UBICACION](
 	[tab_codrela] [char](6) NULL
 ) ON [SECONDARY]
 GO
+
+dotnet ef dbcontext scaffold "Server=localhost;Database=dbhistorias;User=root;Password=123456;" Pomelo.EntityFrameworkCore.MySql -o Models --force

@@ -7,9 +7,9 @@ public partial class Detallealergium
 {
     public int Id { get; set; }
 
-    public int IdPaciente { get; set; }
-
     public int IdAlergia { get; set; }
+
+    public int IdPaciente { get; set; }
 
     public virtual Alergium IdAlergiaNavigation { get; set; } = null!;
 
