@@ -109,13 +109,13 @@ CREATE TABLE Alergia (
 DROP TABLE IF EXISTS Departamento;
 CREATE TABLE Departamento (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  departamento VARCHAR(50) NOT NULL
+  nombre VARCHAR(50) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=26;
 
 DROP TABLE IF EXISTS Provincia;
 CREATE TABLE Provincia (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  provincia VARCHAR(50) NOT NULL,
+  nombre VARCHAR(50) NOT NULL,
   idDepartamento INT NOT NULL,
   
   FOREIGN KEY (idDepartamento) REFERENCES Departamento(id)
@@ -124,7 +124,7 @@ CREATE TABLE Provincia (
 DROP TABLE IF EXISTS Distrito;
 CREATE TABLE Distrito (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  distrito VARCHAR(50) NOT NULL,
+  nombre VARCHAR(50) NOT NULL,
   idProvincia INT NOT NULL,
   
   FOREIGN KEY (idProvincia) REFERENCES Provincia(id)
@@ -232,7 +232,8 @@ CREATE TABLE DetalleExamen (
     idExamenLab INT NOT NULL,
     detalle VARCHAR(255),
     resultado VARCHAR(500),
-    fechaResultado DATETIME NULL,
+    fechaRegistro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    fechaResultado DATETIME ON UPDATE CURRENT_TIMESTAMP,
     
     FOREIGN KEY (idConsulta) REFERENCES Consulta(id),
     FOREIGN KEY (idExamenLab) REFERENCES ExamenLaboratorio(id)
@@ -248,7 +249,8 @@ CREATE TABLE DetalleProcedimiento(
     resultado VARCHAR(500),
     imagenes BOOL DEFAULT FALSE,
     directorio VARCHAR(500),
-    fechaResultado DATETIME NULL,
+    fechaRegistro DATETIME DEFAULT CURRENT_TIMESTAMP,
+    fechaResultado DATETIME ON UPDATE CURRENT_TIMESTAMP,
     
     FOREIGN KEY (idConsulta) REFERENCES Consulta(id),
     FOREIGN KEY (idProcedimiento) REFERENCES Procedimiento(id)

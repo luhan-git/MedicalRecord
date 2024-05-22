@@ -323,3 +323,72 @@ BEGIN
     COMMIT;
 END$
 DELIMITER ;
+
+-- PACIENTE
+DROP PROCEDURE IF EXISTS InsertPaciente_sp;
+DELIMITER $
+CREATE PROCEDURE InsertPaciente_sp(
+	IN id INT,
+    IN condicion CHAR(1),
+    IN aPaterno VARCHAR(25),
+    IN aMaterno VARCHAR(25),
+    IN nombres VARCHAR(50),
+    IN tipoDocumento CHAR(1),
+    IN numeroDocumento VARCHAR(12),
+    IN fechaNacimiento DATETIME,
+    IN edad VARCHAR(3),
+    IN sexo CHAR(1),
+    IN estadoCivil CHAR(1),
+    IN grupoSanguineo VARCHAR(10),
+    IN nacionalidad CHAR(1),
+    IN idDepartamento INT,
+    IN idProvincia INT,
+    IN idDistrito INT,
+    IN direccion VARCHAR(60),
+    IN telefono VARCHAR(20),
+    IN celular VARCHAR(20),
+    IN centroTrabajo VARCHAR(40),
+    IN asegurado BOOL,
+    IN idCiaSeguro INT,
+    IN numeroCarnet VARCHAR(10),
+    IN contacto VARCHAR(50),
+    IN idParentesco INT,
+    IN telefonoContacto VARCHAR(20),
+    IN celularContacto VARCHAR(20),
+    IN perfil VARCHAR(200),
+    IN antecedentesClinicos VARCHAR(150),
+    IN antecedentesFamiliares VARCHAR(150),
+    IN idOcupacion INT,
+    IN presionArterial CHAR(3),
+    IN campoVisual VARCHAR(6),
+    IN email VARCHAR(80),
+    IN diabetico BOOL,
+    IN idDiabetes INT,
+    IN alergico BOOL
+
+)
+BEGIN
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+		ROLLBACK;
+	END;
+    
+    START TRANSACTION;
+    
+    INSERT INTO PACIENTE
+    (id, condicion, aPaterno, aMaterno, nombres, tipoDocumento, numeroDocumento, fechaNacimiento, edad, sexo,
+    estadoCivil, grupoSanguineo, nacionalidad, idDepartamento, idProvincia, idDistrito, direccion, telefono, celular,
+    centroTrabajo, asegurado, idCiaSeguro, numeroCarnet, contacto, idParentesco, telefonoContacto, celularContacto,
+    perfil, perfil, antecedentesClinicos, antecedentesFamiliares, idOcupacion, presionArterial, campoVisual, email,
+    diabetico, idDiabetes, alergico)
+    VALUES (id, condicion, aPaterno, aMaterno, nombres, tipoDocumento, numeroDocumento, fechaNacimiento, edad, sexo,
+    estadoCivil, grupoSanguineo, nacionalidad, idDepartamento, idProvincia, idDistrito, direccion, telefono, celular,
+    centroTrabajo, asegurado, idCiaSeguro, numeroCarnet, contacto, idParentesco, telefonoContacto, celularContacto,
+    perfil, perfil, antecedentesClinicos, antecedentesFamiliares, idOcupacion, presionArterial, campoVisual, email,
+    diabetico, idDiabetes, alergico);
+    
+    SET id = LAST_INSERT_ID();
+    
+    COMMIT;
+END$
+DELIMITER ;
