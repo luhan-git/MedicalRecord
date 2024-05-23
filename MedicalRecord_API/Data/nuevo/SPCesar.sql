@@ -1,3 +1,5 @@
+USE dbhistorias;
+
 -- CIA SEGURO
 DELIMITER $
 DROP PROCEDURE IF EXISTS InsertCiaSeguro_sp;
@@ -63,8 +65,8 @@ CREATE PROCEDURE InsertDirectorio_sp(
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
-        ROLLBACK;
         SET id = -1;
+        ROLLBACK;
     END;
 
     START TRANSACTION;
@@ -123,8 +125,8 @@ CREATE PROCEDURE InsertProcedimiento_sp(
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
-        ROLLBACK;
         SET id = -1;
+        ROLLBACK;
     END;
 
     START TRANSACTION;
@@ -176,6 +178,7 @@ CREATE PROCEDURE InsertOcupacion_sp(
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
+        SET id = -1;
         ROLLBACK;
     END;
 
@@ -223,6 +226,7 @@ CREATE PROCEDURE InsertAlergia_sp(
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
+        SET id = -1;
         ROLLBACK;
     END;
 
@@ -268,6 +272,7 @@ CREATE PROCEDURE InsertDetalleAlergia_sp(
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
+        SET id = -1;
         ROLLBACK;
     END;
 
@@ -326,7 +331,8 @@ CREATE PROCEDURE InsertPaciente_sp(
 BEGIN
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
-		ROLLBACK;
+        SET id = -1;
+        ROLLBACK;
 	END;
     
     START TRANSACTION;
@@ -426,3 +432,5 @@ BEGIN
 			COMMIT;
 END$
 DELIMITER ;
+
+select *from paciente

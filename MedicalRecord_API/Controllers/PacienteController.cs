@@ -56,9 +56,47 @@ namespace MedicalRecord_API.Controllers
 
                 return Created("", _response);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogError($"Error al intentar crear paciente");
+                _logger.LogError($"Error al intentar crear paciente {ex.Message}");
+                _response.Status = HttpStatusCode.InternalServerError;
+                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+        }
+
+
+        [HttpGet("{Id:int}", Name = "GetPaciente")]
+        [ProducesResponseType(StatusCodes.Status102Processing)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<Response>> Get(int Id)
+        {
+            if (Id < 1)
+            {
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMensajes = ["id: argumento no puede ser 0"];
+                return BadRequest(_response);
+            }
+            try
+            {
+                PacienteDetalleDto pacienteDto = _mapper.Map<PacienteDetalleDto>(await _pacienteRepository.GetEntity(p => p.Id == Id, false));
+                if (pacienteDto == null)
+                {
+                    _response.Status = HttpStatusCode.NotFound;
+                    _response.ErrorMensajes = [" modelo: no esxiste en la base de datos"];
+                    return NotFound(_response);
+                }
+                _response.Status = HttpStatusCode.OK;
+                _response.IsExitoso = true;
+                _response.Resultado = pacienteDto;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error al intentar crear paciente: {ex.Message}");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
