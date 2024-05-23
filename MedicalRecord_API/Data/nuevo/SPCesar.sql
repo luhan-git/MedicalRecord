@@ -432,5 +432,3 @@ BEGIN
 			COMMIT;
 END$
 DELIMITER ;
-
-select *from paciente

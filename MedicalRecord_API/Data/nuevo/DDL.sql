@@ -81,6 +81,7 @@ DROP TABLE IF EXISTS Medicamento;
 CREATE TABLE Medicamento (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	codigo VARCHAR(7) NOT NULL UNIQUE,
+    tipo VARCHAR(30) NOT NULL,-- Comercial ...no se sabe cuantos tipos hay por eso lo deje así nomas
 	nombreComercial VARCHAR(50) NULL,
 	nombreGenerico VARCHAR(50) NULL,
 	estado VARCHAR(1) NULL,

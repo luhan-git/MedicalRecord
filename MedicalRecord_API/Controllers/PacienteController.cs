@@ -65,28 +65,51 @@ namespace MedicalRecord_API.Controllers
             }
         }
 
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status102Processing)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<Response>> GetAll()
+        {
+            try
+            {
+                IEnumerable<PacienteDto> pacientes = _mapper.Map<IEnumerable<PacienteDto>>(await _pacienteRepository.QueryAsync());
+                _response.Status = HttpStatusCode.OK;
+                _response.IsExitoso = true;
+                _response.Resultado = pacientes;
 
-        [HttpGet("{Id:int}", Name = "GetPaciente")]
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error al intentar obtener pacientes: {ex.Message}");
+                _response.Status = HttpStatusCode.InternalServerError;
+                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+        }
+
+        [HttpGet("{id:int}", Name = "GetPaciente")]
         [ProducesResponseType(StatusCodes.Status102Processing)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Response>> Get(int Id)
+        public async Task<ActionResult<Response>> Get(int id)
         {
-            if (Id < 1)
+            if (id < 1)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["id: argumento no puede ser 0"];
+                _response.ErrorMensajes = ["Identificador fuera del rango permitido"];
                 return BadRequest(_response);
             }
             try
             {
-                PacienteDetalleDto pacienteDto = _mapper.Map<PacienteDetalleDto>(await _pacienteRepository.GetEntity(p => p.Id == Id, false));
+                PacienteDetalleDto pacienteDto = _mapper.Map<PacienteDetalleDto>(await _pacienteRepository.GetEntity(p => p.Id == id, false));
                 if (pacienteDto == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = [" modelo: no esxiste en la base de datos"];
+                    _response.ErrorMensajes = ["modelo: no existe en la base de datos"];
                     return NotFound(_response);
                 }
                 _response.Status = HttpStatusCode.OK;

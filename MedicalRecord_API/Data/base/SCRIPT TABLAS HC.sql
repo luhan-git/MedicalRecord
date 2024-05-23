@@ -1,6 +1,6 @@
 USE [BDHISTORIAS]
 GO
-/****** Object:  Table [dbo].[AgendaCitas]    Script Date: 09/05/2024 14:07:34 ******/
+/**ESTA TABLA DEBEMOS USARLA CUANDO VAMOS A IMPLEMENTAR EL MODULO DE CITAS
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -18,7 +18,7 @@ CREATE TABLE [dbo].[AgendaCitas](
 	[monto] [numeric](12, 2) NULL
 ) ON [SECONDARY]
 GO
-/****** Object:  Table [dbo].[CampoVisual]    Script Date: 09/05/2024 14:07:34 ******/
+/**EL CAMPO DE ESTA TABLA FUE INGRESADO DIRECTAMENTE EN PACIENTE POR ESO YA NO SE USA
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -28,7 +28,7 @@ CREATE TABLE [dbo].[CampoVisual](
 	[CAMPO_VIS] [nVARCHAR](6) NULL
 ) ON [SECONDARY]
 GO
-/****** Object:  Table [dbo].[CiaSeguros]    Script Date: 09/05/2024 14:07:34 ******/
+/**ESTA TABLA YA LA USAMOS
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -39,7 +39,7 @@ CREATE TABLE [dbo].[CiaSeguros](
 	[nemo_cia] [VARCHAR](20) NULL
 ) ON [SECONDARY]
 GO
-/****** Object:  Table [dbo].[CIE]    Script Date: 09/05/2024 14:07:34 ******/
+/**ESTA TABLA YA LA USAMOS
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -50,8 +50,7 @@ CREATE TABLE [dbo].[CIE](
 	[enfermedad] [VARCHAR](120) NOT NULL
 ) ON [SECONDARY]
 GO
-/****** Object:  Table [dbo].[Consulta]    Script Date: 09/05/2024 14:07:34 ******/
-SET ANSI_NULLS ON
+/**ESTA TABLA YA LA USAMOS PERO HAY UNOS CAMPOS QUE NO SE CONSIDERARON 
 GO
 SET QUOTED_IDENTIFIER ON
 GO
@@ -83,7 +82,7 @@ CREATE TABLE [dbo].[Consulta](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [SECONDARY]
 ) ON [SECONDARY]
 GO
-/****** Object:  Table [dbo].[DiagCIE]    Script Date: 09/05/2024 14:07:34 ******/
+/**ESTA TABLA NO LA USAMOS (NO CE PARA QUE SIRVE EXACAMENTE)
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -93,7 +92,7 @@ CREATE TABLE [dbo].[DiagCIE](
 	[id_cie] [int] NULL
 ) ON [SECONDARY]
 GO
-/****** Object:  Table [dbo].[Directorio]    Script Date: 09/05/2024 14:07:34 ******/
+/**ESTA TABLA YA LA USAMOS
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -109,7 +108,7 @@ CREATE TABLE [dbo].[Directorio](
 	[estado] [VARCHAR](1) NULL
 ) ON [SECONDARY]
 GO
-/****** Object:  Table [dbo].[ExamenesLaboratorio]    Script Date: 09/05/2024 14:07:34 ******/
+/**ESTA TABLA YA LA USAMOS
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -120,7 +119,7 @@ CREATE TABLE [dbo].[ExamenesLaboratorio](
 	[nemo_exam] [VARCHAR](20) NULL
 ) ON [SECONDARY]
 GO
-/****** Object:  Table [dbo].[HorarioConsultas]    Script Date: 09/05/2024 14:07:34 ******/
+/**ESTA TABLA NO LA USAMOS PERO ES PARA EL MODULO DE CITAS
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -136,7 +135,7 @@ CREATE TABLE [dbo].[HorarioConsultas](
 	[observa] [VARCHAR](300) NULL
 ) ON [SECONDARY]
 GO
-/****** Object:  Table [dbo].[imagenes]    Script Date: 09/05/2024 14:07:34 ******/
+/**ESTA TABLA LA INCLUIMOS EN EL DETALLE DE EXAMENES DE LABORATORIO (YA NO USAR ESTA TABLA)
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -150,7 +149,7 @@ CREATE TABLE [dbo].[imagenes](
 	[foto_imagen] [image] NULL
 ) ON [SECONDARY] TEXTIMAGE_ON [SECONDARY]
 GO
-/****** Object:  Table [dbo].[IndicaExamenes]    Script Date: 09/05/2024 14:07:34 ******/
+/**ESTA TABLA LA USAMOS COMO DETALLE ENTRE LOS EXAMENES DE LABORATORIO Y LA CONSULTA
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -162,7 +161,7 @@ CREATE TABLE [dbo].[IndicaExamenes](
 	[observaExam] [VARCHAR](200) NULL
 ) ON [SECONDARY]
 GO
-/****** Object:  Table [dbo].[InformesPaciente]    Script Date: 09/05/2024 14:07:34 ******/
+/**ESTA TABLA NO SE PARA QUE SE USA (NO LA USAMOS)
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -179,7 +178,7 @@ CREATE TABLE [dbo].[InformesPaciente](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [SECONDARY]
 ) ON [SECONDARY] TEXTIMAGE_ON [SECONDARY]
 GO
-/****** Object:  Table [dbo].[Lineas]    Script Date: 09/05/2024 14:07:34 ******/
+/**ESTA TABLA HACE REFENRECIA A LOS LABORATORIO (YA LA USAMOS)
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -190,7 +189,7 @@ CREATE TABLE [dbo].[Lineas](
 	[nemo_linea] [VARCHAR](4) NULL
 ) ON [SECONDARY]
 GO
-/****** Object:  Table [dbo].[Medicacion]    Script Date: 09/05/2024 14:07:34 ******/
+/**ESTA TABLA YA LA USAMOS
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -202,7 +201,7 @@ CREATE TABLE [dbo].[Medicacion](
 	[indicacion] [VARCHAR](300) NULL
 ) ON [SECONDARY]
 GO
-/****** Object:  Table [dbo].[Medicamentos]    Script Date: 09/05/2024 14:07:34 ******/
+/**ESTA TABLA YA LA USAMOS
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -220,7 +219,7 @@ CREATE TABLE [dbo].[Medicamentos](
 	[indicacion] [VARCHAR](180) NULL
 ) ON [SECONDARY]
 GO
-/****** Object:  Table [dbo].[Medicos]    Script Date: 09/05/2024 14:07:34 ******/
+/**ESTA TABLA LA UNIFICAMOS EN LA TABLA USUARIO ASI QUE YA ESTA LISTA
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -233,7 +232,7 @@ CREATE TABLE [dbo].[Medicos](
 	[estado] [char](1) NULL
 ) ON [SECONDARY]
 GO
-/****** Object:  Table [dbo].[MedidaLentes]    Script Date: 09/05/2024 14:07:34 ******/
+/**ESTA TABLA YA ESTA
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -264,7 +263,7 @@ CREATE TABLE [dbo].[MedidaLentes](
 	[condi] [char](1) NULL
 ) ON [SECONDARY]
 GO
-/****** Object:  Table [dbo].[Ocupacion]    Script Date: 09/05/2024 14:07:34 ******/
+/** ESTA TABLA YA ESTA
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -275,7 +274,7 @@ CREATE TABLE [dbo].[Ocupacion](
 	[detalle_ocupa] [VARCHAR](20) NULL
 ) ON [SECONDARY]
 GO
-/****** Object:  Table [dbo].[OrdenesVarias]    Script Date: 09/05/2024 14:07:34 ******/
+/** ESTOS CAMPOS FUERON REGISTRADOS DIRECTAMENTE EN LA CONSULTA YA QUE ALLI PERTENECE
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -288,7 +287,7 @@ CREATE TABLE [dbo].[OrdenesVarias](
 	[observa] [VARCHAR](120) NULL
 ) ON [SECONDARY]
 GO
-/****** Object:  Table [dbo].[paciente]    Script Date: 09/05/2024 14:07:34 ******/
+/**ESTA TABLA YA ESTA
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -345,7 +344,7 @@ CREATE TABLE [dbo].[paciente](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [SECONDARY]
 ) ON [SECONDARY] TEXTIMAGE_ON [SECONDARY]
 GO
-/****** Object:  Table [dbo].[Presentaciones]    Script Date: 09/05/2024 14:07:34 ******/
+/** ESTA TABLA YA ESTA Y ES PARA LA PRESENTACION DE MEDICOS
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -356,7 +355,7 @@ CREATE TABLE [dbo].[Presentaciones](
 	[nemo_prese] [VARCHAR](4) NOT NULL
 ) ON [SECONDARY]
 GO
-/****** Object:  Table [dbo].[ProcedEspeciales]    Script Date: 09/05/2024 14:07:34 ******/
+/** ESTA TABLA YA ESTA INCLUIDA
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -370,7 +369,7 @@ CREATE TABLE [dbo].[ProcedEspeciales](
 	[ubicacion] [VARCHAR](160) NULL
 ) ON [SECONDARY]
 GO
-/****** Object:  Table [dbo].[Procedimientos]    Script Date: 09/05/2024 14:07:34 ******/
+/** ESTA TABLA YA ESTA INCLUIDA
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -381,7 +380,7 @@ CREATE TABLE [dbo].[Procedimientos](
 	[nemo_proce] [VARCHAR](20) NULL
 ) ON [SECONDARY]
 GO
-/****** Object:  Table [dbo].[UBICACION]    Script Date: 09/05/2024 14:07:34 ******/
+/** ESTA TABLA YA ESTA
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

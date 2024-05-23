@@ -101,6 +101,8 @@ namespace MedicalRecord_API.Models.Dtos.Paciente
         [RegularExpression(@"^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ,. ]*$", ErrorMessage = "El {0} solo puede contener letras, comas, puntos y espacios en blanco.")]
         public string? AntecedentesFamiliares { get; set; }
 
+        [Required(ErrorMessage = "El {0} es requerido.")]
+        [Range(1, 2, ErrorMessage = "El campo Id debe ser mayor que 0.")]
         public int IdOcupacion { get; set; }
 
         [Required(ErrorMessage = "El {0} es requerido.")]

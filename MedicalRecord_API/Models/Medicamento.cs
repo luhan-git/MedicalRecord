@@ -9,6 +9,8 @@ public partial class Medicamento
 
     public string Codigo { get; set; } = null!;
 
+    public string Tipo { get; set; } = null!;
+
     public string? NombreComercial { get; set; }
 
     public string? NombreGenerico { get; set; }

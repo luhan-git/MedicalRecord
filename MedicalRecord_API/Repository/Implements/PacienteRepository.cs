@@ -47,10 +47,10 @@ namespace MedicalRecord_API.Repository.Implements
                 cmd.Parameters.Add(new MySqlParameter("@celular", entity.Celular));
                 cmd.Parameters.Add(new MySqlParameter("@centroTrabajo", entity.CentroTrabajo));
                 cmd.Parameters.Add(new MySqlParameter("@asegurado", entity.Asegurado));
-                cmd.Parameters.Add(new MySqlParameter("@idCiaSeguro", entity.IdCiaSeguro));
+                cmd.Parameters.Add(new MySqlParameter("@idCiaSeguro", entity.IdCiaSeguro != 0 ? entity.IdCiaSeguro : (object)DBNull.Value));
                 cmd.Parameters.Add(new MySqlParameter("@numeroCarnet", entity.NumeroCarnet));
                 cmd.Parameters.Add(new MySqlParameter("@contacto", entity.Contacto));
-                cmd.Parameters.Add(new MySqlParameter("@idParentesco", entity.IdParentesco));
+                cmd.Parameters.Add(new MySqlParameter("@idParentesco", entity.IdParentesco !=0 ? entity.IdParentesco : (object)DBNull.Value));
                 cmd.Parameters.Add(new MySqlParameter("@telefonoContacto", entity.TelefonoContacto));
                 cmd.Parameters.Add(new MySqlParameter("@celularContacto", entity.CelularContacto));
                 cmd.Parameters.Add(new MySqlParameter("@perfil", entity.Perfil));
@@ -61,7 +61,7 @@ namespace MedicalRecord_API.Repository.Implements
                 cmd.Parameters.Add(new MySqlParameter("@campoVisual", entity.CampoVisual));
                 cmd.Parameters.Add(new MySqlParameter("@email", entity.Email));
                 cmd.Parameters.Add(new MySqlParameter("@diabetico", entity.Diabetico));
-                cmd.Parameters.Add(new MySqlParameter("@idDiabetes", entity.IdDiabetes));
+                cmd.Parameters.Add(new MySqlParameter("@idDiabetes", entity.IdDiabetes != 0 ? entity.IdDiabetes : (object)DBNull.Value));
                 cmd.Parameters.Add(new MySqlParameter("@alergico", entity.Alergico));
 
                 var idPacienteParam = new MySqlParameter("@id", MySqlDbType.Int32)

@@ -74,6 +74,8 @@ public partial class DbhistoriasContext : DbContext
 
             entity.ToTable("alergia");
 
+            entity.HasIndex(e => e.Nombre, "nombre").IsUnique();
+
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Nombre)
                 .HasMaxLength(50)
@@ -85,6 +87,8 @@ public partial class DbhistoriasContext : DbContext
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
             entity.ToTable("ciaseguro");
+
+            entity.HasIndex(e => e.Nombre, "nombre").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Abreviatura)
@@ -100,6 +104,8 @@ public partial class DbhistoriasContext : DbContext
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
             entity.ToTable("cie");
+
+            entity.HasIndex(e => e.Codigo, "codigo").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Codigo)
@@ -121,6 +127,8 @@ public partial class DbhistoriasContext : DbContext
             entity.HasIndex(e => e.IdPaciente, "idPaciente");
 
             entity.HasIndex(e => e.IdUsuario, "idUsuario");
+
+            entity.HasIndex(e => e.NumeroConsulta, "numeroConsulta").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Davcc)
@@ -317,6 +325,8 @@ public partial class DbhistoriasContext : DbContext
 
             entity.ToTable("diabetes");
 
+            entity.HasIndex(e => e.Tipo, "tipo").IsUnique();
+
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Detalle)
                 .HasMaxLength(100)
@@ -331,6 +341,8 @@ public partial class DbhistoriasContext : DbContext
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
             entity.ToTable("directorio");
+
+            entity.HasIndex(e => e.Nombre, "nombre").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Celular)
@@ -382,6 +394,8 @@ public partial class DbhistoriasContext : DbContext
 
             entity.ToTable("examenlaboratorio");
 
+            entity.HasIndex(e => e.Nombre, "nombre").IsUnique();
+
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Abreviatura)
                 .HasMaxLength(20)
@@ -396,6 +410,8 @@ public partial class DbhistoriasContext : DbContext
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
             entity.ToTable("laboratorio");
+
+            entity.HasIndex(e => e.Nombre, "nombre").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Abreviatura)
@@ -446,6 +462,8 @@ public partial class DbhistoriasContext : DbContext
 
             entity.ToTable("medicamento");
 
+            entity.HasIndex(e => e.Codigo, "codigo").IsUnique();
+
             entity.HasIndex(e => e.IdLaboratorio, "idLaboratorio");
 
             entity.HasIndex(e => e.IdPresentacion, "idPresentacion");
@@ -471,6 +489,9 @@ public partial class DbhistoriasContext : DbContext
             entity.Property(e => e.NombreGenerico)
                 .HasMaxLength(50)
                 .HasColumnName("nombreGenerico");
+            entity.Property(e => e.Tipo)
+                .HasMaxLength(30)
+                .HasColumnName("tipo");
 
             entity.HasOne(d => d.IdLaboratorioNavigation).WithMany(p => p.Medicamentos)
                 .HasForeignKey(d => d.IdLaboratorio)
@@ -563,6 +584,8 @@ public partial class DbhistoriasContext : DbContext
 
             entity.ToTable("ocupacion");
 
+            entity.HasIndex(e => e.Nombre, "nombre").IsUnique();
+
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Detalle)
                 .HasMaxLength(50)
@@ -591,6 +614,8 @@ public partial class DbhistoriasContext : DbContext
             entity.HasIndex(e => e.IdParentesco, "idParentesco");
 
             entity.HasIndex(e => e.IdProvincia, "idProvincia");
+
+            entity.HasIndex(e => e.NumeroCarnet, "numeroCarnet").IsUnique();
 
             entity.HasIndex(e => e.NumeroDocumento, "numeroDocumento").IsUnique();
 
@@ -748,6 +773,8 @@ public partial class DbhistoriasContext : DbContext
 
             entity.ToTable("parentesco");
 
+            entity.HasIndex(e => e.Valor, "valor").IsUnique();
+
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Valor)
                 .HasMaxLength(20)
@@ -759,6 +786,8 @@ public partial class DbhistoriasContext : DbContext
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
             entity.ToTable("presentacion");
+
+            entity.HasIndex(e => e.Nombre, "nombre").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Abreviatura)
@@ -774,6 +803,8 @@ public partial class DbhistoriasContext : DbContext
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
             entity.ToTable("procedimiento");
+
+            entity.HasIndex(e => e.Nombre, "nombre").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Abreviatura)
@@ -811,6 +842,8 @@ public partial class DbhistoriasContext : DbContext
             entity.ToTable("usuario");
 
             entity.HasIndex(e => e.Correo, "correo").IsUnique();
+
+            entity.HasIndex(e => e.Nombre, "nombre").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Activo)
