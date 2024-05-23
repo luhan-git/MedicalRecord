@@ -46,22 +46,20 @@ namespace MedicalRecord_API.Controllers
 
                 Paciente paciente = _mapper.Map<Paciente>(dto);
                 paciente.Edad = edad.ToString();
-
                 paciente = await _pacienteRepository.Create(paciente);
-                PacienteDto pacienteDto = _mapper.Map<PacienteDto>(paciente);
 
+                _response.Resultado = _mapper.Map<PacienteDto>(paciente);
                 _response.Status = HttpStatusCode.Created;
                 _response.IsExitoso = true;
-                _response.Resultado = pacienteDto;
 
                 return CreatedAtRoute("GetPaciente", new { id = paciente.Id }, _response);
 
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error al intentar crear paciente {ex.Message}");
+                _logger.LogError("Error al intentar crear paciente");
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMensajes = [ex.ToString(),"Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MedicalRecord_API.Models.Dtos.DetalleAlergia;
+using System.ComponentModel.DataAnnotations;
 
 namespace MedicalRecord_API.Models.Dtos.Paciente
 {
@@ -121,7 +122,7 @@ namespace MedicalRecord_API.Models.Dtos.Paciente
         public int? IdDiabetes { get; set; }
 
         public bool? Alergico { get; set; }
-        public virtual ICollection<Detallealergium> Detallealergia { get; set; } =[];
+        public virtual ICollection<DetalleAlergiaCreateDto> Detallealergia { get; set; } =[];
 
     }
 }

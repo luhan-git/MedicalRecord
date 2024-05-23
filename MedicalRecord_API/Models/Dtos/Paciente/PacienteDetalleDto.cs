@@ -87,7 +87,7 @@ namespace MedicalRecord_API.Models.Dtos.Paciente
 
         public DateTime? FechaActualizacion { get; set; }
 
-        public virtual ICollection<DetalleAlergiaDto> Detallealergia { get; set; } =[];
+        public virtual ICollection<DetalleAlergiaCreateDto> Detallealergia { get; set; } =[];
 
 
     }

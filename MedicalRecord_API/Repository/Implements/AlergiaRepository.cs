@@ -54,6 +54,11 @@ namespace MedicalRecord_API.Repository.Implements
             }
         }
 
+        public Task CreateDetalle(Detallealergium entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task Update(Alergium entity)
         {
             try
@@ -77,30 +82,5 @@ namespace MedicalRecord_API.Repository.Implements
                 throw;
             }
         }
-
-        public async Task CreateDetalle(Detallealergium entity)
-        {
-            try
-            {
-                await using var connection = _context.Database.GetDbConnection();
-                await connection.OpenAsync();
-
-                using var command = connection.CreateCommand();
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "InsertDetalleAlergia_sp";
-                command.Parameters.Add(new MySqlParameter("@idAlergia", entity.IdAlergia));
-                command.Parameters.Add(new MySqlParameter("@idPaciente", entity.IdPaciente));
-
-                await command.ExecuteNonQueryAsync();
-
-                _logger.LogInformation("Registro de inserción en DetalleAlergia con IDAlergia:{@idAlergia} y IDPaciente:{@idPaciente}", entity.IdAlergia, entity.IdPaciente);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Excepción al intentar crear un registro en DetalleAlergia");
-                throw;
-            }
-        }
-
     }
 }
