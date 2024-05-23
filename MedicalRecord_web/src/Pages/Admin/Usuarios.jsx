@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
-import { Tables } from '../../Components/Tables.js'
+// import { Tables } from '../../Components/Tables.js'
 
 export function Usuarios() {
   const [usuarios, setUsuarios] = useState([])
   const headers = ['ID', 'Nombre', 'Cargo', 'Session', 'Estado', 'Acciones']
   const obtenerDatos = () => {
     return new Promise((resolve, reject) => {
-      fetch('https://localhost:7027/api/Usuarios')
+      fetch('https://localhost:7027/api/Pacinete')
         .then(response => {
           if (response.ok) {
             return response.json()

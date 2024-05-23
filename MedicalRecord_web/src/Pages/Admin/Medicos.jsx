@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Tables } from '../../Components/Tables.jsx'
+// import { Tables } from '../../Components/Tables.js'
 
 export function Medicos() {
   const [medicos, setMedicos] = useState([])

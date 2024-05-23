@@ -22,11 +22,11 @@ function App() {
         <Route path='/registro' element={<Register />} />
         <Route path='/olvide-password' element={<ForgetPassword />} /> */}
         <Route path='/' element={<LayoutAdmin />}>
-          {/* <Route index element={<Home />} /> */}
+          {<Route index element={<Home />} />}
           {/* <Route path='perfil' element={<Profile />} /> */}
           {/* <Route path='chat' element={<Chat />} />
           <Route path='tickets' element={<Tickets />} /> */}
-          <Route path='medicos' element={<Medicos />} />
+          {/* <Route path='medicos' element={<Medicos />} /> */}
         </Route>
         <Route path='*' element={<Error404 />} />
       </Routes>
