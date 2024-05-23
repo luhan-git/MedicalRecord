@@ -11,6 +11,8 @@ public partial class Detallealergium
 
     public int IdPaciente { get; set; }
 
+    public string? Reacciones { get; set; }
+
     public virtual Alergium IdAlergiaNavigation { get; set; } = null!;
 
     public virtual Paciente IdPacienteNavigation { get; set; } = null!;

@@ -62,6 +62,7 @@ public partial class DbhistoriasContext : DbContext
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
+   
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
@@ -220,6 +221,9 @@ public partial class DbhistoriasContext : DbContext
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.IdAlergia).HasColumnName("idAlergia");
             entity.Property(e => e.IdPaciente).HasColumnName("idPaciente");
+            entity.Property(e => e.Reacciones)
+                .HasMaxLength(200)
+                .HasColumnName("reacciones");
 
             entity.HasOne(d => d.IdAlergiaNavigation).WithMany(p => p.Detallealergia)
                 .HasForeignKey(d => d.IdAlergia)

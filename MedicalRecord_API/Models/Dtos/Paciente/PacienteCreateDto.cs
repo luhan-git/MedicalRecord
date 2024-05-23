@@ -59,12 +59,12 @@ namespace MedicalRecord_API.Models.Dtos.Paciente
         [RegularExpression(@"^[a-zA-Z0-9\s.,#-áéíóúÁÉÍÓÚüÜñÑ]*$", ErrorMessage = "La {0} debe tener un formato válido de dirección.")]
         public string? Direccion { get; set; }
 
-        [StringLength(20, ErrorMessage = "El {0} debe tener como máximo {1} caracteres.")]
-        [RegularExpression(@"^[0-9\s]*$", ErrorMessage = "El campo {0} solo puede contener números y espacios en blanco.")]
+        //[StringLength(20, ErrorMessage = "El {0} debe tener como máximo {1} caracteres.")]
+        //[RegularExpression(@"^[0-9\s]*$", ErrorMessage = "El campo {0} solo puede contener números y espacios en blanco.")]
         public string? Telefono { get; set; }
 
-        [StringLength(20, ErrorMessage = "El {0} debe tener como máximo {1} caracteres.")]
-        [RegularExpression(@"^[0-9\s]*$", ErrorMessage = "El campo {0} solo puede contener números y espacios en blanco.")]
+        //[StringLength(20, ErrorMessage = "El {0} debe tener como máximo {1} caracteres.")]
+        //[RegularExpression(@"^[0-9\s]*$", ErrorMessage = "El campo {0} solo puede contener números y espacios en blanco.")]
         public string? Celular { get; set; }
 
         [StringLength(40, ErrorMessage = "El {0} debe tener como máximo {1} caracteres.")]
@@ -82,12 +82,12 @@ namespace MedicalRecord_API.Models.Dtos.Paciente
 
         public int? IdParentesco { get; set; }
 
-        [RegularExpression(@"^[0-9\s]*$", ErrorMessage = "El campo {0} solo puede contener números y espacios en blanco.")]
-        [StringLength(20, ErrorMessage = "El {0} debe tener como máximo {1} caracteres.")]
+        //[RegularExpression(@"^[0-9\s]*$", ErrorMessage = "El campo {0} solo puede contener números y espacios en blanco.")]
+        //[StringLength(20, ErrorMessage = "El {0} debe tener como máximo {1} caracteres.")]
         public string? TelefonoContacto { get; set; }
 
-        [RegularExpression(@"^[0-9\s]*$", ErrorMessage = "El campo {0} solo puede contener números y espacios en blanco.")]
-        [StringLength(20, ErrorMessage = "El {0} debe tener como máximo {1} caracteres.")]
+        //[RegularExpression(@"^[0-9\s]*$", ErrorMessage = "El campo {0} solo puede contener números y espacios en blanco.")]
+        //[StringLength(20, ErrorMessage = "El {0} debe tener como máximo {1} caracteres.")]
         public string? CelularContacto { get; set; }
 
         [StringLength(200, ErrorMessage = "El {0} debe tener como máximo {1} caracteres.")]
