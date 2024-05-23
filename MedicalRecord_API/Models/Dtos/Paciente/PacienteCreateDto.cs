@@ -121,5 +121,7 @@ namespace MedicalRecord_API.Models.Dtos.Paciente
         public int? IdDiabetes { get; set; }
 
         public bool? Alergico { get; set; }
+        public virtual ICollection<Detallealergium> Detallealergia { get; set; } =[];
+
     }
 }

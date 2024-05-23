@@ -23,7 +23,7 @@ namespace MedicalRecord_API.Controllers
             _pacienteRepository = pacienteRepository;
             _mapper = mapper;
             _logger = logger;
-            _response = new Response();
+            _response = new();
         }
 
         [HttpPost]
@@ -54,7 +54,8 @@ namespace MedicalRecord_API.Controllers
                 _response.IsExitoso = true;
                 _response.Resultado = pacienteDto;
 
-                return Created("", _response);
+                return CreatedAtRoute("GetPaciente", new { id = paciente.Id }, _response);
+
             }
             catch (Exception ex)
             {
@@ -69,7 +70,7 @@ namespace MedicalRecord_API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status102Processing)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Response>> GetAll()
+        public async Task<ActionResult<Response>> GetPacientes()
         {
             try
             {
@@ -95,7 +96,7 @@ namespace MedicalRecord_API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Response>> Get(int id)
+        public async Task<ActionResult<Response>> GetPaciente(int id)
         {
             if (id < 1)
             {
