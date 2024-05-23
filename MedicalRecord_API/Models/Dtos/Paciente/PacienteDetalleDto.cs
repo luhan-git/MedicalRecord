@@ -38,11 +38,11 @@ namespace MedicalRecord_API.Models.Dtos.Paciente
         public string Nacionalidad { get; set; } = null!;
 
         public int IdDepartamento { get; set; }
-
+        public string Departamento { get; set;} = null!;
         public int IdProvincia { get; set; }
-
+        public string Provincia { get; set; } = null!;
         public int IdDistrito { get; set; }
-
+        public string Distrito { get; set; } =null!;
         public string? Direccion { get; set; }
 
         public string? Telefono { get; set; }
@@ -54,13 +54,13 @@ namespace MedicalRecord_API.Models.Dtos.Paciente
         public bool? Asegurado { get; set; }
 
         public int? IdCiaSeguro { get; set; }
-
         public string? NumeroCarnet { get; set; }
+        public string? CiaSeguro { get; set; }
 
         public string? Contacto { get; set; }
 
         public int? IdParentesco { get; set; }
-
+        public string? Parentesco { get; set; }
         public string? TelefonoContacto { get; set; }
 
         public string? CelularContacto { get; set; }
@@ -72,7 +72,7 @@ namespace MedicalRecord_API.Models.Dtos.Paciente
         public string? AntecedentesFamiliares { get; set; }
 
         public int IdOcupacion { get; set; }
-
+        public string? Ocupacion { get; set; }
         public string PresionArterial { get; set; } = null!;
 
         public string? CampoVisual { get; set; }
@@ -82,11 +82,9 @@ namespace MedicalRecord_API.Models.Dtos.Paciente
         public bool? Diabetico { get; set; }
 
         public int? IdDiabetes { get; set; }
-
+        public string? Diabetes { get; set; }
         public bool? Alergico { get; set; }
-
         public DateTime? FechaActualizacion { get; set; }
-
         public virtual ICollection<DetalleAlergiaCreateDto> Detallealergia { get; set; } =[];
 
 
