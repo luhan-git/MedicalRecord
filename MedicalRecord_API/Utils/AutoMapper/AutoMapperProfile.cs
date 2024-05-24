@@ -13,6 +13,7 @@ using MedicalRecord_API.Models.Dtos.Procedimiento;
 using MedicalRecord_API.Models.Dtos.Usuario;
 using MedicalRecord_API.Models.Dtos.Paciente;
 using MedicalRecord_API.Models.Dtos.Ubicacion;
+using MedicalRecord_API.Models.Dtos.DetalleAlergia;
 
 namespace MedicalRecord_API.Utils.AutoMapper
 {
@@ -87,11 +88,15 @@ namespace MedicalRecord_API.Utils.AutoMapper
             CreateMap<Alergium, AlergiaDto>().ReverseMap();
             CreateMap<Alergium, AlergiaCreateDto>().ReverseMap();
             CreateMap<Alergium, AlergiaUpdateDto>().ReverseMap();
+            CreateMap<Detallealergium, DetalleAlergiaCreateDto>().ReverseMap();
+
             #endregion Alergia
 
             #region Paciente
             CreateMap<Paciente, PacienteDetalleDto>().ReverseMap();
             CreateMap<Paciente, PacienteCreateDto>().ReverseMap();
+
+
             CreateMap<Paciente, PacienteUpdateDto>().ReverseMap();
             CreateMap<Paciente,PacienteDto>().ReverseMap();
             #endregion Paciente

@@ -6,6 +6,7 @@ using MedicalRecord_API.Models.Dtos.Ubicacion;
 using MedicalRecord_API.Models.Dtos.Diabetes;
 using MedicalRecord_API.Models.Dtos.Ocupacion;
 using MedicalRecord_API.Models.Dtos.Parentesco;
+using MedicalRecord_API.Models.Dtos.Alergia;
 
 namespace MedicalRecord_API.Models.Dtos.Paciente
 {
@@ -85,7 +86,7 @@ namespace MedicalRecord_API.Models.Dtos.Paciente
         public string? Diabetes { get; set; }
         public bool? Alergico { get; set; }
         public DateTime? FechaActualizacion { get; set; }
-        public virtual ICollection<DetalleAlergiaCreateDto> Detallealergia { get; set; } =[];
+        public virtual ICollection<AlergiaDto> Detallealergia { get; set; } =[];
 
 
     }

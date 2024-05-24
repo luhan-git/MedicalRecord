@@ -1,4 +1,5 @@
-﻿using MedicalRecord_API.Models.Dtos.DetalleAlergia;
+﻿using MedicalRecord_API.Models.Dtos.Alergia;
+using MedicalRecord_API.Models.Dtos.DetalleAlergia;
 using System.ComponentModel.DataAnnotations;
 
 namespace MedicalRecord_API.Models.Dtos.Paciente
@@ -7,8 +8,7 @@ namespace MedicalRecord_API.Models.Dtos.Paciente
     {
 
 
-        public string Condicion { get; set; } = null!;
-
+        #region DatosPersonales
         public string APaterno { get; set; } = null!;
 
         public string AMaterno { get; set; } = null!;
@@ -50,7 +50,9 @@ namespace MedicalRecord_API.Models.Dtos.Paciente
         public int? IdCiaSeguro { get; set; }
 
         public string? NumeroCarnet { get; set; }
-
+        public string Condicion { get; set; } = null!;
+        #endregion DatosPersonales
+        #region Anteceentes
         public string? Contacto { get; set; }
 
         public int? IdParentesco { get; set; }
@@ -77,7 +79,7 @@ namespace MedicalRecord_API.Models.Dtos.Paciente
 
         public bool? Alergico { get; set; }
 
-        public virtual ICollection<DetalleAlergiaCreateDto> Detallealergia { get; set; } = [];
-
+        public virtual ICollection<DetalleAlergiaCreateDto>? Detallealergia { get; set; } = [];
+        #endregion Antecedentes
     }
 }

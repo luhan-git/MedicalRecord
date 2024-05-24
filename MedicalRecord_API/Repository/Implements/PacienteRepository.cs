@@ -19,6 +19,7 @@ namespace MedicalRecord_API.Repository.Implements
 
         public async Task<Paciente> Create(Paciente entity)
         {
+
             using var transaction = _context.Database.BeginTransaction();
             Paciente paciente;
             try

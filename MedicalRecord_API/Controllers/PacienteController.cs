@@ -39,6 +39,7 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
+
                 DateTime fechaNacimiento = dto.FechaNacimiento;
                 int edad = DateTime.Today.Year - fechaNacimiento.Year;
                 if (fechaNacimiento.Date > DateTime.Today.AddYears(-edad))
