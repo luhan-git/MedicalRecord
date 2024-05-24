@@ -44,13 +44,13 @@ namespace MedicalRecord_API.Repository.Implements
                     throw new Exception("El procedimiento almacenado InsertCiaSeguro_sp devolvió -1, indicando un error.");
                 }
 
-                _logger.LogInformation("Registro de inserción en CiaSeguro con ID:{@id}", idCiaSeguro);
+                _logger.LogInformation("Registro en CiaSeguro con id: {@id}", idCiaSeguro);
 
                 return await _context.Set<Ciaseguro>().FirstOrDefaultAsync(c => c.Id == idCiaSeguro) ?? new();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Excepción al intentar crear un registro en CiaSeguro");
+                _logger.LogError(ex, "Error en create ciaseguro");
                 throw;
             }
         }
@@ -71,11 +71,11 @@ namespace MedicalRecord_API.Repository.Implements
 
                 await command.ExecuteNonQueryAsync();
 
-                _logger.LogInformation("Registro de actualización en CiaSeguro con ID:{@idUpdate}", entity.Id);
+                _logger.LogInformation("Registro de actualización en CiaSeguro con id: {@id}", entity.Id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Excepción al intentar actualizar un registro en CiaSeguro");
+                _logger.LogError(ex, "Error en update ciaseguro");
                 throw;
             }
         }

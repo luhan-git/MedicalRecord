@@ -44,13 +44,13 @@ namespace MedicalRecord_API.Repository.Implements
                     throw new Exception("El procedimiento almacenado InsertProcedimiento_sp devolvió -1, indicando un error.");
                 }
 
-                _logger.LogInformation("Registro de inserción en Procedimiento con ID:{@id}", idProcedimiento);
+                _logger.LogInformation("Registro en procedimiento con id: {@id}", idProcedimiento);
 
                 return await _context.Set<Procedimiento>().FirstOrDefaultAsync(c => c.Id == idProcedimiento) ?? new();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Excepción al intentar crear un registro en Procedimiento");
+                _logger.LogError(ex, "Error en create procedimiento");
                 throw;
             }
         }
@@ -71,11 +71,11 @@ namespace MedicalRecord_API.Repository.Implements
 
                 await command.ExecuteNonQueryAsync();
 
-                _logger.LogInformation("Registro de actualización en Procedimiento con ID:{@idUpdate}", entity.Id);
+                _logger.LogInformation("Actualización en procedimiento con id: {@id}", entity.Id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Excepción al intentar actualizar un registro en Procedimiento");
+                _logger.LogError(ex, "Error en update procedimiento");
                 throw;
             }
         }

@@ -47,9 +47,9 @@ namespace MedicalRecord_API.Repository.Implements
                 usuario.Clave = "";
                 return usuario;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogError("Error creando un usuario");
+                _logger.LogError(ex, "Error en create usuario");
                 throw;
             }
         }
@@ -96,7 +96,6 @@ namespace MedicalRecord_API.Repository.Implements
         {
             try
             {
-          
                 entity.Clave ??= await _context.Set<Usuario>()
                                                 .Where(u => u.Id == entity.Id)
                                                 .Select(u => u.Clave)
@@ -116,9 +115,9 @@ namespace MedicalRecord_API.Repository.Implements
                 _logger.LogWarning("Se actualizó un usuario con id: {id} en la base de datos", entity.Id);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogError("Error actualizando un usuario");
+                _logger.LogError(ex, "Error en update usuario");
                 throw;
             }
         }

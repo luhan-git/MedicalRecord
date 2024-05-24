@@ -45,9 +45,8 @@ namespace MedicalRecord_API.Controllers
 
                 return Created("", _response);
             }
-            catch (Exception)
+            catch
             {
-                _logger.LogError($"Error al intentar crear consulta");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);

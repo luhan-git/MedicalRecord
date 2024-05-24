@@ -56,11 +56,10 @@ namespace MedicalRecord_API.Controllers
                 return CreatedAtRoute("GetPaciente", new { id = paciente.Id }, _response);
 
             }
-            catch (Exception ex)
+            catch
             {
-                _logger.LogError("Error al intentar crear paciente");
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = [ex.ToString(),"Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud"];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -80,9 +79,8 @@ namespace MedicalRecord_API.Controllers
 
                 return Ok(_response);
             }
-            catch (Exception ex)
+            catch
             {
-                _logger.LogError($"Error al intentar obtener pacientes: {ex.Message}");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
@@ -117,9 +115,8 @@ namespace MedicalRecord_API.Controllers
                 _response.Resultado = pacienteDto;
                 return Ok(_response);
             }
-            catch (Exception ex)
+            catch
             {
-                _logger.LogError($"Error al intentar crear paciente: {ex.Message}");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);

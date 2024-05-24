@@ -43,13 +43,13 @@ namespace MedicalRecord_API.Repository.Implements
                     throw new Exception("El procedimiento almacenado InsertAlergia_sp devolvió -1, indicando un error.");
                 }
 
-                _logger.LogInformation("Registro de inserción en Alergia con ID:{@id}", idAlergia);
+                _logger.LogInformation("Registro en Alergia con id: {@id}", idAlergia);
 
                 return await _context.Set<Alergium>().FirstOrDefaultAsync(a => a.Id == idAlergia) ?? new();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Excepción al intentar crear un registro en Alergia");
+                _logger.LogError(ex, "Error en create alergia");
                 throw;
             }
         }
@@ -74,11 +74,11 @@ namespace MedicalRecord_API.Repository.Implements
 
                 await command.ExecuteNonQueryAsync();
 
-                _logger.LogInformation("Registro de actualización en Alergia con ID:{@id}", entity.Id);
+                _logger.LogInformation("Registro de actualización en Alergia con id: {@id}", entity.Id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Excepción al intentar actualizar un registro en Alergia");
+                _logger.LogError(ex, "Error en update alergia");
                 throw;
             }
         }

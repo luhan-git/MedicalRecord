@@ -49,9 +49,8 @@ namespace MedicalRecord_API.Controllers
 
                 return Created("", _response);
             }
-            catch (Exception)
+            catch
             {
-                _logger.LogError($"Error al intentar crear cia de seguro");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
@@ -73,9 +72,8 @@ namespace MedicalRecord_API.Controllers
 
                 return Ok(_response);
             }
-            catch (Exception)
+            catch
             {
-                _logger.LogError($"Error al intentar obtener las compañias de seguro");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
@@ -118,9 +116,8 @@ namespace MedicalRecord_API.Controllers
 
                 return Ok(_response);
             }
-            catch (Exception)
+            catch
             {
-                _logger.LogError($"Error al intentar actualizar cia de seguro {id}");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
@@ -159,9 +156,8 @@ namespace MedicalRecord_API.Controllers
 
                 return Ok(_response);
             }
-            catch (Exception ex)
+            catch
             {
-                _logger.LogError(ex, $"Error al intentar eliminar cia de seguro: {ex.Message}");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
@@ -199,9 +195,8 @@ namespace MedicalRecord_API.Controllers
 
                 return Ok(_response);
             }
-            catch (Exception)
+            catch
             {
-                _logger.LogError($"Error al intentar obtener cia de seguro: {id}");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);

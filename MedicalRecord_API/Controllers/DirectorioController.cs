@@ -45,12 +45,10 @@ namespace MedicalRecord_API.Controllers
 
                 return Created("", _response);
             }
-            catch (Exception)
+            catch
             {
-                _logger.LogError($"Error al intentar crear directorio");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
-
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -70,9 +68,8 @@ namespace MedicalRecord_API.Controllers
 
                 return Ok(_response);
             }
-            catch (Exception)
+            catch
             {
-                _logger.LogError($"Error al intentar obtener directorios");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
@@ -116,12 +113,10 @@ namespace MedicalRecord_API.Controllers
 
                 return Ok(_response);
             }
-            catch (Exception)
+            catch
             {
-                _logger.LogError($"Error al intentar actualizar directorio {id}");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
-
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -158,12 +153,10 @@ namespace MedicalRecord_API.Controllers
 
                 return Ok(_response);
             }
-            catch (Exception)
+            catch
             {
-                _logger.LogError($"Error al intentar eliminar directorio {id}");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
-
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -199,12 +192,10 @@ namespace MedicalRecord_API.Controllers
 
                 return Ok(_response);
             }
-            catch (Exception)
+            catch
             {
-                _logger.LogError($"Error al intentar obtener directorio {id}");
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
-
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
