@@ -1,6 +1,5 @@
 import { TablePaciente } from '../../Components/TablePaciente'
 import { useState, useEffect } from 'react'
-import { FrmPaciente } from '../../Components/FrmPaciente'
 
 export function Paciente() {
   const [pacientes, setPacientes] = useState([])
@@ -24,11 +23,8 @@ export function Paciente() {
     obtenerDatos()
   }, [])
 
-    return
-    ;<>
-        <TablePaciente headers={headers} data={pacientes}></TablePaciente>
-        <FrmPaciente></FrmPaciente>
-    </>
-
-    
+  return
+  ;<>
+    <TablePaciente headers={headers} data={pacientes}></TablePaciente>
+  </>
 }

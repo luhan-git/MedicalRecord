@@ -104,7 +104,7 @@ export function TablePaciente(props) {
                 </MenuItem>
               </Menu>
             </div>
-            </div>      
+          </div>
         ))}
       </div>
     </div>
