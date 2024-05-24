@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MedicalRecord_API.Models.Dtos.Usuario
 {
-    public class UsuarioCreateDto
+    public class UsuarioRegistroDto
     {
         [Required]
         [StringLength(50)]
@@ -20,5 +20,7 @@ namespace MedicalRecord_API.Models.Dtos.Usuario
         public string? Especialidad { get; set; }
         [StringLength(6)]
         public string? NroColMedico { get; set; }
+
+        public string Rol { get; set; } = null!;
     }
 }

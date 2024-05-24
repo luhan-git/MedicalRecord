@@ -28,7 +28,6 @@ namespace MedicalRecord_API.Controllers
             _utilsService = utilsService;
             _response = new();
         }
-
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status102Processing)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -96,49 +95,69 @@ namespace MedicalRecord_API.Controllers
 
             }
         }
+
+        [HttpPost("Login")]
+        public async Task<ActionResult<Response>> Login([FromBody] LoginRequestDto modelo)
+        {
+            modelo.Password=await _utilsService.ConvertirSha256Async(modelo.Password);
+
+            LoginResponseDto loginResponseDto = await _usuarioRepo.Login(modelo);
+            if(loginResponseDto == null|| loginResponseDto.Token == null)
+            {
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMensajes = ["username o password es incorrecto"];
+                return BadRequest(_response);
+            }
+            _response.Status= HttpStatusCode.OK;
+            _response.IsExitoso = true;
+            _response.Resultado=loginResponseDto;
+            return Ok(_response);
+        }
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<Response>> Create([FromBody] UsuarioCreateDto dto)
+        public async Task<ActionResult<Response>> Create([FromBody] UsuarioRegistroDto dto)
         {
-            _logger.LogInformation("{StatusCode}[{HttpStatusCode}]:Procesando la solicitud CREATE", StatusCodes.Status102Processing, HttpStatusCode.Processing);
             if (dto == null) 
             {
                 _response.ErrorMensajes = ["modelo: no puede ser null"];
                 _response.Status = HttpStatusCode.BadRequest;
-                _logger.LogError("{StatusCode}[{HttpStatusCode}] : modelo: modelo no puede ser null", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest);
                 return BadRequest(_response);
             };
             if (!ModelState.IsValid)
             {
-                _logger.LogError("{StatusCode}[{HttpStatusCode}] {ModelState}", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest, ModelState.ToString());
                 return BadRequest(ModelState);
             };
             try
             {
-                if (await _usuarioRepo.GetEntity(u => string.Equals(u.Correo,dto.Correo), false) != null)
+                bool unique = await _usuarioRepo.IsUserUnique(dto.Correo);
+                if (!unique)
                 {
+                    _response.Status=HttpStatusCode.BadRequest; 
                     _response.ErrorMensajes = ["El Usuario con este Correo ya existe"];
-                    _logger.LogError("{StatusCode}[{HttpStatusCode}] El Usuario con este Correo ya existe", StatusCodes.Status400BadRequest, HttpStatusCode.BadRequest);
                     return BadRequest(_response);
                 }
 
                 Usuario modelo = _mapper.Map<Usuario>(dto);
                 modelo.Clave= await _utilsService.ConvertirSha256Async(dto.Clave);
                 modelo = await _usuarioRepo.Create(modelo);
+                if (modelo == null)
+                {
+                    _response.Status = HttpStatusCode.BadRequest;
+                    _response.ErrorMensajes = ["Error al registrar Usuario"];
+                    return BadRequest(_response);
+                }
                 _response.Resultado = _mapper.Map<UsuarioDto>(modelo);
                 _response.Status = HttpStatusCode.Created;
                 _response.IsExitoso = true;
-                _logger.LogWarning("{StatusCode}[{HttpStatusCode}]: Respuesta existosa de CREATE", StatusCodes.Status201Created, HttpStatusCode.Created);
-                return CreatedAtRoute("GetUsuario", new { id = modelo.Id }, _response);
+                return Ok(_response);
             }
             catch (Exception ex)
             {
                 _response.IsExitoso = false;
                 _response.ErrorMensajes = [ex.ToString()];
                 _response.Status = HttpStatusCode.InternalServerError;
-                _logger.LogError("{StatusCode}[{HttpStatusCode}]: Error en la respuesta de CREATE", StatusCodes.Status500InternalServerError, HttpStatusCode.InternalServerError);
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
 
             }  

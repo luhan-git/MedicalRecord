@@ -875,6 +875,9 @@ public partial class DbhistoriasContext : DbContext
             entity.Property(e => e.NroColMedico)
                 .HasMaxLength(6)
                 .HasColumnName("nroColMedico");
+            entity.Property(e => e.Rol)
+                .HasMaxLength(20)
+                .HasColumnName("rol");
             entity.Property(e => e.UltimaSesion)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("datetime")

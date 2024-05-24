@@ -19,6 +19,8 @@ public partial class Usuario
 
     public string? NroColMedico { get; set; }
 
+    public string Rol { get; set; } = null!;
+
     public bool? Activo { get; set; }
 
     public DateTime? FechaRegistro { get; set; }
