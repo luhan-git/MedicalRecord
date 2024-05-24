@@ -8,8 +8,6 @@
 
         public string Correo { get; set; } = null!;
 
-        public string Clave { get; set; } = null!;
-
         public string Rol { get; set; } = null!;
 
         public bool? Activo { get; set; }
