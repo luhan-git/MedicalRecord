@@ -4,6 +4,7 @@ using MedicalRecord_API.Models.Dtos.Cie;
 using MedicalRecord_API.Models.Dtos.Parentesco;
 using MedicalRecord_API.Repository.Interfaces;
 using MedicalRecord_API.Utils.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -11,6 +12,7 @@ using System.Net;
 namespace MedicalRecord_API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Roles = "admin")]
     [ApiController]
     public class ParentescoController : ControllerBase
     {

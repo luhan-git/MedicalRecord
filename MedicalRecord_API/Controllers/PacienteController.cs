@@ -6,10 +6,12 @@ using MedicalRecord_API.Utils.Response;
 using MedicalRecord_API.Models.Dtos.Paciente;
 using System.Net;
 using MedicalRecord_API.Models.Dtos.Usuario;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MedicalRecord_API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Roles = "admin")]
     [ApiController]
     public class PacienteController : ControllerBase
     {

@@ -25,7 +25,7 @@ namespace MedicalRecord_API.Repository.Implements
 
             _context = context;
             _mapper = mapper;
-            _secretkey = configuration.GetValue<string>("apiSetting:Secret");
+            _secretkey = configuration.GetValue<string>("ApiSettings:Secret");
             _logger = logger;
         }
         public async Task<Usuario> Create(Usuario entity)

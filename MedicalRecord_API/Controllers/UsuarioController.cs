@@ -7,9 +7,11 @@ using System.Net;
 using MedicalRecord_API.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using MedicalRecord_API.Utils.Recursos.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MedicalRecord_API.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class UsuarioController : ControllerBase
@@ -29,6 +31,7 @@ namespace MedicalRecord_API.Controllers
             _response = new();
         }
         [HttpGet]
+        [Authorize(Roles = "admin")]
         [ProducesResponseType(StatusCodes.Status102Processing)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -51,6 +54,7 @@ namespace MedicalRecord_API.Controllers
             }
         }
         [HttpGet("{Id:int}", Name = "GetUsuario")]
+        [Authorize(Roles = "admin")]
         [ProducesResponseType(StatusCodes.Status102Processing)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
@@ -104,6 +108,7 @@ namespace MedicalRecord_API.Controllers
             return Ok(_response);
         }
         [HttpPost]
+        [Authorize(Roles = "admin")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -152,6 +157,7 @@ namespace MedicalRecord_API.Controllers
 
         }
         [HttpPut("{id:int}")]
+        [Authorize(Roles = "admin")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
