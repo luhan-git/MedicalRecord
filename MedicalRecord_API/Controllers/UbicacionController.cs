@@ -43,10 +43,10 @@ namespace MedicalRecord_API.Controllers
                 return _response;
 
             }
-            catch(Exception ex)
+            catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = [ex.ToString()];
+                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud"];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -73,10 +73,10 @@ namespace MedicalRecord_API.Controllers
                 _response.Resultado = provList;
                 return Ok(_response);
             }
-            catch (Exception ex)
+            catch
             {
-                _response.ErrorMensajes = [ex.ToString()];
                 _response.Status = HttpStatusCode.InternalServerError;
+                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud"];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -103,10 +103,10 @@ namespace MedicalRecord_API.Controllers
                 _response.Resultado = distList;
                 return Ok(_response);
             }
-            catch (Exception ex)
+            catch
             {
-                _response.ErrorMensajes = [ex.ToString()];
                 _response.Status = HttpStatusCode.InternalServerError;
+                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud"];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }

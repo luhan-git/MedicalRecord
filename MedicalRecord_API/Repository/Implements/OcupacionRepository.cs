@@ -44,13 +44,13 @@ namespace MedicalRecord_API.Repository.Implements
                     throw new Exception("El procedimiento almacenado InsertOcupacion_sp devolvió -1, indicando un error.");
                 }
 
-                _logger.LogInformation("Registro de inserción en Ocupacion con ID:{@id}", idOcupacion);
+                _logger.LogInformation("Registro en Ocupacion con id: {@id}", idOcupacion);
 
                 return await _context.Set<Ocupacion>().FirstOrDefaultAsync(c => c.Id == idOcupacion) ?? new();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Excepción al intentar crear un registro en Ocupacion");
+                _logger.LogError(ex, "Error en create ocupacion");
                 throw;
             }
         }
@@ -71,11 +71,11 @@ namespace MedicalRecord_API.Repository.Implements
 
                 await command.ExecuteNonQueryAsync();
 
-                _logger.LogInformation("Registro de actualización en Ocupacion con ID:{@idUpdate}", entity.Id);
+                _logger.LogInformation("Registro de actualización en Ocupacion con id: {@id}", entity.Id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Excepción al intentar actualizar un registro en Ocupacion");
+                _logger.LogError(ex, "Error en update ocupacion");
                 throw;
             }
         }   

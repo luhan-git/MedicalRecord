@@ -48,13 +48,13 @@ namespace MedicalRecord_API.Repository.Implements
                     throw new Exception("El procedimiento almacenado InsertDirectorio_sp devolvió -1, indicando un error.");
                 }
 
-                _logger.LogInformation("Registro de inserción en Directorio con ID:{@id}", idDirectorio);
+                _logger.LogInformation("Registro en Directorio con id: {@id}", idDirectorio);
 
                 return await _context.Set<Directorio>().FirstOrDefaultAsync(c => c.Id == idDirectorio) ?? new();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Excepción al intentar crear un registro en Directorio");
+                _logger.LogError(ex, "Error en create directorio");
                 throw;
             }
         }
@@ -78,11 +78,11 @@ namespace MedicalRecord_API.Repository.Implements
 
                 await command.ExecuteNonQueryAsync();
 
-                _logger.LogInformation("Registro de actualización en Directorio con ID:{@idUpdate}", entity.Id);
+                _logger.LogInformation("Registro de actualización en Directorio con id: {@id}", entity.Id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Excepción al intentar actualizar un registro en Directorio");
+                _logger.LogError(ex, "Error en update directorio");
                 throw;
             }
         }

@@ -30,9 +30,9 @@ namespace MedicalRecord_API.Repository.Implements
                 _logger.LogWarning("Se creo un nuevo cie con codigo : {codigo}",entity.Codigo);
                 return await _context.Set<Cie>().FirstOrDefaultAsync(c => string.Equals(c.Codigo,entity.Codigo))?? new();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogError("Error creating cie");
+                _logger.LogError(ex, "Error en create cie");
                 throw;
             }
         }
@@ -51,9 +51,9 @@ namespace MedicalRecord_API.Repository.Implements
                     );
                 _logger.LogWarning("Se actualizó un cie con id: {id} en la base de datos",entity.Id);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogError("Error actualizando un cie");
+                _logger.LogError(ex, "Error en update cie");
                 throw;
             }
         }

@@ -53,18 +53,19 @@ namespace MedicalRecord_API.Repository.Implements
                 await command.ExecuteNonQueryAsync();
 
                 var idConsulta = (int)idConsultaParam.Value;
+                
                 if (idConsulta == -1)
                 {
                     throw new Exception("El procedimiento almacenado InsertConsulta_sp devolvió -1, indicando un error.");
                 }
 
-                _logger.LogInformation("Registro de inserción en Consulta con ID:{@id}", idConsulta);
+                _logger.LogInformation("Registro en consulta con id: {@id}", idConsulta);
 
                 return await _context.Set<Consultum>().FirstOrDefaultAsync(c => c.Id == idConsulta) ?? new();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Excepción al intentar crear un registro en Consulta");
+                _logger.LogError(ex, "Error en create consulta");
                 throw;
             }
         }
