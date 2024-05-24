@@ -8,7 +8,8 @@ CREATE PROCEDURE sp_InsertUsuario(
   IN clave VARCHAR(250),
   IN cargo VARCHAR(30),
   IN especialidad VARCHAR(30),
-  IN nroColMedico VARCHAR(6)
+  IN nroColMedico VARCHAR(6),
+  IN rol VARCHAR(20)
 )
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -17,8 +18,8 @@ BEGIN
     END;
 
     START TRANSACTION;
-    INSERT INTO Usuario (TRIM(nombre),TRIM(correo),clave,TRIM(cargo),TRIM(especialidad),TRIM(nroColMedico))
-    VALUES (nombre,correo,clave,cargo,especialidad,nroColMedico);
+    INSERT INTO Usuario (nombre,correo,clave,cargo,especialidad,nroColMedico,rol)
+    VALUES (nombre,correo,clave,cargo,especialidad,nroColMedico,rol);
     COMMIT;
 END$
 DELIMITER ;
