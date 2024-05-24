@@ -10,20 +10,11 @@ namespace MedicalRecord_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AlergiaController : ControllerBase
+    public class AlergiaController(IAlergiaRepository alergiaRepo, IMapper mapper) : ControllerBase
     {
-        private readonly IAlergiaRepository _alergiaRepo;
-        private readonly IMapper _mapper;
-        private readonly ILogger<AlergiaController> _logger;
-        protected Response _response;
-
-        public AlergiaController(IAlergiaRepository alergiaRepo,IMapper mapper,ILogger<AlergiaController> logger)
-        {
-            _alergiaRepo = alergiaRepo;
-            _mapper = mapper;
-            _logger = logger;
-            _response = new Response();
-        }
+        private readonly IAlergiaRepository _alergiaRepo = alergiaRepo;
+        private readonly IMapper _mapper = mapper;
+        protected Response _response = new();
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -55,7 +46,6 @@ namespace MedicalRecord_API.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status102Processing)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Response>> GetAll()
         {

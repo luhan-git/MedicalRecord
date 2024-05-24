@@ -10,20 +10,11 @@ namespace MedicalRecord_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ConsultaController : ControllerBase
+    public class ConsultaController(IConsultaRepository consultaRepo, IMapper mapper) : ControllerBase
     {
-        private readonly IConsultaRepository _consultaRepo;
-        private readonly IMapper _mapper;
-        private readonly ILogger<AlergiaController> _logger;
-        protected Response _response;
-
-        public ConsultaController(IConsultaRepository consultaRepo, IMapper mapper, ILogger<AlergiaController> logger)
-        {
-            _consultaRepo = consultaRepo;
-            _mapper = mapper;
-            _logger = logger;
-            _response = new Response();
-        }
+        private readonly IConsultaRepository _consultaRepo = consultaRepo;
+        private readonly IMapper _mapper = mapper;
+        protected Response _response = new();
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
