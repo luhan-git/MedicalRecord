@@ -78,10 +78,10 @@ namespace MedicalRecord_API.Controllers
             }
 
 
-            if (id <= 0 || id != dto.Id)
+            if (id != dto.Id)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["El identificador de directorio no es válido."];
+                _response.ErrorMensajes = ["El identificador de directorio telefonico no es válido."];
                 return BadRequest(_response);
             }
 
@@ -121,7 +121,7 @@ namespace MedicalRecord_API.Controllers
             if (id <= 0)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["El identificador de directorio no es válido."];
+                _response.ErrorMensajes = ["El identificador de directorio telefonico no es válido."];
                 return BadRequest(_response);
             }
 
@@ -161,7 +161,7 @@ namespace MedicalRecord_API.Controllers
             if (id <= 0)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["El identificador de directorio no es válido."];
+                _response.ErrorMensajes = ["El identificador de directorio telefonico no es válido."];
                 return BadRequest(_response);
             }
 

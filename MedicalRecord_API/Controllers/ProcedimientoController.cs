@@ -76,7 +76,7 @@ namespace MedicalRecord_API.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id <= 0 || id != dto.Id)
+            if (id != dto.Id)
             {
                 _response.Status = HttpStatusCode.BadRequest;
                 _response.ErrorMensajes = ["El identificador del procedimiento no es válido"];

@@ -43,5 +43,28 @@ namespace MedicalRecord_API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<Response>> GetAll()
+        {
+            try
+            {
+                IEnumerable<ConsultaDto> consultas = _mapper.Map<IEnumerable<ConsultaDto>>(await _consultaRepo.QueryAsync());
+                _response.Status = HttpStatusCode.OK;
+                _response.IsExitoso = true;
+                _response.Resultado = consultas;
+
+                return Ok(_response);
+            }
+            catch
+            {
+                _response.Status = HttpStatusCode.InternalServerError;
+                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+        }
+
     }
 }

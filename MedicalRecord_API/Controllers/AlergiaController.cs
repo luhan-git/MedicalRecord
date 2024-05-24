@@ -36,10 +36,10 @@ namespace MedicalRecord_API.Controllers
 
                 return Created("", _response);
             }
-            catch(Exception ex)
+            catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = [ex.ToString(),"Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -77,7 +77,7 @@ namespace MedicalRecord_API.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id <= 0 || id != dto.Id)
+            if (id != dto.Id)
             {
                 _response.Status = HttpStatusCode.BadRequest;
                 _response.ErrorMensajes = ["El identificador de alergia no es válido."];
@@ -120,7 +120,7 @@ namespace MedicalRecord_API.Controllers
             if (id <= 0)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["Id de alergia no válido."];
+                _response.ErrorMensajes = ["Identificador de alergia no válido."];
                 return BadRequest();
             }
 
