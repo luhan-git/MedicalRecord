@@ -23,8 +23,5 @@ export function Paciente() {
     obtenerDatos()
   }, [])
 
-  return
-  ;<>
-    <TablePaciente headers={headers} data={pacientes}></TablePaciente>
-  </>
+  return <TablePaciente headers={headers} data={pacientes}></TablePaciente>
 }
