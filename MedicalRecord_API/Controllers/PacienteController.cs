@@ -11,20 +11,11 @@ namespace MedicalRecord_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PacienteController : ControllerBase
+    public class PacienteController(IPacienteRepository pacienteRepository, IMapper mapper) : ControllerBase
     {
-        private readonly IPacienteRepository _pacienteRepository;
-        private readonly IMapper _mapper;
-        protected Response _response;
-        private readonly ILogger<PacienteController> _logger;
-
-        public PacienteController(IPacienteRepository pacienteRepository, IMapper mapper, ILogger<PacienteController> logger)
-        {
-            _pacienteRepository = pacienteRepository;
-            _mapper = mapper;
-            _logger = logger;
-            _response = new();
-        }
+        private readonly IPacienteRepository _pacienteRepository = pacienteRepository;
+        private readonly IMapper _mapper = mapper;
+        protected Response _response = new();
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -66,7 +57,6 @@ namespace MedicalRecord_API.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status102Processing)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Response>> GetPacientes()
         {
@@ -88,7 +78,6 @@ namespace MedicalRecord_API.Controllers
         }
 
         [HttpGet("{id:int}", Name = "GetPaciente")]
-        [ProducesResponseType(StatusCodes.Status102Processing)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

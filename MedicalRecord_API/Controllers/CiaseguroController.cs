@@ -10,23 +10,11 @@ namespace MedicalRecord_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CiaSeguroController : ControllerBase
+    public class CiaSeguroController(ICiaSeguroRepository ciaRepo, IMapper mapper) : ControllerBase
     {
-        private readonly ICiaSeguroRepository _ciaRepo;
-        private readonly IMapper _mapper;
-        private readonly ILogger<CiaSeguroController> _logger;
-        protected Response _response;
-
-        public CiaSeguroController(
-            ICiaSeguroRepository ciaRepo,
-            IMapper mapper,
-            ILogger<CiaSeguroController> logger)
-        {
-            _ciaRepo = ciaRepo;
-            _mapper = mapper;
-            _logger = logger;
-            _response = new Response();
-        }
+        private readonly ICiaSeguroRepository _ciaRepo = ciaRepo;
+        private readonly IMapper _mapper = mapper;
+        protected Response _response = new();
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -59,7 +47,6 @@ namespace MedicalRecord_API.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status102Processing)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Response>> GetAll()
         {

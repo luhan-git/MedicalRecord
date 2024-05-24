@@ -11,20 +11,11 @@ namespace MedicalRecord_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OcupacionController : ControllerBase
+    public class OcupacionController(IOcupacionRepository ocupacionRepo, IMapper mapper) : ControllerBase
     {
-        private readonly IOcupacionRepository _ocupacionRepo;
-        private readonly IMapper _mapper;
-        private readonly ILogger<OcupacionController> _logger;
-        protected Response _response;
-
-        public OcupacionController(IOcupacionRepository ocupacionRepo,IMapper mapper,ILogger<OcupacionController> logger)
-        {
-            _ocupacionRepo = ocupacionRepo;
-            _mapper = mapper;
-            _logger = logger;
-            _response = new Response();
-        }
+        private readonly IOcupacionRepository _ocupacionRepo = ocupacionRepo;
+        private readonly IMapper _mapper = mapper;
+        protected Response _response = new();
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -56,7 +47,6 @@ namespace MedicalRecord_API.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status102Processing)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Response>> GetAll()
         {

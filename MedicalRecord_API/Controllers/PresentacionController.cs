@@ -11,19 +11,12 @@ namespace MedicalRecord_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PresentacionController : ControllerBase
+    public class PresentacionController(IPresentacionRepository presentacionRepo, IMapper mapper) : ControllerBase
     {
-        private readonly IPresentacionRepository _presentacionRepo;
-        private readonly IMapper _mapper;
-        private readonly ILogger<PresentacionController> _logger;
-        protected Response _response;
-        public PresentacionController(IPresentacionRepository presentacionRepo, IMapper mapper, ILogger<PresentacionController> logger)
-        {
-            _presentacionRepo = presentacionRepo;
-            _mapper = mapper;
-            _logger = logger;
-            _response = new();
-        }
+        private readonly IPresentacionRepository _presentacionRepo = presentacionRepo;
+        private readonly IMapper _mapper = mapper;
+        protected Response _response = new();
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

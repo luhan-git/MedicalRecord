@@ -10,20 +10,11 @@ namespace MedicalRecord_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DirectorioController : ControllerBase
+    public class DirectorioController(IDirectorioRepository directorioRepo, IMapper mapper) : ControllerBase
     {
-        private readonly IDirectorioRepository _directorioRepo;
-        private readonly IMapper _mapper;
-        private readonly ILogger<DirectorioController> _logger;
-        protected Response _response;
-
-        public DirectorioController(IDirectorioRepository directorioRepo,IMapper mapper,ILogger<DirectorioController> logger)
-        {
-            _directorioRepo = directorioRepo;
-            _mapper = mapper;
-            _logger = logger;
-            _response = new Response();
-        }
+        private readonly IDirectorioRepository _directorioRepo = directorioRepo;
+        private readonly IMapper _mapper = mapper;
+        protected Response _response = new();
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -55,7 +46,6 @@ namespace MedicalRecord_API.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status102Processing)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Response>> GetAll()
         {
