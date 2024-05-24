@@ -28,7 +28,7 @@ namespace MedicalRecord_API.Tests.Controllers
         }
 
         [Fact]
-        public async Task Create_ReturnsBadRequest_WhenModelStateIsInvalid()
+        public async Task ModeloInvalidoRetornaSolicitudInvalida()
         {
             // Preparamos escenario
             _controller.ModelState.AddModelError("Test", "Test eror");
@@ -37,7 +37,8 @@ namespace MedicalRecord_API.Tests.Controllers
             var result = await _controller.Create(new AlergiaCreateDto());
 
             // Verificamos la respuesta
-            var okResult = Assert.IsType<OkResult>(result.Result);
+            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
+            Assert.IsType<SerializableError>(badRequestResult.Value);
         }
     }
 }
