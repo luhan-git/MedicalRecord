@@ -13,7 +13,7 @@ import { Profile } from './Pages/Admin/Profile'
 import { Chat } from './Pages/Admin/Chat'
 import { Error404 } from './Pages/Error404 '
 import { Tickets } from './Pages/Admin/Tickets'
-import { Medicos } from './Pages/Admin/Medicos'
+import { Paciente } from './Pages/Admin/Paciente'
 function App() {
   return (
     <BrowserRouter>
@@ -23,7 +23,7 @@ function App() {
         <Route path='/olvide-password' element={<ForgetPassword />} /> */}
         <Route path='/' element={<LayoutAdmin />}>
           {<Route index element={<Home />} />}
-          {/* <Route path='perfil' element={<Profile />} /> */}
+          <Route path='pacientes' element={<Paciente />} />
           {/* <Route path='chat' element={<Chat />} />
           <Route path='tickets' element={<Tickets />} /> */}
           {/* <Route path='medicos' element={<Medicos />} /> */}

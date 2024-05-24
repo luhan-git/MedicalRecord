@@ -1,0 +1,87 @@
+import React, { useState } from 'react';
+
+function RegistroForm() {
+  const [formData, setFormData] = useState({
+    nombre: '',
+    apellido: '',
+    correo: '',
+    contraseña: '',
+    confirmarContraseña: ''
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Aquí puedes agregar la lógica para enviar el formulario o realizar validaciones
+    console.log(formData);
+  };
+
+  return (
+    <div className="max-w-md mx-auto">
+      <h2 className="text-2xl font-bold mb-4">Registro</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label htmlFor="nombre" className="block mb-1">Nombre</label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            value={formData.nombre}
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded px-3 py-2"
+          />
+        </div>
+        <div>
+          <label htmlFor="apellido" className="block mb-1">Apellido</label>
+          <input
+            type="text"
+            id="apellido"
+            name="apellido"
+            value={formData.apellido}
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded px-3 py-2"
+          />
+        </div>
+        <div>
+          <label htmlFor="correo" className="block mb-1">Correo Electrónico</label>
+          <input
+            type="email"
+            id="correo"
+            name="correo"
+            value={formData.correo}
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded px-3 py-2"
+          />
+        </div>
+        <div>
+          <label htmlFor="contraseña" className="block mb-1">Contraseña</label>
+          <input
+            type="password"
+            id="contraseña"
+            name="contraseña"
+            value={formData.contraseña}
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded px-3 py-2"
+          />
+        </div>
+        <div>
+          <label htmlFor="confirmarContraseña" className="block mb-1">Confirmar Contraseña</label>
+          <input
+            type="password"
+            id="confirmarContraseña"
+            name="confirmarContraseña"
+            value={formData.confirmarContraseña}
+            onChange={handleChange}
+            className="w-full border border-gray-300 rounded px-3 py-2"
+          />
+        </div>
+        <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Registrarse</button>
+      </form>
+    </div>
+  );
+}
+
+export default RegistroForm;
