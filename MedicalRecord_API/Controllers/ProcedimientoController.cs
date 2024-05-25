@@ -154,7 +154,7 @@ namespace MedicalRecord_API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Response>> Get(int id)
+        public async Task<ActionResult<Response>> GetById(int id)
         {
             if (id <= 0)
             {

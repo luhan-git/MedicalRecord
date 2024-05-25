@@ -1,4 +1,4 @@
--- USUARIOS
+
 INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, nroColMedico, activo,rol)
 VALUES ('Ana Martínez', 'ana@example.com', 'ana123', 'Médico', 'Pediatría', '654321', TRUE,'admin');
 INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, activo,rol)
@@ -6,14 +6,13 @@ VALUES ('Carlos Rodríguez', 'carlos@example.com', 'carlos456', 'Enfermero', NUL
 INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, nroColMedico, activo,rol)
 VALUES ('Laura Fernández', 'laura@example.com', 'laura789', 'Administrativo', NULL, NULL, TRUE,'admin');
 INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, nroColMedico, activo,rol)
-VALUES ('Pablo Sánchez', 'pablo@example.com', 'pablo123', 'Médico', 'Ginecología', '987654', TRUE,'admin');
+VALUES ('Pablo Sánchez', 'pablo@example.com', 'pablo123', 'Médico', 'Oftalmologia', '987654', TRUE,'admin');
 INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, activo,rol)
 VALUES ('Sofía Gómez', 'sofia@example.com', 'sofia456', 'Enfermera', NULL, TRUE,'admin');
 INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, nroColMedico, activo,rol)
 VALUES ('Diego Pérez', 'diego@example.com', 'diego789', 'Administrativo', NULL, '234567', FALSE,'admin');
 
 
--- LABORATORIO
 INSERT INTO Laboratorio (nombre, abreviatura) VALUES ('Laboratorio Clínico Central', 'LCC');
 INSERT INTO Laboratorio (nombre, abreviatura) VALUES ('Laboratorio de Microbiología', 'LM');
 INSERT INTO Laboratorio (nombre, abreviatura) VALUES ('Laboratorio de Patología', 'LP');
@@ -2239,11 +2238,11 @@ INSERT INTO Paciente (condicion, aPaterno, aMaterno, nombres, tipoDocumento, num
 grupoSanguineo, nacionalidad, idDepartamento, idProvincia, idDistrito, direccion, telefono, celular, idOcupacion)
 VALUES ('0', 'Gonzalez', 'Pérez', 'Brando', '0', '37598426', '2002-05-15', '22', 'F', '0', '0', '0', 1, 5, 1, 'San juan de Lurigancho 453', '01-2345678', '987654321', 1);
 -- DETALLE ALERGIA
-INSERT INTO DetalleAlergia (idPaciente, idAlergia,reacciones) VALUES (1, 1,"hinchazon en los ojos");
-INSERT INTO DetalleAlergia (idPaciente, idAlergia,reacciones) VALUES (1, 2,"ve al diablo");
-INSERT INTO DetalleAlergia (idPaciente, idAlergia,reacciones) VALUES (2, 3,"le da sueño");
-INSERT INTO DetalleAlergia (idPaciente, idAlergia,reacciones) VALUES (3, 4,"ronchas");
-INSERT INTO DetalleAlergia (idPaciente, idAlergia,reacciones) VALUES (4, 5,"estornuda,muere");
+INSERT INTO DetalleAlergia (idPaciente, idAlergia,reacciones) VALUES (1, 1,'hinchazon en los ojos');
+INSERT INTO DetalleAlergia (idPaciente, idAlergia,reacciones) VALUES (1, 2,'ve al diablo');
+INSERT INTO DetalleAlergia (idPaciente, idAlergia,reacciones) VALUES (2, 3,'le da sueño');
+INSERT INTO DetalleAlergia (idPaciente, idAlergia,reacciones) VALUES (3, 4,'ronchas');
+INSERT INTO DetalleAlergia (idPaciente, idAlergia,reacciones) VALUES (4, 5,'estornuda,muere');
 -- CONSULTA
 INSERT INTO Consulta (numeroConsulta, motivo, enfermedadActual, davsc, iavsc, davcc, iavcc, dpio, ipio, shimer, valorK, diagnostico, idCie, idUsuario, idPaciente) 
 VALUES 
