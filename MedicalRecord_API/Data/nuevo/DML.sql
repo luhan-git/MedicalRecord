@@ -1,24 +1,12 @@
 -- USUARIOS
-INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, nroColMedico, activo) 
-VALUES ('Ana Martínez', 'ana@example.com', 'ana123', 'Médico', 'Pediatría', '654321', TRUE);
-INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, activo) 
-VALUES ('Carlos Rodríguez', 'carlos@example.com', 'carlos456', 'Enfermero', NULL, FALSE);
-INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, nroColMedico, activo) 
-VALUES ('Laura Fernández', 'laura@example.com', 'laura789', 'Administrativo', NULL, NULL, TRUE);
-INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, nroColMedico, activo) 
-VALUES ('Pablo Sánchez', 'pablo@example.com', 'pablo123', 'Médico', 'Ginecología', '987654', TRUE);
-INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, activo) 
-VALUES ('Sofía Gómez', 'sofia@example.com', 'sofia456', 'Enfermera', NULL, TRUE);
-INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, nroColMedico, activo) 
-VALUES ('Diego Pérez', 'diego@example.com', 'diego789', 'Administrativo', NULL, '234567', FALSE);
-INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, nroColMedico, activo) 
-VALUES ('Elena López', 'elena@example.com', 'elena123', 'Médico', 'Dermatología', '876543', TRUE);
-INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, activo) 
-VALUES ('Mario Torres', 'mario@example.com', 'mario456', 'Enfermero', NULL, TRUE);
-INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, nroColMedico, activo) 
-VALUES ('Lucía Rodríguez', 'lucia@example.com', 'lucia789', 'Administrativo', NULL, NULL, FALSE);
-INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, nroColMedico, activo) 
-VALUES ('Andrés Martínez', 'andres@example.com', 'andres123', 'Médico', 'Oftalmología', '765432', TRUE);
+INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, nroColMedico, rol, activo) 
+VALUES ('Ana Martínez', 'ana@example.com', 'ana123', 'Médico', 'Oftalmologia', '654321', 'admin', TRUE);
+INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, nroColMedico, rol, activo) 
+VALUES ('Carlos Rodríguez', 'carlos@example.com', 'carlos456','Médico', 'Oftalmologia', NULL, 'empleado', FALSE);
+INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, nroColMedico, rol, activo) 
+VALUES ('Laura Fernández', 'laura@example.com', 'laura789', 'Oftalmologia', NULL, NULL, 'empleado', TRUE);
+INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, nroColMedico, rol, activo) 
+VALUES ('Pablo Sánchez', 'pablo@example.com', 'pablo123', 'Médico', 'Oftalmologia', '987654', 'empleado', TRUE);
 -- LABORATORIO
 INSERT INTO Laboratorio (nombre, abreviatura) VALUES ('Laboratorio Clínico Central', 'LCC');
 INSERT INTO Laboratorio (nombre, abreviatura) VALUES ('Laboratorio de Microbiología', 'LM');
@@ -2245,11 +2233,11 @@ INSERT INTO Paciente (condicion, aPaterno, aMaterno, nombres, tipoDocumento, num
 grupoSanguineo, nacionalidad, idDepartamento, idProvincia, idDistrito, direccion, telefono, celular, idOcupacion)
 VALUES ('0', 'Gonzalez', 'Pérez', 'Brando', '0', '37598426', '2002-05-15', '22', 'F', '0', '0', '0', 1, 5, 1, 'San juan de Lurigancho 453', '01-2345678', '987654321', 1);
 -- DETALLE ALERGIA
-INSERT INTO DetalleAlergia (idPaciente, idAlergia,reacciones) VALUES (1, 1,"hinchazon en los ojos");
-INSERT INTO DetalleAlergia (idPaciente, idAlergia,reacciones) VALUES (1, 2,"ve al diablo");
-INSERT INTO DetalleAlergia (idPaciente, idAlergia,reacciones) VALUES (2, 3,"le da sueño");
-INSERT INTO DetalleAlergia (idPaciente, idAlergia,reacciones) VALUES (3, 4,"ronchas");
-INSERT INTO DetalleAlergia (idPaciente, idAlergia,reacciones) VALUES (4, 5,"estornuda,muere");
+INSERT INTO DetalleAlergia (idPaciente, idAlergia) VALUES (1, 1);
+INSERT INTO DetalleAlergia (idPaciente, idAlergia) VALUES (1, 2);
+INSERT INTO DetalleAlergia (idPaciente, idAlergia) VALUES (2, 3);
+INSERT INTO DetalleAlergia (idPaciente, idAlergia) VALUES (3, 4);
+INSERT INTO DetalleAlergia (idPaciente, idAlergia) VALUES (4, 5);
 -- CONSULTA
 INSERT INTO Consulta (numeroConsulta, motivo, enfermedadActual, davsc, iavsc, davcc, iavcc, dpio, ipio, shimer, valorK, diagnostico, idCie, idUsuario, idPaciente) 
 VALUES 
