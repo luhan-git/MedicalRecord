@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Authorization;
 namespace MedicalRecord_API.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(Roles = "admin")]
     [ApiController]
     public class PacienteController(IPacienteRepository pacienteRepository, IMapper mapper) : ControllerBase
     {

@@ -86,7 +86,7 @@ namespace MedicalRecord_API.Repository.Implements
             LoginResponseDto loginResponseDto = new()
             {
                 Token = tokenHandler.WriteToken(token),
-                UsuarioDto = _mapper.Map<UsuarioDto>(usuario)
+                Usuario = _mapper.Map<UsuarioDto>(usuario)
 
             };
             return loginResponseDto;

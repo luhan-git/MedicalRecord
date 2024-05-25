@@ -6,7 +6,7 @@ export function Usuarios() {
   const headers = ['ID', 'Nombre', 'Cargo', 'Session', 'Estado', 'Acciones']
   const obtenerDatos = () => {
     return new Promise((resolve, reject) => {
-      fetch('https://localhost:7027/api/Pacinete')
+      fetch('https://localhost:7027/api/Usuario')
         .then(response => {
           if (response.ok) {
             return response.json()
