@@ -14,7 +14,8 @@ import {
 
 export function Sidebar() {
   const [showMenu, setShowMenu] = useState(false)
-  const [showSubmenu, setShowSubmenu] = useState(false)
+  const [showSubmenuMantenimiento, setShowSubmenuMantenimiento] = useState(false)
+  const [showSubmenuControl, setShowSubmenuControl] = useState(false)
   return (
     <>
       <div
@@ -24,7 +25,7 @@ export function Sidebar() {
       >
         <div>
           <h1 className='text-center text-2xl font-bold text-white mb-10'>
-            Admin<span className='text-primary text-4xl'>.</span>
+            Oftalmología<span className='text-primary text-4xl'>.</span>
           </h1>
           <ul>
             <li>
@@ -37,7 +38,9 @@ export function Sidebar() {
             </li>
             <li>
               <button
-                onClick={() => setShowSubmenu(!showSubmenu)}
+                onClick={() =>
+                  setShowSubmenuMantenimiento(!showSubmenuMantenimiento)
+                }
                 className='w-full flex items-center justify-between py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors'
               >
                 <span className='flex items-center gap-4'>
@@ -45,18 +48,103 @@ export function Sidebar() {
                 </span>
                 <RiArrowRightSLine
                   className={`mt-1 ${
-                    showSubmenu && 'rotate-90'
+                    showSubmenuMantenimiento && 'rotate-90'
                   } transition-all`}
                 />
               </button>
               <ul
                 className={` ${
-                  showSubmenu ? 'h-[130px]' : 'h-0'
+                  showSubmenuMantenimiento ? 'h-[320px]' : 'h-0'
                 } overflow-y-hidden transition-all`}
               >
                 <li>
                   <Link
-                    to='/pacientes'
+                    to='/Usuario'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Personal administrativo
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/Laboratorio'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Laboratorios
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/Medicamento'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Medicamentos
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/Cie'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    CIE10
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/ExamenLaboratorio'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Examenes de Laboratorio
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/Procedimiento'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Procedimientos Especiales
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/CiaSeguro'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Compañias de Seguros
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Directorio Telefonico
+                  </Link>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <button
+                onClick={() => setShowSubmenuControl(!showSubmenuControl)}
+                className='w-full flex items-center justify-between py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors'
+              >
+                <span className='flex items-center gap-4'>
+                  <RiEarthLine className='text-primary' /> Control
+                </span>
+                <RiArrowRightSLine
+                  className={`mt-1 ${
+                    showSubmenuControl && 'rotate-90'
+                  } transition-all`}
+                />
+              </button>
+              <ul
+                className={` ${
+                  showSubmenuControl ? 'h-[160px]' : 'h-0'
+                } overflow-y-hidden transition-all`}
+              >
+                <li>
+                  <Link
+                    to='/Paciente'
                     className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
                   >
                     Pacientes
@@ -64,44 +152,51 @@ export function Sidebar() {
                 </li>
                 <li>
                   <Link
-                    to='/'
+                    to='/Consulta'
                     className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
                   >
-                    Estadisticas
+                    Consultas
                   </Link>
                 </li>
                 <li>
                   <Link
-                    to='/'
+                    to='/Cita'
                     className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
                   >
-                    Perfiles
+                    Citas
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/MedidaLente'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Medida de lentes
                   </Link>
                 </li>
               </ul>
             </li>
             <li>
               <Link
-                to='/tickets'
+                to='/Reporte'
                 className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors'
               >
-                <RiCustomerService2Line className='text-primary' /> Soporte
-                técnico
+                <RiCustomerService2Line className='text-primary' /> Reportes
               </Link>
             </li>
             <li>
               <Link
-                to='/'
+                to='/Utilitario'
                 className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors'
               >
-                <RiCalendarTodoLine className='text-primary' /> Calendario
+                <RiCalendarTodoLine className='text-primary' /> Utilitarios
               </Link>
             </li>
           </ul>
         </div>
         <nav>
           <Link
-            to='/'
+            to='/Usuario/CerrarSesion'
             className='flex items-center gap-4 py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors'
           >
             <RiLogoutCircleRLine className='text-primary' /> Cerrar sesión
