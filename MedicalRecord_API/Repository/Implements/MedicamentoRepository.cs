@@ -5,18 +5,44 @@ namespace MedicalRecord_API.Repository.Implements
 {
     public class MedicamentoRepository : GenericRepository<Medicamento>, IMedicamentoRepository
     {
-        public MedicamentoRepository(DbhistoriasContext context) : base(context)
+        private readonly DbhistoriasContext _context;
+        private readonly ILogger<PacienteRepository> _logger;
+
+        public MedicamentoRepository(DbhistoriasContext context, ILogger<PacienteRepository> logger) : base(context)
         {
+            _context = context;
+            _logger = logger;
         }
 
-        public Task<Medicamento> Create(Medicamento entity)
+        public async Task<Medicamento> Create(Medicamento entity)
         {
-            throw new NotImplementedException();
+            Medicamento medicamento;
+            try
+            {
+                await _context.AddAsync(entity);
+                await _context.SaveChangesAsync();
+                medicamento = entity;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error en create medicamento");
+                throw;
+            }
+            return medicamento;
         }
 
-        public Task Update(Medicamento entity)
+        public async Task Update(Medicamento entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Update(entity);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error en update medicamento");
+                throw;
+            }
         }
     }
 }
