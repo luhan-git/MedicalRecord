@@ -2233,11 +2233,11 @@ INSERT INTO Paciente (condicion, aPaterno, aMaterno, nombres, tipoDocumento, num
 grupoSanguineo, nacionalidad, idDepartamento, idProvincia, idDistrito, direccion, telefono, celular, idOcupacion)
 VALUES ('0', 'Gonzalez', 'Pérez', 'Brando', '0', '37598426', '2002-05-15', '22', 'F', '0', '0', '0', 1, 5, 1, 'San juan de Lurigancho 453', '01-2345678', '987654321', 1);
 -- DETALLE ALERGIA
-INSERT INTO DetalleAlergia (idPaciente, idAlergia) VALUES (1, 1);
-INSERT INTO DetalleAlergia (idPaciente, idAlergia) VALUES (1, 2);
-INSERT INTO DetalleAlergia (idPaciente, idAlergia) VALUES (2, 3);
-INSERT INTO DetalleAlergia (idPaciente, idAlergia) VALUES (3, 4);
-INSERT INTO DetalleAlergia (idPaciente, idAlergia) VALUES (4, 5);
+INSERT INTO DetalleAlergia (idPaciente, idAlergia,reacciones) VALUES (1, 1,"hinchazon en los ojos");
+INSERT INTO DetalleAlergia (idPaciente, idAlergia,reacciones) VALUES (1, 2,"ve al diablo");
+INSERT INTO DetalleAlergia (idPaciente, idAlergia,reacciones) VALUES (2, 3,"le da sueño");
+INSERT INTO DetalleAlergia (idPaciente, idAlergia,reacciones) VALUES (3, 4,"ronchas");
+INSERT INTO DetalleAlergia (idPaciente, idAlergia,reacciones) VALUES (4, 5,"estornuda,muere");
 -- CONSULTA
 INSERT INTO Consulta (numeroConsulta, motivo, enfermedadActual, davsc, iavsc, davcc, iavcc, dpio, ipio, shimer, valorK, diagnostico, idCie, idUsuario, idPaciente) 
 VALUES 
