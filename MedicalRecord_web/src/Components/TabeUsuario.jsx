@@ -12,63 +12,41 @@ export function TableUsuario(props) {
         <h1 className='text-2xl text-white my-10'>Paciente</h1>
       </div>
       <div className='bg-secondary-100 p-8 rounded-xl'>
-        <div className='hidden md:grid grid-cols-1 md:grid-cols-8 gap-4 mb-10 p-4'>
+        <div className='hidden md:grid grid-cols-1 md:grid-cols-6 gap-4 mb-10 p-4'>
           {props.headers.map((header, index) => (
             <h5 key={index}>{header}</h5>
           ))}
         </div>
-        {props.data.map(paciente => (
+        {props.data.map(usuario => (
           <div
-            key={paciente.id}
-            className='grid grid-cols-1 md:grid-cols-5 gap-4 items-center mb-4 bg-secondary-900 p-4 rounded-xl'
+            key={usuario.id}
+            className='grid grid-cols-1 md:grid-cols-6 gap-4 items-center mb-4 bg-secondary-900 p-4 rounded-xl'
           >
             <div>
               <h5 className='md:hidden text-white font-bold mb-2'>ID</h5>
-              <p>{paciente.id}</p>
+              <p>{usuario.id}</p>
             </div>
             <div>
               <h5 className='md:hidden text-white font-bold mb-2'>NOMBRE</h5>
-              <p>{paciente.nombres}</p>
+              <p>{usuario.nombre}</p>
             </div>
             <div>
-              <h5 className='md:hidden text-white font-bold mb-2'>DOCUMENTO</h5>
-              <p>{paciente.numeroDocumento}</p>
+              <h5 className='md:hidden text-white font-bold mb-2'>CORREO</h5>
+              <p>{usuario.correo}</p>
             </div>
             <div>
-              <h5 className='md:hidden text-white font-bold mb-2'>EDAD</h5>
-              <p>{paciente.edad}</p>
+              <h5 className='md:hidden text-white font-bold mb-2'>ROLL</h5>
+              <p>{usuario.rol}</p>
             </div>
             <div>
-              <h5 className='md:hidden text-white font-bold mb-2'>CELULAR</h5>
-              <p>{paciente.celular}</p>
-            </div>
-            <div>
-              <h5 className='md:hidden text-white font-bold mb-2'>ASEGURADO</h5>
-              {paciente.asegurado ? (
+              <h5 className='md:hidden text-white font-bold mb-2'>ACTIVO</h5>
+              {usuario.activo ? (
                 <span className='py-1 px-2 bg-green-500/10 text-green-500 rounded-lg'>
-                  Si
+                  Activo
                 </span>
               ) : (
                 <span className='py-1 px-2 bg-yellow-500/10 text-yellow-500 rounded-lg'>
-                  No
-                </span>
-              )}
-            </div>
-            <div>
-              <h5 className='md:hidden text-white font-bold mb-2'>CONDICIÓN</h5>
-              {paciente.condicion === '0' && (
-                <span className='py-1 px-2 bg-green-500/10 text-green-500 rounded-lg'>
-                  Regular
-                </span>
-              )}
-              {paciente.condicion === '1' && (
-                <span className='py-1 px-2 bg-yellow-500/10 text-yellow-500 rounded-lg'>
-                  Retirado
-                </span>
-              )}
-              {paciente.condicion === '2' && (
-                <span className='py-1 px-2 bg-red-500/10 text-red-500 rounded-lg'>
-                  Fallecido
+                  No Actvo
                 </span>
               )}
             </div>

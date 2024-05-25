@@ -14,16 +14,18 @@ import { Chat } from './Pages/Admin/Chat'
 import { Error404 } from './Pages/Error404 '
 import { Tickets } from './Pages/Admin/Tickets'
 import { Paciente } from './Pages/Admin/Paciente'
+import { Usuarios } from './Pages/Admin/Usuarios'
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Login />} />
         <Route path='/registro' element={<Register />} />
         <Route path='/olvide-password' element={<ForgetPassword />} />
         <Route path='/' element={<LayoutAdmin />}>
+          <Route index element={<Home />} />
           <Route path='home' element={<Home />} />
           <Route path='paciente' element={<Paciente />} />
+          <Route path='usuario' element={<Usuarios />} />
           <Route path='chat' element={<Chat />} />
           <Route path='tickets' element={<Tickets />} />
         </Route>

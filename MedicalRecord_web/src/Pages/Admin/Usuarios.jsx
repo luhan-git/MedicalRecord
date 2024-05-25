@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-// import { Tables } from '../../Components/Tables.js'
+import { TableUsuario } from '../../Components/TabeUsuario'
 
 export function Usuarios() {
   const [usuarios, setUsuarios] = useState([])
-  const headers = ['ID', 'Nombre', 'Cargo', 'Session', 'Estado', 'Acciones']
+  const headers = ['ID', 'Nombre', 'Correo', 'ROL', 'Estado', 'Acciones']
   const obtenerDatos = () => {
     return new Promise((resolve, reject) => {
       fetch('https://localhost:7027/api/Usuario')
@@ -28,5 +28,5 @@ export function Usuarios() {
   useEffect(() => {
     obtenerDatos()
   }, [])
-  return <Tables data={usuarios} headers={headers}></Tables>
+  return <TableUsuario data={usuarios} headers={headers}></TableUsuario>
 }
