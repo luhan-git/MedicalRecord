@@ -31,7 +31,7 @@ export function Usuarios() {
     <>
       <div>
         <div>
-          <h1 className='text-2xl text-white my-10'>Paciente</h1>
+          <h1 className='text-2xl text-white my-10'>Usuarios</h1>
         </div>
         <div className='bg-secondary-100 p-8 rounded-xl'>
           <HeaderTable data={headers} />
