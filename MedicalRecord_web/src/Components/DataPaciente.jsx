@@ -1,14 +1,12 @@
 import { Link } from 'react-router-dom'
-import { RiArrowLeftSLine, RiArrowRightSLine } from 'react-icons/ri'
 import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu'
-export function DataPaciente({ data, cols }) {
-  const gridColsClass = `md:grid-cols-${cols.length}`
+export function DataPaciente({ data }) {
   return (
     <>
       {data.map(item => (
         <div
           key={item.id}
-          className={`grid grid-cols-1 ${gridColsClass} gap-4 items-center mb-4 bg-secondary-900 p-4 rounded-xl`}
+          className={`grid grid-cols-1 md:grid-cols-8 gap-4 items-center mb-4 bg-secondary-900 p-4 rounded-xl`}
         >
           <div>
             <h5 className='md:hidden text-white font-bold mb-2'>ID</h5>

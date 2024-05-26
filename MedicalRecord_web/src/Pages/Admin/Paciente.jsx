@@ -28,26 +28,26 @@ export function Paciente() {
 
   const headers = [
     'ID',
-    'Nombre',
-    'Documento',
-    'Edad',
-    'Celular',
-    'Asegurado',
-    'Condición',
-    'Acciones'
+    'NOMBRE',
+    'DOCUMENTO',
+    'EDAD',
+    'CELULAR',
+    'ASEGURADO',
+    'CONDICIÓN',
+    'ACCIONES'
   ]
 
   return (
     <>
       <div>
         <div>
-          <h1 className='text-2xl text-white my-10'>Paciente</h1>
+          <h1 className='text-2xl text-white my-10'>Pacientes</h1>
         </div>
         <div className='bg-secondary-100 p-8 rounded-xl'>
           <HeaderTable data={headers} />
           {loading && <Spinners number={headers.length} />}
-          <Suspense fallback={<Spinners number={5} />}>
-            {data && <DataPaciente data={data} cols={headers} />}
+          <Suspense fallback={<Spinners number={headers.length} />}>
+            {data && <DataPaciente data={data} />}
           </Suspense>
         </div>
       </div>

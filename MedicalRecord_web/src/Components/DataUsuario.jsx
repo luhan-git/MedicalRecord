@@ -26,7 +26,7 @@ export function DataUsuario({ data }) {
             <p>{item.correo}</p>
           </div>
           <div>
-            <h5 className='md:hidden text-white font-bold mb-2'>ROLL</h5>
+            <h5 className='md:hidden text-white font-bold mb-2'>ROL</h5>
             <p>{item.rol}</p>
           </div>
           <div>
@@ -42,7 +42,7 @@ export function DataUsuario({ data }) {
             )}
           </div>
           <div>
-            <h5 className='md:hidden text-white font-bold mb-2'>Acciones</h5>
+            <h5 className='md:hidden text-white font-bold mb-2'>ACCIONES</h5>
             <Menu
               menuButton={
                 <MenuButton className='flex items-center gap-x-2 bg-secondary-100 p-2 rounded-lg transition-colors'>

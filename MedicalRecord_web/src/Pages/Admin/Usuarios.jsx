@@ -25,7 +25,8 @@ export function Usuarios() {
   useEffect(() => {
     fetchDataAsync()
   }, [])
-  const headers = ['ID', 'Nombre', 'Correo', 'ROL', 'Estado', 'Acciones']
+
+  const headers = ['ID', 'NOMBRE', 'CORREO', 'ROL', 'ESTADO', 'ACCIONES']
 
   return (
     <>
@@ -36,7 +37,7 @@ export function Usuarios() {
         <div className='bg-secondary-100 p-8 rounded-xl'>
           <HeaderTable data={headers} />
           {loading && <Spinners number={headers.length} />}
-          <Suspense fallback={<Spinners number={6} />}>
+          <Suspense fallback={<Spinners number={headers.length} />}>
             {data && <DataUsuario data={data} />}
           </Suspense>
         </div>
