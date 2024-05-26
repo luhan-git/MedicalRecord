@@ -5,16 +5,13 @@ import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu'
 import '@szhsin/react-menu/dist/index.css'
 import '@szhsin/react-menu/dist/transitions/slide.css'
 
-export function DataUsuario({ data, cols }) {
-  const gridColsClass = `md:grid-cols-${cols.length}`
+export function DataUsuario({ data }) {
   return (
     <>
       {data.map(item => (
         <div
           key={item.id}
-          className={`grid grid-cols-1 ${
-            gridColsClass - 1
-          } gap-4 items-center mb-4 bg-secondary-900 p-4 rounded-xl`}
+          className={`grid grid-cols-1 md:grid-cols-6 gap-4 items-center mb-4 bg-secondary-900 p-4 rounded-xl`}
         >
           <div>
             <h5 className='md:hidden text-white font-bold mb-2'>ID</h5>

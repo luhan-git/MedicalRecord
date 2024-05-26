@@ -36,8 +36,8 @@ export function Usuarios() {
         <div className='bg-secondary-100 p-8 rounded-xl'>
           <HeaderTable data={headers} />
           {loading && <Spinners number={headers.length} />}
-          <Suspense fallback={<Spinners number={5} />}>
-            {data && <DataUsuario data={data} cols={headers} />}
+          <Suspense fallback={<Spinners number={6} />}>
+            {data && <DataUsuario data={data} />}
           </Suspense>
         </div>
       </div>
