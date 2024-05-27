@@ -16,6 +16,7 @@ import { Tickets } from './Pages/Admin/Tickets'
 import { Usuarios } from './Pages/Admin/Usuarios'
 import { Alergia } from './Pages/Admin/Alergia'
 import { CiaSeguro } from './Pages/Admin/CiaSeguro'
+import { Consulta } from './Pages/Admin/Consulta'
 import { Directorio } from './Pages/Admin/Directorio'
 import { Medicamento } from './Pages/Admin/Medicamento'
 import { Ocupacion } from './Pages/Admin/Ocupacion'
@@ -35,6 +36,7 @@ function App() {
           <Route path='usuario' element={<Usuarios />} />
           <Route path='alergia' element={<Alergia />} />
           <Route path='ciaseguro' element={<CiaSeguro />} />
+          <Route path='consulta' element={<Consulta />} />
           <Route path='directorio' element={<Directorio />} />
           <Route path='medicamento' element={<Medicamento />} />
           <Route path='ocupacion' element={<Ocupacion />} />

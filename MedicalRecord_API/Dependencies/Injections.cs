@@ -33,6 +33,7 @@ namespace MedicalRecord_API.Dependencies
             services.AddScoped<IAlergiaRepository, AlergiaRepository>();
             services.AddScoped<IPacienteRepository, PacienteRepository>();
             services.AddScoped<IMedicamentoRepository, MedicamentoRepository>();
+            services.AddScoped<IConsultaRepository, ConsultaRepository>();
         }
     }
 }

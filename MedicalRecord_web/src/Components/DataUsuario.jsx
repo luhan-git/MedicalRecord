@@ -37,7 +37,7 @@ export function DataUsuario({ data }) {
               </span>
             ) : (
               <span className='py-1 px-2 bg-yellow-500/10 text-yellow-500 rounded-lg'>
-                No Actvo
+                No Activo
               </span>
             )}
           </div>

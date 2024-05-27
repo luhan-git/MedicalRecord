@@ -1,0 +1,2 @@
+-- Luego debo cambiar el tipo de estado a char 1 y poner restriccion check
+-- 

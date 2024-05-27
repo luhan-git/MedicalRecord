@@ -4,13 +4,13 @@ import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu'
 import '@szhsin/react-menu/dist/index.css'
 import '@szhsin/react-menu/dist/transitions/slide.css'
 
-export function DataMedicamento({ data }) {
+export function DataConsulta({ data }) {
   return (
     <>
       {data.map(item => (
         <div
           key={item.id}
-          className={`grid grid-cols-1 md:grid-cols-10 gap-4 items-center mb-4 bg-secondary-900 p-4 rounded-xl`}
+          className={`grid grid-cols-1 md:grid-cols-9 gap-4 items-center mb-4 bg-secondary-900 p-4 rounded-xl`}
         >
           <div className='md:hidden'>
             <h5 className='md:hidden text-white font-bold mb-2'>ID</h5>
@@ -18,53 +18,35 @@ export function DataMedicamento({ data }) {
           </div>
           <div>
             <h5 className='md:hidden text-white font-bold mb-2'>CODIGO</h5>
-            <p>{item.codigo}</p>
+            <p>{item.numeroConsulta}</p>
           </div>
           <div>
-            <h5 className='md:hidden text-white font-bold mb-2'>TIPO</h5>
-            <p>{item.tipo}</p>
+            <h5 className='md:hidden text-white font-bold mb-2'>PACIENTE</h5>
+            <p>{item.paciente}</p>
           </div>
           <div>
-            <h5 className='md:hidden text-white font-bold mb-2'>
-              NOMBRE COMERCIAL
-            </h5>
-            <p>{item.nombreComercial}</p>
+            <h5 className='md:hidden text-white font-bold mb-2'>MOTIVO</h5>
+            <p>{item.motivo}</p>
           </div>
           <div>
-            <h5 className='md:hidden text-white font-bold mb-2'>
-              NOMBRE GENERICO
-            </h5>
-            <p>{item.nombreGenerico}</p>
+            <h5 className='md:hidden text-white font-bold mb-2'>ENFERMEDAD</h5>
+            <p>{item.enfermedadActual}</p>
           </div>
           <div>
-            <h5 className='md:hidden text-white font-bold mb-2'>ESTADO</h5>
-            {item.activo ? (
-              <span className='py-1 px-2 bg-green-500/10 text-green-500 rounded-lg'>
-                Activo
-              </span>
-            ) : (
-              <span className='py-1 px-2 bg-yellow-500/10 text-yellow-500 rounded-lg'>
-                No Activo
-              </span>
-            )}
+            <h5 className='md:hidden text-white font-bold mb-2'>DIAGNOSTICO</h5>
+            <p>{item.diagnostico}</p>
           </div>
           <div>
-            <h5 className='md:hidden text-white font-bold mb-2'>DOSIS</h5>
-            <p>{item.dosis}</p>
+            <h5 className='md:hidden text-white font-bold mb-2'>ATENDIÓ</h5>
+            <p>{item.usuario}</p>
           </div>
           <div>
-            <h5 className='md:hidden text-white font-bold mb-2'>INDICACIÓN</h5>
-            <p>{item.indicacion}</p>
+            <h5 className='md:hidden text-white font-bold mb-2'>ASEGURADO</h5>
+            <p>{item.asegurado}</p>
           </div>
           <div>
-            <h5 className='md:hidden text-white font-bold mb-2'>
-              PRESENTACION
-            </h5>
-            <p>{item.idPresentacion}</p>
-          </div>
-          <div>
-            <h5 className='md:hidden text-white font-bold mb-2'>LABORATORIO</h5>
-            <p>{item.idLaboratorio}</p>
+            <h5 className='md:hidden text-white font-bold mb-2'>FECHA</h5>
+            <p>{item.fechaConsulta}</p>
           </div>
           <div>
             <h5 className='md:hidden text-white font-bold mb-2'>ACCIONES</h5>
@@ -85,7 +67,7 @@ export function DataMedicamento({ data }) {
                   to='/perfil'
                   className='rounded-lg transition-colors text-gray-300 hover:bg-secondary-900 flex items-center gap-x-4 p-2 flex-1'
                 >
-                  Actualizar
+                  Ver datos
                 </Link>
               </MenuItem>
               <MenuItem className='p-0 hover:bg-transparent'>
@@ -93,7 +75,7 @@ export function DataMedicamento({ data }) {
                   to='/perfil'
                   className='rounded-lg transition-colors text-gray-300 hover:bg-secondary-900 flex items-center gap-x-4 p-2 flex-1'
                 >
-                  Eliminar
+                  Ver detalle
                 </Link>
               </MenuItem>
             </Menu>
