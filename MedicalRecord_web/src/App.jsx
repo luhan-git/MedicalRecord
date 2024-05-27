@@ -24,7 +24,7 @@ import { Paciente } from './Pages/Admin/Paciente'
 import { Procedimiento } from './Pages/Admin/Procedimiento'
 import { Cie } from './Pages/Admin/Cie'
 import { ExamenLab } from './Pages/Admin/ExamenLab'
-
+import { Laboratorio } from './Pages/Admin/Laboratorio'
 function App() {
   return (
     <BrowserRouter>
@@ -38,6 +38,7 @@ function App() {
           <Route path='alergia' element={<Alergia />} />
           <Route path='cie' element={<Cie></Cie>}></Route>
           <Route path='examenLab' element={<ExamenLab />} />
+          <Route path='laboratorio' element={<Laboratorio />} />
           <Route path='ciaseguro' element={<CiaSeguro />} />
           <Route path='consulta' element={<Consulta />} />
           <Route path='directorio' element={<Directorio />} />

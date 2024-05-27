@@ -24,6 +24,7 @@ namespace MedicalRecord_API.Dependencies
             services.AddScoped<ICieRepository, CieRepository>();
             services.AddScoped<IPresentacionRepository, PresentacionRepository>();
             services.AddScoped<IDiabetesRepository, DiabetesRepository>();
+            services.AddScoped<ILaboratorioRepository,LaboratorioRepository>();
 
 
             services.AddScoped<ICiaSeguroRepository, CiaSeguroRepository>();

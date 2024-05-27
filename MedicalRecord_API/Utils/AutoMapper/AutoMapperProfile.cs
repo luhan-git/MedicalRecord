@@ -17,6 +17,7 @@ using MedicalRecord_API.Models.Dtos.DetalleAlergia;
 using MedicalRecord_API.Models.Dtos.Medicamento;
 using MedicalRecord_API.Models.Dtos.Consulta;
 using MedicalRecord_API.Models.Dtos.ExamenLab;
+using MedicalRecord_API.Models.Dtos.Laboratorio;
 
 namespace MedicalRecord_API.Utils.AutoMapper
 {
@@ -47,6 +48,9 @@ namespace MedicalRecord_API.Utils.AutoMapper
             CreateMap<Examenlaboratorio, ExamenLaboratorioCreateDto>().ReverseMap();
             CreateMap<Examenlaboratorio, ExamenLaboratorioUpdateDto>().ReverseMap();
             #endregion ExamenLaboratorio 
+            #region Laboratorio
+            CreateMap<Laboratorio,LaboratorioDto>().ReverseMap();
+            #endregion Laboratorio
             #region Diabetes
             CreateMap<Diabete, DiabetesDto>().ReverseMap();
             CreateMap<Diabete, DiabetesCreateDto>().ReverseMap();
