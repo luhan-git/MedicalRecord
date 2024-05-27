@@ -19,34 +19,34 @@ export function Home() {
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8'>
         {/* Card */}
         <CardTicket
-          ticket='total'
-          totalTickets='145,000'
-          text='Tickets totales'
+          ticket='close'
+          totalTickets='10,000'
+          text='Pacientes atendidos'
         />
         <CardTicket
           ticket='pending'
-          totalTickets='5,000'
-          text='Tickets pendientes'
+          totalTickets='100'
+          text='Citas pendientes'
         />
         <CardTicket
           ticket='inProcess'
-          totalTickets='130,000'
-          text='Tickets en proceso'
+          totalTickets='5,000'
+          text='Citas atendidas'
         />
         <CardTicket
-          ticket='close'
-          totalTickets='10,000'
-          text='Tickets cerrados'
+          ticket='total'
+          totalTickets='1,000'
+          text='Citas canceladas'
         />
       </div>
       <div>
-        <h1 className='text-2xl text-white my-10'>Tickets más recientes</h1>
+        <h1 className='text-2xl text-white my-10'>Próximas citas</h1>
       </div>
       <div className='bg-secondary-100 p-8 rounded-xl'>
         <div className='hidden md:grid grid-cols-1 md:grid-cols-5 gap-4 mb-10 p-4'>
-          <h5>ID</h5>
+          <h5>Codigo</h5>
           <h5>Descripción</h5>
-          <h5>Estatus</h5>
+          <h5>Estado</h5>
           <h5>Fecha</h5>
           <h5>Acciones</h5>
         </div>
@@ -88,7 +88,7 @@ export function Home() {
                   to='/perfil'
                   className='rounded-lg transition-colors text-gray-300 hover:bg-secondary-900 flex items-center gap-x-4 p-2 flex-1'
                 >
-                  Dashboard tickets
+                  Ver detalle
                 </Link>
               </MenuItem>
               <MenuItem className='p-0 hover:bg-transparent'>

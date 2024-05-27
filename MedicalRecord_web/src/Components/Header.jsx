@@ -32,7 +32,7 @@ export function Header() {
           menuClassName='bg-secondary-100 p-4'
         >
           <h1 className='text-gray-300 text-center font-medium'>
-            Notificaciones (2)
+            Citas pendientes (2)
           </h1>
           <hr className='my-6 border-gray-500' />
           <MenuItem className='p-0 hover:bg-transparent'>
@@ -46,7 +46,7 @@ export function Header() {
               />
               <div className='text-sm flex flex-col'>
                 <div className='flex items-center justify-between gap-4'>
-                  <span>Jorge Luis Trejo</span>{' '}
+                  <span>Proximo paciente</span>{' '}
                   <span className='text-[8px]'>21/10/2022</span>
                 </div>
                 <p className='text-gray-500 text-xs'>
@@ -95,7 +95,7 @@ export function Header() {
               to='/'
               className='text-gray-400 text-sm hover:text-white transition-colors'
             >
-              Todas las notificaciones
+              Ver todas las citas
             </Link>
           </MenuItem>
         </Menu>
@@ -106,7 +106,7 @@ export function Header() {
                 src='https://img.freepik.com/foto-gratis/feliz-optimista-guapo-gerente-ventas-latina-apuntando-lado-mirando-camara_1262-12679.jpg'
                 className='w-6 h-6 object-cover rounded-full'
               />
-              <span>Jorge Luis Trejo</span>
+              <span>Nombres y Apellidos</span>
               <RiArrowDownSLine />
             </MenuButton>
           }
@@ -126,8 +126,10 @@ export function Header() {
                 className='w-8 h-8 object-cover rounded-full'
               />
               <div className='flex flex-col text-sm'>
-                <span className='text-sm'>Jorge Luis Trejo</span>
-                <span className='text-xs text-gray-500'>jorge@gmail.com</span>
+                <span className='text-sm'>Nombres y Apellidos</span>
+                <span className='text-xs text-gray-500'>
+                  oftalmologo@gmail.com
+                </span>
               </div>
             </Link>
           </MenuItem>
