@@ -45,7 +45,7 @@ export function DataMedicamento({ data }) {
             <h5 className='md:hidden text-white font-bold mb-2'>
               PRESENTACION
             </h5>
-            <p>{item.idPresentacion}</p>
+            <p>{item.presentacion}</p>
           </div>
           <div>
             <h5 className='md:hidden text-white font-bold mb-2'>ESTADO</h5>

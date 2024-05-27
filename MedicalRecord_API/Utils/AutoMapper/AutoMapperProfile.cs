@@ -113,8 +113,8 @@ namespace MedicalRecord_API.Utils.AutoMapper
             CreateMap<Medicamento, MedicamentoUpdateDto>().ReverseMap();
 
             CreateMap<Medicamento, MedicamentoDto>()
-                .ForMember(dest => dest.Presentacion, opt => opt.MapFrom(src => src.IdPresentacionNavigation.Nombre))
-                .ForMember(dest => dest.Laboratorio, opt => opt.MapFrom(src => src.IdLaboratorioNavigation.Nombre));
+                .ForMember(dest => dest.Presentacion, opt => opt.MapFrom(origen => origen.IdPresentacionNavigation.Nombre));
+                
             #endregion Medicamento
 
             #region Consulta
