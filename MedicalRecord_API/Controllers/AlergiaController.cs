@@ -8,8 +8,8 @@ using System.Net;
 
 namespace MedicalRecord_API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class AlergiaController(IAlergiaRepository alergiaRepo, IMapper mapper) : ControllerBase
     {
         private readonly IAlergiaRepository _alergiaRepo = alergiaRepo;

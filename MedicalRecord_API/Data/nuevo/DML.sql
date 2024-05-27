@@ -1,16 +1,16 @@
 
 INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, nroColMedico, activo,rol)
-VALUES ('Ana Martínez', 'ana@example.com', 'ana123', 'Médico', 'Pediatría', '654321', TRUE,'admin');
+VALUES ('Ana Martínez', 'ana@example.com', 'bb8b810d769f92ba3b6576e95be930cf2e6147b91de0d085a47fcb42b8bae20f', 'Médico', 'Pediatría', '654321', TRUE,'admin'); -- Password24*-+
 INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, activo,rol)
-VALUES ('Carlos Rodríguez', 'carlos@example.com', 'carlos456', 'Enfermero', NULL, FALSE,'admin');
+VALUES ('Carlos Rodríguez', 'carlos@example.com', 'bb8b810d769f92ba3b6576e95be930cf2e6147b91de0d085a47fcb42b8bae20f', 'Enfermero', NULL, FALSE,'admin');
 INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, nroColMedico, activo,rol)
-VALUES ('Laura Fernández', 'laura@example.com', 'laura789', 'Administrativo', NULL, NULL, TRUE,'admin');
+VALUES ('Laura Fernández', 'laura@example.com', 'bb8b810d769f92ba3b6576e95be930cf2e6147b91de0d085a47fcb42b8bae20f', 'Administrativo', NULL, NULL, TRUE,'admin');
 INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, nroColMedico, activo,rol)
-VALUES ('Pablo Sánchez', 'pablo@example.com', 'pablo123', 'Médico', 'Oftalmologia', '987654', TRUE,'admin');
+VALUES ('Pablo Sánchez', 'pablo@example.com', 'bb8b810d769f92ba3b6576e95be930cf2e6147b91de0d085a47fcb42b8bae20f', 'Médico', 'Oftalmologia', '987654', TRUE,'admin');
 INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, activo,rol)
-VALUES ('Sofía Gómez', 'sofia@example.com', 'sofia456', 'Enfermera', NULL, TRUE,'admin');
+VALUES ('Sofía Gómez', 'sofia@example.com', 'bb8b810d769f92ba3b6576e95be930cf2e6147b91de0d085a47fcb42b8bae20f', 'Enfermera', NULL, TRUE,'admin');
 INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, nroColMedico, activo,rol)
-VALUES ('Diego Pérez', 'diego@example.com', 'diego789', 'Administrativo', NULL, '234567', FALSE,'admin');
+VALUES ('Diego Pérez', 'diego@example.com', 'bb8b810d769f92ba3b6576e95be930cf2e6147b91de0d085a47fcb42b8bae20f', 'Administrativo', NULL, '234567', FALSE,'admin');
 
 
 INSERT INTO Laboratorio (nombre, abreviatura) VALUES ('Laboratorio Clínico Central', 'LCC');

@@ -10,8 +10,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace MedicalRecord_API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class PacienteController(IPacienteRepository pacienteRepository, IMapper mapper) : ControllerBase
     {
         private readonly IPacienteRepository _pacienteRepository = pacienteRepository;

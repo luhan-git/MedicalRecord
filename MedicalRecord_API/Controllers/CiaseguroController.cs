@@ -8,8 +8,8 @@ using System.Net;
 
 namespace MedicalRecord_API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class CiaSeguroController(ICiaSeguroRepository ciaRepo, IMapper mapper) : ControllerBase
     {
         private readonly ICiaSeguroRepository _ciaRepo = ciaRepo;

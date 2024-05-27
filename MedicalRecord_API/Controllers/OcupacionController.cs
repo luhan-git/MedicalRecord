@@ -9,8 +9,8 @@ using System.Net;
 
 namespace MedicalRecord_API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class OcupacionController(IOcupacionRepository ocupacionRepo, IMapper mapper) : ControllerBase
     {
         private readonly IOcupacionRepository _ocupacionRepo = ocupacionRepo;
