@@ -28,14 +28,12 @@ export function Medicamento() {
 
   const headers = [
     'CODIGO',
-    'TIPO',
-    'COMERCIAL',
     'GENERICO',
-    'ESTADO',
+    'COMERCIAL',
     'DOSIS',
     'INDICACION',
     'PRESENTACION',
-    'LABORATORIO',
+    'ESTADO',
     'ACCIONES'
   ]
 

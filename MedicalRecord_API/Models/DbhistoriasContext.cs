@@ -481,6 +481,7 @@ public partial class DbhistoriasContext : DbContext
                 .HasColumnName("dosis");
             entity.Property(e => e.Estado)
                 .HasMaxLength(1)
+                .IsFixedLength()
                 .HasColumnName("estado");
             entity.Property(e => e.IdLaboratorio).HasColumnName("idLaboratorio");
             entity.Property(e => e.IdPresentacion).HasColumnName("idPresentacion");
@@ -493,9 +494,6 @@ public partial class DbhistoriasContext : DbContext
             entity.Property(e => e.NombreGenerico)
                 .HasMaxLength(50)
                 .HasColumnName("nombreGenerico");
-            entity.Property(e => e.Tipo)
-                .HasMaxLength(30)
-                .HasColumnName("tipo");
 
             entity.HasOne(d => d.IdLaboratorioNavigation).WithMany(p => p.Medicamentos)
                 .HasForeignKey(d => d.IdLaboratorio)

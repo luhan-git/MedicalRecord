@@ -103,24 +103,18 @@ INSERT INTO Ocupacion (nombre, detalle) VALUES ('Administrador de clínica oftal
 INSERT INTO Ocupacion (nombre, detalle) VALUES ('Representante de ventas de equipos oftalmológicos', 'Representante');
 INSERT INTO Ocupacion (nombre, detalle) VALUES ('Estudiante de medicina', 'Estudiante');
 -- MEDICAMENTOS
-INSERT INTO Medicamento (codigo, tipo, nombreComercial, nombreGenerico, estado, dosis, indicacion, idPresentacion, idLaboratorio) 
-VALUES ('ABC123', 'Comercial', 'OftaClear', 'Clorhidrato de X', 'A', '1 gota en el ojo afectado, 2 veces al día', 'Para el tratamiento del glaucoma', 1, 1);
-INSERT INTO Medicamento (codigo, tipo, nombreComercial, nombreGenerico, estado, dosis, indicacion, idPresentacion, idLaboratorio) 
-VALUES ('DEF456', 'Comercial', 'VisioPlus', 'Latanoprost', 'A', '1 gota en el ojo afectado, una vez al día', 'Para reducir la presión intraocular', 2, 2);
-INSERT INTO Medicamento (codigo, tipo, nombreComercial, nombreGenerico, estado, dosis, indicacion, idPresentacion, idLaboratorio) 
-VALUES ('GHI789', 'Comercial', 'LacriClear', 'Lágrimas artificiales', 'A', 'Según sea necesario', 'Para aliviar la sequedad ocular', 3, 3);
-INSERT INTO Medicamento (codigo, tipo, nombreComercial, nombreGenerico, estado, dosis, indicacion, idPresentacion, idLaboratorio) 
-VALUES ('JKL012', 'Comercial', 'Oculinex', 'Sulfato de Neomicina', 'A', 'Aplicar una pequeña cantidad en el párpado afectado, 4 veces al día', 'Para tratar infecciones oculares', 4, 4);
-INSERT INTO Medicamento (codigo, tipo, nombreComercial, nombreGenerico, estado, dosis, indicacion, idPresentacion, idLaboratorio) 
-VALUES ('MNO345', 'Comercial', 'OftaVit', 'Vitamina A', 'A', '1 cápsula al día', 'Suplemento vitamínico para la salud ocular', 5, 5);
-INSERT INTO Medicamento (codigo, tipo, nombreComercial, nombreGenerico, estado, dosis, indicacion, idPresentacion, idLaboratorio) 
-VALUES ('PQR678', 'Comercial', 'CiproClear', 'Ciprofloxacino', 'A', '2 gotas en el ojo afectado, cada 4 horas', 'Para tratar infecciones oculares bacterianas', 6, 6);
-INSERT INTO Medicamento (codigo, tipo, nombreComercial, nombreGenerico, estado, dosis, indicacion, idPresentacion, idLaboratorio) 
-VALUES ('STU901', 'Comercial', 'OftaLub', 'Carboximetilcelulosa sódica', 'A', 'Según sea necesario', 'Para aliviar la sequedad ocular', 7, 7);
-INSERT INTO Medicamento (codigo, tipo, nombreComercial, nombreGenerico, estado, dosis, indicacion, idPresentacion, idLaboratorio) 
-VALUES ('VWX234', 'Comercial', 'PredniClear', 'Prednisolona', 'A', '1 gota en el ojo afectado, 4 veces al día', 'Para reducir la inflamación ocular', 8, 8);
-INSERT INTO Medicamento (codigo, tipo, nombreComercial, nombreGenerico, estado, dosis, indicacion, idPresentacion, idLaboratorio) 
-VALUES ('YZA567', 'Comercial', 'Ocultrin', 'Cloruro de sodio', 'A', 'Según sea necesario', 'Para lavado ocular', 9, 9);
+INSERT INTO Medicamento (codigo, nombreGenerico, nombreComercial, estado, dosis, indicacion, idPresentacion, idLaboratorio) VALUES
+('MED001', 'Paracetamol', 'Tylenol', '2', '500mg', 'Analgesico y antipiretico', 1, 1),
+('MED002', 'Paracetamol', 'Panadol', '2', '500mg', 'Analgesico y antipiretico', 2, 2),
+('MED003', 'Ibuprofeno', 'Advil', '2', '200mg', 'Antiinflamatorio y analgesico', 3, 3),
+('MED004', 'Ibuprofeno', 'Motrin', '0', '400mg', 'Antiinflamatorio y analgesico', 4, 4),
+('MED005', 'Atorvastatina', 'Lipitor', '1', '20mg', 'Reducir el colesterol', 5, 5),
+('MED006', 'Atorvastatina', 'Atorlip', '1', '10mg', 'Reducir el colesterol', 1, 2),
+('MED007', 'Amoxicilina', 'Amoxil', '2', '500mg', 'Antibiotico', 2, 3),
+('MED008', 'Amoxicilina', 'Trimox', '2', '250mg', 'Antibiotico', 3, 4),
+('MED009', 'Metformina', 'Glucophage', '2', '500mg', 'Control de la glucosa en diabetes', 4, 1),
+('MED010', 'Metformina', 'Fortamet', '2', '1000mg', 'Control de la glucosa en diabetes', 5, 2);
+
 -- DIABETES
 INSERT INTO Diabetes (tipo, detalle) 
 VALUES ('Diabetes tipo 1', 'Se produce cuando el páncreas no produce suficiente insulina.');

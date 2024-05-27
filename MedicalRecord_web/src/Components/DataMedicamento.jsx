@@ -10,7 +10,7 @@ export function DataMedicamento({ data }) {
       {data.map(item => (
         <div
           key={item.id}
-          className={`grid grid-cols-1 md:grid-cols-10 gap-4 items-center mb-4 bg-secondary-900 p-4 rounded-xl`}
+          className={`grid grid-cols-1 md:grid-cols-8 gap-4 items-center mb-4 bg-secondary-900 p-4 rounded-xl`}
         >
           <div className='md:hidden'>
             <h5 className='md:hidden text-white font-bold mb-2'>ID</h5>
@@ -21,8 +21,10 @@ export function DataMedicamento({ data }) {
             <p>{item.codigo}</p>
           </div>
           <div>
-            <h5 className='md:hidden text-white font-bold mb-2'>TIPO</h5>
-            <p>{item.tipo}</p>
+            <h5 className='md:hidden text-white font-bold mb-2'>
+              NOMBRE GENERICO
+            </h5>
+            <p>{item.nombreGenerico}</p>
           </div>
           <div>
             <h5 className='md:hidden text-white font-bold mb-2'>
@@ -30,24 +32,7 @@ export function DataMedicamento({ data }) {
             </h5>
             <p>{item.nombreComercial}</p>
           </div>
-          <div>
-            <h5 className='md:hidden text-white font-bold mb-2'>
-              NOMBRE GENERICO
-            </h5>
-            <p>{item.nombreGenerico}</p>
-          </div>
-          <div>
-            <h5 className='md:hidden text-white font-bold mb-2'>ESTADO</h5>
-            {item.activo ? (
-              <span className='py-1 px-2 bg-green-500/10 text-green-500 rounded-lg'>
-                Activo
-              </span>
-            ) : (
-              <span className='py-1 px-2 bg-yellow-500/10 text-yellow-500 rounded-lg'>
-                No Activo
-              </span>
-            )}
-          </div>
+
           <div>
             <h5 className='md:hidden text-white font-bold mb-2'>DOSIS</h5>
             <p>{item.dosis}</p>
@@ -63,8 +48,22 @@ export function DataMedicamento({ data }) {
             <p>{item.idPresentacion}</p>
           </div>
           <div>
-            <h5 className='md:hidden text-white font-bold mb-2'>LABORATORIO</h5>
-            <p>{item.idLaboratorio}</p>
+            <h5 className='md:hidden text-white font-bold mb-2'>ESTADO</h5>
+            {item.estado === '0' && (
+              <span className='py-1 px-2 bg-green-500/10 text-green-500 rounded-lg'>
+                ACTIVO
+              </span>
+            )}
+            {item.estado === '1' && (
+              <span className='py-1 px-2 bg-yellow-500/10 text-yellow-500 rounded-lg'>
+                PRUEBA
+              </span>
+            )}
+            {item.estado === '2' && (
+              <span className='py-1 px-2 bg-red-500/10 text-red-500 rounded-lg'>
+                DESC
+              </span>
+            )}
           </div>
           <div>
             <h5 className='md:hidden text-white font-bold mb-2'>ACCIONES</h5>
