@@ -22,7 +22,8 @@ import { Medicamento } from './Pages/Admin/Medicamento'
 import { Ocupacion } from './Pages/Admin/Ocupacion'
 import { Paciente } from './Pages/Admin/Paciente'
 import { Procedimiento } from './Pages/Admin/Procedimiento'
-
+import { Cie } from './Pages/Admin/Cie'
+import { ExamenLab } from './Pages/Admin/ExamenLab'
 
 function App() {
   return (
@@ -35,6 +36,8 @@ function App() {
           <Route path='home' element={<Home />} />
           <Route path='usuario' element={<Usuarios />} />
           <Route path='alergia' element={<Alergia />} />
+          <Route path='cie' element={<Cie></Cie>}></Route>
+          <Route path='examenLab' element={<ExamenLab />} />
           <Route path='ciaseguro' element={<CiaSeguro />} />
           <Route path='consulta' element={<Consulta />} />
           <Route path='directorio' element={<Directorio />} />

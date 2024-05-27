@@ -1,15 +1,14 @@
-import { Suspense, useEffect, useState } from 'react'
-import { DataUsuario } from '../../Components/DataUsuario'
+import { DataExamenLab } from '../../Components/DataExamenLab'
 import { HeaderTable } from '../../Components/HeaderTable'
 import { Spinners } from '../../Components/Spinners'
-
-export function Usuarios() {
+import { Suspense, useEffect, useState } from 'react'
+export function ExamenLab() {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
-
+  const headers = ['ID', 'NOMBRE', 'ABREVIATURA', 'ACCIONES']
   const fetchDataAsync = async () => {
     try {
-      const response = await fetch('https://localhost:7027/api/Usuario')
+      const response = await fetch('https://localhost:7027/api/ExamenLab')
       if (!response.ok) {
         throw new Error('Error al obtener los datos')
       }
@@ -21,24 +20,20 @@ export function Usuarios() {
       setLoading(false)
     }
   }
-
   useEffect(() => {
     fetchDataAsync()
   }, [])
-
-  const headers = ['ID', 'NOMBRE', 'CORREO', 'ROL', 'ACTIVO', 'ACCIONES']
-
   return (
     <>
       <div>
         <div>
-          <h1 className='text-2xl text-white my-10'>Usuarios</h1>
+          <h1 className='text-2xl text-white my-10'>CIE 10 </h1>
         </div>
         <div className='bg-secondary-100 p-8 rounded-xl'>
           <HeaderTable data={headers} />
           {loading && <Spinners number={headers.length} />}
           <Suspense fallback={<Spinners number={headers.length} />}>
-            {data && <DataUsuario data={data} />}
+            {data && <DataExamenLab data={data} />}
           </Suspense>
         </div>
       </div>

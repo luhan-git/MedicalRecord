@@ -11,7 +11,7 @@ using System.Net;
 namespace MedicalRecord_API.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(Roles = "admin")]
+    // [Authorize(Roles = "admin")]
     [ApiController]
     public class CieController : ControllerBase
     {

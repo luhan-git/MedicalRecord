@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MedicalRecord_API.Models;
 using MedicalRecord_API.Models.Dtos.Cie;
-using MedicalRecord_API.Models.Dtos.ExamenLaboratorio;
+using MedicalRecord_API.Models.Dtos.ExamenLab;
 using MedicalRecord_API.Repository.Interfaces;
 using MedicalRecord_API.Utils.Response;
 using Microsoft.AspNetCore.Http;
@@ -12,12 +12,12 @@ namespace MedicalRecord_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ExamenLaboratorioController : ControllerBase
+    public class ExamenLabController : ControllerBase
     {
         private readonly IExamenLaboratorioRepository _examenRepo;
         private readonly IMapper _mapper;
         protected Response _response;
-        public ExamenLaboratorioController(IExamenLaboratorioRepository examenRepo, IMapper mapper)
+        public ExamenLabController(IExamenLaboratorioRepository examenRepo, IMapper mapper)
         {
             _examenRepo = examenRepo;
             _mapper = mapper;
@@ -31,7 +31,7 @@ namespace MedicalRecord_API.Controllers
         {
             try
             {
-                IEnumerable<Examenlaboratorio> examenList = _mapper.Map<IEnumerable<Examenlaboratorio>>(await _examenRepo.QueryAsync());
+                IEnumerable<ExamenLabDto> examenList = _mapper.Map<IEnumerable<ExamenLabDto>>(await _examenRepo.QueryAsync());
                 _response.Resultado = examenList;
                 _response.IsExitoso = true;
                 _response.Status = HttpStatusCode.OK;
@@ -61,7 +61,7 @@ namespace MedicalRecord_API.Controllers
             }
             try
             {
-                ExamenLaboratorioDto dto = _mapper.Map<ExamenLaboratorioDto>(await _examenRepo.GetEntity(c => c.Id == Id, false));
+                ExamenLabDto dto = _mapper.Map<ExamenLabDto>(await _examenRepo.GetEntity(c => c.Id == Id, false));
                 if (dto == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
