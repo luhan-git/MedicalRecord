@@ -39,109 +39,6 @@ export function Sidebar() {
             </li>
             <li>
               <button
-                onClick={() =>
-                  setShowSubmenuMantenimiento(!showSubmenuMantenimiento)
-                }
-                className='w-full flex items-center justify-between py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors'
-              >
-                <span className='flex items-center gap-4'>
-                  <RiEarthLine className='text-primary' /> Mantenimiento
-                </span>
-                <RiArrowRightSLine
-                  className={`mt-1 ${
-                    showSubmenuMantenimiento && 'rotate-90'
-                  } transition-all`}
-                />
-              </button>
-              <ul
-                className={` ${
-                  showSubmenuMantenimiento ? 'h-[480px]' : 'h-0'
-                } overflow-y-hidden transition-all`}
-              >
-                <li>
-                  <Link
-                    to='/usuario'
-                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
-                  >
-                    Administrativos
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to='/alergia'
-                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
-                  >
-                    Alergias
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to='/cie'
-                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
-                  >
-                    CIE10
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to='/ciaseguro'
-                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
-                  >
-                    Compañias de Seguros
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to='/directorio'
-                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
-                  >
-                    Directorio Teléfonico
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to='/examenLab'
-                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
-                  >
-                    Examenes de Laboratorio
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to='/Laboratorio'
-                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
-                  >
-                    Laboratorios
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to='/medicamento'
-                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
-                  >
-                    Medicamentos
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to='/Ocupacion'
-                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
-                  >
-                    Ocupaciones
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to='/Procedimiento'
-                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
-                  >
-                    Procedimientos Especiales
-                  </Link>
-                </li>
-              </ul>
-            </li>
-            <li>
-              <button
                 onClick={() => setShowSubmenuControl(!showSubmenuControl)}
                 className='w-full flex items-center justify-between py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors'
               >
@@ -189,6 +86,109 @@ export function Sidebar() {
                     className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
                   >
                     Medida de lentes
+                  </Link>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <button
+                onClick={() =>
+                  setShowSubmenuMantenimiento(!showSubmenuMantenimiento)
+                }
+                className='w-full flex items-center justify-between py-2 px-4 rounded-lg hover:bg-secondary-900 transition-colors'
+              >
+                <span className='flex items-center gap-4'>
+                  <RiEarthLine className='text-primary' /> Mantenimiento
+                </span>
+                <RiArrowRightSLine
+                  className={`mt-1 ${
+                    showSubmenuMantenimiento && 'rotate-90'
+                  } transition-all`}
+                />
+              </button>
+              <ul
+                className={` ${
+                  showSubmenuMantenimiento ? 'h-[485px]' : 'h-0'
+                } overflow-y-hidden transition-all`}
+              >
+                <li>
+                  <Link
+                    to='/usuario'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Administrativos
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/alergia'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Alergias
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/cie'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    CIE10
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/ciaseguro'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Compañias de Seguros
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/examenLab'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Examenes de Laboratorio
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/Laboratorio'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Laboratorios
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/medicamento'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Medicamentos
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/Ocupacion'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Ocupaciones
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/Procedimiento'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Procedimientos Especiales
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/directorio'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Directorio Teléfonico
                   </Link>
                 </li>
               </ul>
