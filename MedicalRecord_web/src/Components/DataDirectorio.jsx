@@ -10,7 +10,7 @@ export function DataDirectorio({ data }) {
       {data.map(item => (
         <div
           key={item.id}
-          className={`grid grid-cols-1 md:grid-cols-8 gap-4 items-center mb-4 bg-secondary-900 p-4 rounded-xl`}
+          className={`grid grid-cols-1 md:grid-cols-7 gap-4 items-center mb-4 bg-secondary-900 p-4 rounded-xl`}
         >
           <div className='md:hidden'>
             <h5 className='md:hidden text-white font-bold mb-2'>ID</h5>
@@ -25,10 +25,6 @@ export function DataDirectorio({ data }) {
               REPRESENTANTE
             </h5>
             <p>{item.representante}</p>
-          </div>
-          <div>
-            <h5 className='md:hidden text-white font-bold mb-2'>TELÉFONO</h5>
-            <p>{item.telefono}</p>
           </div>
           <div>
             <h5 className='md:hidden text-white font-bold mb-2'>CELULAR</h5>

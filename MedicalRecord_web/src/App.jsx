@@ -25,10 +25,13 @@ import { Procedimiento } from './Pages/Admin/Procedimiento'
 import { Cie } from './Pages/Admin/Cie'
 import { ExamenLab } from './Pages/Admin/ExamenLab'
 import { Laboratorio } from './Pages/Admin/Laboratorio'
+import { ModalPaciente } from './Components/ModalPaciente'
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path='modalpaciente' element={<ModalPaciente />} />
+        
         <Route path='/registro' element={<Register />} />
         <Route path='/olvide-password' element={<ForgetPassword />} />
         <Route path='/' element={<LayoutAdmin />}>

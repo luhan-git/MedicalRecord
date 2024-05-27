@@ -108,7 +108,7 @@ export function Sidebar() {
               </button>
               <ul
                 className={` ${
-                  showSubmenuMantenimiento ? 'h-[485px]' : 'h-0'
+                  showSubmenuMantenimiento ? 'h-[25rem]' : 'h-0'
                 } overflow-y-hidden transition-all`}
               >
                 <li>

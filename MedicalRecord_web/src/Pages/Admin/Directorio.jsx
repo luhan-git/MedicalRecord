@@ -29,7 +29,6 @@ export function Directorio() {
   const headers = [
     'NOMBRE',
     'REPRESENTANTE',
-    'TELEFONO',
     'CELULAR',
     'CORREO',
     'DIRECCION',
