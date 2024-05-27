@@ -13,8 +13,16 @@ import { Profile } from './Pages/Admin/Profile'
 import { Chat } from './Pages/Admin/Chat'
 import { Error404 } from './Pages/Error404 '
 import { Tickets } from './Pages/Admin/Tickets'
-import { Paciente } from './Pages/Admin/Paciente'
 import { Usuarios } from './Pages/Admin/Usuarios'
+import { Alergia } from './Pages/Admin/Alergia'
+import { CiaSeguro } from './Pages/Admin/CiaSeguro'
+import { Directorio } from './Pages/Admin/Directorio'
+import { Medicamento } from './Pages/Admin/Medicamento'
+import { Ocupacion } from './Pages/Admin/Ocupacion'
+import { Paciente } from './Pages/Admin/Paciente'
+import { Procedimiento } from './Pages/Admin/Procedimiento'
+
+
 function App() {
   return (
     <BrowserRouter>
@@ -24,8 +32,14 @@ function App() {
         <Route path='/' element={<LayoutAdmin />}>
           <Route index element={<Home />} />
           <Route path='home' element={<Home />} />
-          <Route path='paciente' element={<Paciente />} />
           <Route path='usuario' element={<Usuarios />} />
+          <Route path='alergia' element={<Alergia />} />
+          <Route path='ciaseguro' element={<CiaSeguro />} />
+          <Route path='directorio' element={<Directorio />} />
+          <Route path='medicamento' element={<Medicamento />} />
+          <Route path='ocupacion' element={<Ocupacion />} />
+          <Route path='paciente' element={<Paciente />} />
+          <Route path='procedimiento' element={<Procedimiento />} />
           <Route path='chat' element={<Chat />} />
           <Route path='tickets' element={<Tickets />} />
         </Route>

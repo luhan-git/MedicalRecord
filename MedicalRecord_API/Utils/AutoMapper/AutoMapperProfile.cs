@@ -14,6 +14,7 @@ using MedicalRecord_API.Models.Dtos.Usuario;
 using MedicalRecord_API.Models.Dtos.Paciente;
 using MedicalRecord_API.Models.Dtos.Ubicacion;
 using MedicalRecord_API.Models.Dtos.DetalleAlergia;
+using MedicalRecord_API.Models.Dtos.Medicamento;
 
 namespace MedicalRecord_API.Utils.AutoMapper
 {
@@ -100,6 +101,15 @@ namespace MedicalRecord_API.Utils.AutoMapper
             CreateMap<Paciente, PacienteUpdateDto>().ReverseMap();
             CreateMap<Paciente,PacienteDto>().ReverseMap();
             #endregion Paciente
+
+            #region Medicamento
+            CreateMap<Medicamento, MedicamentoCreateDto>().ReverseMap();
+            CreateMap<Medicamento, MedicamentoUpdateDto>().ReverseMap();
+
+            CreateMap<Medicamento, MedicamentoDto>()
+                .ForMember(dest => dest.Presentacion, opt => opt.MapFrom(src => src.IdPresentacionNavigation.Nombre))
+                .ForMember(dest => dest.Laboratorio, opt => opt.MapFrom(src => src.IdLaboratorioNavigation.Nombre));
+            #endregion Medicamento
 
         }
     }

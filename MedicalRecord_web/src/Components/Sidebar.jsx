@@ -55,7 +55,7 @@ export function Sidebar() {
               </button>
               <ul
                 className={` ${
-                  showSubmenuMantenimiento ? 'h-[320px]' : 'h-0'
+                  showSubmenuMantenimiento ? 'h-[480px]' : 'h-0'
                 } overflow-y-hidden transition-all`}
               >
                 <li>
@@ -63,23 +63,15 @@ export function Sidebar() {
                     to='/usuario'
                     className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
                   >
-                    Personal administrativo
+                    Administrativos
                   </Link>
                 </li>
                 <li>
                   <Link
-                    to='/Laboratorio'
-                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                    to='/alergia'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
                   >
-                    Laboratorios
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to='/Medicamento'
-                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
-                  >
-                    Medicamentos
+                    Alergias
                   </Link>
                 </li>
                 <li>
@@ -92,6 +84,22 @@ export function Sidebar() {
                 </li>
                 <li>
                   <Link
+                    to='/ciaseguro'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Compañias de Seguros
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/directorio'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Directorio Teléfonico
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     to='/ExamenLaboratorio'
                     className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
                   >
@@ -100,26 +108,34 @@ export function Sidebar() {
                 </li>
                 <li>
                   <Link
-                    to='/Procedimiento'
+                    to='/Laboratorio'
                     className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Laboratorios
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/medicamento'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Medicamentos
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/Ocupacion'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
+                  >
+                    Ocupaciones
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to='/Procedimiento'
+                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-primary before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
                   >
                     Procedimientos Especiales
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to='/CiaSeguro'
-                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
-                  >
-                    Compañias de Seguros
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to='/'
-                    className='py-2 px-4 border-l border-gray-500 ml-6 block relative before:w-3 before:h-3 before:absolute before:bg-gray-500 before:rounded-full before:-left-[6.5px] before:top-1/2 before:-translate-y-1/2 before:border-4 before:border-secondary-100 hover:text-white transition-colors'
-                  >
-                    Directorio Telefonico
                   </Link>
                 </li>
               </ul>
