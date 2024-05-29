@@ -9,7 +9,6 @@ export function DataPaciente({ data }) {
   const closeDialog = () => setIsOpen(false)
   return (
     <>
-      <DialogPaciente isOpen={isOpen} close={closeDialog}></DialogPaciente>
       {data.map(item => (
         <div
           key={item.id}
@@ -101,6 +100,7 @@ export function DataPaciente({ data }) {
           </div>
         </div>
       ))}
+      <DialogPaciente isOpen={isOpen} close={closeDialog}></DialogPaciente>
     </>
   )
 }
