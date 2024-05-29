@@ -1,7 +1,6 @@
 import { PiEyedropperSample } from 'react-icons/pi'
 import { SiApmterminals } from 'react-icons/si'
 import React from 'react'
-
 export function HeaderTable({ data }) {
   const gridColsClass = `md:grid-cols-${data.length}`
   return (

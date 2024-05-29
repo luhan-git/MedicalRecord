@@ -26,12 +26,13 @@ import { Cie } from './Pages/Admin/Cie'
 import { ExamenLab } from './Pages/Admin/ExamenLab'
 import { Laboratorio } from './Pages/Admin/Laboratorio'
 import { ModalPaciente } from './Components/ModalPaciente'
+import { DialogPaciente } from './Components/DialogPaciente'
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path='modalpaciente' element={<ModalPaciente />} />
-        
+
         <Route path='/registro' element={<Register />} />
         <Route path='/olvide-password' element={<ForgetPassword />} />
         <Route path='/' element={<LayoutAdmin />}>
@@ -51,6 +52,7 @@ function App() {
           <Route path='procedimiento' element={<Procedimiento />} />
           <Route path='chat' element={<Chat />} />
           <Route path='tickets' element={<Tickets />} />
+          <Route path='dialogPaciente' element={<DialogPaciente />} />
         </Route>
         <Route path='*' element={<Error404 />} />
       </Routes>

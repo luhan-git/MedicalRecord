@@ -1,12 +1,21 @@
 import { Link } from 'react-router-dom'
 import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu'
+import { useState } from 'react'
+import { DialogPaciente } from './DialogPaciente'
 export function DataPaciente({ data }) {
+  const [isOpen, setIsOpen] = useState(false)
+
+  const openDialog = () => setIsOpen(true)
+  const closeDialog = () => setIsOpen(false)
   return (
     <>
+      <DialogPaciente isOpen={isOpen} close={closeDialog}></DialogPaciente>
       {data.map(item => (
         <div
           key={item.id}
-          className={`grid grid-cols-1 md:grid-cols-8 gap-4 items-center mb-4 bg-secondary-900 p-4 rounded-xl`}
+          className={
+            'grid grid-cols-1 md:grid-cols-8 gap-4 items-center  mb-4 bg-secondary-900 p-4 rounded-xl'
+          }
         >
           <div>
             <h5 className='md:hidden text-white font-bold mb-2'>ID</h5>
@@ -74,7 +83,7 @@ export function DataPaciente({ data }) {
             >
               <MenuItem className='p-0 hover:bg-transparent'>
                 <Link
-                  to='/perfil'
+                  onClick={openDialog}
                   className='rounded-lg transition-colors text-gray-300 hover:bg-secondary-900 flex items-center gap-x-4 p-2 flex-1'
                 >
                   Ver detalle
