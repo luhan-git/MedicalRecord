@@ -5,6 +5,7 @@ using MedicalRecord_API.Utils.Response;
 using MedicalRecord_API.Models.Dtos.Alergia;
 using MedicalRecord_API.Models;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MedicalRecord_API.Controllers
 {
@@ -45,6 +46,7 @@ namespace MedicalRecord_API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Response>> GetAll()

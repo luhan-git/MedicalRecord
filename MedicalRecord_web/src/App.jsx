@@ -32,8 +32,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='modalpaciente' element={<ModalPaciente />} />
-
         <Route path='/registro' element={<Register />} />
+        <Route path='/login' element={<Login />} />
         <Route path='/olvide-password' element={<ForgetPassword />} />
         <Route path='/' element={<LayoutAdmin />}>
           <Route index element={<Home />} />
