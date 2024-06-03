@@ -87,7 +87,7 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                var directorio = await _directorioRepo.GetEntity(e => e.Id == id, false);
+                var directorio = await _directorioRepo.GetAsync(e => e.Id == id, false);
 
                 if (directorio == null)
                 {
@@ -127,7 +127,7 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                var directorio = await _directorioRepo.GetEntity(e => e.Id == id, false);
+                var directorio = await _directorioRepo.GetAsync(e => e.Id == id, false);
 
                 if (directorio == null)
                 {
@@ -167,7 +167,7 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                DirectorioDto directorio = _mapper.Map<DirectorioDto>(await _directorioRepo.GetEntity(e => e.Id == id, false));
+                DirectorioDto directorio = _mapper.Map<DirectorioDto>(await _directorioRepo.GetAsync(e => e.Id == id, false));
 
                 if (directorio == null)
                 {

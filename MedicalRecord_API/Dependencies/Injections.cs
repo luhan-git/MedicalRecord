@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using MedicalRecord_API.Utils.AutoMapper;
 using MedicalRecord_API.Utils.Recursos.Implements;
 using MedicalRecord_API.Utils.Recursos.Interfaces;
+using MedicalRecord_API.Services.Interfaces;
+using MedicalRecord_API.Services.Implements;
 
 namespace MedicalRecord_API.Dependencies
 {
@@ -15,7 +17,7 @@ namespace MedicalRecord_API.Dependencies
             services.AddDbContext<DbhistoriasContext>(option => option.UseMySql(configuration.GetConnectionString("Context"),
                                                       Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.30-mysql")));
 
-            services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddAutoMapper(typeof(AutoMapperProfile));
             services.AddScoped<IUtilsService, UtilsService>();
             services.AddScoped<IExamenLaboratorioRepository, ExamenLaboratorioRepository>();
@@ -25,8 +27,6 @@ namespace MedicalRecord_API.Dependencies
             services.AddScoped<IPresentacionRepository, PresentacionRepository>();
             services.AddScoped<IDiabetesRepository, DiabetesRepository>();
             services.AddScoped<ILaboratorioRepository,LaboratorioRepository>();
-
-
             services.AddScoped<ICiaSeguroRepository, CiaSeguroRepository>();
             services.AddScoped<IDirectorioRepository, DirectorioRepository>();
             services.AddScoped<IProcedimientoRepository, ProcedimientoRepository>();
@@ -35,6 +35,8 @@ namespace MedicalRecord_API.Dependencies
             services.AddScoped<IPacienteRepository, PacienteRepository>();
             services.AddScoped<IMedicamentoRepository, MedicamentoRepository>();
             services.AddScoped<IConsultaRepository, ConsultaRepository>();
+
+            services.AddScoped<IPresentacionService,PresentacionService>();
         }
     }
 }

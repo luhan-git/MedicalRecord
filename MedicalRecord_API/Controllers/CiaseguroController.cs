@@ -87,7 +87,7 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                var cia = await _ciaRepo.GetEntity(e => e.Id == id, false);
+                var cia = await _ciaRepo.GetAsync(e => e.Id == id, false);
 
                 if (cia == null)
                 {
@@ -127,7 +127,7 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                var cia = await _ciaRepo.GetEntity(e => e.Id == id, false);
+                var cia = await _ciaRepo.GetAsync(e => e.Id == id, false);
 
                 if (cia == null)
                 {
@@ -167,7 +167,7 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                CiaSeguroDto cia = _mapper.Map<CiaSeguroDto>(await _ciaRepo.GetEntity(e => e.Id == id, false));
+                CiaSeguroDto cia = _mapper.Map<CiaSeguroDto>(await _ciaRepo.GetAsync(e => e.Id == id, false));
 
                 if (cia == null)
                 {

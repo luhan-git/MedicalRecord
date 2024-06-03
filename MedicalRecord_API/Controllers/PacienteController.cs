@@ -93,7 +93,7 @@ namespace MedicalRecord_API.Controllers
             }
             try
             {
-                PacienteDetalleDto pacienteDto = _mapper.Map<PacienteDetalleDto>(await _pacienteRepository.GetEntity(p => p.Id == id, false));
+                PacienteDetalleDto pacienteDto = _mapper.Map<PacienteDetalleDto>(await _pacienteRepository.GetAsync(p => p.Id == id, false));
                 if (pacienteDto == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;

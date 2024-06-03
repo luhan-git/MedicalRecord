@@ -70,7 +70,7 @@ namespace MedicalRecord_API.Controllers
             }
             try
             {
-                UsuarioDto usuarioDto = _mapper.Map<UsuarioDto>(await _usuarioRepo.GetEntity(u => u.Id == Id, false));
+                UsuarioDto usuarioDto = _mapper.Map<UsuarioDto>(await _usuarioRepo.GetAsync(u => u.Id == Id, false));
                 if (usuarioDto == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
@@ -187,13 +187,13 @@ namespace MedicalRecord_API.Controllers
             };
             try
             {
-                if (await _usuarioRepo.GetEntity(u => u.Id == id, false) == null)
+                if (await _usuarioRepo.GetAsync(u => u.Id == id, false) == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
                     _response.ErrorMensajes = ["modelo: no esxiste en la base de datos"];
                     return BadRequest(_response);
                 }
-                if (await _usuarioRepo.GetEntity(u => string.Equals(u.Correo, dto.Correo), false) != null)
+                if (await _usuarioRepo.GetAsync(u => string.Equals(u.Correo, dto.Correo), false) != null)
                 {
                     _response.ErrorMensajes = ["El Usuario con este Correo ya existe"];
                     return BadRequest(_response);
@@ -234,7 +234,7 @@ namespace MedicalRecord_API.Controllers
             try
             {
 
-                Usuario usuario = await _usuarioRepo.GetEntity(v => v.Id == id, false);
+                Usuario usuario = await _usuarioRepo.GetAsync(v => v.Id == id, false);
                 if (usuario == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
@@ -277,7 +277,7 @@ namespace MedicalRecord_API.Controllers
             };
             try
             {
-                Usuario usuario = await _usuarioRepo.GetEntity(u => u.Id == id, false);
+                Usuario usuario = await _usuarioRepo.GetAsync(u => u.Id == id, false);
                 if (usuario == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
@@ -329,7 +329,7 @@ namespace MedicalRecord_API.Controllers
             try
             {
 
-                Usuario usuario = await _usuarioRepo.GetEntity(u => u.Id == id);
+                Usuario usuario = await _usuarioRepo.GetAsync(u => u.Id == id);
                 if (usuario == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;

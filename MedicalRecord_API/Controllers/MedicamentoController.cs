@@ -90,7 +90,7 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                var alergia = await _medicamentoRepo.GetEntity(e => e.Id == id, false);
+                var alergia = await _medicamentoRepo.GetAsync(e => e.Id == id, false);
 
                 if (alergia == null)
                 {
@@ -130,7 +130,7 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                var medicamento = await _medicamentoRepo.GetEntity(e => e.Id == id, false);
+                var medicamento = await _medicamentoRepo.GetAsync(e => e.Id == id, false);
 
                 if (medicamento == null)
                 {
@@ -162,7 +162,7 @@ namespace MedicalRecord_API.Controllers
         {
             try
             {
-                MedicamentoDto medicamento = _mapper.Map<MedicamentoDto>(await _medicamentoRepo.GetEntity(e => e.Id == id, false));
+                MedicamentoDto medicamento = _mapper.Map<MedicamentoDto>(await _medicamentoRepo.GetAsync(e => e.Id == id, false));
                 if (medicamento == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;

@@ -25,7 +25,7 @@ namespace MedicalRecord_API.Repository.Implements
 
         }
 
-        public async Task<TEntity> GetEntity(Expression<Func<TEntity, bool>> filters, bool tracked = true)
+        public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filters, bool tracked = true)
         {
             IQueryable<TEntity> query = dbSet;
             if (!tracked) query = query.AsNoTracking();

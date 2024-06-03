@@ -87,7 +87,7 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                var ocupacion = await _ocupacionRepo.GetEntity(e => e.Id == id, false);
+                var ocupacion = await _ocupacionRepo.GetAsync(e => e.Id == id, false);
 
                 if (ocupacion == null)
                 {
@@ -129,7 +129,7 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                var ocupacion = await _ocupacionRepo.GetEntity(e => e.Id == id, false);
+                var ocupacion = await _ocupacionRepo.GetAsync(e => e.Id == id, false);
 
                 if (ocupacion == null)
                 {
@@ -171,7 +171,7 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                OcupacionDto ocupacion = _mapper.Map<OcupacionDto>(await _ocupacionRepo.GetEntity(e => e.Id == id, false));
+                OcupacionDto ocupacion = _mapper.Map<OcupacionDto>(await _ocupacionRepo.GetAsync(e => e.Id == id, false));
 
                 if (ocupacion == null)
                 {

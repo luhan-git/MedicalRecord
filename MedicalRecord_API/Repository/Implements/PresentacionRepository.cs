@@ -12,14 +12,17 @@ namespace MedicalRecord_API.Repository.Implements
             _context = context;
 
         }
-        public Task<Presentacion> Create(Presentacion entity)
+        public async Task<Presentacion> Create(Presentacion entity)
         {
-            throw new NotImplementedException();
+           await  _context.AddAsync(entity);
+           await _context.SaveChangesAsync();
+           return entity;
         }
 
-        public Task Update(Presentacion entity)
+        public async Task Update(Presentacion entity)
         {
-            throw new NotImplementedException();
+             _context.Update(entity);
+             await _context.SaveChangesAsync();
         }
     }
 }

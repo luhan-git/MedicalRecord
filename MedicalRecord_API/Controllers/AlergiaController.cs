@@ -88,7 +88,7 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                var alergia = await _alergiaRepo.GetEntity(e => e.Id == id, false);
+                var alergia = await _alergiaRepo.GetAsync(e => e.Id == id, false);
 
                 if (alergia == null)
                 {
@@ -128,7 +128,7 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                var alergia = await _alergiaRepo.GetEntity(e => e.Id == id, false);
+                var alergia = await _alergiaRepo.GetAsync(e => e.Id == id, false);
 
                 if (alergia == null)
                 {
@@ -168,7 +168,7 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                AlergiaDto alergia = _mapper.Map<AlergiaDto>(await _alergiaRepo.GetEntity(e => e.Id == id, false));
+                AlergiaDto alergia = _mapper.Map<AlergiaDto>(await _alergiaRepo.GetAsync(e => e.Id == id, false));
 
                 if (alergia == null)
                 {

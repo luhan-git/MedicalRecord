@@ -63,7 +63,7 @@ namespace MedicalRecord_API.Controllers
                 }
             try
             {
-                CieDto dto = _mapper.Map<CieDto>(await _cieRepo.GetEntity(c => c.Id == Id, false));
+                CieDto dto = _mapper.Map<CieDto>(await _cieRepo.GetAsync(c => c.Id == Id, false));
                 if (dto == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
@@ -100,7 +100,7 @@ namespace MedicalRecord_API.Controllers
             };
             try
             {
-                if (await _cieRepo.GetEntity(v => string.Equals(v.Codigo,dto.Codigo), false) != null)
+                if (await _cieRepo.GetAsync(v => string.Equals(v.Codigo,dto.Codigo), false) != null)
                 {
                     return BadRequest(_response);
                 }
@@ -153,13 +153,13 @@ namespace MedicalRecord_API.Controllers
             };
             try
             {
-                if (await _cieRepo.GetEntity(c => c.Id == id, false) == null)
+                if (await _cieRepo.GetAsync(c => c.Id == id, false) == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
                     _response.ErrorMensajes = ["modelo: no esxiste en la base de datos"];
                     return BadRequest(_response);
                 }
-                if (await _cieRepo.GetEntity(c => string.Equals(c.Codigo, dto.Codigo), false) != null)
+                if (await _cieRepo.GetAsync(c => string.Equals(c.Codigo, dto.Codigo), false) != null)
                 {
                     _response.ErrorMensajes = ["El Cie con este Codigo ya existe"];
                     return BadRequest(_response);
@@ -199,7 +199,7 @@ namespace MedicalRecord_API.Controllers
             try
             {
 
-                Cie cie = await _cieRepo.GetEntity(v => v.Id == id, false);
+                Cie cie = await _cieRepo.GetAsync(v => v.Id == id, false);
                 if (cie == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
@@ -244,7 +244,7 @@ namespace MedicalRecord_API.Controllers
             };
             try
             {
-                Cie cie = await _cieRepo.GetEntity(c => c.Id == id, false);
+                Cie cie = await _cieRepo.GetAsync(c => c.Id == id, false);
                 if (cie == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;

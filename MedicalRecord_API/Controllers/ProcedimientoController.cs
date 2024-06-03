@@ -85,7 +85,7 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                var procedimiento = await _procedimientoRepo.GetEntity(e => e.Id == id, false);
+                var procedimiento = await _procedimientoRepo.GetAsync(e => e.Id == id, false);
 
                 if (procedimiento == null)
                 {
@@ -125,7 +125,7 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                var procedimiento = await _procedimientoRepo.GetEntity(e => e.Id == id, false);
+                var procedimiento = await _procedimientoRepo.GetAsync(e => e.Id == id, false);
 
                 if (procedimiento == null)
                 {
@@ -165,7 +165,7 @@ namespace MedicalRecord_API.Controllers
 
             try
             {
-                ProcedimientoDto procedimiento = _mapper.Map<ProcedimientoDto>(await _procedimientoRepo.GetEntity(e => e.Id == id, false));
+                ProcedimientoDto procedimiento = _mapper.Map<ProcedimientoDto>(await _procedimientoRepo.GetAsync(e => e.Id == id, false));
 
                 if (procedimiento == null)
                 {

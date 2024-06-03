@@ -61,7 +61,7 @@ namespace MedicalRecord_API.Controllers
             }
             try
             {
-                ExamenLabDto dto = _mapper.Map<ExamenLabDto>(await _examenRepo.GetEntity(c => c.Id == Id, false));
+                ExamenLabDto dto = _mapper.Map<ExamenLabDto>(await _examenRepo.GetAsync(c => c.Id == Id, false));
                 if (dto == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;

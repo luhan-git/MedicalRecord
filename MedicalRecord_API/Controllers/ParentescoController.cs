@@ -63,7 +63,7 @@ namespace MedicalRecord_API.Controllers
             }
             try
             {
-                ParentescoDto dto = _mapper.Map<ParentescoDto>(await _repository.GetEntity(c => c.Id == Id, false));
+                ParentescoDto dto = _mapper.Map<ParentescoDto>(await _repository.GetAsync(c => c.Id == Id, false));
                 if (dto == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
