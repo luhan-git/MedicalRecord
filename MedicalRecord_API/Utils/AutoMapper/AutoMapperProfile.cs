@@ -29,6 +29,7 @@ namespace MedicalRecord_API.Utils.AutoMapper
             CreateMap<Usuario, UsuarioDto>().ReverseMap();
             CreateMap<Usuario, UsuarioRegistroDto>().ReverseMap();
             CreateMap<Usuario, UsuarioUpdateDto>().ReverseMap();
+            CreateMap<Usuario,PerfilDto>().ReverseMap();
             #endregion Usuario
 
             #region Cie

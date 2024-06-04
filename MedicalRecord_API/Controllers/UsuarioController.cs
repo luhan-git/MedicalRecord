@@ -30,7 +30,6 @@ namespace MedicalRecord_API.Controllers
         }
         [HttpGet]
         // [Authorize(Roles = "admin")]
-        [ProducesResponseType(StatusCodes.Status102Processing)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Response>> Get()
@@ -52,9 +51,8 @@ namespace MedicalRecord_API.Controllers
         }
         [HttpGet("{Id:int}", Name = "GetUsuario")]
         //[Authorize(Roles = "admin")]
-        [ProducesResponseType(StatusCodes.Status102Processing)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Response>> GetUsuario(int Id)
@@ -86,7 +84,37 @@ namespace MedicalRecord_API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
-
+        [HttpGet("Perfil/{Id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<Response>>Perfil(int Id){
+             if (Id < 1)
+            {
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMessages = ["id: argumento no puede ser 0"];
+                return BadRequest(_response);
+            }
+            try{
+                PerfilDto perfil=_mapper.Map<PerfilDto>(await _service.GetAsync(u=> u.Id==Id));
+                if (perfil == null)
+                {
+                    _response.Status = HttpStatusCode.NotFound;
+                    _response.ErrorMessages = [" modelo: no esxiste en la base de datos"];
+                    return NotFound(_response);
+                }
+                 _response.Status = HttpStatusCode.OK;
+                _response.IsSuccess = true;
+                _response.Result = perfil;
+                return Ok(_response);
+            }catch{
+                _response.Status = HttpStatusCode.InternalServerError;
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+            
+        }
         [HttpPost("Login")]
         public async Task<ActionResult<Response>> Login([FromBody] LoginRequestDto modelo)
         {
@@ -350,5 +378,7 @@ namespace MedicalRecord_API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
+
     }
+
 }
