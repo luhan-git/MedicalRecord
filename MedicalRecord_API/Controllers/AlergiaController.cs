@@ -32,15 +32,15 @@ namespace MedicalRecord_API.Controllers
             {
                 AlergiaDto alergia = _mapper.Map<AlergiaDto>(await _alergiaRepo.Create(_mapper.Map<Alergium>(dto)));
                 _response.Status = HttpStatusCode.Created;
-                _response.IsExitoso = true;
-                _response.Resultado = alergia;
+                _response.IsSuccess = true;
+                _response.Result = alergia;
 
                 return Created("", _response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -55,15 +55,15 @@ namespace MedicalRecord_API.Controllers
             {
                 IEnumerable<AlergiaDto> alergias = _mapper.Map<IEnumerable<AlergiaDto>>(await _alergiaRepo.QueryAsync());
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
-                _response.Resultado = alergias;
+                _response.IsSuccess = true;
+                _response.Result = alergias;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -82,7 +82,7 @@ namespace MedicalRecord_API.Controllers
             if (id != dto.Id)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["El identificador de alergia no es válido."];
+                _response.ErrorMessages = ["El identificador de alergia no es válido."];
                 return BadRequest(_response);
             }
 
@@ -93,21 +93,21 @@ namespace MedicalRecord_API.Controllers
                 if (alergia == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = ["Alergia no encontrada."];
+                    _response.ErrorMessages = ["Alergia no encontrada."];
                     return NotFound(_response);
                 }
 
                 await _alergiaRepo.Update(_mapper.Map<Alergium>(dto));
 
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
+                _response.IsSuccess = true;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -122,7 +122,7 @@ namespace MedicalRecord_API.Controllers
             if (id <= 0)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["Identificador de alergia no válido."];
+                _response.ErrorMessages = ["Identificador de alergia no válido."];
                 return BadRequest();
             }
 
@@ -133,21 +133,21 @@ namespace MedicalRecord_API.Controllers
                 if (alergia == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = ["Alergia no encontrada."];
+                    _response.ErrorMessages = ["Alergia no encontrada."];
                     return NotFound(_response);
                 }
 
                 await _alergiaRepo.Delete(alergia);
 
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
+                _response.IsSuccess = true;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -162,7 +162,7 @@ namespace MedicalRecord_API.Controllers
             if (id <= 0)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["Id de alergia no válido."];
+                _response.ErrorMessages = ["Id de alergia no válido."];
                 return BadRequest(_response);
             }
 
@@ -173,20 +173,20 @@ namespace MedicalRecord_API.Controllers
                 if (alergia == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = ["Alergia no encontrada."];
+                    _response.ErrorMessages = ["Alergia no encontrada."];
                     return NotFound(_response);
                 }
 
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
-                _response.Resultado = alergia;
+                _response.IsSuccess = true;
+                _response.Result = alergia;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }

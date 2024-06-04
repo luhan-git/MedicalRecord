@@ -31,15 +31,15 @@ namespace MedicalRecord_API.Controllers
             {
                 IEnumerable<MedicamentoDto> medicamentos = _mapper.Map<IEnumerable<MedicamentoDto>>(await _medicamentoRepo.QueryAsync(null,p=> p.IdPresentacionNavigation));
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
-                _response.Resultado = medicamentos;
+                _response.IsSuccess = true;
+                _response.Result = medicamentos;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -58,15 +58,15 @@ namespace MedicalRecord_API.Controllers
             {
                 MedicamentoDto medicamento = _mapper.Map<MedicamentoDto>(await _medicamentoRepo.Create(_mapper.Map<Medicamento>(dto)));
                 _response.Status = HttpStatusCode.Created;
-                _response.IsExitoso = true;
-                _response.Resultado = medicamento;
+                _response.IsSuccess = true;
+                _response.Result = medicamento;
 
                 return Created("", _response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -84,7 +84,7 @@ namespace MedicalRecord_API.Controllers
             if (id != dto.Id)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["El identificador de medicamento no es válido."];
+                _response.ErrorMessages = ["El identificador de medicamento no es válido."];
                 return BadRequest(_response);
             }
 
@@ -95,21 +95,21 @@ namespace MedicalRecord_API.Controllers
                 if (alergia == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = ["Alergia no encontrada."];
+                    _response.ErrorMessages = ["Alergia no encontrada."];
                     return NotFound(_response);
                 }
 
                 await _medicamentoRepo.Update(_mapper.Map<Medicamento>(dto));
 
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
+                _response.IsSuccess = true;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -124,7 +124,7 @@ namespace MedicalRecord_API.Controllers
             if (id <= 0)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["El identificador de medicamento no es válido."];
+                _response.ErrorMessages = ["El identificador de medicamento no es válido."];
                 return BadRequest(_response);
             }
 
@@ -135,21 +135,21 @@ namespace MedicalRecord_API.Controllers
                 if (medicamento == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = ["Medicamento no encontrado."];
+                    _response.ErrorMessages = ["Medicamento no encontrado."];
                     return NotFound(_response);
                 }
 
                 await _medicamentoRepo.Delete(medicamento);
 
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
+                _response.IsSuccess = true;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -166,20 +166,20 @@ namespace MedicalRecord_API.Controllers
                 if (medicamento == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = ["El medicamento no existe."];
+                    _response.ErrorMessages = ["El medicamento no existe."];
                     return NotFound(_response);
                 }
 
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
-                _response.Resultado = medicamento;
+                _response.IsSuccess = true;
+                _response.Result = medicamento;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }

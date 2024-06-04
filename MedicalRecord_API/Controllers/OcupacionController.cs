@@ -32,15 +32,15 @@ namespace MedicalRecord_API.Controllers
             {
                 OcupacionDto ocupacion = _mapper.Map<OcupacionDto>(await _ocupacionRepo.Create(_mapper.Map<Ocupacion>(dto)));
                 _response.Status = HttpStatusCode.Created;
-                _response.IsExitoso = true;
-                _response.Resultado = ocupacion;
+                _response.IsSuccess = true;
+                _response.Result = ocupacion;
 
                 return Created("", _response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -54,15 +54,15 @@ namespace MedicalRecord_API.Controllers
             {
                 IEnumerable<OcupacionDto> ocupaciones = _mapper.Map<IEnumerable<OcupacionDto>>(await _ocupacionRepo.QueryAsync());
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
-                _response.Resultado = ocupaciones;
+                _response.IsSuccess = true;
+                _response.Result = ocupaciones;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -80,7 +80,7 @@ namespace MedicalRecord_API.Controllers
             if (id != dto.Id)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["El identificador de ocupación no es válido"];
+                _response.ErrorMessages = ["El identificador de ocupación no es válido"];
 
                 return BadRequest(_response);
             }
@@ -92,7 +92,7 @@ namespace MedicalRecord_API.Controllers
                 if (ocupacion == null)
                 {
                     _response.Status = HttpStatusCode.BadRequest;
-                    _response.ErrorMensajes = ["Ocupación no encontrada"];
+                    _response.ErrorMessages = ["Ocupación no encontrada"];
 
                     return BadRequest(_response);
                 }
@@ -100,14 +100,14 @@ namespace MedicalRecord_API.Controllers
                 await _ocupacionRepo.Update(_mapper.Map<Ocupacion>(dto));
 
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
+                _response.IsSuccess = true;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -122,7 +122,7 @@ namespace MedicalRecord_API.Controllers
             if (id <= 0)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["El identificador de ocupación no es válido"];
+                _response.ErrorMessages = ["El identificador de ocupación no es válido"];
 
                 return BadRequest(_response);
             }
@@ -134,7 +134,7 @@ namespace MedicalRecord_API.Controllers
                 if (ocupacion == null)
                 {
                     _response.Status = HttpStatusCode.BadRequest;
-                    _response.ErrorMensajes = ["Ocupación no encontrada"];
+                    _response.ErrorMessages = ["Ocupación no encontrada"];
 
                     return BadRequest(_response);
                 }
@@ -142,14 +142,14 @@ namespace MedicalRecord_API.Controllers
                 await _ocupacionRepo.Delete(ocupacion);
 
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
+                _response.IsSuccess = true;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -164,7 +164,7 @@ namespace MedicalRecord_API.Controllers
             if (id <= 0)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["El identificador de ocupación no es válido"];
+                _response.ErrorMessages = ["El identificador de ocupación no es válido"];
 
                 return BadRequest(_response);
             }
@@ -176,21 +176,21 @@ namespace MedicalRecord_API.Controllers
                 if (ocupacion == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = ["Ocupación no encontrada"];
+                    _response.ErrorMessages = ["Ocupación no encontrada"];
 
                     return NotFound(_response);
                 }
 
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
-                _response.Resultado = ocupacion;
+                _response.IsSuccess = true;
+                _response.Result = ocupacion;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }

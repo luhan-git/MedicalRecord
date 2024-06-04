@@ -39,16 +39,16 @@ namespace MedicalRecord_API.Controllers
             try
             {
                 IEnumerable<DepartamentoDto> dpaList = _mapper.Map<IEnumerable<DepartamentoDto>>(await _departamentoRepository.QueryAsync());
-                _response.Resultado = dpaList;
+                _response.Result = dpaList;
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
+                _response.IsSuccess = true;
                 return _response;
 
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud"];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud"];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -64,21 +64,21 @@ namespace MedicalRecord_API.Controllers
             if (IdDepartamento < 1)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["id: argumento no puede ser 0"];
+                _response.ErrorMessages = ["id: argumento no puede ser 0"];
                 return BadRequest(_response);
             }
             try
             {
                 IEnumerable<ProvinciaDto> provList = _mapper.Map<IEnumerable<ProvinciaDto>>(await _provinciaRepository.QueryAsync(p => p.IdDepartamento == IdDepartamento));
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
-                _response.Resultado = provList;
+                _response.IsSuccess = true;
+                _response.Result = provList;
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud"];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud"];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -94,21 +94,21 @@ namespace MedicalRecord_API.Controllers
             if (IdProvincia < 1)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["id: argumento no puede ser 0"];
+                _response.ErrorMessages = ["id: argumento no puede ser 0"];
                 return BadRequest(_response);
             }
             try
             {
                 IEnumerable<DistritoDto> distList = _mapper.Map<IEnumerable<DistritoDto>>(await _distritoRepository.QueryAsync(d=>d.IdProvincia == IdProvincia));
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
-                _response.Resultado = distList;
+                _response.IsSuccess = true;
+                _response.Result = distList;
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud"];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud"];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }

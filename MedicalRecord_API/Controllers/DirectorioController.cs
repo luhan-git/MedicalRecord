@@ -31,15 +31,15 @@ namespace MedicalRecord_API.Controllers
             {
                 DirectorioDto directorio = _mapper.Map<DirectorioDto>(await _directorioRepo.Create(_mapper.Map<Directorio>(dto)));
                 _response.Status = HttpStatusCode.Created;
-                _response.IsExitoso = true;
-                _response.Resultado = directorio;
+                _response.IsSuccess = true;
+                _response.Result = directorio;
 
                 return Created("", _response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -53,15 +53,15 @@ namespace MedicalRecord_API.Controllers
             {
                 IEnumerable<DirectorioDto> directorios = _mapper.Map<IEnumerable<DirectorioDto>>(await _directorioRepo.QueryAsync());
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
-                _response.Resultado = directorios;
+                _response.IsSuccess = true;
+                _response.Result = directorios;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -81,7 +81,7 @@ namespace MedicalRecord_API.Controllers
             if (id != dto.Id)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["El identificador de directorio telefonico no es válido."];
+                _response.ErrorMessages = ["El identificador de directorio telefonico no es válido."];
                 return BadRequest(_response);
             }
 
@@ -92,21 +92,21 @@ namespace MedicalRecord_API.Controllers
                 if (directorio == null)
                 {
                     _response.Status = HttpStatusCode.BadRequest;
-                    _response.ErrorMensajes = ["El directorio no existe."];
+                    _response.ErrorMessages = ["El directorio no existe."];
                     return BadRequest(_response);
                 }
 
                 await _directorioRepo.Update(_mapper.Map<Directorio>(dto));
 
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
+                _response.IsSuccess = true;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -121,7 +121,7 @@ namespace MedicalRecord_API.Controllers
             if (id <= 0)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["El identificador de directorio telefonico no es válido."];
+                _response.ErrorMessages = ["El identificador de directorio telefonico no es válido."];
                 return BadRequest(_response);
             }
 
@@ -132,21 +132,21 @@ namespace MedicalRecord_API.Controllers
                 if (directorio == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = ["Directorio no encontrado."];
+                    _response.ErrorMessages = ["Directorio no encontrado."];
                     return NotFound(_response);
                 }
 
                 await _directorioRepo.Delete(directorio);
 
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
+                _response.IsSuccess = true;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -161,7 +161,7 @@ namespace MedicalRecord_API.Controllers
             if (id <= 0)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["El identificador de directorio telefonico no es válido."];
+                _response.ErrorMessages = ["El identificador de directorio telefonico no es válido."];
                 return BadRequest(_response);
             }
 
@@ -172,20 +172,20 @@ namespace MedicalRecord_API.Controllers
                 if (directorio == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = ["Directorio no encontrado."];
+                    _response.ErrorMessages = ["Directorio no encontrado."];
                     return NotFound(_response);
                 }
 
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
-                _response.Resultado = directorio;
+                _response.IsSuccess = true;
+                _response.Result = directorio;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }

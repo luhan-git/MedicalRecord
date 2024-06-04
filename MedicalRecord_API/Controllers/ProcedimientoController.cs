@@ -31,15 +31,15 @@ namespace MedicalRecord_API.Controllers
             {
                 ProcedimientoDto procedimiento = _mapper.Map<ProcedimientoDto>(await _procedimientoRepo.Create(_mapper.Map<Procedimiento>(dto)));
                 _response.Status = HttpStatusCode.Created;
-                _response.IsExitoso = true;
-                _response.Resultado = procedimiento;
+                _response.IsSuccess = true;
+                _response.Result = procedimiento;
 
                 return Created("", _response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -53,15 +53,15 @@ namespace MedicalRecord_API.Controllers
             {
                 IEnumerable<ProcedimientoDto> procedimientos = _mapper.Map<IEnumerable<ProcedimientoDto>>(await _procedimientoRepo.QueryAsync());
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
-                _response.Resultado = procedimientos;
+                _response.IsSuccess = true;
+                _response.Result = procedimientos;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -79,7 +79,7 @@ namespace MedicalRecord_API.Controllers
             if (id != dto.Id)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["El identificador del procedimiento no es válido"];
+                _response.ErrorMessages = ["El identificador del procedimiento no es válido"];
                 return BadRequest(_response);
             }
 
@@ -90,21 +90,21 @@ namespace MedicalRecord_API.Controllers
                 if (procedimiento == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = ["Procedimiento no encontrado"];
+                    _response.ErrorMessages = ["Procedimiento no encontrado"];
                     return NotFound(_response);
                 }
 
                 await _procedimientoRepo.Update(_mapper.Map<Procedimiento>(dto));
 
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
+                _response.IsSuccess = true;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -119,7 +119,7 @@ namespace MedicalRecord_API.Controllers
             if (id <= 0)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["El identificador del procedimiento no es válido"];
+                _response.ErrorMessages = ["El identificador del procedimiento no es válido"];
                 return BadRequest(_response);
             }
 
@@ -130,21 +130,21 @@ namespace MedicalRecord_API.Controllers
                 if (procedimiento == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = ["Procedimiento no encontrado"];
+                    _response.ErrorMessages = ["Procedimiento no encontrado"];
                     return NotFound(_response);
                 }
 
                 await _procedimientoRepo.Delete(procedimiento);
 
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
+                _response.IsSuccess = true;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -159,7 +159,7 @@ namespace MedicalRecord_API.Controllers
             if (id <= 0)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["El identificador del procedimiento no es válido"];
+                _response.ErrorMessages = ["El identificador del procedimiento no es válido"];
                 return BadRequest(_response);
             }
 
@@ -170,20 +170,20 @@ namespace MedicalRecord_API.Controllers
                 if (procedimiento == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = ["Procedimiento no encontrado"];
+                    _response.ErrorMessages = ["Procedimiento no encontrado"];
                     return NotFound(_response);
                 }
 
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
-                _response.Resultado = procedimiento;
+                _response.IsSuccess = true;
+                _response.Result = procedimiento;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }

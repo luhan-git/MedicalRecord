@@ -29,12 +29,12 @@ namespace MedicalRecord_API.Controllers
         public async Task<ActionResult<Response>>Laboratorios(){
          try{
             IEnumerable<LaboratorioDto> listLaboratorio = _mapper.Map<IEnumerable<LaboratorioDto>>( await _laboratorioRepo.QueryAsync());
-            _response.Resultado=listLaboratorio;
+            _response.Result=listLaboratorio;
              _response.Status=HttpStatusCode.OK;
-            _response.IsExitoso=true;
+            _response.IsSuccess=true;
             return Ok(_response);
          }catch(Exception ex){
-            _response.ErrorMensajes=[ex.ToString()];
+            _response.ErrorMessages=[ex.ToString()];
             _response.Status=HttpStatusCode.InternalServerError;
             return _response;
          }           

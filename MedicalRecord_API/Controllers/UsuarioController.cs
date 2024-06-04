@@ -40,8 +40,8 @@ namespace MedicalRecord_API.Controllers
             try
             {
                 IEnumerable<UsuarioDto> usuarioList = _mapper.Map<IEnumerable<UsuarioDto>>(await _usuarioRepo.QueryAsync());
-                _response.Resultado = usuarioList;
-                _response.IsExitoso = true;
+                _response.Result = usuarioList;
+                _response.IsSuccess = true;
                 _response.Status = HttpStatusCode.OK;
 
                 return Ok(_response);
@@ -49,7 +49,7 @@ namespace MedicalRecord_API.Controllers
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud"];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud"];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -65,7 +65,7 @@ namespace MedicalRecord_API.Controllers
             if (Id < 1)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["id: argumento no puede ser 0"];
+                _response.ErrorMessages = ["id: argumento no puede ser 0"];
                 return BadRequest(_response);
             }
             try
@@ -74,18 +74,18 @@ namespace MedicalRecord_API.Controllers
                 if (usuarioDto == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = [" modelo: no esxiste en la base de datos"];
+                    _response.ErrorMessages = [" modelo: no esxiste en la base de datos"];
                     return NotFound(_response);
                 }
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
-                _response.Resultado = usuarioDto;
+                _response.IsSuccess = true;
+                _response.Result = usuarioDto;
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -99,12 +99,12 @@ namespace MedicalRecord_API.Controllers
             if (loginResponseDto == null || loginResponseDto.Token == null)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["username o password es incorrecto"];
+                _response.ErrorMessages = ["username o password es incorrecto"];
                 return BadRequest(_response);
             }
             _response.Status = HttpStatusCode.OK;
-            _response.IsExitoso = true;
-            _response.Resultado = loginResponseDto;
+            _response.IsSuccess = true;
+            _response.Result = loginResponseDto;
             return Ok(_response);
         }
         [HttpPost]
@@ -116,7 +116,7 @@ namespace MedicalRecord_API.Controllers
         {
             if (dto == null)
             {
-                _response.ErrorMensajes = ["modelo: no puede ser null"];
+                _response.ErrorMessages = ["modelo: no puede ser null"];
                 _response.Status = HttpStatusCode.BadRequest;
                 return BadRequest(_response);
             };
@@ -130,7 +130,7 @@ namespace MedicalRecord_API.Controllers
                 if (!unique)
                 {
                     _response.Status = HttpStatusCode.BadRequest;
-                    _response.ErrorMensajes = ["El Usuario con este Correo ya existe"];
+                    _response.ErrorMessages = ["El Usuario con este Correo ya existe"];
                     return BadRequest(_response);
                 }
 
@@ -140,12 +140,12 @@ namespace MedicalRecord_API.Controllers
                 if (modelo == null)
                 {
                     _response.Status = HttpStatusCode.BadRequest;
-                    _response.ErrorMensajes = ["Error al registrar Usuario"];
+                    _response.ErrorMessages = ["Error al registrar Usuario"];
                     return BadRequest(_response);
                 }
-                _response.Resultado = _mapper.Map<UsuarioDto>(modelo);
+                _response.Result = _mapper.Map<UsuarioDto>(modelo);
                 _response.Status = HttpStatusCode.Created;
-                _response.IsExitoso = true;
+                _response.IsSuccess = true;
                 return Ok(_response);
 
             }
@@ -166,19 +166,19 @@ namespace MedicalRecord_API.Controllers
             if (id < 1)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["id: argumento no puede ser 0"];
+                _response.ErrorMessages = ["id: argumento no puede ser 0"];
                 return BadRequest(_response);
             }
             if (dto == null)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["modelo: no puede ser null"];
+                _response.ErrorMessages = ["modelo: no puede ser null"];
                 return BadRequest(_response);
             }
             if (dto.Id != id)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["id: argumento id & modelo.id no pueden ser diferenes"];
+                _response.ErrorMessages = ["id: argumento id & modelo.id no pueden ser diferenes"];
                 return BadRequest(_response);
             }
             if (!ModelState.IsValid)
@@ -190,23 +190,23 @@ namespace MedicalRecord_API.Controllers
                 if (await _usuarioRepo.GetAsync(u => u.Id == id, false) == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = ["modelo: no esxiste en la base de datos"];
+                    _response.ErrorMessages = ["modelo: no esxiste en la base de datos"];
                     return BadRequest(_response);
                 }
                 if (await _usuarioRepo.GetAsync(u => string.Equals(u.Correo, dto.Correo), false) != null)
                 {
-                    _response.ErrorMensajes = ["El Usuario con este Correo ya existe"];
+                    _response.ErrorMessages = ["El Usuario con este Correo ya existe"];
                     return BadRequest(_response);
                 }
                 await _usuarioRepo.Update(_mapper.Map<Usuario>(dto));
                 _response.Status = HttpStatusCode.NoContent;
-                _response.IsExitoso = true;
+                _response.IsSuccess = true;
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
 
@@ -222,13 +222,13 @@ namespace MedicalRecord_API.Controllers
             if (id < 1)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["id: argumento no puede ser 0"];
+                _response.ErrorMessages = ["id: argumento no puede ser 0"];
                 return BadRequest(_response);
             }
             if (patch == null)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["modelo: no puede ser null"];
+                _response.ErrorMessages = ["modelo: no puede ser null"];
                 return BadRequest(_response);
             }
             try
@@ -238,7 +238,7 @@ namespace MedicalRecord_API.Controllers
                 if (usuario == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = [" modelo: no esxiste en la base de datos"];
+                    _response.ErrorMessages = [" modelo: no esxiste en la base de datos"];
                     return NotFound(_response);
                 }
 
@@ -252,13 +252,13 @@ namespace MedicalRecord_API.Controllers
 
                 await _usuarioRepo.Update(_mapper.Map<Usuario>(dto));
                 _response.Status = HttpStatusCode.NoContent;
-                _response.IsExitoso = true;
+                _response.IsSuccess = true;
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -272,7 +272,7 @@ namespace MedicalRecord_API.Controllers
             if (id < 1)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["id: argumento no puede ser 0"];
+                _response.ErrorMessages = ["id: argumento no puede ser 0"];
                 BadRequest(_response);
             };
             try
@@ -281,18 +281,18 @@ namespace MedicalRecord_API.Controllers
                 if (usuario == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = ["modelo: no esxiste en la base de datos"];
+                    _response.ErrorMessages = ["modelo: no esxiste en la base de datos"];
                     return NotFound(_response);
                 }
                 await _usuarioRepo.Delete(usuario);
                 _response.Status = HttpStatusCode.NoContent;
-                _response.IsExitoso = true;
+                _response.IsSuccess = true;
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
 
@@ -307,19 +307,19 @@ namespace MedicalRecord_API.Controllers
             if (id < 1)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["id: argumento no puede ser 0"];
+                _response.ErrorMessages = ["id: argumento no puede ser 0"];
                 return BadRequest(_response);
             }
             if (dto == null)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["modelo: no puede ser null"];
+                _response.ErrorMessages = ["modelo: no puede ser null"];
                 return BadRequest(_response);
             }
             if (dto.Id != id)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["id: argumento id & modelo.id no pueden ser diferenes"];
+                _response.ErrorMessages = ["id: argumento id & modelo.id no pueden ser diferenes"];
                 return BadRequest(_response);
             }
             if (!ModelState.IsValid)
@@ -333,27 +333,27 @@ namespace MedicalRecord_API.Controllers
                 if (usuario == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = [" usuario no esxiste en la base de datos"];
+                    _response.ErrorMessages = [" usuario no esxiste en la base de datos"];
                     return NotFound(_response);
                 }
                 if (usuario.Clave != await _utilsService.ConvertirSha256Async(dto.CurrentPassword))
                 {
                     _response.Status = HttpStatusCode.BadRequest;
-                    _response.ErrorMensajes = ["Contraseña ingresasa no coincide con la contraseña actual"];
+                    _response.ErrorMessages = ["Contraseña ingresasa no coincide con la contraseña actual"];
                     BadRequest(_response);
                 }
 
                 usuario.Clave = await _utilsService.ConvertirSha256Async(dto.NewPassword);
                 await _usuarioRepo.Update(usuario);
                 _response.Status = HttpStatusCode.NoContent;
-                _response.IsExitoso = true;
+                _response.IsSuccess = true;
                 return Ok(_response);
 
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }

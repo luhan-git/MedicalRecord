@@ -32,15 +32,15 @@ namespace MedicalRecord_API.Controllers
             try
             {
                 IEnumerable<ExamenLabDto> examenList = _mapper.Map<IEnumerable<ExamenLabDto>>(await _examenRepo.QueryAsync());
-                _response.Resultado = examenList;
-                _response.IsExitoso = true;
+                _response.Result = examenList;
+                _response.IsSuccess = true;
                 _response.Status = HttpStatusCode.OK;
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud"];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud"];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -56,7 +56,7 @@ namespace MedicalRecord_API.Controllers
             if (Id < 1)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["id: argumento no puede ser 0"];
+                _response.ErrorMessages = ["id: argumento no puede ser 0"];
                 return BadRequest(_response);
             }
             try
@@ -65,18 +65,18 @@ namespace MedicalRecord_API.Controllers
                 if (dto == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = [" modelo: no esxiste en la base de datos"];
+                    _response.ErrorMessages = [" modelo: no esxiste en la base de datos"];
                     return NotFound(_response);
                 }
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
-                _response.Resultado = dto;
+                _response.IsSuccess = true;
+                _response.Result = dto;
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud"];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud"];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }

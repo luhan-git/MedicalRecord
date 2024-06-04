@@ -34,15 +34,15 @@ namespace MedicalRecord_API.Controllers
             try
             {
                 IEnumerable<CieDto> cieList = _mapper.Map<IEnumerable<CieDto>>(await _cieRepo.QueryAsync());
-                _response.Resultado = cieList;
-                _response.IsExitoso = true; 
+                _response.Result = cieList;
+                _response.IsSuccess = true; 
                 _response.Status = HttpStatusCode.OK;
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud"];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud"];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -58,7 +58,7 @@ namespace MedicalRecord_API.Controllers
             if (Id < 1)
                 {
                     _response.Status = HttpStatusCode.BadRequest;
-                   _response.ErrorMensajes = ["id: argumento no puede ser 0"];
+                   _response.ErrorMessages = ["id: argumento no puede ser 0"];
                    return BadRequest(_response);
                 }
             try
@@ -67,18 +67,18 @@ namespace MedicalRecord_API.Controllers
                 if (dto == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = [" modelo: no esxiste en la base de datos"];
+                    _response.ErrorMessages = [" modelo: no esxiste en la base de datos"];
                     return NotFound(_response);
                 }
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
-                _response.Resultado = dto;
+                _response.IsSuccess = true;
+                _response.Result = dto;
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud"];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud"];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -90,7 +90,7 @@ namespace MedicalRecord_API.Controllers
 
             if (dto == null)
             {
-                _response.ErrorMensajes = ["modelo: no puede ser null"];
+                _response.ErrorMessages = ["modelo: no puede ser null"];
                 _response.Status = HttpStatusCode.BadRequest;
                 return BadRequest(_response);
             };
@@ -107,15 +107,15 @@ namespace MedicalRecord_API.Controllers
 
                 Cie modelo = _mapper.Map<Cie>(dto);
                 modelo= await _cieRepo.Create(modelo);
-                _response.Resultado = _mapper.Map<CieDto>(modelo);
-                _response.IsExitoso = true;
+                _response.Result = _mapper.Map<CieDto>(modelo);
+                _response.IsSuccess = true;
                 _response.Status = HttpStatusCode.Created;
                 return CreatedAtRoute("GetCie", new { id = modelo.Id }, _response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud"];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud"];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -132,19 +132,19 @@ namespace MedicalRecord_API.Controllers
             if (id < 1)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["id: argumento no puede ser 0"];
+                _response.ErrorMessages = ["id: argumento no puede ser 0"];
                 return BadRequest(_response);
             }
             if (dto == null)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["modelo: no puede ser null"];
+                _response.ErrorMessages = ["modelo: no puede ser null"];
                 return BadRequest(_response);
             }
             if (dto.Id != id)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["id: argumento id & modelo.id no pueden ser diferenes"];
+                _response.ErrorMessages = ["id: argumento id & modelo.id no pueden ser diferenes"];
                 return BadRequest(_response);
             }
             if (!ModelState.IsValid)
@@ -156,23 +156,23 @@ namespace MedicalRecord_API.Controllers
                 if (await _cieRepo.GetAsync(c => c.Id == id, false) == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = ["modelo: no esxiste en la base de datos"];
+                    _response.ErrorMessages = ["modelo: no esxiste en la base de datos"];
                     return BadRequest(_response);
                 }
                 if (await _cieRepo.GetAsync(c => string.Equals(c.Codigo, dto.Codigo), false) != null)
                 {
-                    _response.ErrorMensajes = ["El Cie con este Codigo ya existe"];
+                    _response.ErrorMessages = ["El Cie con este Codigo ya existe"];
                     return BadRequest(_response);
                 }
                 await _cieRepo.Update(_mapper.Map<Cie>(dto));
                 _response.Status = HttpStatusCode.NoContent;
-                _response.IsExitoso = true;
+                _response.IsSuccess = true;
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud"];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud"];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -187,13 +187,13 @@ namespace MedicalRecord_API.Controllers
             if (id < 1)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["id: argumento no puede ser 0"];
+                _response.ErrorMessages = ["id: argumento no puede ser 0"];
                 return BadRequest(_response);
             }
             if (patch == null)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["modelo: no puede ser null"];
+                _response.ErrorMessages = ["modelo: no puede ser null"];
                 return BadRequest(_response);
             }
             try
@@ -203,7 +203,7 @@ namespace MedicalRecord_API.Controllers
                 if (cie == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = [" modelo: no esxiste en la base de datos"];
+                    _response.ErrorMessages = [" modelo: no esxiste en la base de datos"];
                     return NotFound(_response);
                 }
 
@@ -217,13 +217,13 @@ namespace MedicalRecord_API.Controllers
 
                 await _cieRepo.Update(_mapper.Map<Cie>(dto));
                 _response.Status = HttpStatusCode.NoContent;
-                _response.IsExitoso = true;
+                _response.IsSuccess = true;
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud"];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud"];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -238,7 +238,7 @@ namespace MedicalRecord_API.Controllers
             if (id < 1)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["id: argumento no puede ser 0"];
+                _response.ErrorMessages = ["id: argumento no puede ser 0"];
 
                 BadRequest(_response);
             };
@@ -248,18 +248,18 @@ namespace MedicalRecord_API.Controllers
                 if (cie == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = ["modelo: no esxiste en la base de datos"];
+                    _response.ErrorMessages = ["modelo: no esxiste en la base de datos"];
                     return NotFound(_response);
                 }
                 await _cieRepo.Delete(cie);
                 _response.Status = HttpStatusCode.NoContent;
-                _response.IsExitoso = true;
+                _response.IsSuccess = true;
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud"];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud"];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }

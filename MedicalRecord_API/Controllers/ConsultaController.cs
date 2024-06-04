@@ -31,15 +31,15 @@ namespace MedicalRecord_API.Controllers
             {
                 ConsultaDto consulta = _mapper.Map<ConsultaDto>(await _consultaRepo.Create(_mapper.Map<Consultum>(dto)));
                 _response.Status = HttpStatusCode.Created;
-                _response.IsExitoso = true;
-                _response.Resultado = consulta;
+                _response.IsSuccess = true;
+                _response.Result = consulta;
 
                 return Created("", _response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -53,15 +53,15 @@ namespace MedicalRecord_API.Controllers
             {
                 IEnumerable<ConsultaDto> consultas = _mapper.Map<IEnumerable<ConsultaDto>>(await _consultaRepo.QueryAsync());
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
-                _response.Resultado = consultas;
+                _response.IsSuccess = true;
+                _response.Result = consultas;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }

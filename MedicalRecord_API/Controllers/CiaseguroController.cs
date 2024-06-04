@@ -32,15 +32,15 @@ namespace MedicalRecord_API.Controllers
                 CiaSeguroDto ciaSeguroDto = _mapper.Map<CiaSeguroDto>(await _ciaRepo.Create(_mapper.Map<Ciaseguro>(dto)));
 
                 _response.Status = HttpStatusCode.Created;
-                _response.IsExitoso = true;
-                _response.Resultado = ciaSeguroDto;
+                _response.IsSuccess = true;
+                _response.Result = ciaSeguroDto;
 
                 return Created("", _response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -54,15 +54,15 @@ namespace MedicalRecord_API.Controllers
             {
                 IEnumerable<CiaSeguroDto> CiaSeguros = _mapper.Map<IEnumerable<CiaSeguroDto>>(await _ciaRepo.QueryAsync());
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
-                _response.Resultado = CiaSeguros;
+                _response.IsSuccess = true;
+                _response.Result = CiaSeguros;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -81,7 +81,7 @@ namespace MedicalRecord_API.Controllers
             if (id != dto.Id)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["El identificador de la compañia de seguros no es válido."];
+                _response.ErrorMessages = ["El identificador de la compañia de seguros no es válido."];
                 return BadRequest(_response);
             }
 
@@ -92,21 +92,21 @@ namespace MedicalRecord_API.Controllers
                 if (cia == null)
                 {
                     _response.Status = HttpStatusCode.BadRequest;
-                    _response.ErrorMensajes = ["La compañia de seguro no existe."];
+                    _response.ErrorMessages = ["La compañia de seguro no existe."];
                     return BadRequest(_response);
                 }
 
                 await _ciaRepo.Update(_mapper.Map<Ciaseguro>(dto));
 
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
+                _response.IsSuccess = true;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -121,7 +121,7 @@ namespace MedicalRecord_API.Controllers
             if (id <= 0)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["El identificador de la compañia de seguros no es válido."];
+                _response.ErrorMessages = ["El identificador de la compañia de seguros no es válido."];
                 return BadRequest(_response);
             }
 
@@ -132,21 +132,21 @@ namespace MedicalRecord_API.Controllers
                 if (cia == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = ["La compañia de seguro no existe."];
+                    _response.ErrorMessages = ["La compañia de seguro no existe."];
                     return NotFound(_response);
                 }
 
                 await _ciaRepo.Delete(cia);
 
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
+                _response.IsSuccess = true;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -161,7 +161,7 @@ namespace MedicalRecord_API.Controllers
             if (id <= 0)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["El identificador de la compañia de seguros no es válido."];
+                _response.ErrorMessages = ["El identificador de la compañia de seguros no es válido."];
                 return BadRequest(_response);
             }
 
@@ -172,20 +172,20 @@ namespace MedicalRecord_API.Controllers
                 if (cia == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = ["La compañia de seguro no existe."];
+                    _response.ErrorMessages = ["La compañia de seguro no existe."];
                     return NotFound(_response);
                 }
 
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
-                _response.Resultado = cia;
+                _response.IsSuccess = true;
+                _response.Result = cia;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }

@@ -41,9 +41,9 @@ namespace MedicalRecord_API.Controllers
                 paciente.Edad = edad.ToString();
                 paciente = await _pacienteRepository.Create(paciente);
 
-                _response.Resultado = _mapper.Map<PacienteDto>(paciente);
+                _response.Result = _mapper.Map<PacienteDto>(paciente);
                 _response.Status = HttpStatusCode.Created;
-                _response.IsExitoso = true;
+                _response.IsSuccess = true;
 
                 return CreatedAtRoute("GetPaciente", new { id = paciente.Id }, _response);
 
@@ -51,7 +51,7 @@ namespace MedicalRecord_API.Controllers
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud"];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud"];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -65,15 +65,15 @@ namespace MedicalRecord_API.Controllers
             {
                 IEnumerable<PacienteDto> pacientes = _mapper.Map<IEnumerable<PacienteDto>>(await _pacienteRepository.QueryAsync());
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
-                _response.Resultado = pacientes;
+                _response.IsSuccess = true;
+                _response.Result = pacientes;
 
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -88,7 +88,7 @@ namespace MedicalRecord_API.Controllers
             if (id < 1)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMensajes = ["Identificador fuera del rango permitido"];
+                _response.ErrorMessages = ["Identificador fuera del rango permitido"];
                 return BadRequest(_response);
             }
             try
@@ -97,18 +97,18 @@ namespace MedicalRecord_API.Controllers
                 if (pacienteDto == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
-                    _response.ErrorMensajes = ["modelo: no existe en la base de datos"];
+                    _response.ErrorMessages = ["modelo: no existe en la base de datos"];
                     return NotFound(_response);
                 }
                 _response.Status = HttpStatusCode.OK;
-                _response.IsExitoso = true;
-                _response.Resultado = pacienteDto;
+                _response.IsSuccess = true;
+                _response.Result = pacienteDto;
                 return Ok(_response);
             }
             catch
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMensajes = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
