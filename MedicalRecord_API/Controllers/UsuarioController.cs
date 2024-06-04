@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using MedicalRecord_API.Models;
 using Microsoft.AspNetCore.JsonPatch;
-using MedicalRecord_API.Utils.Recursos.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using MedicalRecord_API.Services.Interfaces;
 
 namespace MedicalRecord_API.Controllers
 {
@@ -16,16 +16,14 @@ namespace MedicalRecord_API.Controllers
     [ApiController]
     public class UsuarioController : ControllerBase
     {
-        private readonly IUsuarioRepository _usuarioRepo;
+        private readonly IUsuarioService _service;
         private readonly IMapper _mapper;
         private readonly IUtilsService _utilsService;
-        private readonly ILogger<UsuarioController> _logger;
         protected Response _response;
 
-        public UsuarioController(IMapper mapper, IUsuarioRepository usuarioRepo, IUtilsService utilsService, ILogger<UsuarioController> logger)
+        public UsuarioController(IMapper mapper, IUsuarioService service, IUtilsService utilsService)
         {
-            _logger = logger;
-            _usuarioRepo = usuarioRepo;
+            _service=service;
             _mapper = mapper;
             _utilsService = utilsService;
             _response = new();
@@ -35,15 +33,14 @@ namespace MedicalRecord_API.Controllers
         [ProducesResponseType(StatusCodes.Status102Processing)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Response>> GetUsuarios()
+        public async Task<ActionResult<Response>> Get()
         {
             try
             {
-                IEnumerable<UsuarioDto> usuarioList = _mapper.Map<IEnumerable<UsuarioDto>>(await _usuarioRepo.QueryAsync());
-                _response.Result = usuarioList;
+                IEnumerable<UsuarioDto> usuarios = _mapper.Map<IEnumerable<UsuarioDto>>(await _service.QueryAsync());
+                _response.Result = usuarios;
                 _response.IsSuccess = true;
                 _response.Status = HttpStatusCode.OK;
-
                 return Ok(_response);
             }
             catch
@@ -70,7 +67,7 @@ namespace MedicalRecord_API.Controllers
             }
             try
             {
-                UsuarioDto usuarioDto = _mapper.Map<UsuarioDto>(await _usuarioRepo.GetAsync(u => u.Id == Id, false));
+                UsuarioDto usuarioDto = _mapper.Map<UsuarioDto>(await _service.GetAsync(u => u.Id == Id, false));
                 if (usuarioDto == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
@@ -93,16 +90,16 @@ namespace MedicalRecord_API.Controllers
         [HttpPost("Login")]
         public async Task<ActionResult<Response>> Login([FromBody] LoginRequestDto modelo)
         {
-            modelo.Password = await _utilsService.ConvertirSha256Async(modelo.Password);
+            modelo.Password = await _utilsService.ConvertirSha256(modelo.Password);
 
-            LoginResponseDto loginResponseDto = await _usuarioRepo.Login(modelo);
-            if (loginResponseDto == null || loginResponseDto.Token == null)
+            LoginResponseDto loginResponseDto = await _service.Login(modelo);
+            if (loginResponseDto.Usuario == null)
             {
                 _response.Status = HttpStatusCode.BadRequest;
                 _response.ErrorMessages = ["username o password es incorrecto"];
                 return BadRequest(_response);
             }
-            _response.Status = HttpStatusCode.OK;
+            
             _response.IsSuccess = true;
             _response.Result = loginResponseDto;
             return Ok(_response);
@@ -120,13 +117,9 @@ namespace MedicalRecord_API.Controllers
                 _response.Status = HttpStatusCode.BadRequest;
                 return BadRequest(_response);
             };
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            };
             try
             {
-                bool unique = await _usuarioRepo.IsUserUnique(dto.Correo);
+                bool unique = await _service.IsUserUnique(dto.Correo);
                 if (!unique)
                 {
                     _response.Status = HttpStatusCode.BadRequest;
@@ -135,8 +128,8 @@ namespace MedicalRecord_API.Controllers
                 }
 
                 Usuario modelo = _mapper.Map<Usuario>(dto);
-                modelo.Clave = await _utilsService.ConvertirSha256Async(dto.Clave);
-                modelo = await _usuarioRepo.Create(modelo);
+                modelo.Clave = await _utilsService.ConvertirSha256(dto.Clave);
+                modelo = await _service.Create(modelo);
                 if (modelo == null)
                 {
                     _response.Status = HttpStatusCode.BadRequest;
@@ -146,15 +139,15 @@ namespace MedicalRecord_API.Controllers
                 _response.Result = _mapper.Map<UsuarioDto>(modelo);
                 _response.Status = HttpStatusCode.Created;
                 _response.IsSuccess = true;
-                return Ok(_response);
+                return CreatedAtRoute("GetUsuario", new { id = modelo.Id }, _response);
 
             }
-            catch
+            catch(Exception ex)
             {
                 _response.Status = HttpStatusCode.InternalServerError;
+                _response.ErrorMessages=["Error al registrar usuario",ex.ToString()];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
-
         }
         [HttpPut("{id:int}")]
         [Authorize(Roles = "admin")]
@@ -187,18 +180,18 @@ namespace MedicalRecord_API.Controllers
             };
             try
             {
-                if (await _usuarioRepo.GetAsync(u => u.Id == id, false) == null)
+                if (await _service.GetAsync(u => u.Id == id, false) == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
                     _response.ErrorMessages = ["modelo: no esxiste en la base de datos"];
                     return BadRequest(_response);
                 }
-                if (await _usuarioRepo.GetAsync(u => string.Equals(u.Correo, dto.Correo), false) != null)
+                if (await _service.GetAsync(u => string.Equals(u.Correo, dto.Correo), false) != null)
                 {
                     _response.ErrorMessages = ["El Usuario con este Correo ya existe"];
                     return BadRequest(_response);
                 }
-                await _usuarioRepo.Update(_mapper.Map<Usuario>(dto));
+                await _service.Update(_mapper.Map<Usuario>(dto));
                 _response.Status = HttpStatusCode.NoContent;
                 _response.IsSuccess = true;
                 return Ok(_response);
@@ -234,7 +227,7 @@ namespace MedicalRecord_API.Controllers
             try
             {
 
-                Usuario usuario = await _usuarioRepo.GetAsync(v => v.Id == id, false);
+                Usuario usuario = await _service.GetAsync(v => v.Id == id, false);
                 if (usuario == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
@@ -250,7 +243,7 @@ namespace MedicalRecord_API.Controllers
                     return BadRequest(ModelState);
                 };
 
-                await _usuarioRepo.Update(_mapper.Map<Usuario>(dto));
+                await _service.Update(_mapper.Map<Usuario>(dto));
                 _response.Status = HttpStatusCode.NoContent;
                 _response.IsSuccess = true;
                 return Ok(_response);
@@ -277,14 +270,14 @@ namespace MedicalRecord_API.Controllers
             };
             try
             {
-                Usuario usuario = await _usuarioRepo.GetAsync(u => u.Id == id, false);
+                Usuario usuario = await _service.GetAsync(u => u.Id == id, false);
                 if (usuario == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
                     _response.ErrorMessages = ["modelo: no esxiste en la base de datos"];
                     return NotFound(_response);
                 }
-                await _usuarioRepo.Delete(usuario);
+                await _service.Delete(usuario);
                 _response.Status = HttpStatusCode.NoContent;
                 _response.IsSuccess = true;
                 return Ok(_response);
@@ -329,22 +322,22 @@ namespace MedicalRecord_API.Controllers
             try
             {
 
-                Usuario usuario = await _usuarioRepo.GetAsync(u => u.Id == id);
+                Usuario usuario = await _service.GetAsync(u => u.Id == id);
                 if (usuario == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
                     _response.ErrorMessages = [" usuario no esxiste en la base de datos"];
                     return NotFound(_response);
                 }
-                if (usuario.Clave != await _utilsService.ConvertirSha256Async(dto.CurrentPassword))
+                if (usuario.Clave != await _utilsService.ConvertirSha256(dto.CurrentPassword))
                 {
                     _response.Status = HttpStatusCode.BadRequest;
                     _response.ErrorMessages = ["Contraseña ingresasa no coincide con la contraseña actual"];
                     BadRequest(_response);
                 }
 
-                usuario.Clave = await _utilsService.ConvertirSha256Async(dto.NewPassword);
-                await _usuarioRepo.Update(usuario);
+                usuario.Clave = await _utilsService.ConvertirSha256(dto.NewPassword);
+                await _service.Update(usuario);
                 _response.Status = HttpStatusCode.NoContent;
                 _response.IsSuccess = true;
                 return Ok(_response);

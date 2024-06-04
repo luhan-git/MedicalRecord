@@ -3,8 +3,6 @@ using MedicalRecord_API.Repository.Interfaces;
 using MedicalRecord_API.Repository.Implements;
 using Microsoft.EntityFrameworkCore;
 using MedicalRecord_API.Utils.AutoMapper;
-using MedicalRecord_API.Utils.Recursos.Implements;
-using MedicalRecord_API.Utils.Recursos.Interfaces;
 using MedicalRecord_API.Services.Interfaces;
 using MedicalRecord_API.Services.Implements;
 
@@ -37,6 +35,7 @@ namespace MedicalRecord_API.Dependencies
             services.AddScoped<IConsultaRepository, ConsultaRepository>();
 
             services.AddScoped<IPresentacionService,PresentacionService>();
+            services.AddScoped<IUsuarioService,UsuarioService>();
         }
     }
 }

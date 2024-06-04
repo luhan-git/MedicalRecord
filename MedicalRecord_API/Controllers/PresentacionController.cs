@@ -156,5 +156,35 @@ namespace MedicalRecord_API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult>Delete(int id){
+            if (id < 1)
+            {
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMessages = ["id: argumento no puede ser 0"];
+                BadRequest(_response);
+            };
+            try
+            {
+                Presentacion presentacion = await _service.GetAsync(u => u.Id == id, false);
+                if (presentacion == null)
+                {
+                    _response.Status = HttpStatusCode.NotFound;
+                    _response.ErrorMessages = ["modelo: no esxiste en la base de datos"];
+                    return NotFound(_response);
+                }
+                await _service.Delete(presentacion);
+                _response.Status = HttpStatusCode.NoContent;
+                _response.IsSuccess = true;
+                return Ok(_response);
+            }
+            catch
+            {
+                _response.Status = HttpStatusCode.InternalServerError;
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+        }
+        
     }
 }

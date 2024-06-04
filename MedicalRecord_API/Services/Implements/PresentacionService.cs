@@ -25,6 +25,12 @@ namespace MedicalRecord_API.Services.Implements
           
         }
 
+        public async Task Delete(Presentacion presentacion)
+        {
+           await _repo.Delete(presentacion);
+
+        }
+
         public async  Task<Presentacion> GetAsync(Expression<Func<Presentacion, bool>> filters, bool tracked = true)
         {
             Presentacion presentacion=await _repo.GetAsync(filters,tracked);

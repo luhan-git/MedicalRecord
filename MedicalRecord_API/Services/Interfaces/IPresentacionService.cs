@@ -16,5 +16,6 @@ namespace MedicalRecord_API.Services.Interfaces
         params Expression<Func<Presentacion, object>>[] includes);
         Task<Presentacion> Create(Presentacion presentacion);
         Task Update(Presentacion presentacion);
+        Task Delete(Presentacion presentacion);
     }
 }

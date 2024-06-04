@@ -2,7 +2,6 @@
 using MedicalRecord_API.Models;
 using MedicalRecord_API.Models.Dtos.Usuario;
 using MedicalRecord_API.Repository.Interfaces;
-using MedicalRecord_API.Utils.Recursos.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.IdentityModel.Tokens;
@@ -19,13 +18,11 @@ namespace MedicalRecord_API.Repository.Implements
         private readonly DbhistoriasContext _context;
         private readonly ILogger<UsuarioRepositoy> _logger;
         private readonly IMapper _mapper;
-        private string _secretkey;
-        public UsuarioRepositoy(DbhistoriasContext context, ILogger<UsuarioRepositoy> logger,IMapper mapper,IConfiguration configuration) : base(context)
+        public UsuarioRepositoy(DbhistoriasContext context, ILogger<UsuarioRepositoy> logger,IMapper mapper) : base(context)
         {
 
             _context = context;
             _mapper = mapper;
-            _secretkey = configuration.GetValue<string>("ApiSettings:Secret");
             _logger = logger;
         }
         public async Task<Usuario> Create(Usuario entity)
@@ -52,44 +49,6 @@ namespace MedicalRecord_API.Repository.Implements
                 _logger.LogError(ex, "Error en create usuario");
                 throw;
             }
-        }
-
-        public async Task<bool> IsUserUnique(string correo)
-        {
-            Usuario usuario = await _context.Usuarios.FirstOrDefaultAsync(u=> string.Equals(u.Correo, correo));
-            if(usuario == null)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public async Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto)
-        {
-            Usuario usuario = await _context.Usuarios.FirstOrDefaultAsync(u => string.Equals(u.Correo, loginRequestDto.Correo)
-                                                                          && string.Equals(u.Clave, loginRequestDto.Password));
-            if (usuario == null)
-                return new LoginResponseDto();
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key=Encoding.UTF8.GetBytes(_secretkey);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new(ClaimTypes.Name, usuario.Id.ToString()),
-                    new(ClaimTypes.Role, usuario.Rol)
-                }),
-                Expires= DateTime.UtcNow.AddDays(7),
-                SigningCredentials=new(new SymmetricSecurityKey(key),SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            LoginResponseDto loginResponseDto = new()
-            {
-                Token = tokenHandler.WriteToken(token),
-                Usuario = _mapper.Map<UsuarioDto>(usuario)
-
-            };
-            return loginResponseDto;
         }
 
         public async Task Update(Usuario entity)
