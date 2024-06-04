@@ -1,4 +1,4 @@
-using MedicalRecord_API.Dependencies;
+using MedicalRecord_API.Dependency;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;

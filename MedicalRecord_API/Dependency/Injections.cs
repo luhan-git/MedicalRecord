@@ -1,12 +1,12 @@
 ﻿using MedicalRecord_API.Models;
 using MedicalRecord_API.Repository.Interfaces;
 using MedicalRecord_API.Repository.Implements;
-using Microsoft.EntityFrameworkCore;
 using MedicalRecord_API.Utils.AutoMapper;
 using MedicalRecord_API.Services.Interfaces;
 using MedicalRecord_API.Services.Implements;
+using Microsoft.EntityFrameworkCore;
 
-namespace MedicalRecord_API.Dependencies
+namespace MedicalRecord_API.Dependency
 {
     public static class Injections
     {
