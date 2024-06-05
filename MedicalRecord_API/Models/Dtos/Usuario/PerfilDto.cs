@@ -25,5 +25,6 @@ namespace MedicalRecord_API.Models.Dtos.Usuario
     public DateTime? FechaRegistro { get; set; }
 
     public DateTime? UltimaSesion { get; set; }
+    public DateTime? FechaActualizacion { get; set; }
     }
 }

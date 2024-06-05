@@ -10,9 +10,6 @@ namespace MedicalRecord_API.Models.Dtos.Usuario
         [StringLength(50)]
         public string Nombre { get; set; } = null!;
         [Required]
-        [StringLength(50)]
-        public string Correo { get; set; } = null!;
-        [Required]
         [StringLength(30)]
         public string Cargo { get; set; } = null!;
         [Required]

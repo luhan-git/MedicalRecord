@@ -27,7 +27,7 @@ namespace MedicalRecord_API.Services.Implements
         }
         public async Task<Usuario> Create(Usuario usuario)
         {
-            await _repo.Create(usuario);
+            usuario= await _repo.Create(usuario);
             return usuario;
         }
 
@@ -86,6 +86,10 @@ namespace MedicalRecord_API.Services.Implements
 
         public async Task Update(Usuario usuario)
         {
+            Usuario actual= await _repo.GetAsync(u=> u.Id==usuario.Id,false);
+            usuario.Clave??=actual.Clave;
+            usuario.Correo??=actual.Correo;
+            usuario.FechaActualizacion= DateTime.Now;                                
             await _repo.Update(usuario);
         }
     }

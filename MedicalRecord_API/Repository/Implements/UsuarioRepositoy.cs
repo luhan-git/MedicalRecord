@@ -55,12 +55,6 @@ namespace MedicalRecord_API.Repository.Implements
         {
             try
             {
-                entity.Clave ??= await _context.Set<Usuario>()
-                                                .Where(u => u.Id == entity.Id)
-                                                .Select(u => u.Clave)
-                                                .FirstOrDefaultAsync();
-
-
                 await _context.Database.ExecuteSqlRawAsync("CALL sp_UpdateUsuario(@idUpdate,@nombre, @correo, @clave,@cargo, @especialidad, @nroColMedico,@activo)",
                                                            new MySqlParameter("@idUpdate", entity.Id),
                                                            new MySqlParameter("@nombre", entity.Nombre),

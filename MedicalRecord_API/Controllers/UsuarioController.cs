@@ -178,7 +178,7 @@ namespace MedicalRecord_API.Controllers
             }
         }
         [HttpPut("{id:int}")]
-        [Authorize(Roles = "admin")]
+        // [Authorize(Roles = "admin")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -202,10 +202,6 @@ namespace MedicalRecord_API.Controllers
                 _response.ErrorMessages = ["id: argumento id & modelo.id no pueden ser diferenes"];
                 return BadRequest(_response);
             }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            };
             try
             {
                 if (await _service.GetAsync(u => u.Id == id, false) == null)
@@ -214,20 +210,15 @@ namespace MedicalRecord_API.Controllers
                     _response.ErrorMessages = ["modelo: no esxiste en la base de datos"];
                     return BadRequest(_response);
                 }
-                if (await _service.GetAsync(u => string.Equals(u.Correo, dto.Correo), false) != null)
-                {
-                    _response.ErrorMessages = ["El Usuario con este Correo ya existe"];
-                    return BadRequest(_response);
-                }
                 await _service.Update(_mapper.Map<Usuario>(dto));
                 _response.Status = HttpStatusCode.NoContent;
                 _response.IsSuccess = true;
                 return Ok(_response);
             }
-            catch
+            catch(Exception ex)
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud.",ex.ToString()];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
 
@@ -265,11 +256,6 @@ namespace MedicalRecord_API.Controllers
 
                 UsuarioUpdateDto dto = _mapper.Map<UsuarioUpdateDto>(usuario);
                 patch.ApplyTo(dto, ModelState);
-
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                };
 
                 await _service.Update(_mapper.Map<Usuario>(dto));
                 _response.Status = HttpStatusCode.NoContent;
@@ -343,10 +329,6 @@ namespace MedicalRecord_API.Controllers
                 _response.ErrorMessages = ["id: argumento id & modelo.id no pueden ser diferenes"];
                 return BadRequest(_response);
             }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            };
             try
             {
 
@@ -360,7 +342,7 @@ namespace MedicalRecord_API.Controllers
                 if (usuario.Clave != await _utilsService.ConvertirSha256(dto.CurrentPassword))
                 {
                     _response.Status = HttpStatusCode.BadRequest;
-                    _response.ErrorMessages = ["Contraseña ingresasa no coincide con la contraseña actual"];
+                    _response.ErrorMessages = ["Contraseña ingresada no coincide con la contraseña actual"];
                     BadRequest(_response);
                 }
 

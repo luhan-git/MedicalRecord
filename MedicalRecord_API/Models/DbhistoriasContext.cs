@@ -863,6 +863,10 @@ public partial class DbhistoriasContext : DbContext
             entity.Property(e => e.Especialidad)
                 .HasMaxLength(30)
                 .HasColumnName("especialidad");
+            entity.Property(e => e.FechaActualizacion)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("datetime")
+                .HasColumnName("fechaActualizacion");
             entity.Property(e => e.FechaRegistro)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("datetime")

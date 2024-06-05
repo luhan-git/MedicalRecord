@@ -1,4 +1,3 @@
-drop table usuario
 
 INSERT INTO Usuario (nombre, correo, clave, cargo, especialidad, nroColMedico, activo,rol)
 VALUES ('Ana Martínez', 'ana@example.com', 'bb8b810d769f92ba3b6576e95be930cf2e6147b91de0d085a47fcb42b8bae20f', 'Médico', 'Pediatría', '654321', TRUE,'admin'); -- Password24*-+
