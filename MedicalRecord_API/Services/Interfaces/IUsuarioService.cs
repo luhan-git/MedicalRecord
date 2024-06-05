@@ -16,9 +16,7 @@ namespace MedicalRecord_API.Services.Interfaces
         Task<Usuario>Create(Usuario usuario);
         Task Update(Usuario usuario);
         Task Delete(Usuario usuario);
-        Task<LoginResponseDto>Login(LoginRequestDto loginRequestDto);
         Task<bool>IsUserUnique(string correo);
-
 
     }
 }

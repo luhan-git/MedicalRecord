@@ -115,23 +115,6 @@ namespace MedicalRecord_API.Controllers
             }
             
         }
-        [HttpPost("Login")]
-        public async Task<ActionResult<Response>> Login([FromBody] LoginRequestDto modelo)
-        {
-            modelo.Password = await _utilsService.ConvertirSha256(modelo.Password);
-
-            LoginResponseDto loginResponseDto = await _service.Login(modelo);
-            if (loginResponseDto.Usuario == null)
-            {
-                _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMessages = ["username o password es incorrecto"];
-                return BadRequest(_response);
-            }
-            
-            _response.IsSuccess = true;
-            _response.Result = loginResponseDto;
-            return Ok(_response);
-        }
         [HttpPost]
         // [Authorize(Roles = "admin")]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
