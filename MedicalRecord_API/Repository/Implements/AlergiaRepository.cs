@@ -21,64 +21,36 @@ namespace MedicalRecord_API.Repository.Implements
         {
             try
             {
-                await using var connection = _context.Database.GetDbConnection();
-                await connection.OpenAsync();
 
-                using var command = connection.CreateCommand();
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "InsertAlergia_sp";
-                command.Parameters.Add(new MySqlParameter("@nombre", entity.Nombre));
-
-                var idAlergiaParam = new MySqlParameter("@id", MySqlDbType.Int32)
-                {
-                    Direction = ParameterDirection.Output
-                };
-                command.Parameters.Add(idAlergiaParam);
-
-                await command.ExecuteNonQueryAsync();
-
-                var idAlergia = (int)idAlergiaParam.Value;
-                if (idAlergia == -1)
-                {
-                    throw new Exception("El procedimiento almacenado InsertAlergia_sp devolvió -1, indicando un error.");
-                }
-
-                _logger.LogInformation("Registro en Alergia con id: {@id}", idAlergia);
-
-                return await _context.Set<Alergium>().FirstOrDefaultAsync(a => a.Id == idAlergia) ?? new();
+                await _context.Database.ExecuteSqlRawAsync("CALL sp_InsertAlergia(@nombre)",
+                                                           new MySqlParameter("@nombre", entity.Nombre)
+                                                           );
+                _logger.LogWarning("Se creo una nueva en la base de datos");
+                Alergium alergia = await _context.Set<Alergium>().FirstOrDefaultAsync(u => string.Equals(u.Nombre, entity.Nombre)) ?? new();          
+                return alergia;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error en create alergia");
+                _logger.LogError(ex, "Ocurrio un error al crear una alergia");
                 throw;
             }
-        }
 
-        public Task CreateDetalle(Detallealergium entity)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task Update(Alergium entity)
         {
             try
             {
-                await using var connection = _context.Database.GetDbConnection();
-                await connection.OpenAsync();
+                await _context.Database.ExecuteSqlRawAsync("CALL sp_UpdateAlergia(@idUpdate,@nombre)",
+                                                           new MySqlParameter("@idUpdate", entity.Id),
+                                                           new MySqlParameter("@nombre", entity.Nombre)
+                                                           );
+                _logger.LogWarning("Se actualizó una alergia con id: {id} en la base de datos", entity.Id);
 
-                var command = connection.CreateCommand();
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "UpdateAlergia_sp";
-                command.Parameters.Add(new MySqlParameter("@idUpdate", entity.Id));
-                command.Parameters.Add(new MySqlParameter("@nombre", entity.Nombre));
-
-                await command.ExecuteNonQueryAsync();
-
-                _logger.LogInformation("Registro de actualización en Alergia con id: {@id}", entity.Id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error en update alergia");
+                _logger.LogError(ex, "Ocurrio un error al actualizar alergia");
                 throw;
             }
         }

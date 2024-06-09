@@ -6,6 +6,5 @@ namespace MedicalRecord_API.Repository.Interfaces
     {
         Task<Alergium> Create(Alergium entity);
         Task Update(Alergium entity);
-        Task CreateDetalle(Detallealergium entity);
     }
 }
