@@ -21,36 +21,18 @@ namespace MedicalRecord_API.Repository.Implements
         {
             try
             {
-                await using var connection = _context.Database.GetDbConnection();
-                await connection.OpenAsync();
 
-                using var command = connection.CreateCommand();
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "InsertCiaSeguro_sp";
-                command.Parameters.Add(new MySqlParameter("@nombre", entity.Nombre));
-                command.Parameters.Add(new MySqlParameter("@abreviatura", entity.Abreviatura));
-
-                var idCiaSeguroParam = new MySqlParameter("@id", MySqlDbType.Int32)
-                {
-                    Direction = ParameterDirection.Output
-                };
-                command.Parameters.Add(idCiaSeguroParam);
-
-                await command.ExecuteNonQueryAsync();
-
-                var idCiaSeguro = (int)idCiaSeguroParam.Value;
-                if (idCiaSeguro == -1)
-                {
-                    throw new Exception("El procedimiento almacenado InsertCiaSeguro_sp devolvió -1, indicando un error.");
-                }
-
-                _logger.LogInformation("Registro en CiaSeguro con id: {@id}", idCiaSeguro);
-
-                return await _context.Set<Ciaseguro>().FirstOrDefaultAsync(c => c.Id == idCiaSeguro) ?? new();
+                await _context.Database.ExecuteSqlRawAsync("CALL sp_InsertCiaSeguro(@nombre,@abreviatura)",
+                                                           new MySqlParameter("@nombre", entity.Nombre),
+                                                           new MySqlParameter("@abreviatura", entity.Abreviatura)
+                                                           );
+                _logger.LogWarning("Se creo un nuevo seguro en la base de datos");
+                Ciaseguro seguro = await _context.Set<Ciaseguro>().FirstOrDefaultAsync(u => string.Equals(u.Nombre, entity.Nombre)) ?? new();
+                return seguro;
             }
-            catch (Exception ex)
+            catch
             {
-                _logger.LogError(ex, "Error en create ciaseguro");
+                _logger.LogError("Ocurrio un error al crear un seguro");
                 throw;
             }
         }
@@ -59,23 +41,17 @@ namespace MedicalRecord_API.Repository.Implements
         {
             try
             {
-                await using var connection = _context.Database.GetDbConnection();
-                await connection.OpenAsync();
+                await _context.Database.ExecuteSqlRawAsync("CALL sp_UpdateCiaSeguro(@idUpdate,@nombre,@abreviatura)",
+                                                           new MySqlParameter("@idUpdate", entity.Id),
+                                                           new MySqlParameter("@nombre", entity.Nombre),
+                                                           new MySqlParameter("@abreviatura", entity.Abreviatura)
+                                                           );
+                _logger.LogWarning("Se actualizó un seguro con id: {id} en la base de datos", entity.Id);
 
-                using var command = connection.CreateCommand();
-                command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "UpdateCiaSeguro_sp";
-                command.Parameters.Add(new MySqlParameter("@idUpdate", entity.Id));
-                command.Parameters.Add(new MySqlParameter("@nombre", entity.Nombre));
-                command.Parameters.Add(new MySqlParameter("@abreviatura", entity.Abreviatura));
-
-                await command.ExecuteNonQueryAsync();
-
-                _logger.LogInformation("Registro de actualización en CiaSeguro con id: {@id}", entity.Id);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error en update ciaseguro");
+                _logger.LogError(ex, "Ocurrio un error al actualizar un seguro");
                 throw;
             }
         }

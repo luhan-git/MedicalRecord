@@ -35,10 +35,10 @@ namespace MedicalRecord_API.Controllers
                 _response.Status = HttpStatusCode.OK;
                 return Ok(_response);
             }
-            catch
+            catch(Exception ex)
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor."];
+                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.",ex.Message];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -47,11 +47,17 @@ namespace MedicalRecord_API.Controllers
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Response>> GetById(int Id)
+        public async Task<ActionResult<Response>> GetById(int id)
         {
+            if (id < 0)
+            {
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMessages = ["El identificador de la alergia no es válido."];
+                return BadRequest(_response);
+            }
             try
             {
-                AlergiaDto dto = _mapper.Map<AlergiaDto>(await _service.GetAsync(a => a.Id == Id, false));
+                AlergiaDto dto = _mapper.Map<AlergiaDto>(await _service.GetAsync(a => a.Id == id, false));
                 if (dto == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
@@ -63,10 +69,10 @@ namespace MedicalRecord_API.Controllers
                 _response.Result = dto;
                 return Ok(_response);
             }
-            catch
+            catch(Exception ex)
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor."];
+                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.",ex.Message];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -100,10 +106,10 @@ namespace MedicalRecord_API.Controllers
                 _response.Result = _mapper.Map<AlergiaDto>(modelo);
                 return CreatedAtRoute("GetAlergia", new { id = modelo.Id }, _response);
             }
-            catch
+            catch(Exception ex)
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor."];
+                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.",ex.Message];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -114,12 +120,10 @@ namespace MedicalRecord_API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Response>> Update(int id, [FromBody] AlergiaUpdateDto dto)
         {
-            AlergiaUpdateDtoValidator validator = new();
-            ValidationResult result = validator.Validate(dto);
-            if (!result.IsValid)
+            if (id < 0)
             {
                 _response.Status = HttpStatusCode.BadRequest;
-                _response.ErrorMessages = result.Errors.Select(e => e.ErrorMessage).ToList();
+                _response.ErrorMessages = ["El identificador de la alergia no es válido."];
                 return BadRequest(_response);
             }
             if (id != dto.Id)
@@ -128,7 +132,14 @@ namespace MedicalRecord_API.Controllers
                 _response.ErrorMessages = ["El identificador es diferente al id del modelo"];
                 return BadRequest(_response);
             }
-
+            AlergiaUpdateDtoValidator validator = new();
+            ValidationResult result = validator.Validate(dto);
+            if (!result.IsValid)
+            {
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMessages = result.Errors.Select(e => e.ErrorMessage).ToList();
+                return BadRequest(_response);
+            }
             try
             {
                 if (await _service.GetAsync(a=> a.Id==id,false)==null)
@@ -143,10 +154,10 @@ namespace MedicalRecord_API.Controllers
                 _response.IsSuccess = true;
                 return Ok(_response);
             }
-            catch
+            catch(Exception ex)
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor."];
+                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.",ex.Message];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
