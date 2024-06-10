@@ -63,7 +63,7 @@ BEGIN
         ROLLBACK;
     END;
     START TRANSACTION;
-    INSERT INTO Cie (codigo, enfermedad) VALUES (TRIM(codigo),TRIM(enfermedad));
+    INSERT INTO Cie (codigo, enfermedad) VALUES (codigo,enfermedad);
     COMMIT;
 END$
 DELIMITER ;
@@ -81,42 +81,64 @@ BEGIN
         ROLLBACK;
     END;
     START TRANSACTION;
-    update Cie set codigo=TRIM(codigo),enfermedad=TRIM(enfermedad) where id=idUpdate;
+    update Cie set codigo=codigo,enfermedad=enfermedad where id=idUpdate;
     COMMIT;
 END$
 DELIMITER ;
-
--- revisar
-
--- CIA SEGURO
+-- ALERGIA
 DELIMITER $
-DROP PROCEDURE IF EXISTS InsertCiaSeguro_sp;
-CREATE PROCEDURE InsertCiaSeguro_sp(
-    IN nombre VARCHAR(50),
-    IN abreviatura VARCHAR(20),
-    OUT id INT
+DROP PROCEDURE IF EXISTS sp_InsertAlergia;
+CREATE PROCEDURE sp_InsertAlergia(
+    IN nombre VARCHAR(20)
 )
 BEGIN
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
-        SET id = -1;
         ROLLBACK;
     END;
-
     START TRANSACTION;
-
-    INSERT INTO CiaSeguro(nombre, abreviatura) 
-    VALUES(TRIM(nombre), TRIM(abreviatura));
-
-    SET id = LAST_INSERT_ID();
-
+    INSERT INTO Alergia (nombre) VALUES (nombre);
     COMMIT;
 END$
 DELIMITER ;
-
 DELIMITER $
-DROP PROCEDURE IF EXISTS UpdateCiaSeguro_sp;
-CREATE PROCEDURE UpdateCiaSeguro_sp(
+DROP PROCEDURE IF EXISTS sp_UpdateAlergia;
+CREATE PROCEDURE sp_UpdateAlergia(
+    IN idUpdate INT,
+    IN nombre VARCHAR(50)
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+    END;
+    START TRANSACTION;
+    UPDATE Alergia SET nombre =nombre where id=idUpdate;
+    COMMIT;
+END$
+DELIMITER ;
+-- revisar
+
+-- CIA SEGURO
+DELIMITER $
+DROP PROCEDURE IF EXISTS sp_InsertCiaSeguro;
+CREATE PROCEDURE sp_InsertCiaSeguro(
+    IN nombre VARCHAR(50),
+    IN abreviatura VARCHAR(20)
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+    END;
+    START TRANSACTION;
+    INSERT INTO CiaSeguro(nombre, abreviatura)VALUES(nombre, abreviatura);
+    COMMIT;
+END$
+DELIMITER ;
+DELIMITER $
+DROP PROCEDURE IF EXISTS sp_UpdateCiaSeguro;
+CREATE PROCEDURE sp_UpdateCiaSeguro(
     IN idUpdate INT,
     IN nombre VARCHAR(50),
     IN abreviatura VARCHAR(20)
@@ -126,18 +148,12 @@ BEGIN
     BEGIN
         ROLLBACK;
     END;
-
     START TRANSACTION;
-
     UPDATE CiaSeguro
-    SET nombre = TRIM(nombre),
-        abreviatura = TRIM(abreviatura)
-    WHERE id = idUpdate;
-
+    SET nombre = nombre,abreviatura = abreviatura WHERE id = idUpdate;
     COMMIT;
 END$
 DELIMITER ;
-
 -- DIRECTORIO
 DELIMITER $
 DROP PROCEDURE IF EXISTS InsertDirectorio_sp;
@@ -304,50 +320,7 @@ BEGIN
 END$
 DELIMITER ;
 
--- ALERGIA
-DELIMITER $
-DROP PROCEDURE IF EXISTS InsertAlergia_sp;
-CREATE PROCEDURE InsertAlergia_sp(
-    IN nombre VARCHAR(50),
-    OUT id INT
-)
-BEGIN
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-    BEGIN
-        SET id = -1;
-        ROLLBACK;
-    END;
 
-    START TRANSACTION;
-
-    INSERT INTO Alergia (nombre)
-    VALUES (TRIM(nombre));
-    SET id = LAST_INSERT_ID();
-
-    COMMIT;
-END$
-DELIMITER ;
-
-DELIMITER $
-DROP PROCEDURE IF EXISTS UpdateAlergia_sp;
-CREATE PROCEDURE UpdateAlergia_sp(
-    IN idUpdate INT,
-    IN nombre VARCHAR(50)
-)
-BEGIN
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-    BEGIN
-        ROLLBACK;
-    END;
-
-    START TRANSACTION;
-    
-    UPDATE Alergia SET nombre = TRIM(nombre)
-    WHERE id = idUpdate;
-
-    COMMIT;
-END$
-DELIMITER ;
 
 -- DETALLE ALERGIA
 DELIMITER $
