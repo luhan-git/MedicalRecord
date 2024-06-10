@@ -9,8 +9,7 @@ namespace MedicalRecord_API.Validators.Alergia
         {
             RuleFor(x => x.Nombre).NotNull()
                                   .NotEmpty()
-                                  .MaximumLength(20)
-                                  .MinimumLength(5);
+                                  .Length(5, 20);
         }
     }
 }

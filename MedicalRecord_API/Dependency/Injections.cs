@@ -39,6 +39,7 @@ namespace MedicalRecord_API.Dependency
             services.AddScoped<IAuthService,AuthService>();
             services.AddScoped<IAlergiaService,AlergiaService>();
             services.AddScoped<ICiaSeguroService, CiaSeguroService>();
+            services.AddScoped<ICieService,CieService>();
         }
     }
 }

@@ -42,7 +42,7 @@ namespace MedicalRecord_API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
-        [HttpGet("{Id:int}", Name = "GetAlergia")]
+        [HttpGet("{id:int}", Name = "GetAlergia")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(statusCode: StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -83,8 +83,7 @@ namespace MedicalRecord_API.Controllers
         public async Task<ActionResult<Response>> Create([FromBody] AlergiaCreateDto dto)
         {
             AlergiaCreateDtoVaidator validator = new();
-
-            ValidationResult result =validator.Validate(dto);
+            ValidationResult result =await validator.ValidateAsync(dto);
             if (!result.IsValid)
             {
                 _response.Status = HttpStatusCode.BadRequest;
@@ -133,7 +132,7 @@ namespace MedicalRecord_API.Controllers
                 return BadRequest(_response);
             }
             AlergiaUpdateDtoValidator validator = new();
-            ValidationResult result = validator.Validate(dto);
+            ValidationResult result = await validator.ValidateAsync(dto);
             if (!result.IsValid)
             {
                 _response.Status = HttpStatusCode.BadRequest;

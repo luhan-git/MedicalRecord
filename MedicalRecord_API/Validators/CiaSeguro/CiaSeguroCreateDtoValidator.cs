@@ -7,14 +7,11 @@ namespace MedicalRecord_API.Validators.CiaSeguro
     {
         public CiaSeguroCreateDtoValidator()
         {
-            RuleFor(x => x.Nombre).NotNull()
-                                  .NotEmpty()
-                                  .MaximumLength(50).
-                                  MinimumLength(5);
+            RuleFor(x => x.Nombre).NotEmpty()
+                                  .Length(5, 50);
             RuleFor(x => x.Abreviatura).NotNull()
                                        .NotEmpty()
-                                       .MaximumLength(5)
-                                       .MinimumLength(2);
+                                       .Length(2, 5);
         }
     }
 }
