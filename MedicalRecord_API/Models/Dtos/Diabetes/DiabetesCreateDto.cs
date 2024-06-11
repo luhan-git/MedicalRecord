@@ -2,5 +2,8 @@
 {
     public class DiabetesCreateDto
     {
+        public string Tipo { get; set; } = null!;
+
+        public string? Detalle { get; set; }
     }
 }

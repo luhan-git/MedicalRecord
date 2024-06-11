@@ -12,14 +12,17 @@ namespace MedicalRecord_API.Repository.Implements
             _context = context;
 
         }
-        public Task<Diabete> Create(Diabete entity)
+        public async  Task<Diabete> Create(Diabete entity)
         {
-            throw new NotImplementedException();
+            await _context.Diabetes.AddAsync(entity);
+            await _context.SaveChangesAsync();
+            return entity;
         }
 
-        public Task Update(Diabete entity)
+        public async Task Update(Diabete entity)
         {
-            throw new NotImplementedException();
+            _context.Diabetes.Update(entity);
+            await _context.SaveChangesAsync();
         }
     }
 }

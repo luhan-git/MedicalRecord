@@ -36,10 +36,10 @@ namespace MedicalRecord_API.Controllers
                 _response.Status = HttpStatusCode.OK;
                 return Ok(_response);
             }
-            catch
+            catch(Exception ex)
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor."];
+                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.",ex.Message];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }

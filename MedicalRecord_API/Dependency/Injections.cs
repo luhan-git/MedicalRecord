@@ -40,6 +40,7 @@ namespace MedicalRecord_API.Dependency
             services.AddScoped<IAlergiaService,AlergiaService>();
             services.AddScoped<ICiaSeguroService, CiaSeguroService>();
             services.AddScoped<ICieService,CieService>();
+            services.AddScoped<IDiabetesService,DiabetesService>();
         }
     }
 }
