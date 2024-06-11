@@ -1,7 +1,4 @@
-﻿using MedicalRecord_API.Models.Dtos.Alergia;
-using MedicalRecord_API.Models.Dtos.Paciente;
-
-namespace MedicalRecord_API.Models.Dtos.DetalleAlergia
+﻿namespace MedicalRecord_API.Models.Dtos.DetalleAlergia
 {
     public class DetalleAlergiaCreateDto
     {

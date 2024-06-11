@@ -1,10 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MedicalRecord_API.Models.Dtos.CiaSeguro
+﻿namespace MedicalRecord_API.Models.Dtos.CiaSeguro
 {
     public class CiaSeguroUpdateDto
     {
-    
+
         public int Id { get; set; }
 
         public string Nombre { get; set; } = null!;

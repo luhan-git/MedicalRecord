@@ -3,7 +3,6 @@ using MedicalRecord_API.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 using System.Data;
-using System.Linq.Expressions;
 
 namespace MedicalRecord_API.Repository.Implements
 {
@@ -53,7 +52,7 @@ namespace MedicalRecord_API.Repository.Implements
                 await command.ExecuteNonQueryAsync();
 
                 var idConsulta = (int)idConsultaParam.Value;
-                
+
                 if (idConsulta == -1)
                 {
                     throw new Exception("El procedimiento almacenado InsertConsulta_sp devolvió -1, indicando un error.");

@@ -1,6 +1,4 @@
-﻿using MedicalRecord_API.Models.Dtos.Presentacion;
-
-namespace MedicalRecord_API.Models.Dtos.Medicamento
+﻿namespace MedicalRecord_API.Models.Dtos.Medicamento
 {
     public class MedicamentoDto
     {
@@ -20,6 +18,6 @@ namespace MedicalRecord_API.Models.Dtos.Medicamento
         public int IdPresentacion { get; set; }
 
         public string Presentacion { get; set; } = null!;
-        
+
     }
 }

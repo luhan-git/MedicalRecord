@@ -1,7 +1,6 @@
 ﻿using MedicalRecord_API.Models;
 using MedicalRecord_API.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
 namespace MedicalRecord_API.Repository.Implements
@@ -9,7 +8,7 @@ namespace MedicalRecord_API.Repository.Implements
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
         private readonly DbhistoriasContext _context;
-        internal DbSet<TEntity>dbSet;
+        internal DbSet<TEntity> dbSet;
         public GenericRepository(DbhistoriasContext context)
         {
 

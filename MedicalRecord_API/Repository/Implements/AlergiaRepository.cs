@@ -2,16 +2,15 @@
 using MedicalRecord_API.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
-using System.Data;
 
 namespace MedicalRecord_API.Repository.Implements
 {
-    public class AlergiaRepository: GenericRepository<Alergium>, IAlergiaRepository
+    public class AlergiaRepository : GenericRepository<Alergium>, IAlergiaRepository
     {
         private readonly DbhistoriasContext _context;
         private readonly ILogger<AlergiaRepository> _logger;
 
-        public AlergiaRepository (DbhistoriasContext context, ILogger<AlergiaRepository> logger): base(context)
+        public AlergiaRepository(DbhistoriasContext context, ILogger<AlergiaRepository> logger) : base(context)
         {
             _context = context;
             _logger = logger;
@@ -26,7 +25,7 @@ namespace MedicalRecord_API.Repository.Implements
                                                            new MySqlParameter("@nombre", entity.Nombre)
                                                            );
                 _logger.LogWarning("Se creo una nueva en la base de datos");
-                Alergium alergia = await _context.Set<Alergium>().FirstOrDefaultAsync(u => string.Equals(u.Nombre, entity.Nombre)) ?? new();          
+                Alergium alergia = await _context.Set<Alergium>().FirstOrDefaultAsync(u => string.Equals(u.Nombre, entity.Nombre)) ?? new();
                 return alergia;
             }
             catch (Exception ex)

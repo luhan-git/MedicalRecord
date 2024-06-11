@@ -1,8 +1,6 @@
 ﻿using MedicalRecord_API.Models;
 using MedicalRecord_API.Repository.Interfaces;
 using MedicalRecord_API.Services.Interfaces;
-using MedicalRecord_API.Validators;
-using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
 
 namespace MedicalRecord_API.Services.Implements
@@ -16,7 +14,7 @@ namespace MedicalRecord_API.Services.Implements
         }
         public async Task<Alergium> Create(Alergium entity)
         {
-           Alergium alergia = await _repo.Create(entity);
+            Alergium alergia = await _repo.Create(entity);
             return alergia;
         }
 

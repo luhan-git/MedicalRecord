@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace MedicalRecord_API.Models;
 
@@ -62,7 +59,7 @@ public partial class DbhistoriasContext : DbContext
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
-   
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder

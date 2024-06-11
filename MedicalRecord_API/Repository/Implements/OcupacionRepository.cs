@@ -78,6 +78,6 @@ namespace MedicalRecord_API.Repository.Implements
                 _logger.LogError(ex, "Error en update ocupacion");
                 throw;
             }
-        }   
+        }
     }
 }

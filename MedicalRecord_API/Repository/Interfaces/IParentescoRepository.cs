@@ -2,9 +2,9 @@
 
 namespace MedicalRecord_API.Repository.Interfaces
 {
-    public interface IParentescoRepository :IGenericRepository<Parentesco>
+    public interface IParentescoRepository : IGenericRepository<Parentesco>
     {
-        Task<Parentesco>Create(Parentesco entity);  
+        Task<Parentesco> Create(Parentesco entity);
         Task Update(Parentesco entity);
     }
 }

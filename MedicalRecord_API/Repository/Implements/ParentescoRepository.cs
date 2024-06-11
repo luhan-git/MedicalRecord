@@ -7,7 +7,7 @@ namespace MedicalRecord_API.Repository.Implements
     {
         private readonly DbhistoriasContext _context;
 
-        public ParentescoRepository(DbhistoriasContext context):base(context)
+        public ParentescoRepository(DbhistoriasContext context) : base(context)
         {
 
             _context = context;

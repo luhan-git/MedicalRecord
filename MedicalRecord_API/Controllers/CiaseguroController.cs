@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using MedicalRecord_API.Utils.Response;
-using MedicalRecord_API.Models.Dtos.CiaSeguro;
-using MedicalRecord_API.Models;
-using System.Net;
-using MedicalRecord_API.Services.Interfaces;
-using MedicalRecord_API.Models.Dtos.Alergia;
-using MedicalRecord_API.Validators.CiaSeguro;
 using FluentValidation.Results;
+using MedicalRecord_API.Models;
+using MedicalRecord_API.Models.Dtos.CiaSeguro;
+using MedicalRecord_API.Services.Interfaces;
+using MedicalRecord_API.Utils.Response;
+using MedicalRecord_API.Validators.CiaSeguro;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
 namespace MedicalRecord_API.Controllers
 {
     [ApiController]
@@ -36,10 +35,10 @@ namespace MedicalRecord_API.Controllers
                 _response.Status = HttpStatusCode.OK;
                 return Ok(_response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.",ex.Message];
+                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.", ex.Message];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -106,10 +105,10 @@ namespace MedicalRecord_API.Controllers
                 _response.Result = _mapper.Map<CiaSeguroDto>(modelo);
                 return CreatedAtRoute("GetSeguro", new { id = modelo.Id }, _response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.",ex.Message];
+                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.", ex.Message];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -120,8 +119,8 @@ namespace MedicalRecord_API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Response>> Update(int id, [FromBody] CiaSeguroUpdateDto dto)
         {
-            
-            if (id<0)
+
+            if (id < 0)
             {
                 _response.Status = HttpStatusCode.BadRequest;
                 _response.ErrorMessages = ["El identificador de la compañia de seguros no es válido."];
@@ -138,9 +137,9 @@ namespace MedicalRecord_API.Controllers
             ValidationResult results = await validator.ValidateAsync(dto);
             if (!results.IsValid)
             {
-               _response.Status = HttpStatusCode.BadRequest;
-               _response.ErrorMessages = results.Errors.Select(e => e.ErrorMessage).ToList();
-               return BadRequest(_response);
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMessages = results.Errors.Select(e => e.ErrorMessage).ToList();
+                return BadRequest(_response);
             }
             try
             {
@@ -156,10 +155,10 @@ namespace MedicalRecord_API.Controllers
                 _response.IsSuccess = true;
                 return Ok(_response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.",ex.Message];
+                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.", ex.Message];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -167,7 +166,7 @@ namespace MedicalRecord_API.Controllers
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType (StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Response>> Delete(int id)
         {

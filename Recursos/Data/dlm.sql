@@ -117,25 +117,14 @@ INSERT INTO Medicamento (codigo, nombreGenerico, nombreComercial, estado, dosis,
 
 -- DIABETES
 INSERT INTO Diabetes (tipo, detalle) 
-VALUES ('Diabetes tipo 1', 'Se produce cuando el páncreas no produce suficiente insulina.');
+VALUES ('tipo 1(DM1)', 'Se produce cuando el páncreas no produce suficiente insulina.');
 INSERT INTO Diabetes (tipo, detalle) 
-VALUES ('Diabetes tipo 2', 'Se produce cuando el cuerpo no puede usar la insulina de manera efectiva.');
+VALUES ('tipo 2(DM2)', 'Se produce cuando el cuerpo no puede usar la insulina de manera efectiva.');
 INSERT INTO Diabetes (tipo, detalle) 
-VALUES ('Diabetes gestacional', 'Se desarrolla durante el embarazo y puede desaparecer después del parto.');
+VALUES ('gestacional(DG)', 'Se desarrolla durante el embarazo y puede desaparecer después del parto.');
 INSERT INTO Diabetes (tipo, detalle) 
-VALUES ('Diabetes secundaria', 'Se produce como resultado de otra enfermedad o medicamento.');
-INSERT INTO Diabetes (tipo, detalle) 
-VALUES ('Diabetes monogénica', 'Es causada por una mutación en un solo gen.');
-INSERT INTO Diabetes (tipo, detalle) 
-VALUES ('Diabetes tipo 3', 'Propuesta para describir la enfermedad de Alzheimer como una forma de diabetes cerebral.');
-INSERT INTO Diabetes (tipo, detalle) 
-VALUES ('Diabetes tipo 1.5 (LADA)', 'Se refiere a una forma de diabetes autoinmune que se desarrolla en adultos.');
-INSERT INTO Diabetes (tipo, detalle) 
-VALUES ('Diabetes insípida', 'Es un trastorno que afecta la regulación del agua en el cuerpo, no está relacionada con la insulina.');
-INSERT INTO Diabetes (tipo, detalle) 
-VALUES ('Diabetes juvenil', 'Término coloquial utilizado para referirse a la diabetes tipo 1.');
-INSERT INTO Diabetes (tipo, detalle) 
-VALUES ('Diabetes mody', 'Se refiere a un grupo heterogéneo de trastornos monogénicos que afectan la secreción de insulina.');
+VALUES ('Otras (OD)', 'otros tipos de diabetes.');
+
 -- ALERGIAS
 INSERT INTO Alergia (nombre) VALUES ('Polen');
 INSERT INTO Alergia (nombre) VALUES ('Ácaros del polvo');

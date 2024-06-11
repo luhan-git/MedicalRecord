@@ -14,7 +14,7 @@ namespace MedicalRecord_API.Services.Implements
         }
         public async Task<Ciaseguro> Create(Ciaseguro entity)
         {
-            Ciaseguro seguro= await _repository.Create(entity);
+            Ciaseguro seguro = await _repository.Create(entity);
             return seguro;
         }
 
@@ -25,13 +25,13 @@ namespace MedicalRecord_API.Services.Implements
 
         public async Task<Ciaseguro> GetAsync(Expression<Func<Ciaseguro, bool>> filters, bool tracked = true)
         {
-           Ciaseguro ciaseguro= await _repository.GetAsync(filters, tracked);
+            Ciaseguro ciaseguro = await _repository.GetAsync(filters, tracked);
             return ciaseguro;
         }
 
         public async Task<IEnumerable<Ciaseguro>> QueryAsync(Expression<Func<Ciaseguro, bool>>? filter = null, params Expression<Func<Ciaseguro, object>>[] Includes)
         {
-            IEnumerable<Ciaseguro> query=await _repository.QueryAsync(filter, Includes);
+            IEnumerable<Ciaseguro> query = await _repository.QueryAsync(filter, Includes);
             return query;
         }
 

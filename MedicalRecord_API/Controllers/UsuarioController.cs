@@ -1,17 +1,15 @@
 ﻿using AutoMapper;
+using MedicalRecord_API.Models;
 using MedicalRecord_API.Models.Dtos.Usuario;
-using MedicalRecord_API.Repository.Interfaces;
+using MedicalRecord_API.Services.Interfaces;
 using MedicalRecord_API.Utils.Response;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using MedicalRecord_API.Models;
-using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.AspNetCore.Authorization;
-using MedicalRecord_API.Services.Interfaces;
 
 namespace MedicalRecord_API.Controllers
 {
-    
+
     [Route("api/[controller]")]
     [ApiController]
     public class UsuarioController : ControllerBase
@@ -23,7 +21,7 @@ namespace MedicalRecord_API.Controllers
 
         public UsuarioController(IMapper mapper, IUsuarioService service, IUtilsService utilsService)
         {
-            _service=service;
+            _service = service;
             _mapper = mapper;
             _utilsService = utilsService;
             _response = new();
@@ -89,31 +87,35 @@ namespace MedicalRecord_API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Response>>Perfil(int Id){
-             if (Id < 1)
+        public async Task<ActionResult<Response>> Perfil(int Id)
+        {
+            if (Id < 1)
             {
                 _response.Status = HttpStatusCode.BadRequest;
                 _response.ErrorMessages = ["id: argumento no puede ser 0"];
                 return BadRequest(_response);
             }
-            try{
-                PerfilDto perfil=_mapper.Map<PerfilDto>(await _service.GetAsync(u=> u.Id==Id));
+            try
+            {
+                PerfilDto perfil = _mapper.Map<PerfilDto>(await _service.GetAsync(u => u.Id == Id));
                 if (perfil == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
                     _response.ErrorMessages = [" modelo: no esxiste en la base de datos"];
                     return NotFound(_response);
                 }
-                 _response.Status = HttpStatusCode.OK;
+                _response.Status = HttpStatusCode.OK;
                 _response.IsSuccess = true;
                 _response.Result = perfil;
                 return Ok(_response);
-            }catch{
+            }
+            catch
+            {
                 _response.Status = HttpStatusCode.InternalServerError;
                 _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud."];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
-            
+
         }
         [HttpPost]
         // [Authorize(Roles = "admin")]
@@ -153,10 +155,10 @@ namespace MedicalRecord_API.Controllers
                 return CreatedAtRoute("GetUsuario", new { id = modelo.Id }, _response);
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMessages=["Error al registrar usuario",ex.ToString()];
+                _response.ErrorMessages = ["Error al registrar usuario", ex.ToString()];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -198,10 +200,10 @@ namespace MedicalRecord_API.Controllers
                 _response.IsSuccess = true;
                 return Ok(_response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud.",ex.ToString()];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud.", ex.ToString()];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
 

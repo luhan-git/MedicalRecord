@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MedicalRecord_API.Models.Dtos.Alergia
+﻿namespace MedicalRecord_API.Models.Dtos.Alergia
 {
     public class AlergiaUpdateDto
     {

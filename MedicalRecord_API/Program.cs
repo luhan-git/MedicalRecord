@@ -1,7 +1,5 @@
 using MedicalRecord_API.Dependency;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -23,7 +21,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.Injection(builder.Configuration);
 // Swagger 
-builder.Services.AddSwaggerGen(options => {
+builder.Services.AddSwaggerGen(options =>
+{
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = "Ingresar Bearer [space] tuToken \r\n\r\n " +

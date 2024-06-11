@@ -1,6 +1,4 @@
-﻿using MedicalRecord_API.Models.Dtos.Alergia;
-using MedicalRecord_API.Models.Dtos.DetalleAlergia;
-using System.ComponentModel.DataAnnotations;
+﻿using MedicalRecord_API.Models.Dtos.DetalleAlergia;
 
 namespace MedicalRecord_API.Models.Dtos.Paciente
 {

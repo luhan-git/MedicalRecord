@@ -32,8 +32,8 @@ namespace MedicalRecord_API.Services.Implements
 
         public async Task<IEnumerable<Diabete>> QueryAsync(Expression<Func<Diabete, bool>>? filter = null, params Expression<Func<Diabete, object>>[] Includes)
         {
-           IEnumerable<Diabete> query= await _repo.QueryAsync(filter, Includes);
-           return query;
+            IEnumerable<Diabete> query = await _repo.QueryAsync(filter, Includes);
+            return query;
         }
 
         public async Task Update(Diabete entity)

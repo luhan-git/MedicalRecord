@@ -11,19 +11,19 @@ namespace MedicalRecord_API.Controllers
     [Route("api/[controller]")]
     // [Authorize(Roles = "admin")]
     [ApiController]
-    public class PresentacionController:ControllerBase
+    public class PresentacionController : ControllerBase
     {
         private readonly IPresentacionService _service;
         private readonly IMapper _mapper;
         protected Response _response;
 
-        public PresentacionController(IPresentacionService service,IMapper mapper)
+        public PresentacionController(IPresentacionService service, IMapper mapper)
         {
-            _service=service;
-            _mapper=mapper;
-            _response=new();
+            _service = service;
+            _mapper = mapper;
+            _response = new();
         }
-        
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -83,24 +83,28 @@ namespace MedicalRecord_API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Response>> Create([FromBody]PresentacionCreateDto dto){
+        public async Task<ActionResult<Response>> Create([FromBody] PresentacionCreateDto dto)
+        {
             if (dto == null)
-             {
+            {
                 _response.ErrorMessages = ["modelo: no puede ser null"];
                 _response.Status = HttpStatusCode.BadRequest;
                 return BadRequest(_response);
-             };
-            try{
-                
-                Presentacion modelo=await _service.Create(_mapper.Map<Presentacion>(dto));
-                modelo=_mapper.Map<Presentacion>(modelo);
+            };
+            try
+            {
+
+                Presentacion modelo = await _service.Create(_mapper.Map<Presentacion>(dto));
+                modelo = _mapper.Map<Presentacion>(modelo);
                 _response.Result = _mapper.Map<PresentacionCreateDto>(modelo);
                 _response.IsSuccess = true;
                 _response.Status = HttpStatusCode.Created;
                 return CreatedAtRoute("GetPresentacion", new { id = modelo.Id }, _response);
-            }catch(Exception ex){
+            }
+            catch (Exception ex)
+            {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud",ex.ToString()];
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud", ex.ToString()];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
 
@@ -157,7 +161,8 @@ namespace MedicalRecord_API.Controllers
             }
         }
         [HttpDelete("{id:int}")]
-        public async Task<IActionResult>Delete(int id){
+        public async Task<IActionResult> Delete(int id)
+        {
             if (id < 1)
             {
                 _response.Status = HttpStatusCode.BadRequest;
@@ -185,6 +190,6 @@ namespace MedicalRecord_API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
-        
+
     }
 }

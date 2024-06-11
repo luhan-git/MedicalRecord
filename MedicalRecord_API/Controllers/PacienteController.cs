@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
 using MedicalRecord_API.Models;
-using MedicalRecord_API.Repository.Interfaces;
-using AutoMapper;
-using MedicalRecord_API.Utils.Response;
 using MedicalRecord_API.Models.Dtos.Paciente;
+using MedicalRecord_API.Repository.Interfaces;
+using MedicalRecord_API.Utils.Response;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using MedicalRecord_API.Models.Dtos.Usuario;
-using Microsoft.AspNetCore.Authorization;
 
 namespace MedicalRecord_API.Controllers
 {

@@ -36,14 +36,14 @@ namespace MedicalRecord_API.Controllers
             {
                 IEnumerable<CieDto> cies = _mapper.Map<IEnumerable<CieDto>>(await _service.QueryAsync());
                 _response.Result = cies;
-                _response.IsSuccess = true; 
+                _response.IsSuccess = true;
                 _response.Status = HttpStatusCode.OK;
                 return Ok(_response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.",ex.Message];
+                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.", ex.Message];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -57,11 +57,11 @@ namespace MedicalRecord_API.Controllers
         {
 
             if (id < 1)
-                {
-                    _response.Status = HttpStatusCode.BadRequest;
-                   _response.ErrorMessages = ["El identificador del cie no es válido."];
-                   return BadRequest(_response);
-                }
+            {
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMessages = ["El identificador del cie no es válido."];
+                return BadRequest(_response);
+            }
             try
             {
                 CieDto dto = _mapper.Map<CieDto>(await _service.GetAsync(c => c.Id == id, false));
@@ -76,10 +76,10 @@ namespace MedicalRecord_API.Controllers
                 _response.Result = dto;
                 return Ok(_response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.",ex.Message];
+                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.", ex.Message];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -92,13 +92,13 @@ namespace MedicalRecord_API.Controllers
             ValidationResult result = await validator.ValidateAsync(dto);
             if (!result.IsValid)
             {
-                _response.Status= HttpStatusCode.BadRequest;
-                _response.ErrorMessages= result.Errors.Select(e => e.ErrorMessage).ToList();
+                _response.Status = HttpStatusCode.BadRequest;
+                _response.ErrorMessages = result.Errors.Select(e => e.ErrorMessage).ToList();
                 return BadRequest(_response);
             }
             try
             {
-                if (await _service.GetAsync(v => string.Equals(v.Codigo,dto.Codigo), false) != null)
+                if (await _service.GetAsync(v => string.Equals(v.Codigo, dto.Codigo), false) != null)
                 {
                     _response.Status = HttpStatusCode.BadRequest;
                     _response.ErrorMessages = ["Ya existe un registro con este nombre"];
@@ -106,20 +106,20 @@ namespace MedicalRecord_API.Controllers
                 }
 
                 Cie modelo = _mapper.Map<Cie>(dto);
-                modelo= await _service.Create(modelo);
+                modelo = await _service.Create(modelo);
                 _response.Result = _mapper.Map<CieDto>(modelo);
                 _response.IsSuccess = true;
                 _response.Status = HttpStatusCode.Created;
                 return CreatedAtRoute("GetCie", new { id = modelo.Id }, _response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.",ex.Message];
+                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.", ex.Message];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
- 
+
         [HttpPut("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -129,7 +129,7 @@ namespace MedicalRecord_API.Controllers
         {
             CieUpdateDtoValidator validator = new();
             ValidationResult result = await validator.ValidateAsync(dto);
-            if(!result.IsValid)
+            if (!result.IsValid)
             {
                 _response.Status = HttpStatusCode.BadRequest;
                 _response.ErrorMessages = result.Errors.Select(e => e.ErrorMessage).ToList();
@@ -161,10 +161,10 @@ namespace MedicalRecord_API.Controllers
                 _response.IsSuccess = true;
                 return Ok(_response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.",ex.Message];
+                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.", ex.Message];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -211,10 +211,10 @@ namespace MedicalRecord_API.Controllers
                 _response.IsSuccess = true;
                 return Ok(_response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.",ex.Message];
+                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.", ex.Message];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -246,10 +246,10 @@ namespace MedicalRecord_API.Controllers
                 _response.IsSuccess = true;
                 return Ok(_response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.",ex.Message];
+                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.", ex.Message];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }

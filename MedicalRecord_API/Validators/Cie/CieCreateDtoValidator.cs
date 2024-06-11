@@ -3,7 +3,7 @@ using MedicalRecord_API.Models.Dtos.Cie;
 
 namespace MedicalRecord_API.Validators.Cie
 {
-    public class CieCreateDtoValidator:AbstractValidator<CieCreateDto>
+    public class CieCreateDtoValidator : AbstractValidator<CieCreateDto>
     {
         public CieCreateDtoValidator()
         {

@@ -2,11 +2,10 @@
 using MedicalRecord_API.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
-using System.Data;
 
 namespace MedicalRecord_API.Repository.Implements
 {
-    public class CiaSeguroRepository: GenericRepository<Ciaseguro>, ICiaSeguroRepository
+    public class CiaSeguroRepository : GenericRepository<Ciaseguro>, ICiaSeguroRepository
     {
         private readonly DbhistoriasContext _context;
         private readonly ILogger<CiaSeguroRepository> _logger;

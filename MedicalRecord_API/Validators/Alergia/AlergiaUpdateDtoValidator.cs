@@ -3,7 +3,7 @@ using MedicalRecord_API.Models.Dtos.Alergia;
 
 namespace MedicalRecord_API.Validators.Alergia
 {
-    public class AlergiaUpdateDtoValidator:AbstractValidator<AlergiaUpdateDto>
+    public class AlergiaUpdateDtoValidator : AbstractValidator<AlergiaUpdateDto>
     {
         public AlergiaUpdateDtoValidator()
         {

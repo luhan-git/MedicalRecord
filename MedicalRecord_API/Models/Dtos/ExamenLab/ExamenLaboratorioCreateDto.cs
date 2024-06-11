@@ -1,4 +1,4 @@
-﻿namespace MedicalRecord_API.Models.Dtos.ExamenLaboratorio
+﻿namespace MedicalRecord_API.Models.Dtos.ExamenLab
 {
     public class ExamenLaboratorioCreateDto
     {

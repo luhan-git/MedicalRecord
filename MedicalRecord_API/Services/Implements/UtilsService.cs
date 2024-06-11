@@ -1,16 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using MedicalRecord_API.Services.Interfaces;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
-using MedicalRecord_API.Services.Interfaces;
 
 namespace MedicalRecord_API.Services.Implements
 {
-    public class UtilsService:IUtilsService
+    public class UtilsService : IUtilsService
     {
-         public Task<string>  ConvertirSha256(string input)
+        public Task<string> ConvertirSha256(string input)
         {
             StringBuilder Sb = new();
             using (SHA256 hash = SHA256.Create())

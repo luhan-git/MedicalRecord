@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace MedicalRecord_API.Models;
+﻿namespace MedicalRecord_API.Models;
 
 public partial class Procedimiento
 {

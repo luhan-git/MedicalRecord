@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MedicalRecord_API.Models.Dtos.CiaSeguro
+﻿namespace MedicalRecord_API.Models.Dtos.CiaSeguro
 {
     public class CiaSeguroCreateDto
     {

@@ -1,15 +1,8 @@
 ﻿using AutoMapper;
 using MedicalRecord_API.Models;
-using MedicalRecord_API.Models.Dtos.Usuario;
 using MedicalRecord_API.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
-using Microsoft.IdentityModel.Tokens;
 using MySqlConnector;
-using System.Data;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace MedicalRecord_API.Repository.Implements
 {
@@ -18,7 +11,7 @@ namespace MedicalRecord_API.Repository.Implements
         private readonly DbhistoriasContext _context;
         private readonly ILogger<UsuarioRepositoy> _logger;
         private readonly IMapper _mapper;
-        public UsuarioRepositoy(DbhistoriasContext context, ILogger<UsuarioRepositoy> logger,IMapper mapper) : base(context)
+        public UsuarioRepositoy(DbhistoriasContext context, ILogger<UsuarioRepositoy> logger, IMapper mapper) : base(context)
         {
 
             _context = context;
@@ -37,10 +30,10 @@ namespace MedicalRecord_API.Repository.Implements
                                                            new MySqlParameter("@cargo", entity.Cargo),
                                                            new MySqlParameter("@especialidad", entity.Especialidad),
                                                            new MySqlParameter("@nroColMedico", entity.NroColMedico),
-                                                           new MySqlParameter("@rol",entity.Rol)
-                                                           );   
+                                                           new MySqlParameter("@rol", entity.Rol)
+                                                           );
                 _logger.LogWarning("Se creo un nuevo usuario en la base de datos");
-               Usuario usuario= await _context.Set<Usuario>().FirstOrDefaultAsync(u => string.Equals(u.Correo, entity.Correo)) ?? new();
+                Usuario usuario = await _context.Set<Usuario>().FirstOrDefaultAsync(u => string.Equals(u.Correo, entity.Correo)) ?? new();
                 usuario.Clave = "";
                 return usuario;
             }

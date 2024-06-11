@@ -3,25 +3,24 @@ using MedicalRecord_API.Models;
 using MedicalRecord_API.Models.Dtos.Alergia;
 using MedicalRecord_API.Models.Dtos.CiaSeguro;
 using MedicalRecord_API.Models.Dtos.Cie;
+using MedicalRecord_API.Models.Dtos.Consulta;
+using MedicalRecord_API.Models.Dtos.DetalleAlergia;
 using MedicalRecord_API.Models.Dtos.Diabetes;
 using MedicalRecord_API.Models.Dtos.Directorio;
-using MedicalRecord_API.Models.Dtos.ExamenLaboratorio;
+using MedicalRecord_API.Models.Dtos.ExamenLab;
+using MedicalRecord_API.Models.Dtos.Laboratorio;
+using MedicalRecord_API.Models.Dtos.Medicamento;
 using MedicalRecord_API.Models.Dtos.Ocupacion;
+using MedicalRecord_API.Models.Dtos.Paciente;
 using MedicalRecord_API.Models.Dtos.Parentesco;
 using MedicalRecord_API.Models.Dtos.Presentacion;
 using MedicalRecord_API.Models.Dtos.Procedimiento;
-using MedicalRecord_API.Models.Dtos.Usuario;
-using MedicalRecord_API.Models.Dtos.Paciente;
 using MedicalRecord_API.Models.Dtos.Ubicacion;
-using MedicalRecord_API.Models.Dtos.DetalleAlergia;
-using MedicalRecord_API.Models.Dtos.Medicamento;
-using MedicalRecord_API.Models.Dtos.Consulta;
-using MedicalRecord_API.Models.Dtos.ExamenLab;
-using MedicalRecord_API.Models.Dtos.Laboratorio;
+using MedicalRecord_API.Models.Dtos.Usuario;
 
 namespace MedicalRecord_API.Utils.AutoMapper
 {
-    public class AutoMapperProfile:Profile
+    public class AutoMapperProfile : Profile
     {
         public AutoMapperProfile()
         {
@@ -29,13 +28,13 @@ namespace MedicalRecord_API.Utils.AutoMapper
             CreateMap<Usuario, UsuarioDto>().ReverseMap();
             CreateMap<Usuario, UsuarioRegistroDto>().ReverseMap();
             CreateMap<Usuario, UsuarioUpdateDto>().ReverseMap();
-            CreateMap<Usuario,PerfilDto>().ReverseMap();
+            CreateMap<Usuario, PerfilDto>().ReverseMap();
             #endregion Usuario
 
             #region Cie
             CreateMap<Cie, CieDto>().ReverseMap();
-            CreateMap<Cie,CieCreateDto>().ReverseMap();
-            CreateMap<Cie,CieUpdateDto>().ReverseMap();
+            CreateMap<Cie, CieCreateDto>().ReverseMap();
+            CreateMap<Cie, CieUpdateDto>().ReverseMap();
             #endregion Cie
 
             #region Presentacion
@@ -50,7 +49,7 @@ namespace MedicalRecord_API.Utils.AutoMapper
             CreateMap<Examenlaboratorio, ExamenLaboratorioUpdateDto>().ReverseMap();
             #endregion ExamenLaboratorio 
             #region Laboratorio
-            CreateMap<Laboratorio,LaboratorioDto>().ReverseMap();
+            CreateMap<Laboratorio, LaboratorioDto>().ReverseMap();
             #endregion Laboratorio
             #region Diabetes
             CreateMap<Diabete, DiabetesDto>().ReverseMap();
@@ -106,7 +105,7 @@ namespace MedicalRecord_API.Utils.AutoMapper
 
 
             CreateMap<Paciente, PacienteUpdateDto>().ReverseMap();
-            CreateMap<Paciente,PacienteDto>().ReverseMap();
+            CreateMap<Paciente, PacienteDto>().ReverseMap();
             #endregion Paciente
 
             #region Medicamento
@@ -115,7 +114,7 @@ namespace MedicalRecord_API.Utils.AutoMapper
 
             CreateMap<Medicamento, MedicamentoDto>()
                 .ForMember(dest => dest.Presentacion, opt => opt.MapFrom(origen => origen.IdPresentacionNavigation.Nombre));
-                
+
             #endregion Medicamento
 
             #region Consulta

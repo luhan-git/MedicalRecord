@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using MedicalRecord_API.Utils.Response;
-using MedicalRecord_API.Models.Dtos.Alergia;
-using MedicalRecord_API.Models;
-using System.Net;
-using MedicalRecord_API.Services.Interfaces;
 using FluentValidation.Results;
+using MedicalRecord_API.Models;
+using MedicalRecord_API.Models.Dtos.Alergia;
+using MedicalRecord_API.Services.Interfaces;
+using MedicalRecord_API.Utils.Response;
 using MedicalRecord_API.Validators.Alergia;
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
 namespace MedicalRecord_API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AlergiaController: ControllerBase
+    public class AlergiaController : ControllerBase
     {
         private readonly IAlergiaService _service;
         private readonly IMapper _mapper;
@@ -35,10 +35,10 @@ namespace MedicalRecord_API.Controllers
                 _response.Status = HttpStatusCode.OK;
                 return Ok(_response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.",ex.Message];
+                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.", ex.Message];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -69,10 +69,10 @@ namespace MedicalRecord_API.Controllers
                 _response.Result = dto;
                 return Ok(_response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.",ex.Message];
+                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.", ex.Message];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -83,14 +83,14 @@ namespace MedicalRecord_API.Controllers
         public async Task<ActionResult<Response>> Create([FromBody] AlergiaCreateDto dto)
         {
             AlergiaCreateDtoVaidator validator = new();
-            ValidationResult result =await validator.ValidateAsync(dto);
+            ValidationResult result = await validator.ValidateAsync(dto);
             if (!result.IsValid)
             {
                 _response.Status = HttpStatusCode.BadRequest;
                 _response.ErrorMessages = result.Errors.Select(e => e.ErrorMessage).ToList();
                 return BadRequest(_response);
             }
-            if(await _service.GetAsync(a=>a.Nombre==dto.Nombre,false)!=null)
+            if (await _service.GetAsync(a => a.Nombre == dto.Nombre, false) != null)
             {
                 _response.Status = HttpStatusCode.BadRequest;
                 _response.ErrorMessages = ["Ya existe un registro con este nombre"];
@@ -98,17 +98,17 @@ namespace MedicalRecord_API.Controllers
             }
             try
             {
-                 Alergium modelo=_mapper.Map<Alergium>(dto);
-                 modelo=await _service.Create(modelo);
+                Alergium modelo = _mapper.Map<Alergium>(dto);
+                modelo = await _service.Create(modelo);
                 _response.Status = HttpStatusCode.Created;
                 _response.IsSuccess = true;
                 _response.Result = _mapper.Map<AlergiaDto>(modelo);
                 return CreatedAtRoute("GetAlergia", new { id = modelo.Id }, _response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.",ex.Message];
+                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.", ex.Message];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -141,7 +141,7 @@ namespace MedicalRecord_API.Controllers
             }
             try
             {
-                if (await _service.GetAsync(a=> a.Id==id,false)==null)
+                if (await _service.GetAsync(a => a.Id == id, false) == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
                     _response.ErrorMessages = ["Sin registros para este identificador"];
@@ -153,10 +153,10 @@ namespace MedicalRecord_API.Controllers
                 _response.IsSuccess = true;
                 return Ok(_response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _response.Status = HttpStatusCode.InternalServerError;
-                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.",ex.Message];
+                _response.ErrorMessages = ["Error al procesar la solicitud en el servidor.", ex.Message];
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
@@ -168,7 +168,7 @@ namespace MedicalRecord_API.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Response>> Delete(int id)
         {
-            bool isValid=id>0;
+            bool isValid = id > 0;
             if (!isValid)
             {
                 _response.Status = HttpStatusCode.BadRequest;
@@ -177,8 +177,8 @@ namespace MedicalRecord_API.Controllers
             }
             try
             {
-                Alergium alergia =await _service.GetAsync(a => a.Id == id);
-                if (alergia==null)
+                Alergium alergia = await _service.GetAsync(a => a.Id == id);
+                if (alergia == null)
                 {
                     _response.Status = HttpStatusCode.NotFound;
                     _response.ErrorMessages = ["Sin registros para este identificador"];

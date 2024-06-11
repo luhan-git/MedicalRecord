@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MedicalRecord_API.Models.Dtos.Presentacion
+﻿namespace MedicalRecord_API.Models.Dtos.Presentacion
 {
     public class PresentacionUpdateDto
     {

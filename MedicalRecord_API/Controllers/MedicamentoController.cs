@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using MedicalRecord_API.Repository.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using MedicalRecord_API.Utils.Response;
-using MedicalRecord_API.Models.Dtos.Medicamento;
 using MedicalRecord_API.Models;
+using MedicalRecord_API.Models.Dtos.Medicamento;
+using MedicalRecord_API.Repository.Interfaces;
+using MedicalRecord_API.Utils.Response;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace MedicalRecord_API.Controllers
@@ -25,11 +25,11 @@ namespace MedicalRecord_API.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Response>>Medicamentos()
+        public async Task<ActionResult<Response>> Medicamentos()
         {
             try
             {
-                IEnumerable<MedicamentoDto> medicamentos = _mapper.Map<IEnumerable<MedicamentoDto>>(await _medicamentoRepo.QueryAsync(null,p=> p.IdPresentacionNavigation));
+                IEnumerable<MedicamentoDto> medicamentos = _mapper.Map<IEnumerable<MedicamentoDto>>(await _medicamentoRepo.QueryAsync(null, p => p.IdPresentacionNavigation));
                 _response.Status = HttpStatusCode.OK;
                 _response.IsSuccess = true;
                 _response.Result = medicamentos;

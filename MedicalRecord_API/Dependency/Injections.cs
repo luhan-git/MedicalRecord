@@ -1,9 +1,9 @@
 ﻿using MedicalRecord_API.Models;
-using MedicalRecord_API.Repository.Interfaces;
 using MedicalRecord_API.Repository.Implements;
-using MedicalRecord_API.Utils.AutoMapper;
-using MedicalRecord_API.Services.Interfaces;
+using MedicalRecord_API.Repository.Interfaces;
 using MedicalRecord_API.Services.Implements;
+using MedicalRecord_API.Services.Interfaces;
+using MedicalRecord_API.Utils.AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace MedicalRecord_API.Dependency
@@ -24,7 +24,7 @@ namespace MedicalRecord_API.Dependency
             services.AddScoped<ICieRepository, CieRepository>();
             services.AddScoped<IPresentacionRepository, PresentacionRepository>();
             services.AddScoped<IDiabetesRepository, DiabetesRepository>();
-            services.AddScoped<ILaboratorioRepository,LaboratorioRepository>();
+            services.AddScoped<ILaboratorioRepository, LaboratorioRepository>();
             services.AddScoped<ICiaSeguroRepository, CiaSeguroRepository>();
             services.AddScoped<IDirectorioRepository, DirectorioRepository>();
             services.AddScoped<IProcedimientoRepository, ProcedimientoRepository>();
@@ -34,13 +34,13 @@ namespace MedicalRecord_API.Dependency
             services.AddScoped<IMedicamentoRepository, MedicamentoRepository>();
             services.AddScoped<IConsultaRepository, ConsultaRepository>();
 
-            services.AddScoped<IPresentacionService,PresentacionService>();
-            services.AddScoped<IUsuarioService,UsuarioService>();
-            services.AddScoped<IAuthService,AuthService>();
-            services.AddScoped<IAlergiaService,AlergiaService>();
+            services.AddScoped<IPresentacionService, PresentacionService>();
+            services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IAlergiaService, AlergiaService>();
             services.AddScoped<ICiaSeguroService, CiaSeguroService>();
-            services.AddScoped<ICieService,CieService>();
-            services.AddScoped<IDiabetesService,DiabetesService>();
+            services.AddScoped<ICieService, CieService>();
+            services.AddScoped<IDiabetesService, DiabetesService>();
         }
     }
 }

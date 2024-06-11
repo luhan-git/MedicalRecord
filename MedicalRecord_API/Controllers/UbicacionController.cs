@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using MedicalRecord_API.Models;
-using MedicalRecord_API.Models.Dtos.Cie;
 using MedicalRecord_API.Models.Dtos.Ubicacion;
 using MedicalRecord_API.Repository.Interfaces;
 using MedicalRecord_API.Utils.Response;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -23,8 +21,8 @@ namespace MedicalRecord_API.Controllers
         internal Response _response;
         public UbicacionController(IGenericRepository<Departamento> departamentoRepository, IGenericRepository<Provincium> provinciaRepository, IGenericRepository<Distrito> distritoRepository, IMapper mapper)
         {
-            _departamentoRepository=departamentoRepository;
-            _provinciaRepository= provinciaRepository;
+            _departamentoRepository = departamentoRepository;
+            _provinciaRepository = provinciaRepository;
             _distritoRepository = distritoRepository;
             _mapper = mapper;
             _response = new();
@@ -99,7 +97,7 @@ namespace MedicalRecord_API.Controllers
             }
             try
             {
-                IEnumerable<DistritoDto> distList = _mapper.Map<IEnumerable<DistritoDto>>(await _distritoRepository.QueryAsync(d=>d.IdProvincia == IdProvincia));
+                IEnumerable<DistritoDto> distList = _mapper.Map<IEnumerable<DistritoDto>>(await _distritoRepository.QueryAsync(d => d.IdProvincia == IdProvincia));
                 _response.Status = HttpStatusCode.OK;
                 _response.IsSuccess = true;
                 _response.Result = distList;
