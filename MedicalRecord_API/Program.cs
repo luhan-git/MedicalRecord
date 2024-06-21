@@ -2,22 +2,15 @@ using MedicalRecord_API.Dependency;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddCors(options =>
-options.AddPolicy("AllowSpecificOrigin",
-            builder =>
-            {
-                builder.WithOrigins("http://localhost:5173")
-                       .AllowAnyHeader()
-                       .AllowAnyMethod();
-            })
-);
-builder.Services.AddControllers().AddNewtonsoftJson();
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+}); 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.Injection(builder.Configuration);
 // Swagger 
@@ -79,8 +72,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseCors("AllowSpecificOrigin");
 
 app.UseHttpsRedirection();
 app.UseAuthentication();

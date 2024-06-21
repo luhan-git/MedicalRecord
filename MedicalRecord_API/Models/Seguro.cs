@@ -1,12 +1,15 @@
-﻿namespace MedicalRecord_API.Models;
+﻿using System;
+using System.Collections.Generic;
 
-public partial class Ciaseguro
+namespace MedicalRecord_API.Models;
+
+public partial class Seguro
 {
     public int Id { get; set; }
 
     public string Nombre { get; set; } = null!;
 
-    public string? Abreviatura { get; set; }
+    public bool? IsDelete { get; set; }
 
     public virtual ICollection<Paciente> Pacientes { get; set; } = new List<Paciente>();
 }

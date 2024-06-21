@@ -1,4 +1,7 @@
-﻿namespace MedicalRecord_API.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace MedicalRecord_API.Models;
 
 public partial class Paciente
 {
@@ -6,11 +9,13 @@ public partial class Paciente
 
     public string Condicion { get; set; } = null!;
 
+    public string PrimerNombre { get; set; } = null!;
+
+    public string? SegundoNombre { get; set; }
+
     public string APaterno { get; set; } = null!;
 
     public string AMaterno { get; set; } = null!;
-
-    public string Nombres { get; set; } = null!;
 
     public string TipoDocumento { get; set; } = null!;
 
@@ -40,61 +45,39 @@ public partial class Paciente
 
     public string? Celular { get; set; }
 
-    public string? CentroTrabajo { get; set; }
-
-    public bool? Asegurado { get; set; }
-
-    public int? IdCiaSeguro { get; set; }
-
-    public string? NumeroCarnet { get; set; }
-
-    public string? Contacto { get; set; }
-
-    public int? IdParentesco { get; set; }
-
-    public string? TelefonoContacto { get; set; }
-
-    public string? CelularContacto { get; set; }
-
-    public string? Perfil { get; set; }
-
-    public string? AntecedentesClinicos { get; set; }
-
-    public string? AntecedentesFamiliares { get; set; }
+    public string? Email { get; set; }
 
     public int IdOcupacion { get; set; }
 
-    public string PresionArterial { get; set; } = null!;
+    public string? CentroTrabajo { get; set; }
 
-    public string? CampoVisual { get; set; }
+    public bool? IsAsegurado { get; set; }
 
-    public string? Email { get; set; }
+    public int? IdSeguro { get; set; }
 
-    public bool? Diabetico { get; set; }
+    public string? NumeroCarnet { get; set; }
 
-    public int? IdDiabetes { get; set; }
+    public string? Perfil { get; set; }
 
-    public bool? Alergico { get; set; }
+    public bool? IsAlergico { get; set; }
 
-    public DateTime? FechaCreacion { get; set; }
+    public bool? IsDiabetico { get; set; }
 
-    public DateTime? FechaActualizacion { get; set; }
+    public bool? IsDelete { get; set; }
 
-    public virtual ICollection<Consultum> Consulta { get; set; } = new List<Consultum>();
+    public virtual Antecedente? Antecedente { get; set; }
 
-    public virtual ICollection<Detallealergium> Detallealergia { get; set; } = new List<Detallealergium>();
+    public virtual ICollection<Consulta> Consulta { get; set; } = new List<Consulta>();
 
-    public virtual Ciaseguro? IdCiaSeguroNavigation { get; set; }
+    public virtual ICollection<Contacto> Contactos { get; set; } = new List<Contacto>();
 
     public virtual Departamento IdDepartamentoNavigation { get; set; } = null!;
 
-    public virtual Diabete? IdDiabetesNavigation { get; set; }
-
     public virtual Distrito IdDistritoNavigation { get; set; } = null!;
 
-    public virtual Ocupacion IdOcupacionNavigation { get; set; } = null!;
+    public virtual Ocupacione IdOcupacionNavigation { get; set; } = null!;
 
-    public virtual Parentesco? IdParentescoNavigation { get; set; }
+    public virtual Provincia IdProvinciaNavigation { get; set; } = null!;
 
-    public virtual Provincium IdProvinciaNavigation { get; set; } = null!;
+    public virtual Seguro? IdSeguroNavigation { get; set; }
 }

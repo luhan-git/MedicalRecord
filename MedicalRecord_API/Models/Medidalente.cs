@@ -1,4 +1,7 @@
-﻿namespace MedicalRecord_API.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace MedicalRecord_API.Models;
 
 public partial class Medidalente
 {
@@ -44,5 +47,7 @@ public partial class Medidalente
 
     public bool? Preventiva { get; set; }
 
-    public virtual Consultum IdConsultaNavigation { get; set; } = null!;
+    public bool? IsDelete { get; set; }
+
+    public virtual Consulta IdConsultaNavigation { get; set; } = null!;
 }

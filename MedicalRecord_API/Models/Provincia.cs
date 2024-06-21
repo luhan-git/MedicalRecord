@@ -1,6 +1,9 @@
-﻿namespace MedicalRecord_API.Models;
+﻿using System;
+using System.Collections.Generic;
 
-public partial class Provincium
+namespace MedicalRecord_API.Models;
+
+public partial class Provincia
 {
     public int Id { get; set; }
 

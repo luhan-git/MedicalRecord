@@ -1,4 +1,7 @@
-﻿namespace MedicalRecord_API.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace MedicalRecord_API.Models;
 
 public partial class Laboratorio
 {
@@ -6,7 +9,7 @@ public partial class Laboratorio
 
     public string Nombre { get; set; } = null!;
 
-    public string? Abreviatura { get; set; }
+    public bool? IsDelete { get; set; }
 
     public virtual ICollection<Medicamento> Medicamentos { get; set; } = new List<Medicamento>();
 }

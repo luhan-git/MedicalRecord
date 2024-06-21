@@ -48,7 +48,7 @@ namespace MedicalRecord_API.Models.Dtos.Consulta
 
         public virtual CiaSeguroDto IdCieNavigation { get; set; } = null!;
 
-        public virtual PacienteDto IdPacienteNavigation { get; set; } = null!;
+        public virtual PacienteListDto IdPacienteNavigation { get; set; } = null!;
 
         public virtual UsuarioDto IdUsuarioNavigation { get; set; } = null!;
 

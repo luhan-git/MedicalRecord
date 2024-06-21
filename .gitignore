@@ -3,5 +3,3 @@ vs/
 bin/
 obj/
 *.sln
-appsettings.json
-Properties/

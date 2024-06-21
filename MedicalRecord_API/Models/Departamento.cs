@@ -1,4 +1,7 @@
-﻿namespace MedicalRecord_API.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace MedicalRecord_API.Models;
 
 public partial class Departamento
 {
@@ -8,5 +11,5 @@ public partial class Departamento
 
     public virtual ICollection<Paciente> Pacientes { get; set; } = new List<Paciente>();
 
-    public virtual ICollection<Provincium> Provincia { get; set; } = new List<Provincium>();
+    public virtual ICollection<Provincia> Provincia { get; set; } = new List<Provincia>();
 }

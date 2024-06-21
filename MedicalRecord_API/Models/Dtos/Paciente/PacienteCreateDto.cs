@@ -1,6 +1,4 @@
-﻿using MedicalRecord_API.Models.Dtos.DetalleAlergia;
-
-namespace MedicalRecord_API.Models.Dtos.Paciente
+﻿namespace MedicalRecord_API.Models.Dtos.Paciente
 {
     public class PacienteCreateDto
     {
@@ -77,7 +75,7 @@ namespace MedicalRecord_API.Models.Dtos.Paciente
 
         public bool? Alergico { get; set; }
 
-        public virtual ICollection<DetalleAlergiaCreateDto>? Detallealergia { get; set; } = [];
+        public virtual ICollection<DetalleAlergiaDto>? Detallealergia { get; set; } = [];
         #endregion Antecedentes
     }
 }

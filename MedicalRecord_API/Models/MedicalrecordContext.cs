@@ -1,64 +1,64 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
 
 namespace MedicalRecord_API.Models;
 
-public partial class DbhistoriasContext : DbContext
+public partial class MedicalrecordContext : DbContext
 {
-    public DbhistoriasContext()
+    public MedicalrecordContext()
     {
     }
 
-    public DbhistoriasContext(DbContextOptions<DbhistoriasContext> options)
+    public MedicalrecordContext(DbContextOptions<MedicalrecordContext> options)
         : base(options)
     {
     }
 
-    public virtual DbSet<Alergium> Alergia { get; set; }
+    public virtual DbSet<Alergia> Alergias { get; set; }
 
-    public virtual DbSet<Ciaseguro> Ciaseguros { get; set; }
+    public virtual DbSet<Antecedente> Antecedentes { get; set; }
 
-    public virtual DbSet<Cie> Cies { get; set; }
+    public virtual DbSet<Consulta> Consultas { get; set; }
 
-    public virtual DbSet<Consultum> Consulta { get; set; }
+    public virtual DbSet<Contacto> Contactos { get; set; }
+
+    public virtual DbSet<Cy> Cies { get; set; }
 
     public virtual DbSet<Departamento> Departamentos { get; set; }
 
-    public virtual DbSet<Detallealergium> Detallealergia { get; set; }
-
-    public virtual DbSet<Detalleexaman> Detalleexamen { get; set; }
-
-    public virtual DbSet<Detalleprocedimiento> Detalleprocedimientos { get; set; }
+    public virtual DbSet<Detallealergia> Detallealergias { get; set; }
 
     public virtual DbSet<Diabete> Diabetes { get; set; }
 
-    public virtual DbSet<Directorio> Directorios { get; set; }
-
     public virtual DbSet<Distrito> Distritos { get; set; }
 
-    public virtual DbSet<Examenlaboratorio> Examenlaboratorios { get; set; }
+    public virtual DbSet<Examene> Examenes { get; set; }
 
     public virtual DbSet<Laboratorio> Laboratorios { get; set; }
-
-    public virtual DbSet<Medicacion> Medicacions { get; set; }
 
     public virtual DbSet<Medicamento> Medicamentos { get; set; }
 
     public virtual DbSet<Medidalente> Medidalentes { get; set; }
 
-    public virtual DbSet<Ocupacion> Ocupacions { get; set; }
+    public virtual DbSet<Ocupacione> Ocupaciones { get; set; }
+
+    public virtual DbSet<Ordenesmedica> Ordenesmedicas { get; set; }
 
     public virtual DbSet<Paciente> Pacientes { get; set; }
 
     public virtual DbSet<Parentesco> Parentescos { get; set; }
 
-    public virtual DbSet<Presentacion> Presentacions { get; set; }
+    public virtual DbSet<Presentacione> Presentaciones { get; set; }
 
-    public virtual DbSet<Procedimiento> Procedimientos { get; set; }
+    public virtual DbSet<Provincia> Provincias { get; set; }
 
-    public virtual DbSet<Provincium> Provincia { get; set; }
+    public virtual DbSet<Receta> Recetas { get; set; }
+
+    public virtual DbSet<Seguro> Seguros { get; set; }
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
-
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -66,59 +66,79 @@ public partial class DbhistoriasContext : DbContext
             .UseCollation("utf8mb4_0900_ai_ci")
             .HasCharSet("utf8mb4");
 
-        modelBuilder.Entity<Alergium>(entity =>
+        modelBuilder.Entity<Alergia>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("alergia");
+            entity.ToTable("alergias");
 
             entity.HasIndex(e => e.Nombre, "nombre").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.IsDelete)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("isDelete");
             entity.Property(e => e.Nombre)
                 .HasMaxLength(50)
                 .HasColumnName("nombre");
         });
 
-        modelBuilder.Entity<Ciaseguro>(entity =>
+        modelBuilder.Entity<Antecedente>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("ciaseguro");
+            entity.ToTable("antecedentes");
 
-            entity.HasIndex(e => e.Nombre, "nombre").IsUnique();
+            entity.HasIndex(e => e.IdDiabete, "idDiabete");
+
+            entity.HasIndex(e => e.IdPaciente, "idPaciente").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Abreviatura)
-                .HasMaxLength(20)
-                .HasColumnName("abreviatura");
-            entity.Property(e => e.Nombre)
-                .HasMaxLength(50)
-                .HasColumnName("nombre");
+            entity.Property(e => e.AntecedentesClinicos)
+                .HasMaxLength(150)
+                .HasColumnName("antecedentesClinicos");
+            entity.Property(e => e.AntecedentesFamiliares)
+                .HasMaxLength(150)
+                .HasColumnName("antecedentesFamiliares");
+            entity.Property(e => e.CampoVisual)
+                .HasMaxLength(6)
+                .HasColumnName("campoVisual");
+            entity.Property(e => e.FechaActualizacion)
+                .ValueGeneratedOnAddOrUpdate()
+                .HasColumnType("datetime")
+                .HasColumnName("fechaActualizacion");
+            entity.Property(e => e.FechaCreacion)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("datetime")
+                .HasColumnName("fechaCreacion");
+            entity.Property(e => e.IdDiabete).HasColumnName("idDiabete");
+            entity.Property(e => e.IdPaciente).HasColumnName("idPaciente");
+            entity.Property(e => e.IsDelete)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("isDelete");
+            entity.Property(e => e.PresionArterial)
+                .HasMaxLength(3)
+                .HasDefaultValueSql("'1'")
+                .IsFixedLength()
+                .HasColumnName("presionArterial");
+
+            entity.HasOne(d => d.IdDiabeteNavigation).WithMany(p => p.Antecedentes)
+                .HasForeignKey(d => d.IdDiabete)
+                .HasConstraintName("antecedentes_ibfk_1");
+
+            entity.HasOne(d => d.IdPacienteNavigation).WithOne(p => p.Antecedente)
+                .HasForeignKey<Antecedente>(d => d.IdPaciente)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("antecedentes_ibfk_2");
         });
 
-        modelBuilder.Entity<Cie>(entity =>
+        modelBuilder.Entity<Consulta>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("cie");
+            entity.ToTable("consultas");
 
-            entity.HasIndex(e => e.Codigo, "codigo").IsUnique();
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Codigo)
-                .HasMaxLength(5)
-                .HasColumnName("codigo");
-            entity.Property(e => e.Enfermedad)
-                .HasMaxLength(120)
-                .HasColumnName("enfermedad");
-        });
-
-        modelBuilder.Entity<Consultum>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
-
-            entity.ToTable("consulta");
+            entity.HasIndex(e => e.Correlacional, "Correlacional").IsUnique();
 
             entity.HasIndex(e => e.IdCie, "idCie");
 
@@ -126,9 +146,8 @@ public partial class DbhistoriasContext : DbContext
 
             entity.HasIndex(e => e.IdUsuario, "idUsuario");
 
-            entity.HasIndex(e => e.NumeroConsulta, "numeroConsulta").IsUnique();
-
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Correlacional).HasMaxLength(7);
             entity.Property(e => e.Davcc)
                 .HasMaxLength(10)
                 .HasColumnName("davcc");
@@ -164,12 +183,12 @@ public partial class DbhistoriasContext : DbContext
             entity.Property(e => e.Ipio)
                 .HasMaxLength(10)
                 .HasColumnName("ipio");
+            entity.Property(e => e.IsDelete)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("isDelete");
             entity.Property(e => e.Motivo)
                 .HasMaxLength(80)
                 .HasColumnName("motivo");
-            entity.Property(e => e.NumeroConsulta)
-                .HasMaxLength(7)
-                .HasColumnName("numeroConsulta");
             entity.Property(e => e.Shimer)
                 .HasMaxLength(10)
                 .HasColumnName("shimer");
@@ -180,24 +199,80 @@ public partial class DbhistoriasContext : DbContext
             entity.HasOne(d => d.IdCieNavigation).WithMany(p => p.Consulta)
                 .HasForeignKey(d => d.IdCie)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("consulta_ibfk_1");
+                .HasConstraintName("consultas_ibfk_1");
 
             entity.HasOne(d => d.IdPacienteNavigation).WithMany(p => p.Consulta)
                 .HasForeignKey(d => d.IdPaciente)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("consulta_ibfk_3");
+                .HasConstraintName("consultas_ibfk_3");
 
             entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.Consulta)
                 .HasForeignKey(d => d.IdUsuario)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("consulta_ibfk_2");
+                .HasConstraintName("consultas_ibfk_2");
+        });
+
+        modelBuilder.Entity<Contacto>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("contactos");
+
+            entity.HasIndex(e => e.IdPaciente, "idPaciente");
+
+            entity.HasIndex(e => e.IdParentesco, "idParentesco");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Celular)
+                .HasMaxLength(20)
+                .HasColumnName("celular");
+            entity.Property(e => e.IdPaciente).HasColumnName("idPaciente");
+            entity.Property(e => e.IdParentesco).HasColumnName("idParentesco");
+            entity.Property(e => e.IsDelete)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("isDelete");
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(50)
+                .HasColumnName("nombre");
+            entity.Property(e => e.Telefono)
+                .HasMaxLength(20)
+                .HasColumnName("telefono");
+
+            entity.HasOne(d => d.IdPacienteNavigation).WithMany(p => p.Contactos)
+                .HasForeignKey(d => d.IdPaciente)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("contactos_ibfk_2");
+
+            entity.HasOne(d => d.IdParentescoNavigation).WithMany(p => p.Contactos)
+                .HasForeignKey(d => d.IdParentesco)
+                .HasConstraintName("contactos_ibfk_1");
+        });
+
+        modelBuilder.Entity<Cy>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("cies");
+
+            entity.HasIndex(e => e.Codigo, "codigo").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Codigo)
+                .HasMaxLength(5)
+                .HasColumnName("codigo");
+            entity.Property(e => e.IsDelete)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("isDelete");
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(50)
+                .HasColumnName("nombre");
         });
 
         modelBuilder.Entity<Departamento>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("departamento");
+            entity.ToTable("departamentos");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Nombre)
@@ -205,19 +280,22 @@ public partial class DbhistoriasContext : DbContext
                 .HasColumnName("nombre");
         });
 
-        modelBuilder.Entity<Detallealergium>(entity =>
+        modelBuilder.Entity<Detallealergia>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("detallealergia");
+            entity.ToTable("detallealergias");
 
             entity.HasIndex(e => e.IdAlergia, "idAlergia");
 
-            entity.HasIndex(e => e.IdPaciente, "idPaciente");
+            entity.HasIndex(e => e.IdAntecedente, "idAntecedente");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.IdAlergia).HasColumnName("idAlergia");
-            entity.Property(e => e.IdPaciente).HasColumnName("idPaciente");
+            entity.Property(e => e.IdAntecedente).HasColumnName("idAntecedente");
+            entity.Property(e => e.IsDelete)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("isDelete");
             entity.Property(e => e.Reacciones)
                 .HasMaxLength(200)
                 .HasColumnName("reacciones");
@@ -225,99 +303,12 @@ public partial class DbhistoriasContext : DbContext
             entity.HasOne(d => d.IdAlergiaNavigation).WithMany(p => p.Detallealergia)
                 .HasForeignKey(d => d.IdAlergia)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("detallealergia_ibfk_1");
+                .HasConstraintName("detallealergias_ibfk_1");
 
-            entity.HasOne(d => d.IdPacienteNavigation).WithMany(p => p.Detallealergia)
-                .HasForeignKey(d => d.IdPaciente)
+            entity.HasOne(d => d.IdAntecedenteNavigation).WithMany(p => p.Detallealergia)
+                .HasForeignKey(d => d.IdAntecedente)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("detallealergia_ibfk_2");
-        });
-
-        modelBuilder.Entity<Detalleexaman>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
-
-            entity.ToTable("detalleexamen");
-
-            entity.HasIndex(e => e.IdConsulta, "idConsulta");
-
-            entity.HasIndex(e => e.IdExamenLab, "idExamenLab");
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Detalle)
-                .HasMaxLength(255)
-                .HasColumnName("detalle");
-            entity.Property(e => e.FechaRegistro)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("datetime")
-                .HasColumnName("fechaRegistro");
-            entity.Property(e => e.FechaResultado)
-                .ValueGeneratedOnAddOrUpdate()
-                .HasColumnType("datetime")
-                .HasColumnName("fechaResultado");
-            entity.Property(e => e.IdConsulta).HasColumnName("idConsulta");
-            entity.Property(e => e.IdExamenLab).HasColumnName("idExamenLab");
-            entity.Property(e => e.Resultado)
-                .HasMaxLength(500)
-                .HasColumnName("resultado");
-
-            entity.HasOne(d => d.IdConsultaNavigation).WithMany(p => p.Detalleexamen)
-                .HasForeignKey(d => d.IdConsulta)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("detalleexamen_ibfk_1");
-
-            entity.HasOne(d => d.IdExamenLabNavigation).WithMany(p => p.Detalleexamen)
-                .HasForeignKey(d => d.IdExamenLab)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("detalleexamen_ibfk_2");
-        });
-
-        modelBuilder.Entity<Detalleprocedimiento>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
-
-            entity.ToTable("detalleprocedimiento");
-
-            entity.HasIndex(e => e.IdConsulta, "idConsulta");
-
-            entity.HasIndex(e => e.IdProcedimiento, "idProcedimiento");
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Detalle)
-                .HasMaxLength(255)
-                .HasColumnName("detalle");
-            entity.Property(e => e.Directorio)
-                .HasMaxLength(500)
-                .HasColumnName("directorio");
-            entity.Property(e => e.FechaRegistro)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("datetime")
-                .HasColumnName("fechaRegistro");
-            entity.Property(e => e.FechaResultado)
-                .ValueGeneratedOnAddOrUpdate()
-                .HasColumnType("datetime")
-                .HasColumnName("fechaResultado");
-            entity.Property(e => e.IdConsulta).HasColumnName("idConsulta");
-            entity.Property(e => e.IdProcedimiento).HasColumnName("idProcedimiento");
-            entity.Property(e => e.Imagenes)
-                .HasDefaultValueSql("'0'")
-                .HasColumnName("imagenes");
-            entity.Property(e => e.Indicacion)
-                .HasMaxLength(255)
-                .HasColumnName("indicacion");
-            entity.Property(e => e.Resultado)
-                .HasMaxLength(500)
-                .HasColumnName("resultado");
-
-            entity.HasOne(d => d.IdConsultaNavigation).WithMany(p => p.Detalleprocedimientos)
-                .HasForeignKey(d => d.IdConsulta)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("detalleprocedimiento_ibfk_1");
-
-            entity.HasOne(d => d.IdProcedimientoNavigation).WithMany(p => p.Detalleprocedimientos)
-                .HasForeignKey(d => d.IdProcedimiento)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("detalleprocedimiento_ibfk_2");
+                .HasConstraintName("detallealergias_ibfk_2");
         });
 
         modelBuilder.Entity<Diabete>(entity =>
@@ -326,54 +317,25 @@ public partial class DbhistoriasContext : DbContext
 
             entity.ToTable("diabetes");
 
-            entity.HasIndex(e => e.Tipo, "tipo").IsUnique();
+            entity.HasIndex(e => e.Nombre, "nombre").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Detalle)
                 .HasMaxLength(100)
                 .HasColumnName("detalle");
-            entity.Property(e => e.Tipo)
-                .HasMaxLength(50)
-                .HasColumnName("tipo");
-        });
-
-        modelBuilder.Entity<Directorio>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
-
-            entity.ToTable("directorio");
-
-            entity.HasIndex(e => e.Nombre, "nombre").IsUnique();
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Celular)
-                .HasMaxLength(40)
-                .HasColumnName("celular");
-            entity.Property(e => e.Direccion)
-                .HasMaxLength(180)
-                .HasColumnName("direccion");
-            entity.Property(e => e.Email)
-                .HasMaxLength(80)
-                .HasColumnName("email");
-            entity.Property(e => e.Estado)
-                .HasDefaultValueSql("'1'")
-                .HasColumnName("estado");
+            entity.Property(e => e.IsDelete)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("isDelete");
             entity.Property(e => e.Nombre)
-                .HasMaxLength(80)
+                .HasMaxLength(50)
                 .HasColumnName("nombre");
-            entity.Property(e => e.Representante)
-                .HasMaxLength(80)
-                .HasColumnName("representante");
-            entity.Property(e => e.Telefono)
-                .HasMaxLength(40)
-                .HasColumnName("telefono");
         });
 
         modelBuilder.Entity<Distrito>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("distrito");
+            entity.ToTable("distritos");
 
             entity.HasIndex(e => e.IdProvincia, "idProvincia");
 
@@ -386,82 +348,52 @@ public partial class DbhistoriasContext : DbContext
             entity.HasOne(d => d.IdProvinciaNavigation).WithMany(p => p.Distritos)
                 .HasForeignKey(d => d.IdProvincia)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("distrito_ibfk_1");
+                .HasConstraintName("distritos_ibfk_1");
         });
 
-        modelBuilder.Entity<Examenlaboratorio>(entity =>
+        modelBuilder.Entity<Examene>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("examenlaboratorio");
+            entity.ToTable("examenes");
 
             entity.HasIndex(e => e.Nombre, "nombre").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Abreviatura)
-                .HasMaxLength(20)
-                .HasColumnName("abreviatura");
+            entity.Property(e => e.IsDelete)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("isDelete");
             entity.Property(e => e.Nombre)
                 .HasMaxLength(50)
                 .HasColumnName("nombre");
+            entity.Property(e => e.Tipo)
+                .HasMaxLength(15)
+                .HasDefaultValueSql("'general'")
+                .HasColumnName("tipo");
         });
 
         modelBuilder.Entity<Laboratorio>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("laboratorio");
+            entity.ToTable("laboratorios");
 
             entity.HasIndex(e => e.Nombre, "nombre").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Abreviatura)
-                .HasMaxLength(4)
-                .HasColumnName("abreviatura");
+            entity.Property(e => e.IsDelete)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("isDelete");
             entity.Property(e => e.Nombre)
                 .HasMaxLength(40)
                 .HasColumnName("nombre");
-        });
-
-        modelBuilder.Entity<Medicacion>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
-
-            entity.ToTable("medicacion");
-
-            entity.HasIndex(e => e.IdConsulta, "idConsulta");
-
-            entity.HasIndex(e => e.IdMedicamento, "idMedicamento");
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Dosis)
-                .HasMaxLength(80)
-                .HasColumnName("dosis");
-            entity.Property(e => e.IdConsulta).HasColumnName("idConsulta");
-            entity.Property(e => e.IdMedicamento).HasColumnName("idMedicamento");
-            entity.Property(e => e.Indicacion)
-                .HasMaxLength(300)
-                .HasColumnName("indicacion");
-            entity.Property(e => e.OrdenMedica)
-                .HasMaxLength(500)
-                .HasColumnName("ordenMedica");
-
-            entity.HasOne(d => d.IdConsultaNavigation).WithMany(p => p.Medicacions)
-                .HasForeignKey(d => d.IdConsulta)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("medicacion_ibfk_1");
-
-            entity.HasOne(d => d.IdMedicamentoNavigation).WithMany(p => p.Medicacions)
-                .HasForeignKey(d => d.IdMedicamento)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("medicacion_ibfk_2");
         });
 
         modelBuilder.Entity<Medicamento>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("medicamento");
+            entity.ToTable("medicamentos");
 
             entity.HasIndex(e => e.Codigo, "codigo").IsUnique();
 
@@ -473,46 +405,62 @@ public partial class DbhistoriasContext : DbContext
             entity.Property(e => e.Codigo)
                 .HasMaxLength(7)
                 .HasColumnName("codigo");
+            entity.Property(e => e.Comercial)
+                .HasMaxLength(50)
+                .HasColumnName("comercial");
+            entity.Property(e => e.Costo)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("costo");
             entity.Property(e => e.Dosis)
-                .HasMaxLength(80)
+                .HasMaxLength(20)
                 .HasColumnName("dosis");
             entity.Property(e => e.Estado)
                 .HasMaxLength(1)
+                .HasDefaultValueSql("'2'")
                 .IsFixedLength()
                 .HasColumnName("estado");
+            entity.Property(e => e.Generico)
+                .HasMaxLength(50)
+                .HasColumnName("generico");
             entity.Property(e => e.IdLaboratorio).HasColumnName("idLaboratorio");
             entity.Property(e => e.IdPresentacion).HasColumnName("idPresentacion");
             entity.Property(e => e.Indicacion)
                 .HasMaxLength(180)
                 .HasColumnName("indicacion");
-            entity.Property(e => e.NombreComercial)
-                .HasMaxLength(50)
-                .HasColumnName("nombreComercial");
-            entity.Property(e => e.NombreGenerico)
-                .HasMaxLength(50)
-                .HasColumnName("nombreGenerico");
+            entity.Property(e => e.IsDelete)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("isDelete");
+            entity.Property(e => e.Stock)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("stock");
+            entity.Property(e => e.Ubicacion)
+                .HasMaxLength(20)
+                .HasColumnName("ubicacion");
 
             entity.HasOne(d => d.IdLaboratorioNavigation).WithMany(p => p.Medicamentos)
                 .HasForeignKey(d => d.IdLaboratorio)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("medicamento_ibfk_2");
+                .HasConstraintName("medicamentos_ibfk_2");
 
             entity.HasOne(d => d.IdPresentacionNavigation).WithMany(p => p.Medicamentos)
                 .HasForeignKey(d => d.IdPresentacion)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("medicamento_ibfk_1");
+                .HasConstraintName("medicamentos_ibfk_1");
         });
 
         modelBuilder.Entity<Medidalente>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("medidalente");
+            entity.ToTable("medidalentes");
 
             entity.HasIndex(e => e.IdConsulta, "idConsulta");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.IdConsulta).HasColumnName("idConsulta");
+            entity.Property(e => e.IsDelete)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("isDelete");
             entity.Property(e => e.Obsc)
                 .HasMaxLength(120)
                 .HasColumnName("OBSC");
@@ -574,14 +522,14 @@ public partial class DbhistoriasContext : DbContext
             entity.HasOne(d => d.IdConsultaNavigation).WithMany(p => p.Medidalentes)
                 .HasForeignKey(d => d.IdConsulta)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("medidalente_ibfk_1");
+                .HasConstraintName("medidalentes_ibfk_1");
         });
 
-        modelBuilder.Entity<Ocupacion>(entity =>
+        modelBuilder.Entity<Ocupacione>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("ocupacion");
+            entity.ToTable("ocupaciones");
 
             entity.HasIndex(e => e.Nombre, "nombre").IsUnique();
 
@@ -589,30 +537,74 @@ public partial class DbhistoriasContext : DbContext
             entity.Property(e => e.Detalle)
                 .HasMaxLength(50)
                 .HasColumnName("detalle");
+            entity.Property(e => e.IsDelete)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("isDelete");
             entity.Property(e => e.Nombre)
                 .HasMaxLength(60)
                 .HasColumnName("nombre");
+        });
+
+        modelBuilder.Entity<Ordenesmedica>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("ordenesmedicas");
+
+            entity.HasIndex(e => e.IdConsulta, "idConsulta");
+
+            entity.HasIndex(e => e.IdExamen, "idExamen");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Descripcion)
+                .HasMaxLength(50)
+                .HasColumnName("descripcion");
+            entity.Property(e => e.FechaCreacion)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("datetime")
+                .HasColumnName("fechaCreacion");
+            entity.Property(e => e.FechaResultados)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("datetime")
+                .HasColumnName("fechaResultados");
+            entity.Property(e => e.IdConsulta).HasColumnName("idConsulta");
+            entity.Property(e => e.IdExamen).HasColumnName("idExamen");
+            entity.Property(e => e.IsDelete)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("isDelete");
+            entity.Property(e => e.NombreExamen)
+                .HasMaxLength(50)
+                .HasColumnName("nombreExamen");
+            entity.Property(e => e.Resultados)
+                .HasMaxLength(20)
+                .HasColumnName("resultados");
+
+            entity.HasOne(d => d.IdConsultaNavigation).WithMany(p => p.Ordenesmedicas)
+                .HasForeignKey(d => d.IdConsulta)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("ordenesmedicas_ibfk_1");
+
+            entity.HasOne(d => d.IdExamenNavigation).WithMany(p => p.Ordenesmedicas)
+                .HasForeignKey(d => d.IdExamen)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("ordenesmedicas_ibfk_2");
         });
 
         modelBuilder.Entity<Paciente>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("paciente");
-
-            entity.HasIndex(e => e.IdCiaSeguro, "idCiaSeguro");
+            entity.ToTable("pacientes");
 
             entity.HasIndex(e => e.IdDepartamento, "idDepartamento");
-
-            entity.HasIndex(e => e.IdDiabetes, "idDiabetes");
 
             entity.HasIndex(e => e.IdDistrito, "idDistrito");
 
             entity.HasIndex(e => e.IdOcupacion, "idOcupacion");
 
-            entity.HasIndex(e => e.IdParentesco, "idParentesco");
-
             entity.HasIndex(e => e.IdProvincia, "idProvincia");
+
+            entity.HasIndex(e => e.IdSeguro, "idSeguro");
 
             entity.HasIndex(e => e.NumeroCarnet, "numeroCarnet").IsUnique();
 
@@ -625,27 +617,9 @@ public partial class DbhistoriasContext : DbContext
             entity.Property(e => e.APaterno)
                 .HasMaxLength(25)
                 .HasColumnName("aPaterno");
-            entity.Property(e => e.Alergico)
-                .HasDefaultValueSql("'0'")
-                .HasColumnName("alergico");
-            entity.Property(e => e.AntecedentesClinicos)
-                .HasMaxLength(150)
-                .HasColumnName("antecedentesClinicos");
-            entity.Property(e => e.AntecedentesFamiliares)
-                .HasMaxLength(150)
-                .HasColumnName("antecedentesFamiliares");
-            entity.Property(e => e.Asegurado)
-                .HasDefaultValueSql("'0'")
-                .HasColumnName("asegurado");
-            entity.Property(e => e.CampoVisual)
-                .HasMaxLength(6)
-                .HasColumnName("campoVisual");
             entity.Property(e => e.Celular)
                 .HasMaxLength(20)
                 .HasColumnName("celular");
-            entity.Property(e => e.CelularContacto)
-                .HasMaxLength(20)
-                .HasColumnName("celularContacto");
             entity.Property(e => e.CentroTrabajo)
                 .HasMaxLength(40)
                 .HasColumnName("centroTrabajo");
@@ -654,12 +628,6 @@ public partial class DbhistoriasContext : DbContext
                 .HasDefaultValueSql("'0'")
                 .IsFixedLength()
                 .HasColumnName("condicion");
-            entity.Property(e => e.Contacto)
-                .HasMaxLength(50)
-                .HasColumnName("contacto");
-            entity.Property(e => e.Diabetico)
-                .HasDefaultValueSql("'0'")
-                .HasColumnName("diabetico");
             entity.Property(e => e.Direccion)
                 .HasMaxLength(60)
                 .HasColumnName("direccion");
@@ -674,14 +642,6 @@ public partial class DbhistoriasContext : DbContext
                 .HasDefaultValueSql("'0'")
                 .IsFixedLength()
                 .HasColumnName("estadoCivil");
-            entity.Property(e => e.FechaActualizacion)
-                .ValueGeneratedOnAddOrUpdate()
-                .HasColumnType("datetime")
-                .HasColumnName("fechaActualizacion");
-            entity.Property(e => e.FechaCreacion)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("datetime")
-                .HasColumnName("fechaCreacion");
             entity.Property(e => e.FechaNacimiento)
                 .HasColumnType("datetime")
                 .HasColumnName("fechaNacimiento");
@@ -689,20 +649,27 @@ public partial class DbhistoriasContext : DbContext
                 .HasMaxLength(10)
                 .HasDefaultValueSql("'0'")
                 .HasColumnName("grupoSanguineo");
-            entity.Property(e => e.IdCiaSeguro).HasColumnName("idCiaSeguro");
             entity.Property(e => e.IdDepartamento).HasColumnName("idDepartamento");
-            entity.Property(e => e.IdDiabetes).HasColumnName("idDiabetes");
             entity.Property(e => e.IdDistrito).HasColumnName("idDistrito");
             entity.Property(e => e.IdOcupacion).HasColumnName("idOcupacion");
-            entity.Property(e => e.IdParentesco).HasColumnName("idParentesco");
             entity.Property(e => e.IdProvincia).HasColumnName("idProvincia");
+            entity.Property(e => e.IdSeguro).HasColumnName("idSeguro");
+            entity.Property(e => e.IsAlergico)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("isAlergico");
+            entity.Property(e => e.IsAsegurado)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("isAsegurado");
+            entity.Property(e => e.IsDelete)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("isDelete");
+            entity.Property(e => e.IsDiabetico)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("isDiabetico");
             entity.Property(e => e.Nacionalidad)
                 .HasMaxLength(1)
                 .IsFixedLength()
                 .HasColumnName("nacionalidad");
-            entity.Property(e => e.Nombres)
-                .HasMaxLength(50)
-                .HasColumnName("nombres");
             entity.Property(e => e.NumeroCarnet)
                 .HasMaxLength(10)
                 .HasColumnName("numeroCarnet");
@@ -712,11 +679,12 @@ public partial class DbhistoriasContext : DbContext
             entity.Property(e => e.Perfil)
                 .HasMaxLength(200)
                 .HasColumnName("perfil");
-            entity.Property(e => e.PresionArterial)
-                .HasMaxLength(3)
-                .HasDefaultValueSql("'1'")
-                .IsFixedLength()
-                .HasColumnName("presionArterial");
+            entity.Property(e => e.PrimerNombre)
+                .HasMaxLength(50)
+                .HasColumnName("primerNombre");
+            entity.Property(e => e.SegundoNombre)
+                .HasMaxLength(50)
+                .HasColumnName("segundoNombre");
             entity.Property(e => e.Sexo)
                 .HasMaxLength(1)
                 .IsFixedLength()
@@ -724,101 +692,76 @@ public partial class DbhistoriasContext : DbContext
             entity.Property(e => e.Telefono)
                 .HasMaxLength(20)
                 .HasColumnName("telefono");
-            entity.Property(e => e.TelefonoContacto)
-                .HasMaxLength(20)
-                .HasColumnName("telefonoContacto");
             entity.Property(e => e.TipoDocumento)
                 .HasMaxLength(1)
                 .HasDefaultValueSql("'0'")
                 .IsFixedLength()
                 .HasColumnName("tipoDocumento");
 
-            entity.HasOne(d => d.IdCiaSeguroNavigation).WithMany(p => p.Pacientes)
-                .HasForeignKey(d => d.IdCiaSeguro)
-                .HasConstraintName("paciente_ibfk_4");
-
             entity.HasOne(d => d.IdDepartamentoNavigation).WithMany(p => p.Pacientes)
                 .HasForeignKey(d => d.IdDepartamento)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("paciente_ibfk_1");
-
-            entity.HasOne(d => d.IdDiabetesNavigation).WithMany(p => p.Pacientes)
-                .HasForeignKey(d => d.IdDiabetes)
-                .HasConstraintName("paciente_ibfk_7");
+                .HasConstraintName("pacientes_ibfk_1");
 
             entity.HasOne(d => d.IdDistritoNavigation).WithMany(p => p.Pacientes)
                 .HasForeignKey(d => d.IdDistrito)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("paciente_ibfk_3");
+                .HasConstraintName("pacientes_ibfk_3");
 
             entity.HasOne(d => d.IdOcupacionNavigation).WithMany(p => p.Pacientes)
                 .HasForeignKey(d => d.IdOcupacion)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("paciente_ibfk_6");
-
-            entity.HasOne(d => d.IdParentescoNavigation).WithMany(p => p.Pacientes)
-                .HasForeignKey(d => d.IdParentesco)
-                .HasConstraintName("paciente_ibfk_5");
+                .HasConstraintName("pacientes_ibfk_4");
 
             entity.HasOne(d => d.IdProvinciaNavigation).WithMany(p => p.Pacientes)
                 .HasForeignKey(d => d.IdProvincia)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("paciente_ibfk_2");
+                .HasConstraintName("pacientes_ibfk_2");
+
+            entity.HasOne(d => d.IdSeguroNavigation).WithMany(p => p.Pacientes)
+                .HasForeignKey(d => d.IdSeguro)
+                .HasConstraintName("pacientes_ibfk_5");
         });
 
         modelBuilder.Entity<Parentesco>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("parentesco");
-
-            entity.HasIndex(e => e.Valor, "valor").IsUnique();
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Valor)
-                .HasMaxLength(20)
-                .HasColumnName("valor");
-        });
-
-        modelBuilder.Entity<Presentacion>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
-
-            entity.ToTable("presentacion");
+            entity.ToTable("parentescos");
 
             entity.HasIndex(e => e.Nombre, "nombre").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Abreviatura)
-                .HasMaxLength(4)
-                .HasColumnName("abreviatura");
+            entity.Property(e => e.IsDelete)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("isDelete");
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(20)
+                .HasColumnName("nombre");
+        });
+
+        modelBuilder.Entity<Presentacione>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("presentaciones");
+
+            entity.HasIndex(e => e.Nombre, "nombre").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.IsDelete)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("isDelete");
             entity.Property(e => e.Nombre)
                 .HasMaxLength(30)
                 .HasColumnName("nombre");
         });
 
-        modelBuilder.Entity<Procedimiento>(entity =>
+        modelBuilder.Entity<Provincia>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("procedimiento");
-
-            entity.HasIndex(e => e.Nombre, "nombre").IsUnique();
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Abreviatura)
-                .HasMaxLength(20)
-                .HasColumnName("abreviatura");
-            entity.Property(e => e.Nombre)
-                .HasMaxLength(50)
-                .HasColumnName("nombre");
-        });
-
-        modelBuilder.Entity<Provincium>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PRIMARY");
-
-            entity.ToTable("provincia");
+            entity.ToTable("provincias");
 
             entity.HasIndex(e => e.IdDepartamento, "idDepartamento");
 
@@ -831,23 +774,77 @@ public partial class DbhistoriasContext : DbContext
             entity.HasOne(d => d.IdDepartamentoNavigation).WithMany(p => p.Provincia)
                 .HasForeignKey(d => d.IdDepartamento)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("provincia_ibfk_1");
+                .HasConstraintName("provincias_ibfk_1");
+        });
+
+        modelBuilder.Entity<Receta>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("recetas");
+
+            entity.HasIndex(e => e.IdConsulta, "idConsulta");
+
+            entity.HasIndex(e => e.IdMedicamento, "idMedicamento");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Diagnostico)
+                .HasMaxLength(250)
+                .HasColumnName("diagnostico");
+            entity.Property(e => e.Dosis)
+                .HasMaxLength(15)
+                .HasColumnName("dosis");
+            entity.Property(e => e.Frecuencia)
+                .HasMaxLength(15)
+                .HasColumnName("frecuencia");
+            entity.Property(e => e.IdConsulta).HasColumnName("idConsulta");
+            entity.Property(e => e.IdMedicamento).HasColumnName("idMedicamento");
+            entity.Property(e => e.Indicaciones)
+                .HasMaxLength(50)
+                .HasColumnName("indicaciones");
+            entity.Property(e => e.IsDelete)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("isDelete");
+
+            entity.HasOne(d => d.IdConsultaNavigation).WithMany(p => p.Receta)
+                .HasForeignKey(d => d.IdConsulta)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("recetas_ibfk_1");
+
+            entity.HasOne(d => d.IdMedicamentoNavigation).WithMany(p => p.Receta)
+                .HasForeignKey(d => d.IdMedicamento)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("recetas_ibfk_2");
+        });
+
+        modelBuilder.Entity<Seguro>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("seguros");
+
+            entity.HasIndex(e => e.Nombre, "nombre").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.IsDelete)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("isDelete");
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(50)
+                .HasColumnName("nombre");
         });
 
         modelBuilder.Entity<Usuario>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("usuario");
+            entity.ToTable("usuarios");
 
             entity.HasIndex(e => e.Correo, "correo").IsUnique();
 
             entity.HasIndex(e => e.Nombre, "nombre").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Activo)
-                .HasDefaultValueSql("'1'")
-                .HasColumnName("activo");
             entity.Property(e => e.Cargo)
                 .HasMaxLength(30)
                 .HasColumnName("cargo");
@@ -868,19 +865,19 @@ public partial class DbhistoriasContext : DbContext
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("datetime")
                 .HasColumnName("fechaRegistro");
+            entity.Property(e => e.IsActivo)
+                .HasDefaultValueSql("'1'")
+                .HasColumnName("isActivo");
+            entity.Property(e => e.IsDelete)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("isDelete");
             entity.Property(e => e.Nombre)
                 .HasMaxLength(50)
                 .HasColumnName("nombre");
-            entity.Property(e => e.NroColMedico)
-                .HasMaxLength(6)
-                .HasColumnName("nroColMedico");
             entity.Property(e => e.Rol)
                 .HasMaxLength(20)
+                .HasDefaultValueSql("'cliente'")
                 .HasColumnName("rol");
-            entity.Property(e => e.UltimaSesion)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnType("datetime")
-                .HasColumnName("ultimaSesion");
         });
 
         OnModelCreatingPartial(modelBuilder);

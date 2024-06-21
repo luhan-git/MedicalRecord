@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
 using MedicalRecord_API.Models;
-using MedicalRecord_API.Models.Dtos.Alergia;
 using MedicalRecord_API.Models.Dtos.CiaSeguro;
 using MedicalRecord_API.Models.Dtos.Cie;
-using MedicalRecord_API.Models.Dtos.Consulta;
-using MedicalRecord_API.Models.Dtos.DetalleAlergia;
 using MedicalRecord_API.Models.Dtos.Diabetes;
 using MedicalRecord_API.Models.Dtos.Directorio;
 using MedicalRecord_API.Models.Dtos.ExamenLab;
@@ -31,101 +28,124 @@ namespace MedicalRecord_API.Utils.AutoMapper
             CreateMap<Usuario, PerfilDto>().ReverseMap();
             #endregion Usuario
 
-            #region Cie
-            CreateMap<Cie, CieDto>().ReverseMap();
-            CreateMap<Cie, CieCreateDto>().ReverseMap();
-            CreateMap<Cie, CieUpdateDto>().ReverseMap();
-            #endregion Cie
+            //#region Cie
+            //CreateMap<Cie, CieDto>().ReverseMap();
+            //CreateMap<Cie, CieCreateDto>().ReverseMap();
+            //CreateMap<Cie, CieUpdateDto>().ReverseMap();
+            //#endregion Cie
 
-            #region Presentacion
-            CreateMap<Presentacion, PresentacionDto>().ReverseMap();
-            CreateMap<Presentacion, PresentacionCreateDto>().ReverseMap();
-            CreateMap<Presentacion, PresentacionUpdateDto>().ReverseMap();
-            #endregion Presentacion
+            //#region Presentacion
+            //CreateMap<Presentacion, PresentacionDto>().ReverseMap();
+            //CreateMap<Presentacion, PresentacionCreateDto>().ReverseMap();
+            //CreateMap<Presentacion, PresentacionUpdateDto>().ReverseMap();
+            //#endregion Presentacion
 
-            #region ExamenLaboratorio
-            CreateMap<Examenlaboratorio, ExamenLabDto>().ReverseMap();
-            CreateMap<Examenlaboratorio, ExamenLaboratorioCreateDto>().ReverseMap();
-            CreateMap<Examenlaboratorio, ExamenLaboratorioUpdateDto>().ReverseMap();
-            #endregion ExamenLaboratorio 
-            #region Laboratorio
-            CreateMap<Laboratorio, LaboratorioDto>().ReverseMap();
-            #endregion Laboratorio
-            #region Diabetes
-            CreateMap<Diabete, DiabetesDto>().ReverseMap();
-            CreateMap<Diabete, DiabetesCreateDto>().ReverseMap();
-            CreateMap<Diabete, DiabetesUpdateDto>().ReverseMap();
-            #endregion Diabetes
-            #region Parentesco
-            CreateMap<Parentesco, ParentescoDto>().ReverseMap();
-            CreateMap<Parentesco, ParentescoCreateDto>().ReverseMap();
-            CreateMap<Parentesco, ParentescoUpdateDto>().ReverseMap();
-            #endregion Parentesco 
-            #region Ubicacion
-            CreateMap<Departamento, DepartamentoDto>().ReverseMap();
-            CreateMap<Provincium, ProvinciaDto>().ReverseMap();
-            CreateMap<Distrito, DistritoDto>().ReverseMap();
-            #endregion Ubicacion
+            //#region ExamenLaboratorio
+            //CreateMap<Examenlaboratorio, ExamenLabDto>().ReverseMap();
+            //CreateMap<Examenlaboratorio, ExamenLaboratorioCreateDto>().ReverseMap();
+            //CreateMap<Examenlaboratorio, ExamenLaboratorioUpdateDto>().ReverseMap();
+            //#endregion ExamenLaboratorio 
+            //#region Laboratorio
+            //CreateMap<Laboratorio, LaboratorioDto>().ReverseMap();
+            //#endregion Laboratorio
+            //#region Diabetes
+            //CreateMap<Diabete, DiabetesDto>().ReverseMap();
+            //CreateMap<Diabete, DiabetesCreateDto>().ReverseMap();
+            //CreateMap<Diabete, DiabetesUpdateDto>().ReverseMap();
+            //#endregion Diabetes
+            //#region Parentesco
+            //CreateMap<Parentesco, ParentescoDto>().ReverseMap();
+            //CreateMap<Parentesco, ParentescoCreateDto>().ReverseMap();
+            //CreateMap<Parentesco, ParentescoUpdateDto>().ReverseMap();
+            //#endregion Parentesco 
+            //#region Ubicacion
+            //CreateMap<Departamento, DepartamentoDto>().ReverseMap();
+            //CreateMap<Provincium, ProvinciaDto>().ReverseMap();
+            //CreateMap<Distrito, DistritoDto>().ReverseMap();
+            //#endregion Ubicacion
 
-            #region CiaSeguros
-            CreateMap<Ciaseguro, CiaSeguroCreateDto>().ReverseMap();
-            CreateMap<Ciaseguro, CiaSeguroUpdateDto>().ReverseMap();
-            CreateMap<Ciaseguro, CiaSeguroDto>().ReverseMap();
-            #endregion CiaSeguros
+            //#region CiaSeguros
+            //CreateMap<Ciaseguro, CiaSeguroCreateDto>().ReverseMap();
+            //CreateMap<Ciaseguro, CiaSeguroUpdateDto>().ReverseMap();
+            //CreateMap<Ciaseguro, CiaSeguroDto>().ReverseMap();
+            //#endregion CiaSeguros
 
-            #region Directorio
-            CreateMap<Directorio, DirectorioDto>().ReverseMap();
-            CreateMap<Directorio, DirectorioCreateDto>().ReverseMap();
-            CreateMap<Directorio, DirectorioUpdateDto>().ReverseMap();
-            #endregion Directorio
+            //#region Directorio
+            //CreateMap<Directorio, DirectorioDto>().ReverseMap();
+            //CreateMap<Directorio, DirectorioCreateDto>().ReverseMap();
+            //CreateMap<Directorio, DirectorioUpdateDto>().ReverseMap();
+            //#endregion Directorio
 
-            #region Procedimiento
-            CreateMap<Procedimiento, ProcedimientoDto>().ReverseMap();
-            CreateMap<Procedimiento, ProcedimientoCreateDto>().ReverseMap();
-            CreateMap<Procedimiento, ProcedimientoUpdateDto>().ReverseMap();
-            #endregion Procedimiento
+            //#region Procedimiento
+            //CreateMap<Procedimiento, ProcedimientoDto>().ReverseMap();
+            //CreateMap<Procedimiento, ProcedimientoCreateDto>().ReverseMap();
+            //CreateMap<Procedimiento, ProcedimientoUpdateDto>().ReverseMap();
+            //#endregion Procedimiento
 
-            #region Ocupacion
-            CreateMap<Ocupacion, OcupacionDto>().ReverseMap();
-            CreateMap<Ocupacion, OcupacionCreateDto>().ReverseMap();
-            CreateMap<Ocupacion, OcupacionUpdateDto>().ReverseMap();
-            #endregion Ocupacion
+            //#region Ocupacion
+            //CreateMap<Ocupacion, OcupacionDto>().ReverseMap();
+            //CreateMap<Ocupacion, OcupacionCreateDto>().ReverseMap();
+            //CreateMap<Ocupacion, OcupacionUpdateDto>().ReverseMap();
+            //#endregion Ocupacion
 
-            #region Alergia
-            CreateMap<Alergium, AlergiaDto>().ReverseMap();
-            CreateMap<Alergium, AlergiaCreateDto>().ReverseMap();
-            CreateMap<Alergium, AlergiaUpdateDto>().ReverseMap();
-            CreateMap<Detallealergium, DetalleAlergiaCreateDto>().ReverseMap();
+            //#region Alergia
+            //CreateMap<Alergium, AlergiaDto>().ReverseMap();
+            //CreateMap<Alergium, AlergiaCreateDto>().ReverseMap();
+            //CreateMap<Alergium, AlergiaUpdateDto>().ReverseMap();
+            //CreateMap<Detallealergium, DetalleAlergiaCreateDto>().ReverseMap();
 
-            #endregion Alergia
+            //#endregion Alergia
 
             #region Paciente
-            CreateMap<Paciente, PacienteDetalleDto>().ReverseMap();
-            CreateMap<Paciente, PacienteCreateDto>().ReverseMap();
+            //CreateMap<Paciente, PacienteDetalleDto>().ReverseMap();
+            //CreateMap<Paciente, PacienteCreateDto>().ReverseMap();
+            CreateMap<Paciente, PacienteListDto>().ReverseMap();
+            CreateMap<Paciente, PacienteDto>()
+                     .ForMember(dest => dest.Departamento,
+                      opt => opt.MapFrom(origen => origen.IdDepartamentoNavigation.Nombre))
+                     .ForMember(dest => dest.Provincia,
+                     opt => opt.MapFrom(origen => origen.IdProvinciaNavigation.Nombre))
+                     .ForMember(dest => dest.Distrito,
+                     opt => opt.MapFrom(origen => origen.IdDistritoNavigation.Nombre))
+                     .ForMember(dest => dest.Seguro,
+                     opt => opt.MapFrom(origen => origen.IdSeguroNavigation.Nombre))
+                     .ForMember(dest => dest.Ocupacion,
+                     opt => opt.MapFrom(origen => origen.IdOcupacionNavigation.Nombre))
+                     .ForMember(dest => dest.Contactos,
+                     opt => opt.MapFrom(origen => origen.Contactos))
+                     .ForMember(dest => dest.Antecedente,
+                     opt => opt.MapFrom(origen => origen.Antecedente));
 
-
-            CreateMap<Paciente, PacienteUpdateDto>().ReverseMap();
-            CreateMap<Paciente, PacienteDto>().ReverseMap();
+            CreateMap<Contacto, ContactoDto>()
+                .ForMember(dest=> dest.Parentesco,
+                opt=> opt.MapFrom(origen=> origen.IdParentescoNavigation.Nombre));
+            CreateMap<Antecedente, AntecedenteDto>()
+                .ForMember(dest => dest.Diabetes,
+                opt => opt.MapFrom(d => d.IdDiabeteNavigation.Nombre));
+            CreateMap<Detallealergia, DetalleAlergiaDto>()
+                      .ForMember(dest=> dest.Alergia,
+                      opt=> opt.MapFrom(origen=> origen.IdAlergiaNavigation.Nombre));
             #endregion Paciente
 
-            #region Medicamento
-            CreateMap<Medicamento, MedicamentoCreateDto>().ReverseMap();
-            CreateMap<Medicamento, MedicamentoUpdateDto>().ReverseMap();
 
-            CreateMap<Medicamento, MedicamentoDto>()
-                .ForMember(dest => dest.Presentacion, opt => opt.MapFrom(origen => origen.IdPresentacionNavigation.Nombre));
+            //#region Medicamento
+            //CreateMap<Medicamento, MedicamentoCreateDto>().ReverseMap();
+            //CreateMap<Medicamento, MedicamentoUpdateDto>().ReverseMap();
 
-            #endregion Medicamento
+            //CreateMap<Medicamento, MedicamentoDto>()
+            //    .ForMember(dest => dest.Presentacion, opt => opt.MapFrom(origen => origen.IdPresentacionNavigation.Nombre));
 
-            #region Consulta
-            CreateMap<Consultum, ConsultaDto>()
-                .ForMember(dest => dest.IdCieNavigation, opt => opt.MapFrom(src => src.IdCieNavigation))
-                .ForMember(dest => dest.IdPacienteNavigation, opt => opt.MapFrom(src => src.IdPacienteNavigation))
-                .ForMember(dest => dest.IdUsuarioNavigation, opt => opt.MapFrom(src => src.IdUsuarioNavigation))
-                .ReverseMap();
-            CreateMap<Consultum, ConsultaCreateDto>().ReverseMap();
-            CreateMap<Consultum, ConsultaUpdateDto>().ReverseMap();
-            #endregion Consulta
+            //#endregion Medicamento
+
+            //#region Consulta
+            //CreateMap<Consultum, ConsultaDto>()
+            //    .ForMember(dest => dest.IdCieNavigation, opt => opt.MapFrom(src => src.IdCieNavigation))
+            //    .ForMember(dest => dest.IdPacienteNavigation, opt => opt.MapFrom(src => src.IdPacienteNavigation))
+            //    .ForMember(dest => dest.IdUsuarioNavigation, opt => opt.MapFrom(src => src.IdUsuarioNavigation))
+            //    .ReverseMap();
+            //CreateMap<Consultum, ConsultaCreateDto>().ReverseMap();
+            //CreateMap<Consultum, ConsultaUpdateDto>().ReverseMap();
+            //#endregion Consulta
 
         }
     }

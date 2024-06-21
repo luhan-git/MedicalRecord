@@ -1,10 +1,10 @@
-﻿using MedicalRecord_API.Models;
+﻿//using MedicalRecord_API.Models;
 
-namespace MedicalRecord_API.Repository.Interfaces
-{
-    public interface IOcupacionRepository : IGenericRepository<Ocupacion>
-    {
-        Task<Ocupacion> Create(Ocupacion entity);
-        Task Update(Ocupacion entity);
-    }
-}
+//namespace MedicalRecord_API.Repository.Interfaces
+//{
+//    public interface IOcupacionRepository : IGenericRepository<Ocupacion>
+//    {
+//        Task<Ocupacion> Create(Ocupacion entity);
+//        Task Update(Ocupacion entity);
+//    }
+//}

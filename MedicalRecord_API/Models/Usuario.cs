@@ -1,4 +1,7 @@
-﻿namespace MedicalRecord_API.Models;
+﻿using System;
+using System.Collections.Generic;
+
+namespace MedicalRecord_API.Models;
 
 public partial class Usuario
 {
@@ -14,17 +17,15 @@ public partial class Usuario
 
     public string? Especialidad { get; set; }
 
-    public string? NroColMedico { get; set; }
+    public string? Rol { get; set; }
 
-    public string Rol { get; set; } = null!;
+    public bool? IsActivo { get; set; }
 
-    public bool? Activo { get; set; }
+    public bool? IsDelete { get; set; }
 
     public DateTime? FechaRegistro { get; set; }
 
-    public DateTime? UltimaSesion { get; set; }
-
     public DateTime? FechaActualizacion { get; set; }
 
-    public virtual ICollection<Consultum> Consulta { get; set; } = new List<Consultum>();
+    public virtual ICollection<Consulta> Consulta { get; set; } = new List<Consulta>();
 }
