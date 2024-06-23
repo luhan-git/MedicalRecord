@@ -69,14 +69,15 @@ INSERT INTO Antecedentes(idPaciente,antecedentesClinicos,idDiabete) VALUES (1,'a
 INSERT INTO DetalleAlergias (idAlergia,idAntecedente,reacciones)VALUES (1,1,'ronchas');
 INSERT INTO DetalleAlergias (idAlergia,idAntecedente,reacciones)VALUES (2,1,'muere');
 
-select p.primerNombre,p.aPaterno,p.isAsegurado,s.nombre,p.numeroCarnet,p.isAlergico,al.nombre,d.reacciones,p.isDiabetico,di.nombre,a.antecedentesClinicos,c.nombre,c.telefono
+select p.id ,p.primerNombre,p.aPaterno,p.isAsegurado,s.nombre,p.numeroCarnet,p.isAlergico,al.nombre,d.reacciones,p.isDiabetico,di.nombre,a.antecedentesClinicos,c.nombre,c.telefono
  from pacientes p inner join contactos c on p.id=c.idPaciente
  inner join seguros s on p.idSeguro=s.id
  inner join Antecedentes a on p.id=a.idpaciente
  inner join diabetes di on a.idDiabete = di.id
  inner join DetalleAlergias d on d.idAntecedente=a.id
  inner join alergias al on d.idAlergia=al.id
- where p.idSeguro=s.id and c.nombre='omar'
+ where p.idSeguro=s.id and c.nombre='omar';
  
+
  
 
