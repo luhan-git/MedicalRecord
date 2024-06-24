@@ -1,5 +1,4 @@
-﻿using MedicalRecord_API.Models.Dtos.Alergia;
-
+﻿
 namespace MedicalRecord_API.Models.Dtos.Paciente
 {
     public class PacienteDetalleDto
@@ -63,23 +62,6 @@ namespace MedicalRecord_API.Models.Dtos.Paciente
         public bool? IsDiabetico { get; set; }
 
         public bool? IsDelete { get; set; }
-
-        //public virtual Antecedente? Antecedente { get; set; }
-
-        //public virtual ICollection<Consulta> Consulta { get; set; } = new List<Consulta>();
-
-        //public virtual ICollection<Contacto> Contactos { get; set; } = new List<Contacto>();
-
-        //public virtual Departamento IdDepartamentoNavigation { get; set; } = null!;
-
-        //public virtual Distrito IdDistritoNavigation { get; set; } = null!;
-
-        //public virtual Ocupacione IdOcupacionNavigation { get; set; } = null!;
-
-        //public virtual Provincia IdProvinciaNavigation { get; set; } = null!;
-
-        //public virtual Seguro? IdSeguroNavigation { get; set; }
-
 
     }
 }

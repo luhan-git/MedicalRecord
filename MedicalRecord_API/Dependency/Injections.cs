@@ -17,33 +17,11 @@ namespace MedicalRecord_API.Dependency
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IPacienteService, PacienteService>();
-            services.AddScoped<IDetalleAlergiaService, DetalleAlergiaService>();
+            services.AddScoped<IAuthService, AuthService>();
             services.AddAutoMapper(typeof(AutoMapperProfile));
-            services.AddScoped<IAntecedenteService, AntecedenteService>();
-            //services.AddScoped<IUtilsService, UtilsService>();
-            //services.AddScoped<IExamenLaboratorioRepository, ExamenLaboratorioRepository>();
-            //services.AddScoped<IParentescoRepository, ParentescoRepository>();
-            //services.AddScoped<IUsuarioRepository, UsuarioRepositoy>();
-            //services.AddScoped<ICieRepository, CieRepository>();
-            //services.AddScoped<IPresentacionRepository, PresentacionRepository>();
-            //services.AddScoped<IDiabetesRepository, DiabetesRepository>();
-            //services.AddScoped<ILaboratorioRepository, LaboratorioRepository>();
-            //services.AddScoped<ICiaSeguroRepository, CiaSeguroRepository>();
-            //services.AddScoped<IDirectorioRepository, DirectorioRepository>();
-            //services.AddScoped<IProcedimientoRepository, ProcedimientoRepository>();
-            //services.AddScoped<IOcupacionRepository, OcupacionRepository>();
-            //services.AddScoped<IAlergiaRepository, AlergiaRepository>();
-            //services.AddScoped<IPacienteRepository, PacienteRepository>();
-            //services.AddScoped<IMedicamentoRepository, MedicamentoRepository>();
-            //services.AddScoped<IConsultaRepository, ConsultaRepository>();
-
-            //services.AddScoped<IPresentacionService, PresentacionService>();
-            //services.AddScoped<IUsuarioService, UsuarioService>();
-            //services.AddScoped<IAuthService, AuthService>();
-            //services.AddScoped<IAlergiaService, AlergiaService>();
-            //services.AddScoped<ICiaSeguroService, CiaSeguroService>();
-            //services.AddScoped<ICieService, CieService>();
-            //services.AddScoped<IDiabetesService, DiabetesService>();
+            services.AddScoped<IUtilsService, UtilsService>();
+            services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<IUbicacionService, UbicacionService>();
         }
     }
 }
