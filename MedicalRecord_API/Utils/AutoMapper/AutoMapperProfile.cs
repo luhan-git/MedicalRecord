@@ -33,7 +33,7 @@ namespace MedicalRecord_API.Utils.AutoMapper
                      opt => opt.MapFrom(origen => origen.Contactos))
                      .ForMember(dest => dest.Antecedente,
                      opt => opt.MapFrom(origen => origen.Antecedente));
-
+            CreateMap<PacienteCreateDto, Paciente>();
             CreateMap<Contacto, ContactoDto>()
                 .ForMember(dest=> dest.Parentesco,
                 opt=> opt.MapFrom(origen=> origen.IdParentescoNavigation.Nombre));

@@ -53,17 +53,12 @@ namespace MedicalRecord_API.Repository.Implements
             }
         }
 
-        public async Task<IEnumerable<T>> QueryAsync(Expression<Func<T, bool>>? filter = null,
-                                               params Expression<Func<T, object>>[] includes)
+        public async Task<IEnumerable<T>> QueryAsync(Expression<Func<T, bool>>? filter = null)
         {
             IQueryable<T> query = dbSet;
             if (filter != null)
             {
                 query = query.Where(filter);
-            }
-            foreach (var include in includes)
-            {
-                query = query.Include(include);
             }
             return await query.ToListAsync();
         }

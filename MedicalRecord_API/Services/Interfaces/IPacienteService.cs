@@ -8,5 +8,6 @@ namespace MedicalRecord_API.Services.Interfaces
     {
         Task<Paciente> GetById(int id);
         Task<IEnumerable<Paciente>> List();
+        Task<Paciente>Create(Paciente paciente);
     }
 }

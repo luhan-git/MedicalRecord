@@ -82,43 +82,29 @@ namespace MedicalRecord_API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, _response);
             }
         }
-        
-        //[HttpPost]
-        //[ProducesResponseType(StatusCodes.Status201Created)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //public async Task<ActionResult<Response>> Create([FromBody] PacienteCreateDto dto)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
 
-        //    try
-        //    {
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<Response>> Create([FromBody] PacienteCreateDto dto)
+        {
+            try
+            {
+                Paciente paciente=await _service.Create(_mapper.Map<Paciente>(dto));
+                _response.Result = _mapper.Map<PacienteDto>(paciente);
+                _response.Status = HttpStatusCode.Created;
+                _response.IsSuccess = true;
 
-        //        DateTime fechaNacimiento = dto.FechaNacimiento;
-        //        int edad = DateTime.Today.Year - fechaNacimiento.Year;
-        //        if (fechaNacimiento.Date > DateTime.Today.AddYears(-edad))
-        //            edad--;
+                return CreatedAtRoute("GetPaciente", new { id = paciente.Id }, _response);
 
-        //        Paciente paciente = _mapper.Map<Paciente>(dto);
-        //        paciente.Edad = edad.ToString();
-        //        paciente = await _pacienteRepository.Create(paciente);
-
-        //        _response.Result = _mapper.Map<PacienteDto>(paciente);
-        //        _response.Status = HttpStatusCode.Created;
-        //        _response.IsSuccess = true;
-
-        //        return CreatedAtRoute("GetPaciente", new { id = paciente.Id }, _response);
-
-        //    }
-        //    catch
-        //    {
-        //        _response.Status = HttpStatusCode.InternalServerError;
-        //        _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud"];
-        //        return StatusCode(StatusCodes.Status500InternalServerError, _response);
-        //    }
-        //}
+            }
+            catch
+            {
+                _response.Status = HttpStatusCode.InternalServerError;
+                _response.ErrorMessages = ["Ocurrió un error al procesar la solicitud"];
+                return StatusCode(StatusCodes.Status500InternalServerError, _response);
+            }
+        }
     }
 }

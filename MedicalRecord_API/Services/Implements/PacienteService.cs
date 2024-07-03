@@ -37,6 +37,35 @@ namespace MedicalRecord_API.Services.Implements
                          
             return await query.FirstAsync();
         }
-        
+
+        public async Task<Paciente> Create(Paciente paciente)
+        {
+            DateTime fechaNacimiento = paciente.FechaNacimiento;
+            int edad = DateTime.Today.Year - fechaNacimiento.Year;
+            if (fechaNacimiento.Date > DateTime.Today.AddYears(-edad))
+                edad--;
+            bool isAsegurado=paciente.IdSeguro!=null;
+            bool isAlergico=false;
+            bool isDiabetico=false;
+            if(paciente.Antecedente!=null)
+            {
+                isAlergico = paciente.Antecedente.Detallealergia.Count > 0;
+                isDiabetico = paciente.Antecedente.IdDiabete!= null;
+            }
+            
+            paciente.Edad = edad.ToString();
+            paciente.IsAsegurado = isAsegurado;
+            paciente.IsAlergico = isAlergico;
+            paciente.IsDiabetico = isDiabetico;
+            try
+            {
+                Paciente created= await _repo.Create(paciente);
+                return created;
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }

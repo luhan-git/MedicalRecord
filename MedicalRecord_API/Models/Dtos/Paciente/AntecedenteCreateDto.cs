@@ -1,9 +1,7 @@
 ﻿namespace MedicalRecord_API.Models.Dtos.Paciente
 {
-    public class AntecedenteDto
+    public class AntecedenteCreateDto
     {
-        public int Id { get; set; }
-
         public int IdPaciente { get; set; }
 
         public string? AntecedentesClinicos { get; set; }
@@ -17,7 +15,6 @@
         public int? IdDiabete { get; set; }
         public string? Diabetes { get; set; }
         public bool? IsDelete { get; set; }
-        public virtual ICollection<DetalleAlergiaCreateDto> Detallealergia { get; set; } = [];
-
+        public virtual ICollection<DetalleAlergiaDto> Detallealergia { get; set; } = [];
     }
 }

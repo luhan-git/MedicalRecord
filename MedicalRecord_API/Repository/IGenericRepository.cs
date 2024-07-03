@@ -9,8 +9,7 @@ namespace MedicalRecord_API.Repository
         Task<T> GetAsync(Expression<Func<T, bool>> filters, bool tracked = true);
         Task<IQueryable<T>> Query(Expression<Func<T, bool>>? filters = null);
         Task<IEnumerable<T>> QueryAsync(
-        Expression<Func<T, bool>>? filter = null,
-        params Expression<Func<T, object>>[] includes);
+        Expression<Func<T, bool>>? filter = null);
         Task Delete(T entity);
     }
 }
