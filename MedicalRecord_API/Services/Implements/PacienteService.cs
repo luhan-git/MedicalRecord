@@ -2,8 +2,6 @@
 using MedicalRecord_API.Repository;
 using MedicalRecord_API.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
-using System.Reflection.Metadata;
 
 namespace MedicalRecord_API.Services.Implements
 {

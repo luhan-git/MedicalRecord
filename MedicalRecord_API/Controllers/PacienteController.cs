@@ -5,7 +5,6 @@ using MedicalRecord_API.Services.Interfaces;
 using MedicalRecord_API.Utils.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Net;
 
 namespace MedicalRecord_API.Controllers
@@ -23,9 +22,6 @@ namespace MedicalRecord_API.Controllers
             _service = service;
             _response = new();
         }
-
-        
-
         [HttpGet]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
